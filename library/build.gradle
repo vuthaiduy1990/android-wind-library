@@ -2,8 +2,6 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 28
-
-
     defaultConfig {
         minSdkVersion 23
         targetSdkVersion 28
@@ -11,7 +9,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -20,7 +17,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {
@@ -30,4 +26,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    // Apache Commons Codec
+    // https://commons.apache.org/proper/commons-codec/
+    implementation 'commons-codec:commons-codec:1.13'
 }
