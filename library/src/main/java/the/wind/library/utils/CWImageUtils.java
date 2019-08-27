@@ -1,4 +1,4 @@
-package the.wind.common.library.utils;
+package the.wind.library.utils;
 
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;

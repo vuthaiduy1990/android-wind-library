@@ -1,4 +1,4 @@
-package the.wind.common.library;
+package the.wind.library;
 
 import org.apache.commons.codec.binary.Base64;
 import org.junit.Assert;
@@ -10,8 +10,8 @@ import java.util.List;
 
 import javax.crypto.SecretKey;
 
-import the.wind.common.library.utils.CWCryptoUtils;
-import the.wind.common.library.utils.CWStreamUtils;
+import the.wind.library.utils.CWCryptoUtils;
+import the.wind.library.utils.CWStreamUtils;
 
 public class CryptoUtilsTest {
 

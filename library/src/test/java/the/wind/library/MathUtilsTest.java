@@ -1,9 +1,9 @@
-package the.wind.common.library;
+package the.wind.library;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import the.wind.common.library.utils.CWMathUtils;
+import the.wind.library.utils.CWMathUtils;
 
 public class MathUtilsTest {
 

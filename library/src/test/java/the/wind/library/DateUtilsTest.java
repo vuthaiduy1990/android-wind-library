@@ -1,4 +1,4 @@
-package the.wind.common.library;
+package the.wind.library;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.util.Calendar;
 import java.util.Date;
 
-import the.wind.common.library.utils.CWDateUtils;
+import the.wind.library.utils.CWDateUtils;
 
 public class DateUtilsTest {
 

@@ -1,11 +1,11 @@
-package the.wind.common.library;
+package the.wind.library;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
 
-import the.wind.common.library.utils.CWFileUtils;
+import the.wind.library.utils.CWFileUtils;
 
 public class FileUtilsTest {
 

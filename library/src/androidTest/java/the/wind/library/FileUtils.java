@@ -1,4 +1,4 @@
-package the.wind.common.library;
+package the.wind.library;
 
 import android.content.Context;
 import android.os.Environment;
@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-import the.wind.common.library.utils.CWFileUtils;
+import the.wind.library.utils.CWFileUtils;
 
 @RunWith(AndroidJUnit4.class)
 public class FileUtils {

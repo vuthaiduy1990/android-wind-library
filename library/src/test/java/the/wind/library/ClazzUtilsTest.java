@@ -1,4 +1,4 @@
-package the.wind.common.library;
+package the.wind.library;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -8,7 +8,7 @@ import java.lang.reflect.Modifier;
 import java.util.LinkedList;
 import java.util.List;
 
-import the.wind.common.library.utils.CWClazzUtils;
+import the.wind.library.utils.CWClazzUtils;
 
 public class ClazzUtilsTest {
     private List<String> linkedList = new LinkedList<>();
@@ -40,7 +40,7 @@ public class ClazzUtilsTest {
         Assert.assertEquals(CWClazzUtils.forName("float"), float.class);
         Assert.assertEquals(CWClazzUtils.forName("java.lang.Float"), Float.class);
         Assert.assertEquals(CWClazzUtils.forName("java.lang.Enum"), Enum.class);
-        Assert.assertEquals(CWClazzUtils.forName("the.wind.common.library.ClazzUtilsTest$GetterSetterTest"), GetterSetterTest.class);
+        Assert.assertEquals(CWClazzUtils.forName("the.wind.library.ClazzUtilsTest$GetterSetterTest"), GetterSetterTest.class);
     }
 
     @Test

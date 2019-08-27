@@ -1,4 +1,4 @@
-package the.wind.common.library.utils;
+package the.wind.library.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

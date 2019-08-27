@@ -1,4 +1,4 @@
-package the.wind.common.library;
+package the.wind.library;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -10,7 +10,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import the.wind.common.library.utils.CWStringUtils;
+import the.wind.library.utils.CWStringUtils;
 
 public class StringUtilsTest {
 
