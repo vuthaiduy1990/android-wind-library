@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 
 import java.io.BufferedOutputStream;
@@ -101,7 +102,7 @@ public final class CWFileUtils {
      */
     public static boolean deleteFile(String filePath) {
         if (filePath != null && !filePath.trim().isEmpty()) {
-            return deleteFile(new File(filePath));
+            return deleteFile(new File(filePath.trim()));
         }
         return false;
     }
@@ -126,7 +127,7 @@ public final class CWFileUtils {
      */
     public static boolean deleteDir(String dirPath) {
         if (dirPath != null && !dirPath.trim().isEmpty()) {
-            return deleteDir(new File(dirPath));
+            return deleteDir(new File(dirPath.trim()));
         }
         return false;
     }
@@ -143,7 +144,7 @@ public final class CWFileUtils {
                 if (f.isDirectory()) {
                     deleteDir(f);
                 } else {
-                    f.delete();
+                    deleteFile(f);
                 }
             }
         }
@@ -156,7 +157,7 @@ public final class CWFileUtils {
      */
     public static void clearDir(String dir) {
         if (dir != null && !dir.trim().isEmpty()) {
-            clearDir(new File(dir));
+            clearDir(new File(dir.trim()));
         }
     }
 
@@ -168,8 +169,12 @@ public final class CWFileUtils {
      * @param dir  target directory
      * @return true if moving successfully
      */
-    public static boolean moveFileToDir(File file, File dir) {
-        return renameTo(file, new File(dir, file.getName()));
+    @Nullable
+    public static File moveFileToDir(File file, File dir) {
+        if (renameTo(file, new File(dir, file.getName()))) {
+            return new File(dir, file.getName());
+        }
+        return null;
     }
 
     /**
@@ -190,9 +195,14 @@ public final class CWFileUtils {
      * @param newName new file name without extension
      * @return true if renaming successfully
      */
-    public static boolean rename(File file, String newName) {
+    @Nullable
+    public static File rename(File file, String newName) {
         String ext = getFileExtension(file.getName());
-        return renameTo(file, new File(file.getParentFile(), newName + ext));
+        File renamedFile = new File(file.getParentFile(), newName + ext);
+        if (renameTo(file, renamedFile)) {
+            return renamedFile;
+        }
+        return null;
     }
 
     /**
@@ -217,7 +227,7 @@ public final class CWFileUtils {
     }
 
     /**
-     * Check where file is image or not
+     * Check where file is given file types or not
      *
      * @param file         file
      * @param supportTypes checked type (extension of file. For ex, .png, .exe)
