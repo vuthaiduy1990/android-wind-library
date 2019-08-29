@@ -15,7 +15,12 @@
  */
 package the.wind.library.utils;
 
+import java.lang.reflect.Array;
+import java.util.Random;
+
 public final class CWMathUtils {
+    // a random generator
+    private static final Random mRand = new Random();
 
     /**
      * Round a double number.
@@ -90,6 +95,94 @@ public final class CWMathUtils {
      * @return random integer number
      */
     public static int random(int min, int max) {
-        return (int) Math.floor(Math.random() * (max - min + 1)) + min;
+        return (int) Math.floor(mRand.nextDouble() * (max - min + 1)) + min;
+    }
+
+    /**
+     * Generate random number between min and max value
+     *
+     * @param min lower boundary
+     * @param max upper boundary
+     * @return random integer number
+     */
+    public static float random(float min, float max) {
+        return mRand.nextFloat() * (max - min) + min;
+    }
+
+    /**
+     * Generate random number between min and max value
+     *
+     * @param min lower boundary
+     * @param max upper boundary
+     * @return random integer number
+     */
+    public static double random(double min, double max) {
+        return mRand.nextDouble() * (max - min) + min;
+    }
+
+    /**
+     * Shuffle array of integer numbers from start index to end index
+     * Note: the shuffled array will not include the end index
+     * <pre>
+     *     shuffle(0, 5) -> [4, 3, 1, 0, 2]
+     *     shuffle(0, 5) -> [3, 0, 1, 4, 2]
+     * </pre>
+     *
+     * @param start start index
+     * @param end   end index
+     * @return shuffled index array
+     */
+    public static int[] shuffle(int start, int end) {
+        if (start > end) throw new IllegalArgumentException("start must not be greater than end");
+        int length = end - start;
+
+        // initiate value for array
+        int[] result = new int[length];
+        for (int idx = 0; idx < length; idx++) {
+            result[idx] = idx + start;
+        }
+
+        // randomize an index
+        // then swap the value at random index with the value at current index
+        int temp;
+        for (int idx = 0; idx < length; idx++) {
+            int randomIdx = (int) Math.floor(mRand.nextDouble() * length);
+            temp = result[idx];
+            result[idx] = result[randomIdx];
+            result[randomIdx] = temp;
+        }
+
+        // make sure the shuffle array is always different from the origin
+        if (length > 1 && result[0] == start) {
+            temp = result[0];
+            result[0] = result[1];
+            result[1] = temp;
+        }
+        return result;
+    }
+
+    /**
+     * Shuffle an array
+     * <pre>
+     *     String[] shuffle = shuffle(String.class, array)
+     *     Color[] shuffle = shuffle(Color.class, array)
+     * </pre>
+     *
+     * @param clazz type of array's elements
+     * @param array array
+     * @param <T>   generic type
+     * @return shuffled array
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T[] shuffle(Class<T> clazz, T[] array) {
+        int length = array.length;
+        int[] shuffleIndexes = shuffle(0, length); // generate shuffle indexes
+
+        // shuffle array based on the shuffle indexes
+        T[] result = (T[]) Array.newInstance(clazz, length);
+        for (int idx = 0; idx < length; idx++) {
+            result[idx] = array[shuffleIndexes[idx]];
+        }
+        return result;
     }
 }
