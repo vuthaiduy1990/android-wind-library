@@ -23,8 +23,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // Android library
-    implementation 'com.android.support:design:28.0.0'
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation "com.android.support:design:${SUPPORT_LIBRARY}"
+    implementation "com.android.support:appcompat-v7:${SUPPORT_LIBRARY}"
 
     // Required for test
     testImplementation 'junit:junit:4.12'
