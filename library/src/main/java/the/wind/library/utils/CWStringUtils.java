@@ -1,23 +1,61 @@
 package the.wind.library.utils;
 
+import android.support.annotation.Nullable;
+
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import the.wind.library.CWLocale;
+import the.wind.library.CWRegex;
+
 public class CWStringUtils {
 
-    // ================================================================
-    // Common Regex - Be-careful when modifying the regex pattern
-    // ================================================================
-    // Regex to detect spaces
-    public static String REGEX_SPACES = "\\s+";
-    // Regex to detect japanese words
-    // Thanks https://gist.github.com/ryanmcgrath/982242
-    // Thanks https://gist.github.com/oanhnn/9043867
-    public static String REGEX_JAV_CHAR = "[\\u3000-\\u303F]|[\\u3040-\\u309F]|[\\u30A0-\\u30FF]|[\\uFF00-\\uFFEF]|[\\u4E00-\\u9FAF]|[\\u2605-\\u2606]|[\\u2190-\\u2195]|\\u203B";
-    // ================================================================
+    /**
+     * Join strings with given delimiter
+     * From API level 26, you can use String.join() method
+     * <pre>
+     *     join(".", "color", "the", "wind") -> color.the.wind
+     *     join("-", ["color", "the", "wind"]) -> color-the-wind
+     * </pre>
+     *
+     * @param delimiter delimiter
+     * @param elements  array of strings
+     * @return joined string
+     */
+    public static String join(String delimiter, CharSequence... elements) {
+        StringBuilder builder = new StringBuilder();
+        for (CharSequence el : elements) {
+            builder.append(delimiter).append(el);
+        }
+        String result = builder.toString();
+        return result.length() > 0 ? result.substring(1) : result;
+    }
+
+    /**
+     * Join strings with given delimiter
+     * From API level 26, you can use String.join() method
+     * <pre>
+     *     List<String> list = new LinkedList();
+     *     join(".", list.iterator()) -> Color.the.wind
+     *     join("-", list.iterator()) -> Color-the-wind
+     * </pre>
+     *
+     * @param delimiter delimiter
+     * @param elements  list of strings
+     * @return joined string
+     */
+    public static String join(String delimiter, Iterator<String> elements) {
+        StringBuilder builder = new StringBuilder();
+        while (elements.hasNext()) {
+            builder.append(delimiter).append(elements.next());
+        }
+        String result = builder.toString();
+        return result.length() > 0 ? result.substring(1) : result;
+    }
 
     /**
      * Joint url path
@@ -128,17 +166,24 @@ public class CWStringUtils {
      *     text2words("\nColor \n the wind    ")
      *     -> ["\n", "Color", " \n ", "the", " ", "wind", "    "]
      * </pre>
-     * To convert text to words without including spaces, use String.split(REGEX_SPACES)
+     * Support both space and non-space breaking languages
+     * https://anycount.com/WordCountBlog/word-count-in-oriental-languages/
+     * <pre>
+     *      + All space-breaking language systems (English/Vietnamese/French, etc.)
+     *      + Non-space breaking language systems
+     *          |- Chinese/Japanese
+     *          |- Thai
+     * </pre>
      *
-     * @param text   a text
-     * @param locale locale, ex, {{{@link Locale#JAPANESE}}}
+     * @param text                  a text
+     * @param nonSpaceBreakingRegex regex to detect no-space breaking language
      * @return list of words
      */
-    public static List<String> text2words(String text, Locale locale) {
+    public static List<String> text2words(String text, @Nullable String nonSpaceBreakingRegex) {
         List<String> result = new LinkedList<>();
-        String regex = "(\\s+)|([^\\s]+)";
-        if (locale.equals(Locale.JAPAN) || locale.equals(Locale.JAPANESE)) {
-            regex = REGEX_JAV_CHAR + "|" + regex;
+        String regex = CWRegex.REGEX_SPACE_BREAKING;
+        if (nonSpaceBreakingRegex != null) {
+            regex = nonSpaceBreakingRegex + "|" + regex;
         }
         Matcher m = Pattern.compile(regex).matcher(text);
         while (m.find()) {
@@ -153,13 +198,47 @@ public class CWStringUtils {
      *     text2words("\nColor \n the wind    ")
      *     -> ["\n", "Color", " \n ", "the", " ", "wind", "    "]
      * </pre>
-     * To convert text to words without including spaces, use String.split(REGEX_SPACES)
+     * Support both space and non-space breaking languages
+     * https://anycount.com/WordCountBlog/word-count-in-oriental-languages/
+     * <pre>
+     *      + All space-breaking language systems (English/Vietnamese/French, etc.)
+     *      + Non-space breaking language systems
+     *          |- Chinese/Japanese
+     *          |- Thai
+     * </pre>
      *
      * @param text a text
      * @return list of words
      */
     public static List<String> text2words(String text) {
-        return text2words(text, Locale.US);
+        String[] regexList = new String[2];
+        Locale loc = Locale.getDefault();
+        // give high priority to regex respective to the default locale
+        if (loc.equals(CWLocale.THAI) || loc.equals(CWLocale.THAILAND)) {
+            regexList[0] = CWRegex.REGEX_THAI_CHARS;
+            regexList[1] = CWRegex.REGEX_JAV_CHARS;
+        } else {
+            regexList[0] = CWRegex.REGEX_JAV_CHARS;
+            regexList[1] = CWRegex.REGEX_THAI_CHARS;
+        }
+
+        // Automatically detect if the input is non-space breaking language or not
+        // Check with maximum of 10 character only to ensure the good performance
+        // a text is considered as belonging to a language
+        // if 50% characters of this text is belonged to a checked language
+        String text10 = text.trim().replaceAll("\\s", "");
+        text10 = text10.length() > 10 ? text10.substring(0, 10) : text10;
+        for (String re : regexList) {
+            int count = 0;
+            Matcher m = Pattern.compile(re).matcher(text10);
+            while (m.find()) {
+                count++;
+            }
+            if ((float) count / text10.length() > 0.49f) /*30%*/ {
+                return text2words(text, re);
+            }
+        }
+        return text2words(text, null);
     }
 
     /**
@@ -186,14 +265,14 @@ public class CWStringUtils {
      * Check if the input string matches with search string or not.
      * <pre>
      *     // full match - match all the keys without considering the order
-     *     searchMatching("Color the wind", "wind", true) -> true
-     *     searchMatching("Color_the_wind", "wind_storm", true) -> false
+     *     searchMatching("wind", "Color the wind", true) -> true
+     *     searchMatching("wind_storm", "Color the wind", true) -> false
      *
      *     // not full match - match any keys from the search string
-     *     searchMatching("Color_the_wind", "wind_storm", false) -> true
+     *     searchMatching("wind_storm", "Color_the_wind", false) -> true
      *
      *     // not match
-     *     searchMatching("Color_the_wind", "nothing") -> false
+     *     searchMatching("nothing", "Color_the_wind") -> false
      * </pre>
      *
      * @param search    search string
@@ -216,9 +295,9 @@ public class CWStringUtils {
 
         // use regex to check matching
         // searchMatching("Color_the_wind", "from wind") -> true
-        String regex;
+        String regex = "(\\d+)|";
         if (locale.equals(Locale.JAPANESE) || locale.equals(Locale.JAPAN)) {
-            regex = "(\\d+)|" + REGEX_JAV_CHAR;
+            regex += CWRegex.REGEX_JAV_CHARS;
         } else {
             // Default is Latin language
             regex = "(\\d+)|([a-zA-Z]+)";
@@ -235,50 +314,17 @@ public class CWStringUtils {
     }
 
     /**
-     * The input will be considered as matching if it matches any keys from the search string
-     * <pre>
-     *     searchPartialMatch("Color the wind", "wind") -> true
-     *     searchPartialMatch("Color_the_wind", "wind_storm") -> true
-     *     searchPartialMatch("Color_the_wind", "storm_wind") -> true
-     * </pre>
-     *
-     * @param search search string
-     * @param input  input string
-     * @return true if matching
-     */
-    public static boolean searchPartialMatch(String search, String input) {
-        return searchMatching(search, input, false, Locale.US);
-    }
-
-    /**
-     * The input will be considered as matching if it matches all the keys from the search string
-     * without caring about the order
-     * <pre>
-     *     searchFullMatch("Color the wind", "color the") -> true
-     *     searchFullMatch("Color_the_wind", "the color") -> true
-     *     searchFullMatch("Color_the_wind", "color storm") -> false
-     * </pre>
-     *
-     * @param search search string
-     * @param input  input string
-     * @return true if matching
-     */
-    public static boolean searchFullMatch(String search, String input) {
-        return searchMatching(search, input, true, Locale.US);
-    }
-
-    /**
      * Check if the input string matches with search string or not.
      * <pre>
      *     // full match
-     *     searchMatching("Color the wind", ["wind"], true) -> true
-     *     searchMatching("Color_the_wind", ["wind", "storm"], true) -> false
+     *     searchMatching(["wind"], "Color the wind", true) -> true
+     *     searchMatching(["wind", "storm"], "Color the wind", true) -> false
      *
      *     // not full match (match any keys from the search string)
-     *     searchMatching("Color_the_wind", ["wind", "storm"], false) -> true
+     *     searchMatching(["wind", "storm"], "Color the wind", false) -> true
      *
      *     // not match
-     *     searchMatching("Color_the_wind", ["nothing"]) -> false
+     *     searchMatching(["nothing"], "Color the wind", ) -> false
      * </pre>
      *
      * @param searchKeys list of search keys
@@ -299,14 +345,14 @@ public class CWStringUtils {
      * Check if the input string matches with search string or not.
      * <pre>
      *     // full match
-     *     searchMatching("Color the wind", ["wind"], true) -> true
-     *     searchMatching("Color_the_wind", ["wind", "storm"], true) -> false
+     *     searchMatching(["wind"], "Color the wind", true) -> true
+     *     searchMatching(["wind", "storm"], "Color the wind", true) -> false
      *
      *     // not full match (match any keys from the search string)
-     *     searchMatching("Color_the_wind", ["wind", "storm"], false) -> true
+     *     searchMatching(["wind", "storm"], "Color the wind", false) -> true
      *
      *     // not match
-     *     searchMatching("Color_the_wind", ["nothing"]) -> false
+     *     searchMatching(["nothing"], "Color the wind", ) -> false
      * </pre>
      *
      * @param searchKeys list of search keys
@@ -321,6 +367,39 @@ public class CWStringUtils {
             builder.append(key).append(" ");
         }
         return searchMatching(builder.toString(), input, fullMatch, locale);
+    }
+
+    /**
+     * The input will be considered as matching if it matches any keys from the search string
+     * <pre>
+     *     searchPartialMatch("wind", "Color the wind", ) -> true
+     *     searchPartialMatch("wind_storm", "Color the wind") -> true
+     *     searchPartialMatch("storm_wind", "Color the wind") -> true
+     * </pre>
+     *
+     * @param search search string
+     * @param input  input string
+     * @return true if matching
+     */
+    public static boolean searchPartialMatch(String search, String input) {
+        return searchMatching(search, input, false, Locale.getDefault());
+    }
+
+    /**
+     * The input will be considered as matching if it matches all the keys from the search string
+     * without caring about the order
+     * <pre>
+     *     searchFullMatch("color the", "Color the wind") -> true
+     *     searchFullMatch("the color", "Color the wind") -> true
+     *     searchFullMatch("color storm", "Color the wind") -> false
+     * </pre>
+     *
+     * @param search search string
+     * @param input  input string
+     * @return true if matching
+     */
+    public static boolean searchFullMatch(String search, String input) {
+        return searchMatching(search, input, true, Locale.getDefault());
     }
 
 }

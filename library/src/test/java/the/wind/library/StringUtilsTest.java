@@ -4,46 +4,44 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Set;
 
 import the.wind.library.utils.CWStringUtils;
 
 public class StringUtilsTest {
 
     @Test
-    public void testRegex() {
-        // ---->>> REGEX_SPACES ---->>> String.split()
+    public void join() {
+        // Testcase: test with array of string
         {
-            String input = "Hey, what the hell is that?. \n I   have   no   idea.";
-            String[] expected = new String[]{"Hey,", "what", "the", "hell", "is", "that?.", "I", "have", "no", "idea."};
-            String[] actual = input.split(CWStringUtils.REGEX_SPACES);
-            Assert.assertEquals(expected.length, actual.length);
-            for (int i = 0; i < expected.length; i++) {
-                Assert.assertEquals(expected[i], actual[i]);
-            }
+            Assert.assertEquals("", CWStringUtils.join("."));
+            Assert.assertEquals("color", CWStringUtils.join(".", "color"));
+            Assert.assertEquals("color.wind", CWStringUtils.join(".", "color", "wind"));
+            Assert.assertEquals(
+                    "color.the.wind",
+                    CWStringUtils.join(".", "color", "the", "wind"));
+            Assert.assertEquals(
+                    "color-the-wind",
+                    CWStringUtils.join("-", "color", "the", "wind"));
         }
-        // ---->>> REGEX_SPACES ---->>> String.replace()
+
+        // Testcase: test list/set
         {
-            String input = "Color the   wind";
-            Assert.assertEquals("Color_the_wind", input.replaceAll(CWStringUtils.REGEX_SPACES, "_"));
-        }
-        // ---->>> JAV_CHAR_REGEX
-        {
-            String input = "律令国家の成立と貴族政治の展開すむませんテスト。";
-            Matcher m = Pattern.compile(CWStringUtils.REGEX_JAV_CHAR).matcher(input);
-            List<String> words = new LinkedList<>();
-            while (m.find()) {
-                words.add(m.group());
-            }
-            Assert.assertEquals(24, words.size());
-            String[] expect = new String[]{"律", "令", "国", "家", "の", "成", "立", "と", "貴", "族", "政", "治", "の", "展", "開", "す", "む", "ま", "せ", "ん", "テ", "ス", "ト", "。"};
-            for (int i = 0; i < words.size(); i++) {
-                Assert.assertEquals(expect[i], words.get(i));
-            }
+            List<String> list = new LinkedList<>();
+            list.add("color");
+            list.add("the");
+            list.add("wind");
+            Assert.assertEquals("color.the.wind", CWStringUtils.join(".", list.iterator()));
+
+            Set<String> set = new LinkedHashSet<>();
+            set.add("color");
+            set.add("the");
+            set.add("wind");
+            Assert.assertEquals("color.the.wind", CWStringUtils.join(".", set.iterator()));
         }
     }
 
@@ -127,12 +125,15 @@ public class StringUtilsTest {
 
     @Test
     public void strip() {
-        Assert.assertEquals("Color the wind", CWStringUtils.strip("   Color \nthe   wind  "));
+        String input = "   Color \nthe   wind  ";
+        String strip = CWStringUtils.strip(input);
+        Assert.assertEquals("Color the wind", strip);
+        Assert.assertNotEquals(input, strip); // do not modify  the input
     }
 
     @Test
     public void text2words() {
-        // Testcase 1:
+        // Testcase: complicated non-space breaking language string
         {
             String input = "  Hey, what the hell is that?. \n I   have   no  idea.";
             String[] expected = new String[]{
@@ -146,7 +147,7 @@ public class StringUtilsTest {
             }
         }
 
-        // Testcase 2:
+        // Testcase: less complicated non-space breaking language string
         {
             String input = "Color \n the wind    ";
             String[] expected = new String[]{"Color", " \n ", "the", " ", "wind", "    "};
@@ -157,16 +158,65 @@ public class StringUtilsTest {
             }
         }
 
-        // Testcase 2 - use Japanese
+        // Testcase - Input is Japanese
         {
-            String input = "一所懸命 勉強 \n きました-hey";
-            String[] expected = new String[]{"一", "所", "懸", "命", " ", "勉", "強", " \n ", "き", "ま", "し", "た", "-hey"};
-            List<String> actual = CWStringUtils.text2words(input, Locale.JAPANESE);
+            String input = "一所懸命 1508 勉強 \n きました-hey";
+            String[] expected = new String[]{
+                    "一", "所", "懸", "命", " ", "1508", " ", "勉", "強",
+                    " \n ", "き", "ま", "し", "た", "-hey"};
+
+            // specify the regex for detecting Japanese language
+            List<String> actual = CWStringUtils.text2words(input, CWRegex.REGEX_JAV_CHARS);
             Assert.assertEquals(expected.length, actual.size());
             for (int i = 0; i < expected.length; i++) {
                 Assert.assertEquals(expected[i], actual.get(i));
             }
-            actual = CWStringUtils.text2words(input, Locale.JAPAN);
+
+            // auto detect japanese language
+            actual = CWStringUtils.text2words(input);
+            Assert.assertEquals(expected.length, actual.size());
+            for (int i = 0; i < expected.length; i++) {
+                Assert.assertEquals(expected[i], actual.get(i));
+            }
+        }
+
+        // Testcase - Input is Thai
+        {
+            String input = "หน่วยเสียงวรรณยุกต์ 1508";
+            String[] expected = new String[]{
+                    "ห", "น", "่", "ว", "ย", "เ", "ส", "ี", "ย", "ง", "ว",
+                    "ร", "ร", "ณ", "ย", "ุ", "ก", "ต", "์", " ", "1508"};
+
+            // specify the regex for detecting Thai language
+            List<String> actual = CWStringUtils.text2words(input, CWRegex.REGEX_THAI_CHARS);
+            Assert.assertEquals(expected.length, actual.size());
+            for (int i = 0; i < expected.length; i++) {
+                Assert.assertEquals(expected[i], actual.get(i));
+            }
+
+            // auto detect Thai language
+            actual = CWStringUtils.text2words(input);
+            Assert.assertEquals(expected.length, actual.size());
+            for (int i = 0; i < expected.length; i++) {
+                Assert.assertEquals(expected[i], actual.get(i));
+            }
+        }
+
+        // Testcase - can't auto detect language -> use default regex for space-breaking language
+        {
+            String input = "一所懸 color the wind";
+            String[] expected = new String[]{"一", "所", "懸", " ", "color", " ", "the", " ", "wind"};
+
+            // specify the regex for detecting Japanese language
+            List<String> actual = CWStringUtils.text2words(input, CWRegex.REGEX_JAV_CHARS);
+            Assert.assertEquals(expected.length, actual.size());
+            for (int i = 0; i < expected.length; i++) {
+                Assert.assertEquals(expected[i], actual.get(i));
+            }
+
+            // can't not auto detect japanese language
+            expected = new String[]{"一所懸", " ", "color", " ", "the", " ", "wind"};
+            actual = CWStringUtils.text2words(input);
             Assert.assertEquals(expected.length, actual.size());
             for (int i = 0; i < expected.length; i++) {
                 Assert.assertEquals(expected[i], actual.get(i));
