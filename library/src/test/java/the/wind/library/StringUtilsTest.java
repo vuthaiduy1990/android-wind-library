@@ -3,11 +3,9 @@ package the.wind.library;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import the.wind.library.utils.CWStringUtils;
@@ -160,20 +158,13 @@ public class StringUtilsTest {
 
         // Testcase - Input is Japanese
         {
-            String input = "一所懸命 1508 勉強 \n きました-hey";
+            String input = "一所懸命color 1508 the勉強wind \n きました-hey";
             String[] expected = new String[]{
-                    "一", "所", "懸", "命", " ", "1508", " ", "勉", "強",
+                    "一", "所", "懸", "命", "color", " ", "1508", " ", "the", "勉", "強", "wind",
                     " \n ", "き", "ま", "し", "た", "-hey"};
 
             // specify the regex for detecting Japanese language
-            List<String> actual = CWStringUtils.text2words(input, CWRegex.REGEX_JAV_CHARS);
-            Assert.assertEquals(expected.length, actual.size());
-            for (int i = 0; i < expected.length; i++) {
-                Assert.assertEquals(expected[i], actual.get(i));
-            }
-
-            // auto detect japanese language
-            actual = CWStringUtils.text2words(input);
+            List<String> actual = CWStringUtils.text2words(input);
             Assert.assertEquals(expected.length, actual.size());
             for (int i = 0; i < expected.length; i++) {
                 Assert.assertEquals(expected[i], actual.get(i));
@@ -188,35 +179,22 @@ public class StringUtilsTest {
                     "ร", "ร", "ณ", "ย", "ุ", "ก", "ต", "์", " ", "1508"};
 
             // specify the regex for detecting Thai language
-            List<String> actual = CWStringUtils.text2words(input, CWRegex.REGEX_THAI_CHARS);
-            Assert.assertEquals(expected.length, actual.size());
-            for (int i = 0; i < expected.length; i++) {
-                Assert.assertEquals(expected[i], actual.get(i));
-            }
-
-            // auto detect Thai language
-            actual = CWStringUtils.text2words(input);
+            List<String> actual = CWStringUtils.text2words(input);
             Assert.assertEquals(expected.length, actual.size());
             for (int i = 0; i < expected.length; i++) {
                 Assert.assertEquals(expected[i], actual.get(i));
             }
         }
 
-        // Testcase - can't auto detect language -> use default regex for space-breaking language
+        // Testcase - Input include both Japanese, Thai and Latin languages
         {
-            String input = "一所懸 color the wind";
-            String[] expected = new String[]{"一", "所", "懸", " ", "color", " ", "the", " ", "wind"};
+            String input = "一所懸命color 1508 the勉強wind \nหนнаиболее распространённы";
+            String[] expected = new String[]{
+                    "一", "所", "懸", "命", "color", " ", "1508", " ", "the", "勉", "強", "wind",
+                    " \n", "ห", "น", "наиболее", " ", "распространённы"};
 
             // specify the regex for detecting Japanese language
-            List<String> actual = CWStringUtils.text2words(input, CWRegex.REGEX_JAV_CHARS);
-            Assert.assertEquals(expected.length, actual.size());
-            for (int i = 0; i < expected.length; i++) {
-                Assert.assertEquals(expected[i], actual.get(i));
-            }
-
-            // can't not auto detect japanese language
-            expected = new String[]{"一所懸", " ", "color", " ", "the", " ", "wind"};
-            actual = CWStringUtils.text2words(input);
+            List<String> actual = CWStringUtils.text2words(input);
             Assert.assertEquals(expected.length, actual.size());
             for (int i = 0; i < expected.length; i++) {
                 Assert.assertEquals(expected[i], actual.get(i));
@@ -237,92 +215,4 @@ public class StringUtilsTest {
         Assert.assertFalse(CWStringUtils.isLowerCase("Color The Wind"));
         Assert.assertTrue(CWStringUtils.isLowerCase("color the wind"));
     }
-
-    @Test
-    public void searchMatching() {
-        // Testcase 1: Match with any keys from the search string ---->>> partial match
-        {
-            String input = "Color the wind";
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("Color the wind", input));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("Color    the  \n wind   ", input));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("COLOR THE WIND", input));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("color", input));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("the", input));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("wind", input));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("color storm", input));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("storm color", input));
-
-            input = "Color-the_wind";
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("Color the wind", input));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("Color    the  \n wind   ", input));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("COLOR THE WIND", input));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("color", input));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("the", input));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("wind", input));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("wind storm", input));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("storm wind", input));
-
-            input = "ColorTheWind";
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("Color the wind", input));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("Color the wind", "colorthewind"));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("Color    the  \n wind   ", input));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("COLOR THE WIND", input));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("color", input));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("the", input));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("wind", input));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("wind storm", input));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("storm wind", input));
-
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("Color the wind", "~!@#$%^&*()_+=}{wind~!@#$%^&*()_+=}{"));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("Color the wind", "^&*$%-$_000Wind_"));
-        }
-
-        // Testcase 2:  Match with all the keys from the search string ---->>> full match
-        {
-            String input = "Color the wind";
-            Assert.assertTrue(CWStringUtils.searchFullMatch("color the", input));
-            Assert.assertTrue(CWStringUtils.searchFullMatch("the color", input));
-            Assert.assertFalse(CWStringUtils.searchFullMatch("color storm", input));
-            Assert.assertFalse(CWStringUtils.searchFullMatch("storm color", input));
-        }
-
-        // Testcase 3:  Neither partial nor full match
-        {
-            Assert.assertFalse(CWStringUtils.searchPartialMatch("Color the wind", "nothing"));
-        }
-
-        // Testcase 4:  Test with array and list
-        {
-            String input = "Color the wind";
-            Assert.assertTrue(CWStringUtils.searchMatching(new String[]{"the", "color"}, input, true, Locale.US));
-            Assert.assertFalse(CWStringUtils.searchMatching(new String[]{"color", "storm"}, input, true, Locale.US));
-            Assert.assertTrue(CWStringUtils.searchMatching(new String[]{"%7897color", "storm"}, input, false, Locale.US));
-            Assert.assertFalse(CWStringUtils.searchMatching(new String[]{"nothing"}, input, false, Locale.US));
-
-            String[] keys = new String[]{"the", "color"};
-            List<String> searchList = Arrays.asList(keys);
-            Assert.assertTrue(CWStringUtils.searchMatching(searchList, input, true, Locale.US));
-        }
-
-        // Testcase 5:  Test with Vietnamese language
-        {
-            String input = "Tô màu cho gió";
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("gió", input));
-            Assert.assertTrue(CWStringUtils.searchPartialMatch("màu gió", input));
-            Assert.assertTrue(CWStringUtils.searchFullMatch("màu gió", input));
-            Assert.assertTrue(CWStringUtils.searchFullMatch("gió màu", input));
-            Assert.assertFalse(CWStringUtils.searchFullMatch("cơn gió", input));
-        }
-
-        // Testcase 6:  Test with Japanese language
-        {
-            String input = "風を彩る。";
-            Assert.assertTrue(CWStringUtils.searchMatching("彩", input, false, Locale.JAPAN));
-            Assert.assertTrue(CWStringUtils.searchMatching("波風", input, false, Locale.JAPAN));
-            Assert.assertTrue(CWStringUtils.searchMatching("風波", input, false, Locale.JAPAN));
-            Assert.assertTrue(CWStringUtils.searchMatching("風彩", input, true, Locale.JAPANESE));
-            Assert.assertTrue(CWStringUtils.searchMatching("彩風", input, true, Locale.JAPANESE));
-        }
-    }
-
 }

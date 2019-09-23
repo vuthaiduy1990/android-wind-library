@@ -58,6 +58,51 @@ public class RegexTest {
     }
 
     @Test
+    public void testRegex_REGEX_LATIN_SYMBOLS() {
+        // Testcase: non symbols
+        {
+            String input = "color the wind 1508";
+            Matcher m = Pattern.compile(CWRegex.REGEX_LATIN_SYMBOLS).matcher(input);
+            Assert.assertFalse(m.find());
+        }
+
+        // Testcase: latin symbols
+        {
+            String input = "~!@#$%^&*()_+{}|:\"<>?`-=[]\\;\',./";
+            Matcher m = Pattern.compile(CWRegex.REGEX_LATIN_SYMBOLS).matcher(input);
+            List<String> words = new LinkedList<>();
+            while (m.find()) {
+                words.add(m.group());
+            }
+            Assert.assertEquals(32, words.size());
+        }
+
+        // Testcase: symbol and non-symbol
+        {
+            String input = "color-the@wind.1508";
+            Matcher m = Pattern.compile(CWRegex.REGEX_LATIN_SYMBOLS).matcher(input);
+            List<String> words = new LinkedList<>();
+            while (m.find()) {
+                words.add(m.group());
+            }
+
+            String[] expected = new String[]{"-", "@", "."};
+            Assert.assertEquals(3, words.size());
+            for (int i = 0; i < words.size(); i++) {
+                Assert.assertEquals(expected[i], words.get(i));
+            }
+        }
+
+        // Testcase: remove symbols from string value
+        {
+            String input = "color-the$%^wind";
+            String expected = "color the wind";
+            String actual = input.replaceAll(CWRegex.REGEX_LATIN_SYMBOLS + "+", " ");
+            Assert.assertEquals(expected, actual);
+        }
+    }
+
+    @Test
     public void testRegex_REGEX_CHINA_CHARS() {
         String input = "目前世界有五分之一人口做為母語。";
         Matcher m = Pattern.compile(CWRegex.REGEX_JAV_CHARS).matcher(input);
