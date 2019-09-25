@@ -23,18 +23,23 @@ public class CWCallback<T> {
 
     /**
      * On returning successfully
+     *
+     * @return result
      */
-    public void onSuccess(T result) {
+    public T onSuccess(T result) {
         onResult(result, null);
+        return result;
     }
 
     /**
      * On returning fail
      *
      * @param t throwable
+     * @return true/false. You can use this returned value to decide whether stop process or not
      */
-    public void onFail(Throwable t) {
+    public boolean onFail(Throwable t) {
         onResult(null, t);
+        return true;
     }
 
     /**

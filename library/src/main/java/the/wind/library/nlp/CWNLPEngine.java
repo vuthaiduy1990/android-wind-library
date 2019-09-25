@@ -1,6 +1,7 @@
 package the.wind.library.nlp;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -44,10 +45,12 @@ public final class CWNLPEngine {
     /* ---------------------- GET-SET ------------------------ */
 
     /**
+     * Note: you can modify this list
+     *
      * @return list of NLP texts
      */
     public List<NLPText> nlpTexts() {
-        return mNlpTexts;
+        return Collections.unmodifiableList(mNlpTexts);
     }
 
     /**
@@ -180,9 +183,11 @@ public final class CWNLPEngine {
      *     doMatching("nothing") -> status = NOT_MATCH
      * </pre>
      *
-     * @param search search string
+     * @param search   search string
+     * @param texts    list of NLP texts
+     * @param callback callback function
      */
-    public void doMatching(String search, CWCallback<NLPMatchResult> callback) {
+    public void doMatching(CharSequence search, List<NLPText> texts, CWCallback<NLPMatchResult> callback) {
         callback.onBegin();
         String _search = preProcess(new NLPText(search)).getText();
 
@@ -208,7 +213,7 @@ public final class CWNLPEngine {
         }
 
         // Check matching
-        for (NLPText tx : mNlpTexts) {
+        for (NLPText tx : texts) {
             NLPMatchResult result = new NLPMatchResult(tx);
             for (Map.Entry<String, Pattern> entry : _searchPat.entrySet()) {
                 Matcher m = entry.getValue().matcher(tx.getText());
@@ -222,6 +227,8 @@ public final class CWNLPEngine {
                 result.status = NLPMatchResult.Status.FULL_MATCH;
             } else if (result.keys.size() > 0) {
                 result.status = NLPMatchResult.Status.PARTIAL_MATCH;
+            } else {
+                result.status = NLPMatchResult.Status.NOT_MATCH;
             }
             callback.onSuccess(result);
         }
@@ -230,28 +237,28 @@ public final class CWNLPEngine {
 
     /**
      * Check if the input string matches with search string or not.
-     * <pre>
-     *     String input = "Color the wind";
      *
-     *     // full match - match all the keys without considering the order
-     *     doMatching("the color") -> status = FULL_MATCH
-     *
-     *     // partial match - match any keys from the search string
-     *     doMatching("color storm") -> status = PARTIAL_MATCH
-     *
-     *     // not match
-     *     doMatching("nothing") -> status = NOT_MATCH
-     * </pre>
+     * @param search   search string
+     * @param callback callback function
+     * @see CWNLPEngine#doMatching(CharSequence, List, CWCallback)
+     */
+    public void doMatching(CharSequence search, CWCallback<NLPMatchResult> callback) {
+        doMatching(search, mNlpTexts, callback);
+    }
+
+    /**
+     * Check if the input string matches with search string or not.
      *
      * @param search search string
+     * @see CWNLPEngine#doMatching(CharSequence, CWCallback)
      */
-    public List<NLPMatchResult> doMatching(String search) {
+    public List<NLPMatchResult> doMatching(CharSequence search) {
         final List<NLPMatchResult> list = new LinkedList<>();
         doMatching(search, new CWCallback<NLPMatchResult>() {
             @Override
-            public void onSuccess(NLPMatchResult result) {
-                super.onSuccess(result);
+            public NLPMatchResult onSuccess(NLPMatchResult result) {
                 list.add(result);
+                return super.onSuccess(result);
             }
         });
         return list;
