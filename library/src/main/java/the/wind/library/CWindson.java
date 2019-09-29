@@ -17,6 +17,8 @@ import com.google.gson.JsonSerializer;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.Date;
@@ -150,6 +152,15 @@ public class CWindson {
      */
     public JsonElement parse(@NonNull byte[] jsonBytes) {
         return parse(CWStreamUtils.bytesToString(jsonBytes));
+    }
+
+    /**
+     * Convert object to json then write it to file.
+     *
+     * @param obj object
+     */
+    public void write(Object obj, @NonNull File file) throws IOException {
+        Gson.toJson(obj, new FileWriter(file.getAbsolutePath()));
     }
 
     /**
