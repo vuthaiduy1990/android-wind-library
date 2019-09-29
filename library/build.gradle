@@ -33,5 +33,9 @@ dependencies {
 
     // Apache Commons Codec
     // https://commons.apache.org/proper/commons-codec/
-    implementation 'commons-codec:commons-codec:1.13'
+    api 'commons-codec:commons-codec:1.13'
+
+    // G-SON library
+    // https://github.com/google/gson
+    api 'com.google.code.gson:gson:2.8.5'
 }
