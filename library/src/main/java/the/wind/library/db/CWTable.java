@@ -11,7 +11,7 @@ import the.wind.library.CWTag;
  * Define structure of table.
  * Note that: all extends should have default constructor
  */
-public class CWTable implements Serializable {
+public abstract class CWTable implements Serializable {
 
     // this constant value should be equal to name of id variable
     // ⚠⚠⚠ Do not modify this field
@@ -57,7 +57,7 @@ public class CWTable implements Serializable {
     /**
      * Constructor
      */
-    public CWTable() {
+    protected CWTable() {
         mTag = new CWTag();
         setHash(new Date().getTime() + Math.random() + "");
     }
