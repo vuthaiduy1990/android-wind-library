@@ -17,6 +17,47 @@ import the.wind.library.CWRegex;
 import the.wind.library.CWUnicode;
 import the.wind.library.utils.CWStringUtils;
 
+/**
+ * Usage
+ * <pre>
+ *     // load text or object which implement {{@link the.wind.library.nlp.NLPText.ITextType}}
+ *     CWNLPEngine engine = new CWNLPEngine();
+ *     engine.loadText(new NLPText("color the wind"));
+ *     engine.loadText(new NLPText("風を彩る。"));
+ *
+ *     // build
+ *     engine.build();
+ *
+ *     // load more text then build again
+ *     engine.loadText(new NLPText("Tô màu cho gió"));
+ *     engine.build();
+ *
+ *     // or data is changed then rebuild on changed data
+ *     nlpText.changeData(data);
+ *     engine.rebuild(nlpText);
+ *
+ *     // or rebuild all loaded data
+ *     engine.rebuild();
+ *
+ *     // do matching
+ *     List<NLPMatchResult> results = engine.doMatching("search-key");
+ *     engine.doMatching("search-key", CWCallback);
+ *     engine.doMatching("search-key", new CWCallback<NLPMatchResult>(){
+ *          @Override
+ *          public NLPMatchResult onSuccess(NLPMatchResult result) {
+ *              return super.onSuccess(result);
+ *          }
+ *
+ *          @Override
+ *          public void onEnd() {
+ *              super.onEnd();
+ *          }
+ *     });
+ *
+ *     // free
+ *     engine.freeMemory();
+ * </pre>
+ */
 public final class CWNLPEngine {
 
     // Configuration for the engine
@@ -124,12 +165,12 @@ public final class CWNLPEngine {
     }
 
     /**
-     * Build engine
+     * Build engine.
+     * Build loaded data in queue only which haven't process yet.
      *
      * @return engine
      */
     public CWNLPEngine build() {
-        // build texts in queue only then flush it to list
         NLPText nlpText = mQueue.poll();
         while (nlpText != null) {
             nlpText.refresh();
@@ -142,6 +183,7 @@ public final class CWNLPEngine {
 
     /**
      * Rebuild engine
+     * Build all loaded data both in queue and processed list
      *
      * @return engine
      */
