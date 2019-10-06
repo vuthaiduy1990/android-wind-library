@@ -20,16 +20,16 @@ import the.wind.library.utils.CWStringUtils;
 /**
  * Usage
  * <pre>
- *     // load text or object which implement {{@link the.wind.library.nlp.NLPText.ITextType}}
- *     CWNLPEngine engine = new CWNLPEngine();
- *     engine.loadText(new NLPText("color the wind"));
- *     engine.loadText(new NLPText("風を彩る。"));
+ *     // load text or object which implement {{@link INLPText}}
+ *     CWNLPEngine<NlpString> engine = new CWNLPEngine<>();
+ *     engine.loadText(new NlpString("color the wind"));
+ *     engine.loadText(new NlpString("風を彩る。"));
  *
  *     // build
  *     engine.build();
  *
  *     // load more text then build again
- *     engine.loadText(new NLPText("Tô màu cho gió"));
+ *     engine.loadText(new NlpString("Tô màu cho gió"));
  *     engine.build();
  *
  *     // or data is changed then rebuild on changed data
@@ -40,11 +40,11 @@ import the.wind.library.utils.CWStringUtils;
  *     engine.rebuild();
  *
  *     // do matching
- *     List<NLPMatchResult> results = engine.doMatching("search-key");
+ *     List<NLPMatchResult<NlpString>> results = engine.doMatching("search-key");
  *     engine.doMatching("search-key", CWCallback);
- *     engine.doMatching("search-key", new CWCallback<NLPMatchResult>(){
+ *     engine.doMatching("search-key", new CWCallback<NLPMatchResult<NlpString>>(){
  *          @Override
- *          public NLPMatchResult onSuccess(NLPMatchResult result) {
+ *          public NLPMatchResult<NlpString> onSuccess(NLPMatchResult<NlpString> result) {
  *              return super.onSuccess(result);
  *          }
  *
@@ -58,14 +58,14 @@ import the.wind.library.utils.CWStringUtils;
  *     engine.freeMemory();
  * </pre>
  */
-public final class CWNLPEngine {
+public final class CWNLPEngine<T extends INLPText> {
 
     // Configuration for the engine
     private Options mOptions;
 
-    // the input text for processing
-    private List<NLPText> mNlpTexts = new LinkedList<>();
-    private Queue<NLPText> mQueue = new LinkedList<>();
+    // the input target for processing
+    private List<T> mTargetList = new LinkedList<>();
+    private Queue<T> mTargetQueue = new LinkedList<>();
 
     /**
      * Construct engine with the default setting
@@ -86,49 +86,50 @@ public final class CWNLPEngine {
     /* ---------------------- GET-SET ------------------------ */
 
     /**
-     * Note: you can modify this list
+     * Note: you can't modify this list
      *
-     * @return list of NLP texts
+     * @return list of targets which implement {@link INLPText} and are loaded into engine
      */
-    public List<NLPText> nlpTexts() {
-        return Collections.unmodifiableList(mNlpTexts);
+    public List<T> targets() {
+        return Collections.unmodifiableList(mTargetList);
     }
 
     /**
-     * Remove a NLP text
+     * Remove a target
      *
-     * @param nlpText NLP text
+     * @param target target which implement {@link INLPText}
      */
-    public void remove(NLPText nlpText) {
-        mNlpTexts.remove(nlpText);
+    public void remove(T target) {
+        mTargetList.remove(target);
     }
 
     /**
-     * Load texts to engine
-     * Loaded text will be stored in queue for later processing
+     * Load targets into to engine
+     * Loaded targets will be stored in queue for later processing
      *
-     * @param nlpTexts array of text
+     * @param targets array of targets which implement {@link INLPText}
      * @return engine
      * @see CWNLPEngine#build
      * @see CWNLPEngine#rebuild
      */
-    public CWNLPEngine loadText(NLPText... nlpTexts) {
-        mQueue.addAll(Arrays.asList(nlpTexts));
+    @SafeVarargs
+    public final CWNLPEngine<T> load(T... targets) {
+        mTargetQueue.addAll(Arrays.asList(targets));
         return this;
     }
 
     /**
-     * Load text to engine
-     * Loaded text will be stored in queue for later processing
+     * Load targets to engine
+     * Loaded targets will be stored in queue for later processing
      *
-     * @param nlpTextIt iterator
+     * @param targetIt iterator
      * @return engine
      * @see CWNLPEngine#build
      * @see CWNLPEngine#rebuild
      */
-    public CWNLPEngine loadText(Iterator<NLPText> nlpTextIt) {
-        while (nlpTextIt.hasNext()) {
-            mQueue.add(nlpTextIt.next());
+    public CWNLPEngine<T> load(Iterator<T> targetIt) {
+        while (targetIt.hasNext()) {
+            mTargetQueue.add(targetIt.next());
         }
         return this;
     }
@@ -137,31 +138,35 @@ public final class CWNLPEngine {
      * Free resource (texts, byte data, etc.)
      */
     public void freeMemory() {
-        mNlpTexts.clear();
-        mQueue.clear();
+        mTargetList.clear();
+        mTargetQueue.clear();
         System.gc();
     }
 
     /* ---------------------- METHOD ------------------------- */
 
     /**
-     * Pre-processing the input text
+     * Pre-processing the the target
+     *
+     * @param target which implement {@link INLPText}
      */
-    private NLPText preProcess(NLPText nlpText) {
+    private <X extends INLPText> X preProcess(X target) {
+        target.nlpText(target.toTextValue());
+
         if (!mOptions.useSpecialChars) {
             String regex = "[" + mOptions.specialChars + "]+";
-            nlpText.setText(nlpText.getText().replaceAll(regex, " "));
+            target.nlpText(target.nlpText().replaceAll(regex, " "));
         }
 
         if (mOptions.strip) {
-            nlpText.setText(CWStringUtils.strip(nlpText.getText()));
+            target.nlpText(CWStringUtils.strip(target.nlpText()));
         }
 
         if (!mOptions.caseSensitive) {
-            nlpText.setText(nlpText.getText().toLowerCase());
+            target.nlpText(target.nlpText().toLowerCase());
         }
 
-        return nlpText;
+        return target;
     }
 
     /**
@@ -170,13 +175,12 @@ public final class CWNLPEngine {
      *
      * @return engine
      */
-    public CWNLPEngine build() {
-        NLPText nlpText = mQueue.poll();
-        while (nlpText != null) {
-            nlpText.refresh();
-            preProcess(nlpText);
-            mNlpTexts.add(nlpText);
-            nlpText = mQueue.poll();
+    public CWNLPEngine<T> build() {
+        T target = mTargetQueue.poll();
+        while (target != null) {
+            preProcess(target);
+            mTargetList.add(target);
+            target = mTargetQueue.poll();
         }
         return this;
     }
@@ -187,10 +191,9 @@ public final class CWNLPEngine {
      *
      * @return engine
      */
-    public CWNLPEngine rebuild() {
+    public CWNLPEngine<T> rebuild() {
         // rebuild pre-loaded texts
-        for (NLPText tx : mNlpTexts) {
-            tx.refresh();
+        for (T tx : mTargetList) {
             preProcess(tx);
         }
 
@@ -199,14 +202,13 @@ public final class CWNLPEngine {
     }
 
     /**
-     * Rebuild only the given text
+     * Rebuild only the given target
      *
-     * @param text NLP text
+     * @param target NLP text
      * @return engine
      */
-    public CWNLPEngine rebuild(NLPText text) {
-        text.refresh();
-        preProcess(text);
+    public CWNLPEngine<T> rebuild(T target) {
+        preProcess(target);
         return this;
     }
 
@@ -226,12 +228,12 @@ public final class CWNLPEngine {
      * </pre>
      *
      * @param search   search string
-     * @param texts    list of NLP texts
+     * @param targets  list of NLP texts
      * @param callback callback function
      */
-    public void doMatching(CharSequence search, List<NLPText> texts, CWCallback<NLPMatchResult> callback) {
+    public void doMatching(CharSequence search, List<T> targets, CWCallback<NLPMatchResult<T>> callback) {
         callback.onBegin();
-        String _search = preProcess(new NLPText(search)).getText();
+        String _search = preProcess(new NLPString(search)).nlpText();
 
         // split the search string into array of keys
         String regex = CWStringUtils.join(
@@ -255,10 +257,10 @@ public final class CWNLPEngine {
         }
 
         // Check matching
-        for (NLPText tx : texts) {
-            NLPMatchResult result = new NLPMatchResult(tx);
+        for (T tx : targets) {
+            NLPMatchResult<T> result = new NLPMatchResult<>(tx);
             for (Map.Entry<String, Pattern> entry : _searchPat.entrySet()) {
-                Matcher m = entry.getValue().matcher(tx.getText());
+                Matcher m = entry.getValue().matcher(tx.nlpText());
                 if (m.find()) {
                     result.indexes.add(m.start());
                     result.indexes.add(m.end());
@@ -284,8 +286,8 @@ public final class CWNLPEngine {
      * @param callback callback function
      * @see CWNLPEngine#doMatching(CharSequence, List, CWCallback)
      */
-    public void doMatching(CharSequence search, CWCallback<NLPMatchResult> callback) {
-        doMatching(search, mNlpTexts, callback);
+    public void doMatching(CharSequence search, CWCallback<NLPMatchResult<T>> callback) {
+        doMatching(search, mTargetList, callback);
     }
 
     /**
@@ -294,11 +296,11 @@ public final class CWNLPEngine {
      * @param search search string
      * @see CWNLPEngine#doMatching(CharSequence, CWCallback)
      */
-    public List<NLPMatchResult> doMatching(CharSequence search) {
-        final List<NLPMatchResult> list = new LinkedList<>();
-        doMatching(search, new CWCallback<NLPMatchResult>() {
+    public List<NLPMatchResult<T>> doMatching(CharSequence search) {
+        final List<NLPMatchResult<T>> list = new LinkedList<>();
+        doMatching(search, new CWCallback<NLPMatchResult<T>>() {
             @Override
-            public NLPMatchResult onSuccess(NLPMatchResult result) {
+            public NLPMatchResult<T> onSuccess(NLPMatchResult<T> result) {
                 list.add(result);
                 return super.onSuccess(result);
             }

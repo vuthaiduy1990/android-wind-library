@@ -6,10 +6,10 @@ import java.util.List;
 /**
  * Matching Result
  */
-public final class NLPMatchResult {
+public final class NLPMatchResult<T extends INLPText> {
 
     // NLP text
-    public NLPText nlpText;
+    public T target;
 
     // search keys which match with the given input
     public List<String> keys = new LinkedList<>();
@@ -29,9 +29,11 @@ public final class NLPMatchResult {
 
     /**
      * Protected constructor to disable user from initializing an NLP result
+     *
+     * @param target a NLP text
      */
-    protected NLPMatchResult(NLPText nlpText) {
-        this.nlpText = nlpText;
+    protected NLPMatchResult(T target) {
+        this.target = target;
     }
 
     /* ---------------------- OVERRIDE ----------------------- */
