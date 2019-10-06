@@ -1,8 +1,8 @@
 package the.wind.library.sample.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
+import androidx.appcompat.app.AppCompatActivity;
 import the.wind.library.sample.R;
 
 public class MainActivity extends AppCompatActivity {

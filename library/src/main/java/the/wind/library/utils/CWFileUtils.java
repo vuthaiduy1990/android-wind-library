@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.v4.content.FileProvider;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -14,6 +12,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 
 /**
  * Provide method for handling file, folder

@@ -1,12 +1,12 @@
 package the.wind.library.utils;
 
-import android.support.annotation.Nullable;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import androidx.annotation.Nullable;
 
 /**
  * Provide method for handling date

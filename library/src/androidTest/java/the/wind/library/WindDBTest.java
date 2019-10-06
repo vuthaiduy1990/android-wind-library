@@ -1,22 +1,25 @@
 package the.wind.library;
 
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.lang.reflect.Field;
 import java.util.List;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 import the.wind.library.db.CWTestTable;
 import the.wind.library.db.CWindDB;
 
+@RunWith(AndroidJUnit4.class)
 public class WindDBTest {
 
-    private static Context context = InstrumentationRegistry.getTargetContext();
+    private static Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
     @BeforeClass
     public static void beforeClass() {

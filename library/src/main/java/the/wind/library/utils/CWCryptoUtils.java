@@ -1,7 +1,5 @@
 package the.wind.library.utils;
 
-import android.support.annotation.Nullable;
-
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -12,6 +10,8 @@ import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+
+import androidx.annotation.Nullable;
 
 /**
  * In this library, we use AES (Cipher algorithm) and GCM (Galois/Counter Mode) for encrypting/decrypting data

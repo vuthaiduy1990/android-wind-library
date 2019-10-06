@@ -1,10 +1,9 @@
 package the.wind.library.db;
 
-import android.support.annotation.NonNull;
-
 import java.io.Serializable;
 import java.util.Date;
 
+import androidx.annotation.NonNull;
 import the.wind.library.CWTag;
 
 /**

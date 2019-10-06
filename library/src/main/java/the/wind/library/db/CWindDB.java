@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.annotation.NonNull;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -17,6 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import androidx.annotation.NonNull;
 import the.wind.library.CWindson;
 import the.wind.library.utils.CWClazzUtils;
 

@@ -2,8 +2,6 @@ package the.wind.library;
 
 import android.content.Context;
 import android.os.Environment;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -15,12 +13,14 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 import the.wind.library.utils.CWFileUtils;
 
 @RunWith(AndroidJUnit4.class)
 public class FileUtils {
 
-    private Context context = InstrumentationRegistry.getTargetContext();
+    private Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
     @Before
     public void before() {

@@ -11,7 +11,6 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.media.ExifInterface;
-import android.support.annotation.Nullable;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -20,6 +19,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import androidx.annotation.Nullable;
 
 /**
  * Provide function for converting image from a format to other
