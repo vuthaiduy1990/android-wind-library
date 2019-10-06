@@ -127,11 +127,23 @@ public class CWindson {
     /**
      * Parse string to json element
      *
-     * @param json json string
+     * @param jsonString json string
      * @return json element
      */
-    public JsonElement parse(@NonNull String json) {
-        return mJsonParse.parse(json);
+    public JsonElement parse(@NonNull String jsonString) {
+        return mJsonParse.parse(jsonString);
+    }
+
+    /**
+     * Parse string to json element
+     *
+     * @param jsonString json string
+     * @param clazz      model class
+     * @param <T>        class type
+     * @return mapped object
+     */
+    public <T> T parse(@NonNull String jsonString, Class<T> clazz) {
+        return deserialize(parse(jsonString), clazz);
     }
 
     /**
@@ -145,6 +157,19 @@ public class CWindson {
     }
 
     /**
+     * Parse file to json element
+     *
+     * @param jsonFile json file
+     * @param clazz    model class
+     * @param <T>      class type
+     * @return mapped object
+     * @throws FileNotFoundException exception
+     */
+    public <T> T parse(@NonNull File jsonFile, Class<T> clazz) throws FileNotFoundException {
+        return deserialize(parse(jsonFile), clazz);
+    }
+
+    /**
      * Parse json bytes to json element
      *
      * @param jsonBytes json bytes
@@ -152,6 +177,18 @@ public class CWindson {
      */
     public JsonElement parse(@NonNull byte[] jsonBytes) {
         return parse(CWStreamUtils.bytesToString(jsonBytes));
+    }
+
+    /**
+     * Parse bytes to json element
+     *
+     * @param jsonBytes json bytes
+     * @param clazz     model class
+     * @param <T>       class type
+     * @return mapped object
+     */
+    public <T> T parse(@NonNull byte[] jsonBytes, Class<T> clazz) {
+        return parse(CWStreamUtils.bytesToString(jsonBytes), clazz);
     }
 
     /**
