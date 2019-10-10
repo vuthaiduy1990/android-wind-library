@@ -59,6 +59,9 @@ public abstract class CWTable implements Serializable {
     protected CWTable() {
         mTag = new CWTag();
         setHash(new Date().getTime() + Math.random() + "");
+        Date now = new Date();
+        setCreatedDate(now);
+        setUpdateDate(now);
     }
 
     /* ---------------------- STATIC ------------------------- */

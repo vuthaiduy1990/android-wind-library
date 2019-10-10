@@ -586,7 +586,7 @@ public class CWindDB extends SQLiteOpenHelper {
      */
     private <T extends CWTable> T parseRowCursor(Cursor cursor, Class<T> clazz) throws Exception {
         // create model object
-        Constructor<T> constructor = clazz.getConstructor();
+        Constructor<T> constructor = clazz.getDeclaredConstructor(); // private constructor is OK
         constructor.setAccessible(true);
         T table = constructor.newInstance();
 
