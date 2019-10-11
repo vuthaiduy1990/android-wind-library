@@ -19,9 +19,10 @@ public final class NlpEngineTest {
         // Testcase:
         // Text is loaded to queue before building
         {
-            engine = new CWNLPEngine<>();
+            engine = new CWNLPEngine<>(null);
             engine.load(new NLPString("color the wind"));
             engine.load(new NLPString("Tô màu cho gió"));
+            engine.load(null, null); // not process null value
             Assert.assertEquals(0, engine.targets().size());
             engine.build();
 
@@ -40,13 +41,13 @@ public final class NlpEngineTest {
             opts.strip = true;
             opts.caseSensitive = false;
             opts.useSpecialChars = false;
-            engine = new CWNLPEngine<>(opts);
+            engine = new CWNLPEngine<>(null, opts);
             engine.load(new NLPString(" color \n  the  WIND %$%^$^6969"));
             engine.load(new NLPString("  風を&*((*彩る。%"));
             engine.build();
 
-            Assert.assertEquals("color the wind 6969", engine.targets().get(0).nlpText());
-            Assert.assertEquals("風を 彩る。", engine.targets().get(1).nlpText());
+            Assert.assertEquals("color the wind 6969", engine.getCookedText(engine.targets().get(0)));
+            Assert.assertEquals("風を 彩る。", engine.getCookedText(engine.targets().get(1)));
         }
 
 
@@ -57,15 +58,15 @@ public final class NlpEngineTest {
             opts.strip = false;
             opts.caseSensitive = true;
             opts.useSpecialChars = true;
-            engine = new CWNLPEngine<>(opts);
+            engine = new CWNLPEngine<>(null, opts);
             String ip1 = " color   the  Wind %$%^$^6969";
             String ip2 = "  風を&*((*彩る。%";
             engine.load(new NLPString(ip1));
             engine.load(new NLPString(ip2));
             engine.build();
 
-            Assert.assertEquals(ip1, engine.targets().get(0).nlpText());
-            Assert.assertEquals(ip2, engine.targets().get(1).nlpText());
+            Assert.assertEquals(ip1, engine.getCookedText(engine.targets().get(0)));
+            Assert.assertEquals(ip2, engine.getCookedText(engine.targets().get(1)));
         }
     }
 
@@ -79,44 +80,44 @@ public final class NlpEngineTest {
 
         // Testcase: data is changed
         {
-            engine = new CWNLPEngine<>(opts);
+            engine = new CWNLPEngine<>(null, opts);
             NLPString target = new NLPString("color the wind");
 
             engine.load(target);
             engine.build();
             Assert.assertEquals(1, engine.targets().size());
-            Assert.assertEquals("color the wind", engine.targets().get(0).nlpText());
+            Assert.assertEquals("color the wind", engine.getCookedText(engine.targets().get(0)));
 
             // build does not update pre-loaded text
             Field field = target.getClass().getDeclaredField("value");
             field.setAccessible(true);
             field.set(target, "Tô màu cho gió");
             engine.build();
-            Assert.assertEquals("color the wind", engine.targets().get(0).nlpText());
+            Assert.assertNull(engine.getCookedText(engine.targets().get(0)));
 
             // rebuild will update both pre-loaded and new-loaded text
             engine.load(new NLPString("風を彩る。"));
             engine.rebuild();
             Assert.assertEquals(2, engine.targets().size());
-            Assert.assertEquals("Tô màu cho gió", engine.targets().get(0).nlpText());
-            Assert.assertEquals("風を彩る。", engine.targets().get(1).nlpText());
+            Assert.assertEquals("Tô màu cho gió", engine.getCookedText(engine.targets().get(0)));
+            Assert.assertEquals("風を彩る。", engine.getCookedText(engine.targets().get(1)));
         }
 
         // testcase
         // rebuild specific text
         {
-            engine = new CWNLPEngine<>(opts);
+            engine = new CWNLPEngine<>(null, opts);
             NLPString target = new NLPString("color the wind");
             engine.load(target);
             engine.build();
-            Assert.assertEquals("color the wind", engine.targets().get(0).nlpText());
+            Assert.assertEquals("color the wind", engine.getCookedText(engine.targets().get(0)));
 
             // change target value then rebuild
             Field field = target.getClass().getDeclaredField("value");
             field.setAccessible(true);
             field.set(target, "風を彩る。");
             engine.rebuild(target);
-            Assert.assertEquals("風を彩る。", engine.targets().get(0).nlpText());
+            Assert.assertEquals("風を彩る。", engine.getCookedText(engine.targets().get(0)));
         }
     }
 
@@ -127,7 +128,7 @@ public final class NlpEngineTest {
         // Testcase
         // empty/null search input
         {
-            engine = new CWNLPEngine<>();
+            engine = new CWNLPEngine<>(null);
             engine.load(new NLPString("color the wind"));
             engine.build();
 
@@ -141,7 +142,7 @@ public final class NlpEngineTest {
         // Testcase
         // Single search
         {
-            engine = new CWNLPEngine<>();
+            engine = new CWNLPEngine<>(null);
             engine.load(new NLPString("color the wind"));
             engine.build();
 
@@ -155,7 +156,7 @@ public final class NlpEngineTest {
         // Testcase
         // The combined search with multiple inputs
         {
-            engine = new CWNLPEngine<>();
+            engine = new CWNLPEngine<>(null);
             NLPString[] inputs = new NLPString[]{
                     new NLPString("color the wind color of the wind"),
                     new NLPString("風を彩る。")
@@ -187,7 +188,7 @@ public final class NlpEngineTest {
         // Testcase:
         // Partial matching
         {
-            engine = new CWNLPEngine<>();
+            engine = new CWNLPEngine<>(null);
             engine.load(new NLPString("color the wind"));
             engine.build();
 
@@ -205,7 +206,7 @@ public final class NlpEngineTest {
         // Testcase:
         // Full matching
         {
-            engine = new CWNLPEngine<>();
+            engine = new CWNLPEngine<>(null);
             engine.load(new NLPString("color the wind"));
             engine.build();
 
@@ -222,7 +223,7 @@ public final class NlpEngineTest {
         // Testcase
         // Not match
         {
-            engine = new CWNLPEngine<>();
+            engine = new CWNLPEngine<>(null);
             engine.load(new NLPString("color the wind"));
             engine.build();
 
@@ -234,7 +235,7 @@ public final class NlpEngineTest {
         // Testcase:
         // Test with Japanese language
         {
-            engine = new CWNLPEngine<>();
+            engine = new CWNLPEngine<>(null);
             engine.load(new NLPString("風を彩る。"));
             engine.build();
 
@@ -254,7 +255,7 @@ public final class NlpEngineTest {
         // Testcase:
         // Test with Thai language
         {
-            engine = new CWNLPEngine<>();
+            engine = new CWNLPEngine<>(null);
             engine.load(new NLPString("หน่วยเสียงวรรณยุกต์"));
             engine.build();
 
@@ -274,7 +275,7 @@ public final class NlpEngineTest {
         // Testcase:
         // Test with Vietnamese language
         {
-            engine = new CWNLPEngine<>();
+            engine = new CWNLPEngine<>(null);
             engine.load(new NLPString("Tô màu cho gió"));
             engine.build();
 
@@ -294,7 +295,7 @@ public final class NlpEngineTest {
         // Testcase:
         // Test with both space and non-space breaking language
         {
-            engine = new CWNLPEngine<>();
+            engine = new CWNLPEngine<>(null);
             engine.load(new NLPString("一所懸命color 1508 the勉強wind \nหนнаиболее распространённы"));
             engine.build();
 

@@ -1,26 +1,24 @@
 package the.wind.library.nlp;
 
+import android.content.Context;
+
+import androidx.annotation.Nullable;
+
 /**
  * Text type interface
  */
 public interface INLPText {
 
     /**
-     * Convert object to text value
+     * @param context application context.
+     * @return unique id
      */
-    String toTextValue();
+    String nlpTextId(@Nullable Context context);
 
     /**
-     * Get NLP text which has been processed by NLP engine
-     *
-     * @return NLP text
+     * @param context application context.
+     *                It can be useful when you want to convert resource string
+     * @return raw text value
      */
-    String nlpText();
-
-    /**
-     * Set text which has been processed by NLP engine
-     *
-     * @param nlpText text
-     */
-    void nlpText(String nlpText);
+    String nlpRawText(@Nullable Context context);
 }

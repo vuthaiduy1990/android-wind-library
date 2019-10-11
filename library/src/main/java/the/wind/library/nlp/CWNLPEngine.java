@@ -1,17 +1,21 @@
 package the.wind.library.nlp;
 
-import java.util.Arrays;
+import android.content.Context;
+
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.Nullable;
 import the.wind.library.CWCallback;
 import the.wind.library.CWRegex;
 import the.wind.library.CWUnicode;
@@ -21,7 +25,7 @@ import the.wind.library.utils.CWStringUtils;
  * Usage
  * <pre>
  *     // load text or object which implement {{@link INLPText}}
- *     CWNLPEngine<NlpString> engine = new CWNLPEngine<>();
+ *     CWNLPEngine<NlpString> engine = new CWNLPEngine<>(context);
  *     engine.loadText(new NlpString("color the wind"));
  *     engine.loadText(new NlpString("風を彩る。"));
  *
@@ -60,6 +64,10 @@ import the.wind.library.utils.CWStringUtils;
  */
 public final class CWNLPEngine<T extends INLPText> {
 
+    // Application context
+    @Nullable
+    private Context mContext;
+
     // Configuration for the engine
     private Options mOptions;
 
@@ -67,17 +75,27 @@ public final class CWNLPEngine<T extends INLPText> {
     private List<T> mTargetList = new LinkedList<>();
     private Queue<T> mTargetQueue = new LinkedList<>();
 
+    // map target id with processed text
+    private Map<String, String> mTextMap = new HashMap<>();
+
     /**
      * Construct engine with the default setting
+     *
+     * @param context application context. It can be null
      */
-    public CWNLPEngine() {
+    public CWNLPEngine(@Nullable Context context) {
+        mContext = context;
         mOptions = new Options();
     }
 
     /**
      * Construct engine with the given setting
+     *
+     * @param context application context. It can be null
+     * @param options option for building text
      */
-    public CWNLPEngine(Options options) {
+    public CWNLPEngine(@Nullable Context context, Options options) {
+        this(context);
         mOptions = options;
     }
 
@@ -114,7 +132,10 @@ public final class CWNLPEngine<T extends INLPText> {
      */
     @SafeVarargs
     public final CWNLPEngine<T> load(T... targets) {
-        mTargetQueue.addAll(Arrays.asList(targets));
+        for (T tx : targets) {
+            if (tx == null) continue;
+            mTargetQueue.add(tx);
+        }
         return this;
     }
 
@@ -129,7 +150,9 @@ public final class CWNLPEngine<T extends INLPText> {
      */
     public CWNLPEngine<T> load(Iterator<T> targetIt) {
         while (targetIt.hasNext()) {
-            mTargetQueue.add(targetIt.next());
+            T tx = targetIt.next();
+            if (tx == null) continue;
+            mTargetQueue.add(tx);
         }
         return this;
     }
@@ -140,7 +163,19 @@ public final class CWNLPEngine<T extends INLPText> {
     public void freeMemory() {
         mTargetList.clear();
         mTargetQueue.clear();
+        mTextMap.clear();
         System.gc();
+    }
+
+    /**
+     * Get target text which has been pre-processed
+     *
+     * @param target target which implement {@link INLPText}
+     * @return text
+     */
+    @Nullable
+    public String getCookedText(T target) {
+        return mTextMap.get(target.nlpTextId(mContext));
     }
 
     /* ---------------------- METHOD ------------------------- */
@@ -150,23 +185,23 @@ public final class CWNLPEngine<T extends INLPText> {
      *
      * @param target which implement {@link INLPText}
      */
-    private <X extends INLPText> X preProcess(X target) {
-        target.nlpText(target.toTextValue());
+    private <X extends INLPText> String preProcess(X target) {
+        String text = target.nlpRawText(mContext);
 
         if (!mOptions.useSpecialChars) {
             String regex = "[" + mOptions.specialChars + "]+";
-            target.nlpText(target.nlpText().replaceAll(regex, " "));
+            text = text.replaceAll(regex, " ");
         }
 
         if (mOptions.strip) {
-            target.nlpText(CWStringUtils.strip(target.nlpText()));
+            text = CWStringUtils.strip(text);
         }
 
         if (!mOptions.caseSensitive) {
-            target.nlpText(target.nlpText().toLowerCase());
+            text = text.toLowerCase();
         }
 
-        return target;
+        return text;
     }
 
     /**
@@ -178,7 +213,7 @@ public final class CWNLPEngine<T extends INLPText> {
     public CWNLPEngine<T> build() {
         T target = mTargetQueue.poll();
         while (target != null) {
-            preProcess(target);
+            mTextMap.put(target.nlpTextId(mContext), preProcess(target));
             mTargetList.add(target);
             target = mTargetQueue.poll();
         }
@@ -194,7 +229,7 @@ public final class CWNLPEngine<T extends INLPText> {
     public CWNLPEngine<T> rebuild() {
         // rebuild pre-loaded texts
         for (T tx : mTargetList) {
-            preProcess(tx);
+            mTextMap.put(tx.nlpTextId(mContext), preProcess(tx));
         }
 
         // build texts is waiting in queue
@@ -208,7 +243,7 @@ public final class CWNLPEngine<T extends INLPText> {
      * @return engine
      */
     public CWNLPEngine<T> rebuild(T target) {
-        preProcess(target);
+        mTextMap.put(target.nlpTextId(mContext), preProcess(target));
         return this;
     }
 
@@ -233,7 +268,7 @@ public final class CWNLPEngine<T extends INLPText> {
      */
     public void doMatching(CharSequence search, List<T> targets, CWCallback<NLPMatchResult<T>> callback) {
         callback.onBegin();
-        String _search = preProcess(new NLPString(search)).nlpText();
+        String _search = preProcess(new NLPString(search));
 
         // split the search string into array of keys
         String regex = CWStringUtils.join(
@@ -260,7 +295,9 @@ public final class CWNLPEngine<T extends INLPText> {
         for (T tx : targets) {
             NLPMatchResult<T> result = new NLPMatchResult<>(tx);
             for (Map.Entry<String, Pattern> entry : _searchPat.entrySet()) {
-                Matcher m = entry.getValue().matcher(tx.nlpText());
+                Matcher m = entry.getValue().matcher(Objects.requireNonNull(
+                        mTextMap.get(tx.nlpTextId(mContext)))
+                );
                 if (m.find()) {
                     result.indexes.add(m.start());
                     result.indexes.add(m.end());
