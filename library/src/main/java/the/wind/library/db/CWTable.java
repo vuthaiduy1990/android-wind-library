@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import androidx.annotation.NonNull;
-import the.wind.library.CWTag;
+import the.wind.library.CWAttach;
 
 /**
  * Define structure of table.
@@ -39,8 +39,8 @@ public abstract class CWTable implements Serializable {
     // false -> Table/model is retrieved from server (online)
     private transient boolean mOffline = false;
 
-    // tagging
-    private transient CWTag mTag;
+    // attaching
+    private transient CWAttach mAttach;
 
     /**
      * Sync state
@@ -57,7 +57,7 @@ public abstract class CWTable implements Serializable {
      * Constructor
      */
     protected CWTable() {
-        mTag = new CWTag();
+        mAttach = new CWAttach();
         setHash(new Date().getTime() + Math.random() + "");
         Date now = new Date();
         setCreatedDate(now);
@@ -73,10 +73,10 @@ public abstract class CWTable implements Serializable {
     /* ---------------------- GET-SET ------------------------ */
 
     /**
-     * @return tag
+     * @return attach
      */
-    public CWTag tag() {
-        return mTag;
+    public CWAttach attach() {
+        return mAttach;
     }
 
     /**

@@ -1,9 +1,10 @@
 package the.wind.library;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class CWTag {
+public final class CWAttach {
 
     // tagged objects
     private Map<String, Object> mTags = new HashMap<>();
@@ -15,8 +16,8 @@ public final class CWTag {
      *
      * @return all tagged object
      */
-    public Map<String, Object> map() {
-        return mTags;
+    public Map<String, Object> values() {
+        return Collections.unmodifiableMap(mTags);
     }
 
     /**
@@ -39,6 +40,14 @@ public final class CWTag {
         mTags.put(key, taggedObj);
     }
 
+    /**
+     * Remove attached object
+     *
+     * @param key key
+     */
+    public void remove(String key) {
+        mTags.remove(key);
+    }
 
     /* ---------------------- METHOD ------------------------- */
 }

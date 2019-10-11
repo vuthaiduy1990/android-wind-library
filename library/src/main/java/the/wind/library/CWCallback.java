@@ -3,7 +3,7 @@ package the.wind.library;
 public class CWCallback<T> {
 
     // tagged object
-    private CWTag mTag = new CWTag();
+    private CWAttach mTag = new CWAttach();
 
     /* ---------------------- STATIC ------------------------- */
 
@@ -58,7 +58,7 @@ public class CWCallback<T> {
     /**
      * @return attach
      */
-    public CWTag tag() {
+    public CWAttach tag() {
         return mTag;
     }
 
