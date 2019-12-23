@@ -1,5 +1,33 @@
 package the.wind.library;
 
+/**
+ * Example.
+ * <pre>
+ *     public void handleSomething(CWCallback<String> callback) {
+ *          //  implement the function
+ *          for ... loop {
+ *              callback.onSuccess(xxx);
+ *          }
+ *          callback.onEnd();
+ *     }
+ *
+ *     // Call the function
+ *     handleSomething(new CWCallback<String>(){
+ *          @Override
+ *          public String onSuccess(String result) {
+ *              // handle something here
+ *              return super.onSuccess(result);
+ *          }
+ *
+ *          @Override
+ *          public void onEnd() {
+ *              super.onEnd();
+ *          }
+ *     });
+ * </pre>
+ *
+ * @param <T> generic type
+ */
 public class CWCallback<T> {
 
     // tagged object
@@ -8,6 +36,8 @@ public class CWCallback<T> {
     /* ---------------------- STATIC ------------------------- */
 
     /* ---------------------- OVERRIDE ----------------------- */
+
+    /* ---------------------- EVENT -------------------------- */
 
     /**
      * On begin of doing something
@@ -50,8 +80,6 @@ public class CWCallback<T> {
      */
     public void onResult(T result, Throwable t) {
     }
-
-    /* ---------------------- EVENT -------------------------- */
 
     /* ---------------------- GET-SET ------------------------ */
 
