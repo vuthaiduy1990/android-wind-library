@@ -43,17 +43,6 @@ public abstract class CWTable implements Serializable {
     private transient CWAttach mAttach;
 
     /**
-     * Sync state
-     */
-    public enum SyncState {
-        NEW, // data have not been uploaded to server
-        MODIFIED, // data have been uploaded to server but not latest version
-        SYNCED,  // data have been uploaded to server and is latest version
-        DELETED, // data have been deleted from local but not synced to server
-        TEMP;    // data is marked as temporary and should be deleted later
-    }
-
-    /**
      * Constructor
      */
     protected CWTable() {
@@ -183,4 +172,15 @@ public abstract class CWTable implements Serializable {
     /* ---------------------- METHOD ------------------------- */
 
     /* ---------------------- INNER CLASS -------------------- */
+
+    /**
+     * Sync state
+     */
+    public enum SyncState {
+        NEW, // data have not been uploaded to server
+        MODIFIED, // data have been uploaded to server but not latest version
+        SYNCED,  // data have been uploaded to server and is latest version
+        DELETED, // data have been deleted from local but not synced to server
+        TEMP    // data is marked as temporary and should be deleted later
+    }
 }

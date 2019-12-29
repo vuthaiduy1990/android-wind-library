@@ -48,13 +48,6 @@ public abstract class CWHandler<T> {
     private CWAttach mTag = new CWAttach();
     private State mState = State.RUNNING;
 
-    // state
-    public enum State {
-        RUNNING,
-        PAUSED,
-        DESTROYED
-    }
-
     /* ---------------------- STATIC ------------------------- */
 
     /* ---------------------- OVERRIDE ----------------------- */
@@ -126,4 +119,11 @@ public abstract class CWHandler<T> {
     }
 
     /* ---------------------- INNER CLASS -------------------- */
+
+    // state
+    public enum State {
+        RUNNING,
+        PAUSED,
+        DESTROYED
+    }
 }

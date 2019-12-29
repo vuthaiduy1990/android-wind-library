@@ -27,6 +27,7 @@
         <emptyLine />
       </value>
     </option>
+    <option name="RIGHT_MARGIN" value="120" />
     <AndroidXmlCodeStyleSettings>
       <option name="ARRANGEMENT_SETTINGS_MIGRATED_TO_191" value="true" />
     </AndroidXmlCodeStyleSettings>
@@ -58,9 +59,20 @@
       <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true" />
     </XML>
     <codeStyleSettings language="JAVA">
+      <option name="KEEP_FIRST_COLUMN_COMMENT" value="false" />
       <option name="ALIGN_MULTILINE_PARAMETERS_IN_CALLS" value="true" />
       <option name="KEEP_SIMPLE_CLASSES_IN_ONE_LINE" value="true" />
       <arrangement>
+        <groups>
+          <group>
+            <type>GETTERS_AND_SETTERS</type>
+            <order>KEEP</order>
+          </group>
+          <group>
+            <type>OVERRIDDEN_METHODS</type>
+            <order>KEEP</order>
+          </group>
+        </groups>
         <rules>
           <section>
             <rule>
@@ -265,13 +277,6 @@
           <section>
             <rule>
               <match>
-                <ENUM>true</ENUM>
-              </match>
-            </rule>
-          </section>
-          <section>
-            <rule>
-              <match>
                 <CONSTRUCTOR>true</CONSTRUCTOR>
               </match>
             </rule>
@@ -297,6 +302,13 @@
             <rule>
               <match>
                 <METHOD>true</METHOD>
+              </match>
+            </rule>
+          </section>
+          <section>
+            <rule>
+              <match>
+                <ENUM>true</ENUM>
               </match>
             </rule>
           </section>

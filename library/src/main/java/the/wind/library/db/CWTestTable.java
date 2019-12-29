@@ -62,13 +62,6 @@ public final class CWTestTable extends CWTable {
     public JsonObject mJsonObj;
     public JsonArray mJsonArr;
 
-    // Enum class
-    public enum EnumType {
-        HIGH,
-        MEDIUM,
-        LOW
-    }
-
     /* ---------------------- OVERRIDE ----------------------- */
 
     @Override
@@ -148,6 +141,13 @@ public final class CWTestTable extends CWTable {
     /* ---------------------- METHOD ------------------------- */
 
     /* ---------------------- INNER CLASS -------------------- */
+
+    // Enum class
+    public enum EnumType {
+        HIGH,
+        MEDIUM,
+        LOW
+    }
 
     // Inner class
     public static class SubClass {

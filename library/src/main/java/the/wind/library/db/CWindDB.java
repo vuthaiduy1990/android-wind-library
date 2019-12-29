@@ -59,6 +59,22 @@ public class CWindDB extends SQLiteOpenHelper {
     /* ---------------------- OVERRIDE ----------------------- */
 
     @Override
+    public SQLiteDatabase getWritableDatabase() {
+        if (this._sqLiteDatabase != null) {
+            return this._sqLiteDatabase;
+        }
+        return super.getWritableDatabase();
+    }
+
+    @Override
+    public SQLiteDatabase getReadableDatabase() {
+        if (this._sqLiteDatabase != null) {
+            return this._sqLiteDatabase;
+        }
+        return super.getReadableDatabase();
+    }
+
+    @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         this._sqLiteDatabase = sqLiteDatabase;
         CWMigrationController.instance().doInitialization();
@@ -72,21 +88,7 @@ public class CWindDB extends SQLiteOpenHelper {
         this._sqLiteDatabase = null;
     }
 
-    @Override
-    public SQLiteDatabase getReadableDatabase() {
-        if (this._sqLiteDatabase != null) {
-            return this._sqLiteDatabase;
-        }
-        return super.getReadableDatabase();
-    }
 
-    @Override
-    public SQLiteDatabase getWritableDatabase() {
-        if (this._sqLiteDatabase != null) {
-            return this._sqLiteDatabase;
-        }
-        return super.getWritableDatabase();
-    }
 
     /* ---------------------- STATIC ------------------------- */
 

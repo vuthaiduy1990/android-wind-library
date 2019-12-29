@@ -20,13 +20,6 @@ public final class NLPMatchResult<T extends INLPText> {
     // status
     public Status status = Status.NOT_MATCH;
 
-    // status
-    public enum Status {
-        NOT_MATCH,
-        FULL_MATCH,
-        PARTIAL_MATCH;
-    }
-
     /**
      * Protected constructor to disable user from initializing an NLP result
      *
@@ -68,4 +61,11 @@ public final class NLPMatchResult<T extends INLPText> {
     /* ---------------------- METHOD ------------------------- */
 
     /* ---------------------- INNER CLASS -------------------- */
+
+    // status
+    public enum Status {
+        NOT_MATCH,
+        FULL_MATCH,
+        PARTIAL_MATCH;
+    }
 }
