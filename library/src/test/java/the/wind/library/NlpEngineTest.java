@@ -4,11 +4,15 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import the.wind.library.nlp.CWNLPEngine;
 import the.wind.library.nlp.NLPMatchResult;
 import the.wind.library.nlp.NLPString;
+import the.wind.library.utils.CWMathUtils;
+import the.wind.library.utils.CWStringUtils;
 
 public final class NlpEngineTest {
 
@@ -228,6 +232,17 @@ public final class NlpEngineTest {
             engine.build();
 
             List<NLPMatchResult<NLPString>> results = engine.doMatching("storm");
+            Assert.assertEquals(0, results.size());
+        }
+        // Not matched item is include in the result
+        {
+            CWNLPEngine.Options opts = new CWNLPEngine.Options();
+            opts.matchOnly = false;
+            engine = new CWNLPEngine<>(null, opts);
+            engine.load(new NLPString("color the wind"));
+            engine.build();
+
+            List<NLPMatchResult<NLPString>> results = engine.doMatching("storm");
             Assert.assertEquals(1, results.size());
             Assert.assertFalse(results.get(0).isMatched());
         }
@@ -329,5 +344,78 @@ public final class NlpEngineTest {
             Assert.assertTrue(results.get(0).isPartialMatched());
             Assert.assertEquals(4, results.get(0).keys.size());
         }
+    }
+
+    @Test
+    public void cache() {
+        CWNLPEngine.Options opts = new CWNLPEngine.Options();
+        opts.cache = 3;
+        opts.matchOnly = true;
+        CWNLPEngine<NLPString> engine = new CWNLPEngine<>(null, opts);
+        List<String> textBags = Arrays.asList("you", "never", "know", "what", "happens", "next");
+        for (int i = 0; i < textBags.size(); i++) {
+            engine.load(new NLPString(CWStringUtils.join(" ", textBags.subList(0, i + 1))));
+        }
+        engine.build();
+
+        // do matching in the first time
+        List<NLPMatchResult<NLPString>> result1 = engine.doMatching("you");
+        List<NLPMatchResult<NLPString>> result2 = engine.doMatching("never");
+        List<NLPMatchResult<NLPString>> result3 = engine.doMatching("know");
+        List<NLPMatchResult<NLPString>> result4 = engine.doMatching("what");
+        Assert.assertEquals(3, engine.getCaches().size());
+        Assert.assertEquals(6, result1.size());
+        Assert.assertNull(engine.getCaches().get("you"));
+        Assert.assertEquals(5, result2.size());
+        Assert.assertEquals(5, Objects.requireNonNull(engine.getCaches().get("never")).size());
+        Assert.assertEquals(4, result3.size());
+        Assert.assertEquals(4, Objects.requireNonNull(engine.getCaches().get("know")).size());
+        Assert.assertEquals(3, result4.size());
+        Assert.assertEquals(3, Objects.requireNonNull(engine.getCaches().get("what")).size());
+
+
+        // do matching again.
+        // These value should
+        result3 = engine.doMatching("know");
+        Assert.assertEquals(3, engine.getCaches().size());
+        Assert.assertNull(engine.getCaches().get("you"));
+        Assert.assertEquals(5, Objects.requireNonNull(engine.getCaches().get("never")).size());
+        Assert.assertEquals(4, result3.size());
+        Assert.assertEquals(4, Objects.requireNonNull(engine.getCaches().get("know")).size());
+
+        // do matching with other difference key
+        result3 = engine.doMatching("know what");
+        Assert.assertNull(engine.getCaches().get("never"));
+        Assert.assertEquals(4, result3.size());
+        Assert.assertEquals(4, Objects.requireNonNull(engine.getCaches().get("know what")).size());
+    }
+
+    @Test
+    public void testCachePerformance() {
+        CWNLPEngine.Options opts = new CWNLPEngine.Options();
+        opts.cache = 3;
+        opts.matchOnly = true;
+        CWNLPEngine<NLPString> engine = new CWNLPEngine<>(null, opts);
+        String[] textBags1 = new String[]{"you", "never", "know", "what", "happens", "next"};
+        String[] textBags2 = new String[]{"color", "of", "the", "wind"};
+        for (int i = 0; i < 10000; i++) {
+            engine.load(new NLPString(CWStringUtils.join(" ", CWMathUtils.shuffle(String.class, textBags1))));
+            engine.load(new NLPString(CWStringUtils.join(" ", CWMathUtils.shuffle(String.class, textBags2))));
+        }
+        engine.build();
+        long startTime = System.currentTimeMillis();
+        List<NLPMatchResult<NLPString>> results = engine.doMatching("never know");
+        long costWithoutCache = System.currentTimeMillis() - startTime;
+        startTime = System.currentTimeMillis();
+
+        // do matching again with the same search key
+        results = engine.doMatching("never know");
+        long costWithCache = System.currentTimeMillis() - startTime;
+
+        // compare
+        System.out.println("[NLPEngine] do matching without cache: " + costWithoutCache);
+        System.out.println("[NLPEngine] do matching with cache: " + costWithCache);
+        Assert.assertTrue(costWithCache < costWithoutCache);
+
     }
 }

@@ -66,6 +66,6 @@ public final class NLPMatchResult<T extends INLPText> {
     public enum Status {
         NOT_MATCH,
         FULL_MATCH,
-        PARTIAL_MATCH;
+        PARTIAL_MATCH
     }
 }

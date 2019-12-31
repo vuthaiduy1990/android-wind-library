@@ -15,6 +15,7 @@ import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import the.wind.library.CWCallback;
 import the.wind.library.CWRegex;
@@ -36,7 +37,7 @@ import the.wind.library.utils.CWStringUtils;
  *     engine.loadText(new NlpString("Tô màu cho gió"));
  *     engine.build();
  *
- *     // or data is changed then rebuild on changed data
+ *     // or data is changed then rebuild the changed data only
  *     nlpText.changeData(data);
  *     engine.rebuild(nlpText);
  *
@@ -49,6 +50,7 @@ import the.wind.library.utils.CWStringUtils;
  *     engine.doMatching("search-key", new CWCallback<NLPMatchResult<NlpString>>(){
  *          @Override
  *          public NLPMatchResult<NlpString> onSuccess(NLPMatchResult<NlpString> result) {
+ *              // you can do something with the search result here
  *              return super.onSuccess(result);
  *          }
  *
@@ -77,6 +79,10 @@ public final class CWNLPEngine<T extends INLPText> {
 
     // map target id with processed text
     private Map<String, String> mTextMap = new HashMap<>();
+
+    // Map between the search key with results
+    private Map<String, List<NLPMatchResult<T>>> mCaches = new HashMap<>();
+    private Queue<String> mCacheKeys = new LinkedList<>();
 
     /**
      * Construct engine with the default setting
@@ -164,6 +170,8 @@ public final class CWNLPEngine<T extends INLPText> {
         mTargetList.clear();
         mTargetQueue.clear();
         mTextMap.clear();
+        mCaches.clear();
+        mCacheKeys.clear();
         System.gc();
     }
 
@@ -176,6 +184,24 @@ public final class CWNLPEngine<T extends INLPText> {
     @Nullable
     public String getCookedText(T target) {
         return mTextMap.get(target.nlpTextId(mContext));
+    }
+
+    /**
+     * Get cache map
+     *
+     * @return map between the search key and cached result
+     */
+    @NonNull
+    public Map<String, List<NLPMatchResult<T>>> getCaches() {
+        return Collections.unmodifiableMap(mCaches);
+    }
+
+    /**
+     * Clear cache
+     */
+    public void clearCache() {
+        mCaches.clear();
+        mCacheKeys.clear();
     }
 
     /* ---------------------- METHOD ------------------------- */
@@ -211,11 +237,10 @@ public final class CWNLPEngine<T extends INLPText> {
      * @return engine
      */
     public CWNLPEngine<T> build() {
-        T target = mTargetQueue.poll();
-        while (target != null) {
+        T target;
+        while ((target = mTargetQueue.poll()) != null) {
             mTextMap.put(target.nlpTextId(mContext), preProcess(target));
             mTargetList.add(target);
-            target = mTargetQueue.poll();
         }
         return this;
     }
@@ -270,6 +295,23 @@ public final class CWNLPEngine<T extends INLPText> {
         callback.onBegin();
         String _search = preProcess(new NLPString(search));
 
+        // Use caching if it is available
+        List<NLPMatchResult<T>> cacheResults;
+        if (mOptions.cache > 0 && (cacheResults = mCaches.get(_search)) != null) {
+            // Get the search result from cache if available
+            for (NLPMatchResult<T> result : cacheResults) {
+                callback.onSuccess(result);
+            }
+            callback.onEnd();
+            return;
+        } else if (mOptions.cache > 0) {
+            mCaches.put(_search, new LinkedList<NLPMatchResult<T>>());
+            mCacheKeys.add(_search);
+            if (mCacheKeys.size() > mOptions.cache) /* exceed the cache limit */ {
+                mCaches.remove(mCacheKeys.poll()); // remove the oldest one
+            }
+        }
+
         // split the search string into array of keys
         String regex = CWStringUtils.join(
                 "|",
@@ -309,7 +351,16 @@ public final class CWNLPEngine<T extends INLPText> {
             } else if (result.keys.size() > 0) {
                 result.status = NLPMatchResult.Status.PARTIAL_MATCH;
             } else {
-                result.status = NLPMatchResult.Status.NOT_MATCH;
+                if (mOptions.matchOnly) {
+                    // do not include the not-match item in the result
+                    continue;
+                } else {
+                    result.status = NLPMatchResult.Status.NOT_MATCH;
+                }
+            }
+            // cache result is caching is available
+            if (mOptions.cache > 0) {
+                Objects.requireNonNull(mCaches.get(_search)).add(result);
             }
             callback.onSuccess(result);
         }
@@ -366,5 +417,14 @@ public final class CWNLPEngine<T extends INLPText> {
         public boolean useSpecialChars = false;
         // default special characters are all latin symbols
         public String specialChars = CWUnicode.LATIN_SYMBOLS;
+
+        // Whether include result which is not matched or not
+        // set false if you want to include the not-match item in the returned result
+        public boolean matchOnly = true;
+
+        // Cache result.
+        // 0 -> no caching
+        // n -> the number of caching result
+        public int cache = 0;
     }
 }
