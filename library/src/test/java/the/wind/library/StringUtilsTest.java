@@ -33,13 +33,13 @@ public class StringUtilsTest {
             list.add("color");
             list.add("the");
             list.add("wind");
-            Assert.assertEquals("color.the.wind", CWStringUtils.join(".", list.iterator()));
+            Assert.assertEquals("color.the.wind", CWStringUtils.join(".", list));
 
             Set<String> set = new LinkedHashSet<>();
             set.add("color");
             set.add("the");
             set.add("wind");
-            Assert.assertEquals("color.the.wind", CWStringUtils.join(".", set.iterator()));
+            Assert.assertEquals("color.the.wind", CWStringUtils.join(".", set));
         }
     }
 

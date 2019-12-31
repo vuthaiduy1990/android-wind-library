@@ -46,10 +46,11 @@ public class CWStringUtils {
      * @param elements  list of strings
      * @return joined string
      */
-    public static String join(String delimiter, Iterator<String> elements) {
+    public static String join(String delimiter, Iterable<String> elements) {
         StringBuilder builder = new StringBuilder();
-        while (elements.hasNext()) {
-            builder.append(delimiter).append(elements.next());
+        Iterator<String> it = elements.iterator();
+        while (it.hasNext()) {
+            builder.append(delimiter).append(it.next());
         }
         String result = builder.toString();
         return result.length() > 0 ? result.substring(1) : result;

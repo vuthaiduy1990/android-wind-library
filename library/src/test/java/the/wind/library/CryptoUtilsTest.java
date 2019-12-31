@@ -23,7 +23,7 @@ public class CryptoUtilsTest {
         {
             String origin = "Color the wind";
             byte[] encrypted = CWCryptoUtils.encrypt(secretKey, origin.getBytes(StandardCharsets.UTF_8));
-            System.out.println("encryptDecryptString - case 1 - base64: " + Base64.encodeBase64String(encrypted));
+            System.out.println("encryptDecryptString - case 1 - base64: " + new String(Base64.encodeBase64(encrypted)));
             System.out.println("encryptDecryptString - case 1: " + CWStreamUtils.bytesToString(encrypted));
             byte[] decrypted = CWCryptoUtils.decrypt(secretKey, encrypted);
             Assert.assertEquals(origin, CWStreamUtils.bytesToString(decrypted));
@@ -41,7 +41,7 @@ public class CryptoUtilsTest {
                     "had applied numerous fixes and patches which were not applied to the Commons HttpClient Base64." +
                     "Different subprojects had differing implementations at various levels of compliance with the";
             byte[] encrypted = CWCryptoUtils.encrypt(secretKey, origin.getBytes(StandardCharsets.UTF_8));
-            System.out.println("encryptDecryptString - case 2: " + Base64.encodeBase64String(encrypted));
+            System.out.println("encryptDecryptString - case 2: " + new String(Base64.encodeBase64(encrypted)));
             byte[] decrypted = CWCryptoUtils.decrypt(secretKey, encrypted);
             Assert.assertEquals(origin, CWStreamUtils.bytesToString(decrypted));
         }
@@ -52,7 +52,7 @@ public class CryptoUtilsTest {
             // wrong secret key
             try {
                 byte[] encrypted = CWCryptoUtils.encrypt("XXX-XXX-XXX-XXX.", origin.getBytes(StandardCharsets.UTF_8));
-                System.out.println("encryptDecryptString - case 3: " + Base64.encodeBase64String(encrypted));
+                System.out.println("encryptDecryptString - case 3: " + new String(Base64.encodeBase64(encrypted)));
                 CWCryptoUtils.decrypt("ZZZ-ZZZ-ZZZ", encrypted);
             } catch (Exception ex) {
                 Assert.assertTrue("Wrong secret key - " + ex.getMessage(), true);
@@ -63,7 +63,7 @@ public class CryptoUtilsTest {
         {
             String origin = "Tô màu cho gió";
             byte[] encrypted = CWCryptoUtils.encrypt(secretKey, origin.getBytes(StandardCharsets.UTF_8));
-            System.out.println("encryptDecryptString - case 4: " + Base64.encodeBase64String(encrypted));
+            System.out.println("encryptDecryptString - case 4: " + new String(Base64.encodeBase64(encrypted)));
             byte[] decrypted = CWCryptoUtils.decrypt(secretKey, encrypted);
             Assert.assertEquals(origin, CWStreamUtils.bytesToString(decrypted));
         }
@@ -72,7 +72,7 @@ public class CryptoUtilsTest {
         {
             String origin = "風を彩る。";
             byte[] encrypted = CWCryptoUtils.encrypt(secretKey, origin.getBytes(StandardCharsets.UTF_8));
-            System.out.println("encryptDecryptString - case 5: " + Base64.encodeBase64String(encrypted));
+            System.out.println("encryptDecryptString - case 5: " + new String(Base64.encodeBase64(encrypted)));
             byte[] decrypted = CWCryptoUtils.decrypt(secretKey, encrypted);
             Assert.assertEquals(origin, CWStreamUtils.bytesToString(decrypted));
         }
@@ -124,23 +124,23 @@ public class CryptoUtilsTest {
         {
             String seed = "$^IP)O_}+BbhGI:^&*DTR";
             SecretKey key = CWCryptoUtils.generateSymmetricKey(seed, 16); // 128 bits
-            String keyBase64 = Base64.encodeBase64String(key.getEncoded());
+            String keyBase64 = new String(Base64.encodeBase64(key.getEncoded()));
             System.out.println("generateSymmetricKey - case 1 - non base64: " + CWStreamUtils.bytesToString(key.getEncoded()));
             System.out.println("generateSymmetricKey - case 1 - base64: " + keyBase64);
 
             // check value
             Assert.assertEquals("GVOSVhedFBgAPC/NgDjlwA==", keyBase64);
-            Assert.assertNotEquals(keyBase64, Base64.encodeBase64String(seed.getBytes(StandardCharsets.UTF_8)));
+            Assert.assertNotEquals(keyBase64, new String(Base64.encodeBase64(seed.getBytes(StandardCharsets.UTF_8))));
             // check size
             Assert.assertEquals(16, key.getEncoded().length);
-            Assert.assertEquals(16, Base64.decodeBase64(keyBase64).length);
+            Assert.assertEquals(16, Base64.decodeBase64(keyBase64.getBytes()).length);
 
             // test generate key 100 times
             for (int i = 0; i < 1000; i++) {
                 SecretKey sameKey = CWCryptoUtils.generateSymmetricKey(seed, 16);
 
                 Assert.assertEquals(16, sameKey.getEncoded().length);
-                Assert.assertEquals(keyBase64, Base64.encodeBase64String(sameKey.getEncoded()));
+                Assert.assertEquals(keyBase64, new String(Base64.encodeBase64(sameKey.getEncoded())));
             }
         }
 
@@ -156,8 +156,8 @@ public class CryptoUtilsTest {
                 Assert.assertEquals(16, key1.getEncoded().length);
                 Assert.assertEquals(16, key2.getEncoded().length);
                 Assert.assertNotEquals(
-                        Base64.encodeBase64String(key1.getEncoded()),
-                        Base64.encodeBase64String(key2.getEncoded()));
+                        new String(Base64.encodeBase64(key1.getEncoded())),
+                        new String(Base64.encodeBase64(key2.getEncoded())));
             }
         }
 
@@ -172,8 +172,8 @@ public class CryptoUtilsTest {
                 Assert.assertEquals(16, key1.getEncoded().length);
                 Assert.assertEquals(32, key2.getEncoded().length);
                 Assert.assertNotEquals(
-                        Base64.encodeBase64String(key1.getEncoded()),
-                        Base64.encodeBase64String(key2.getEncoded()));
+                        new String(Base64.encodeBase64(key1.getEncoded())),
+                        new String(Base64.encodeBase64(key2.getEncoded())));
             }
         }
 
@@ -183,7 +183,7 @@ public class CryptoUtilsTest {
             List<String> keyList = new LinkedList<>();
             for (int i = 0; i < 1000; i++) {
                 SecretKey key = CWCryptoUtils.generateSymmetricKey(null, 16);
-                String base64 = Base64.encodeBase64String(key.getEncoded());
+                String base64 = new String(Base64.encodeBase64(key.getEncoded()));
 
                 Assert.assertFalse(keyList.contains(base64));
                 keyList.add(base64);
@@ -195,7 +195,7 @@ public class CryptoUtilsTest {
             List<String> keyList = new LinkedList<>();
             for (int i = 1; i <= 32; i++) {
                 SecretKey key = CWCryptoUtils.generateSymmetricKey(null, i);
-                String base64 = Base64.encodeBase64String(key.getEncoded());
+                String base64 = new String(Base64.encodeBase64(key.getEncoded()));
 
                 Assert.assertEquals(i, key.getEncoded().length);
                 Assert.assertFalse(keyList.contains(base64));
