@@ -405,11 +405,13 @@ public final class NlpEngineTest {
         engine.build();
         long startTime = System.currentTimeMillis();
         List<NLPMatchResult<NLPString>> results = engine.doMatching("never know");
+        Assert.assertEquals(10000, results.size());
         long costWithoutCache = System.currentTimeMillis() - startTime;
         startTime = System.currentTimeMillis();
 
         // do matching again with the same search key
         results = engine.doMatching("never know");
+        Assert.assertEquals(10000, results.size());
         long costWithCache = System.currentTimeMillis() - startTime;
 
         // compare

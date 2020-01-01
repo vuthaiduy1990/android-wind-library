@@ -273,7 +273,65 @@ public final class CWNLPEngine<T extends INLPText> {
     }
 
     /**
-     * Check if the input string matches with search string or not.
+     * Build the regex pattern for searching
+     *
+     * @param searchKey the search key
+     * @return map between each split search key with respective pattern
+     */
+    private Map<String, Pattern> buildSearchPattern(CharSequence searchKey) {
+        String _search = preProcess(new NLPString(searchKey));
+        // split the search string into array of keys
+        String regex = CWStringUtils.join(
+                "|",
+                CWRegex.REGEX_JAV_CHARS,
+                CWRegex.REGEX_THAI_CHARS,
+                "(\\d+)",
+                "([^\\s\\d" + CWUnicode.JAV_CHARS + CWUnicode.THAI_CHARS + "]+)"
+        );
+        Matcher splitPar = Pattern.compile(regex).matcher(_search);
+        Map<String, Pattern> _searchPat = new LinkedHashMap<>();
+        while (splitPar.find()) {
+            String key = splitPar.group();
+            _searchPat.put(key, Pattern.compile(key));
+        }
+        return _searchPat;
+    }
+
+    /**
+     * Check if the input string (target) matches with search key or not.
+     *
+     * @param searchPat the search pattern. {{buildSearchPattern}}
+     * @param target    the target for searching
+     * @return match result
+     */
+    @Nullable
+    private NLPMatchResult<T> doMatching(Map<String, Pattern> searchPat, T target) {
+        NLPMatchResult<T> result = new NLPMatchResult<>(target);
+        for (Map.Entry<String, Pattern> entry : searchPat.entrySet()) {
+            Matcher m = entry.getValue().matcher(Objects.requireNonNull(mTextMap.get(target.nlpTextId(mContext))));
+            if (m.find()) {
+                result.indexes.add(m.start());
+                result.indexes.add(m.end());
+                result.keys.add(entry.getKey());
+            }
+        }
+        if (result.keys.size() == searchPat.size()) {
+            result.status = NLPMatchResult.Status.FULL_MATCH;
+        } else if (result.keys.size() > 0) {
+            result.status = NLPMatchResult.Status.PARTIAL_MATCH;
+        } else {
+            if (mOptions.matchOnly) {
+                // do not include the not-match item in the result
+                return null;
+            } else {
+                result.status = NLPMatchResult.Status.NOT_MATCH;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Check if the input string (targets) matches with search key or not.
      * <pre>
      *     String input = "Color the wind";
      *
@@ -287,13 +345,18 @@ public final class CWNLPEngine<T extends INLPText> {
      *     doMatching("nothing") -> status = NOT_MATCH
      * </pre>
      *
-     * @param search   search string
-     * @param targets  list of NLP texts
-     * @param callback callback function
+     * @param searchKey search string
+     * @param targets   list of NLP texts
+     * @param callback  callback function
      */
-    public void doMatching(CharSequence search, List<T> targets, CWCallback<NLPMatchResult<T>> callback) {
+    private void doMatching(CharSequence searchKey, List<T> targets, CWCallback<NLPMatchResult<T>> callback) {
         callback.onBegin();
-        String _search = preProcess(new NLPString(search));
+        String _search = preProcess(new NLPString(searchKey));
+        Map<String, Pattern> _searchPat = buildSearchPattern(_search);
+        if (_searchPat.isEmpty()) /* the search input is not valid for searching */ {
+            callback.onEnd();
+            return;
+        }
 
         // Use caching if it is available
         List<NLPMatchResult<T>> cacheResults;
@@ -312,63 +375,22 @@ public final class CWNLPEngine<T extends INLPText> {
             }
         }
 
-        // split the search string into array of keys
-        String regex = CWStringUtils.join(
-                "|",
-                CWRegex.REGEX_JAV_CHARS,
-                CWRegex.REGEX_THAI_CHARS,
-                "(\\d+)",
-                "([^\\s\\d" + CWUnicode.JAV_CHARS + CWUnicode.THAI_CHARS + "]+)"
-        );
-        Matcher splitPar = Pattern.compile(regex).matcher(_search);
-        Map<String, Pattern> _searchPat = new LinkedHashMap<>();
-        while (splitPar.find()) {
-            String key = splitPar.group();
-            _searchPat.put(key, Pattern.compile(key));
-        }
-
-        // no keys are extracted
-        if (_searchPat.isEmpty()) {
-            callback.onEnd();
-            return;
-        }
-
         // Check matching
         for (T tx : targets) {
-            NLPMatchResult<T> result = new NLPMatchResult<>(tx);
-            for (Map.Entry<String, Pattern> entry : _searchPat.entrySet()) {
-                Matcher m = entry.getValue().matcher(Objects.requireNonNull(
-                        mTextMap.get(tx.nlpTextId(mContext)))
-                );
-                if (m.find()) {
-                    result.indexes.add(m.start());
-                    result.indexes.add(m.end());
-                    result.keys.add(entry.getKey());
+            NLPMatchResult<T> result = doMatching(_searchPat, tx);
+            if (result != null) {
+                // cache result is caching is available
+                if (mOptions.cache > 0) {
+                    Objects.requireNonNull(mCaches.get(_search)).add(result);
                 }
+                callback.onSuccess(result);
             }
-            if (result.keys.size() == _searchPat.size()) {
-                result.status = NLPMatchResult.Status.FULL_MATCH;
-            } else if (result.keys.size() > 0) {
-                result.status = NLPMatchResult.Status.PARTIAL_MATCH;
-            } else {
-                if (mOptions.matchOnly) {
-                    // do not include the not-match item in the result
-                    continue;
-                } else {
-                    result.status = NLPMatchResult.Status.NOT_MATCH;
-                }
-            }
-            // cache result is caching is available
-            if (mOptions.cache > 0) {
-                Objects.requireNonNull(mCaches.get(_search)).add(result);
-            }
-            callback.onSuccess(result);
         }
         callback.onEnd();
     }
 
     /**
-     * Check if the input string matches with search string or not.
+     * Check if the input string matches with search key or not.
      *
      * @param search   search string
      * @param callback callback function
@@ -379,7 +401,7 @@ public final class CWNLPEngine<T extends INLPText> {
     }
 
     /**
-     * Check if the input string matches with search string or not.
+     * Check if the input string matches with search key or not.
      *
      * @param search search string
      * @see CWNLPEngine#doMatching(CharSequence, CWCallback)
