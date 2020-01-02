@@ -412,29 +412,72 @@ public final class NlpEngineTest {
         CWNLPEngine.Options opts = new CWNLPEngine.Options();
         opts.cache = 3;
         opts.matchOnly = true;
-        CWNLPEngine<NLPString> engine = new CWNLPEngine<>(null, opts);
-        String[] textBags1 = new String[]{"you", "never", "know", "what", "happens", "next"};
-        String[] textBags2 = new String[]{"color", "of", "the", "wind"};
-        for (int i = 0; i < 10000; i++) {
-            engine.load(new NLPString(CWStringUtils.join(" ", CWMathUtils.shuffle(String.class, textBags1))));
-            engine.load(new NLPString(CWStringUtils.join(" ", CWMathUtils.shuffle(String.class, textBags2))));
+        CWNLPEngine<NLPString> engine;
+
+        // Testcase:
+        // Process 20000 text with using cache
+        {
+            engine = new CWNLPEngine<>(null, opts);
+            String[] textBags1 = new String[]{"you", "never", "know", "what", "happens", "next"};
+            String[] textBags2 = new String[]{"color", "of", "the", "wind"};
+            for (int i = 0; i < 10000; i++) {
+                engine.load(new NLPString(CWStringUtils.join(" ", CWMathUtils.shuffle(String.class, textBags1))));
+                engine.load(new NLPString(CWStringUtils.join(" ", CWMathUtils.shuffle(String.class, textBags2))));
+            }
+            engine.build();
+            long startTime = System.currentTimeMillis();
+            List<NLPMatchResult<NLPString>> results = engine.doMatching("never know");
+            Assert.assertEquals(10000, results.size());
+            long costWithoutCache = System.currentTimeMillis() - startTime;
+
+            // do matching again with the same search key
+            startTime = System.currentTimeMillis();
+            results = engine.doMatching("never know");
+            Assert.assertEquals(10000, results.size());
+            long costWithCache = System.currentTimeMillis() - startTime;
+
+            // compare
+            System.out.println("[NLPEngine] do matching without cache: " + costWithoutCache);
+            System.out.println("[NLPEngine] do matching with cache: " + costWithCache);
+            Assert.assertTrue(costWithCache < costWithoutCache);
         }
-        engine.build();
-        long startTime = System.currentTimeMillis();
-        List<NLPMatchResult<NLPString>> results = engine.doMatching("never know");
-        Assert.assertEquals(10000, results.size());
-        long costWithoutCache = System.currentTimeMillis() - startTime;
-        startTime = System.currentTimeMillis();
 
-        // do matching again with the same search key
-        results = engine.doMatching("never know");
-        Assert.assertEquals(10000, results.size());
-        long costWithCache = System.currentTimeMillis() - startTime;
+        // Testcase:
+        // Process 20000 text with using previous result of wrapping condition
+        {
+            engine = new CWNLPEngine<>(null, opts);
+            String[] textBags1 = new String[]{"you", "never", "know", "what", "happens", "next"};
+            String[] textBags2 = new String[]{"color", "the", "the", "col"};
+            String[] textBags3 = new String[]{"col", "of", "duty"};
+            for (int i = 0; i < 10000; i++) {
+                engine.load(new NLPString(CWStringUtils.join(" ", CWMathUtils.shuffle(String.class, textBags1))));
+            }
+            for (int i = 0; i < 5000; i++) {
+                engine.load(new NLPString(CWStringUtils.join(" ", CWMathUtils.shuffle(String.class, textBags2))));
+                engine.load(new NLPString(CWStringUtils.join(" ", CWMathUtils.shuffle(String.class, textBags3))));
+            }
+            engine.build();
 
-        // compare
-        System.out.println("[NLPEngine] do matching without cache: " + costWithoutCache);
-        System.out.println("[NLPEngine] do matching with cache: " + costWithCache);
-        Assert.assertTrue(costWithCache < costWithoutCache);
+            // do matching with the new search key which wrap the previous one without using cache
+            long startTime = System.currentTimeMillis();
+            List<NLPMatchResult<NLPString>> results = engine.doMatching("color");
+            long costWithoutCache = System.currentTimeMillis() - startTime;
+            engine.clearCache();
+            Assert.assertEquals(5000, results.size());
+
+            // do matching again with the new search key which wrap the previous one with using cache
+            results = engine.doMatching("col");
+            Assert.assertEquals(10000, results.size());
+            startTime = System.currentTimeMillis();
+            results = engine.doMatching("color");
+            long costWithCache = System.currentTimeMillis() - startTime;
+            Assert.assertEquals(5000, results.size());
+
+            // compare
+            System.out.println("[NLPEngine] do matching without pre-result: " + costWithoutCache);
+            System.out.println("[NLPEngine] do matching with pre-result: " + costWithCache);
+            Assert.assertTrue(costWithCache < costWithoutCache);
+        }
 
     }
 }

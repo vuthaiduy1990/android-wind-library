@@ -198,6 +198,15 @@ public final class CWNLPEngine<T extends INLPText> {
     }
 
     /**
+     * Check if the engine is using cache or not
+     *
+     * @return true if using else return false;
+     */
+    public boolean useCache() {
+        return mOptions.cache > 0;
+    }
+
+    /**
      * Clear cache
      */
     public void clearCache() {
@@ -286,7 +295,7 @@ public final class CWNLPEngine<T extends INLPText> {
     /**
      * Build the regex pattern for searching
      *
-     * @param searchKey the search key
+     * @param searchKey the search input
      * @return map between each split search key with respective pattern
      */
     private Map<String, Pattern> buildSearchPattern(CharSequence searchKey) {
@@ -310,6 +319,18 @@ public final class CWNLPEngine<T extends INLPText> {
 
     /**
      * Check if the input string (target) matches with search key or not.
+     * <pre>
+     *     String input = "Color the wind";
+     *
+     *     // full match - match all the keys without considering the order
+     *     doMatching("the color") -> status = FULL_MATCH
+     *
+     *     // partial match - match any keys from the search string
+     *     doMatching("color storm") -> status = PARTIAL_MATCH
+     *
+     *     // not match
+     *     doMatching("nothing") -> status = NOT_MATCH
+     * </pre>
      *
      * @param searchPat the search pattern. {{buildSearchPattern}}
      * @param target    the target for searching
@@ -343,6 +364,66 @@ public final class CWNLPEngine<T extends INLPText> {
 
     /**
      * Check if the input string (targets) matches with search key or not.
+     *
+     * @param searchKey the search input. Should be pre-processed
+     * @param targets   list of NLP texts
+     * @param callback  callback function
+     */
+    private void doMatching(CharSequence searchKey, List<T> targets, CWCallback<NLPMatchResult<T>> callback) {
+        String _search = searchKey.toString();
+        Map<String, Pattern> _searchPat = buildSearchPattern(_search);
+        if (_searchPat.isEmpty()) /* the search input is not valid for searching */ {
+            callback.onEnd();
+            return;
+        }
+
+        // Check matching
+        for (T tx : targets) {
+            NLPMatchResult<T> result = doMatching(_searchPat, tx);
+            // we can decide to accept this result or not by control the returned value of onSuccess function.
+            // Return null to inform that the result is not accepted.
+            // For example: we can use this way to accept the result which is full-match only
+            result = callback.onSuccess(result);
+            if (result != null && useCache()) {
+                // cache result is caching is available
+                Objects.requireNonNull(mCaches.get(_search)).add(result);
+            }
+        }
+    }
+
+    /**
+     * Do matching on results returned by previous search which is wrapped by new search condition
+     *
+     * @param searchKey          the search input. Should be pre-processed
+     * @param preMatchingResults list of NLP results
+     * @param callback           callback function
+     */
+    private void doMatchingOnPreResult(CharSequence searchKey, List<NLPMatchResult<T>> preMatchingResults, CWCallback<NLPMatchResult<T>> callback) {
+        String _search = searchKey.toString();
+        Map<String, Pattern> _searchPat = buildSearchPattern(_search);
+        if (_searchPat.isEmpty()) /* the search input is not valid for searching */ {
+            callback.onEnd();
+            return;
+        }
+
+        // Check matching
+        for (NLPMatchResult<T> rsx : preMatchingResults) {
+            NLPMatchResult<T> result = doMatching(_searchPat, rsx.target);
+            // we can decide to accept this result or not by control the returned value of onSuccess function.
+            // Return null to inform that the result is not accepted.
+            // For example: we can use this way to accept the result which is full-match only
+            result = callback.onSuccess(result);
+            if (result != null && useCache()) {
+                // cache result is caching is available
+                Objects.requireNonNull(mCaches.get(_search)).add(result);
+            }
+        }
+    }
+
+    /**
+     * Check if the input string matches with search key or not.
+     * <p>
+     * Usage:
      * <pre>
      *     String input = "Color the wind";
      *
@@ -355,75 +436,75 @@ public final class CWNLPEngine<T extends INLPText> {
      *     // not match
      *     doMatching("nothing") -> status = NOT_MATCH
      * </pre>
+     * <p>
+     * Tip1: Handle onSuccess(result) callback function
+     * <pre>
+     *     We can decide to accept this result or not by control the returned value of onSuccess function.
+     *     Return null to inform that the result is not accepted.
+     *     For example: we can use this way to accept the result which is full-match only
+     * </pre>
      *
-     * @param searchKey search string
-     * @param targets   list of NLP texts
+     * @param searchKey the search input
      * @param callback  callback function
+     * @see CWNLPEngine#doMatching(CharSequence, List, CWCallback)
      */
-    private void doMatching(CharSequence searchKey, List<T> targets, CWCallback<NLPMatchResult<T>> callback) {
+    public void doMatching(CharSequence searchKey, CWCallback<NLPMatchResult<T>> callback) {
         callback.onBegin();
         String _search = preProcess(new NLPString(searchKey));
-        Map<String, Pattern> _searchPat = buildSearchPattern(_search);
-        if (_searchPat.isEmpty()) /* the search input is not valid for searching */ {
-            callback.onEnd();
-            return;
-        }
-
-        // Use caching if it is available
-        List<NLPMatchResult<T>> cacheResults;
-        if (mOptions.cache > 0 && (cacheResults = mCaches.get(_search)) != null) {
-            // Get the search result from cache if available
-            for (NLPMatchResult<T> result : cacheResults) {
-                callback.onSuccess(result);
-            }
-            callback.onEnd();
-            return;
-        } else if (mOptions.cache > 0) {
-            mCaches.put(_search, new LinkedList<NLPMatchResult<T>>());
-            mCacheSearchKeys.add(_search);
-            if (mCacheSearchKeys.size() > mOptions.cache) /* exceed the cache limit */ {
-                mCaches.remove(mCacheSearchKeys.poll()); // remove the oldest one
-            }
-        }
-
-        // Check matching
-        for (T tx : targets) {
-            NLPMatchResult<T> result = doMatching(_searchPat, tx);
-            if (result != null) {
-                // cache result is caching is available
-                if (mOptions.cache > 0) {
-                    Objects.requireNonNull(mCaches.get(_search)).add(result);
+        if (useCache()) {
+            // the search result respective to given condition already cached -> use cache
+            List<NLPMatchResult<T>> cacheResults;
+            if ((cacheResults = mCaches.get(_search)) != null) {
+                // Get the search result from cache if available
+                for (NLPMatchResult<T> result : cacheResults) {
+                    callback.onSuccess(result);
                 }
-                callback.onSuccess(result);
+                callback.onEnd();
+                return;
+            } else {
+                mCaches.put(_search, new LinkedList<NLPMatchResult<T>>());
+                mCacheSearchKeys.add(_search);
+                if (mCacheSearchKeys.size() > mOptions.cache) /* exceed the cache limit */ {
+                    mCaches.remove(mCacheSearchKeys.poll()); // remove the oldest one
+                }
+            }
+
+            // Check if the search condition wraps the previous search condition or not.
+            // If has -> only do matching on the previous results.
+            // For example:
+            // List<NLPMatchResult<T>> preResults = engine.doMatching("col");
+            // engine.doMatching("color", preResults); // search on previous results because "colors" wrap "col"
+            String preSearchKey = null;
+            for (String key : mCacheSearchKeys) {
+                if (_search.length() > key.length() && _search.startsWith(key)
+                        && (preSearchKey == null || preSearchKey.length() < key.length())) {
+                    preSearchKey = key;
+                }
+            }
+            if (preSearchKey != null) {
+                doMatchingOnPreResult(_search, mCaches.get(preSearchKey), callback);
+                callback.onEnd();
+                return;
             }
         }
+        doMatching(_search, mTargetList, callback);
         callback.onEnd();
     }
 
     /**
      * Check if the input string matches with search key or not.
      *
-     * @param search   search string
-     * @param callback callback function
-     * @see CWNLPEngine#doMatching(CharSequence, List, CWCallback)
-     */
-    public void doMatching(CharSequence search, CWCallback<NLPMatchResult<T>> callback) {
-        // TODO: search with
-        doMatching(search, mTargetList, callback);
-    }
-
-    /**
-     * Check if the input string matches with search key or not.
-     *
-     * @param search search string
+     * @param searchKey the search input
      * @see CWNLPEngine#doMatching(CharSequence, CWCallback)
      */
-    public List<NLPMatchResult<T>> doMatching(CharSequence search) {
+    public List<NLPMatchResult<T>> doMatching(CharSequence searchKey) {
         final List<NLPMatchResult<T>> list = new LinkedList<>();
-        doMatching(search, new CWCallback<NLPMatchResult<T>>() {
+        doMatching(searchKey, new CWCallback<NLPMatchResult<T>>() {
             @Override
             public NLPMatchResult<T> onSuccess(NLPMatchResult<T> result) {
-                list.add(result);
+                if (result != null) {
+                    list.add(result);
+                }
                 return super.onSuccess(result);
             }
         });
