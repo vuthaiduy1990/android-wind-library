@@ -378,16 +378,33 @@ public final class NlpEngineTest {
         // These value should
         result3 = engine.doMatching("know");
         Assert.assertEquals(3, engine.getCaches().size());
+        Assert.assertEquals(4, result3.size());
         Assert.assertNull(engine.getCaches().get("you"));
         Assert.assertEquals(5, Objects.requireNonNull(engine.getCaches().get("never")).size());
-        Assert.assertEquals(4, result3.size());
         Assert.assertEquals(4, Objects.requireNonNull(engine.getCaches().get("know")).size());
+        Assert.assertEquals(3, Objects.requireNonNull(engine.getCaches().get("what")).size());
 
         // do matching with other difference key
         result3 = engine.doMatching("know what");
         Assert.assertNull(engine.getCaches().get("never"));
-        Assert.assertEquals(4, result3.size());
+        Assert.assertEquals(4, Objects.requireNonNull(engine.getCaches().get("know")).size());
+        Assert.assertEquals(3, Objects.requireNonNull(engine.getCaches().get("what")).size());
         Assert.assertEquals(4, Objects.requireNonNull(engine.getCaches().get("know what")).size());
+        Assert.assertEquals(4, result3.size());
+
+        // if no data added -> engine.build() will not clear cache
+        engine.build();
+        Assert.assertEquals(3, engine.getCaches().size());
+
+        // Data is updated -> build/rebuild will clear the cache
+        Assert.assertEquals(3, Objects.requireNonNull(engine.getCaches().get("what")).size());
+        engine.load(new NLPString("what the hell?"));
+        engine.build();
+        Assert.assertEquals(0, engine.getCaches().size());
+        result4 = engine.doMatching("what");
+        Assert.assertEquals(4, result4.size());
+        Assert.assertEquals(4, Objects.requireNonNull(engine.getCaches().get("what")).size());
+        Assert.assertEquals(1, engine.getCaches().size());
     }
 
     @Test

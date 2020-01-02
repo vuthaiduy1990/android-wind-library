@@ -82,7 +82,8 @@ public final class CWNLPEngine<T extends INLPText> {
 
     // Map between the search key with results
     private Map<String, List<NLPMatchResult<T>>> mCaches = new HashMap<>();
-    private Queue<String> mCacheKeys = new LinkedList<>();
+    // contains search keys which has been pre-processed.
+    private Queue<String> mCacheSearchKeys = new LinkedList<>();
 
     /**
      * Construct engine with the default setting
@@ -171,7 +172,7 @@ public final class CWNLPEngine<T extends INLPText> {
         mTargetQueue.clear();
         mTextMap.clear();
         mCaches.clear();
-        mCacheKeys.clear();
+        mCacheSearchKeys.clear();
         System.gc();
     }
 
@@ -201,7 +202,7 @@ public final class CWNLPEngine<T extends INLPText> {
      */
     public void clearCache() {
         mCaches.clear();
-        mCacheKeys.clear();
+        mCacheSearchKeys.clear();
     }
 
     /* ---------------------- METHOD ------------------------- */
@@ -237,6 +238,10 @@ public final class CWNLPEngine<T extends INLPText> {
      * @return engine
      */
     public CWNLPEngine<T> build() {
+        // clear cache if new data is added
+        if (mTargetQueue.size() > 0) {
+            clearCache();
+        }
         T target;
         while ((target = mTargetQueue.poll()) != null) {
             mTextMap.put(target.nlpTextId(mContext), preProcess(target));
@@ -252,6 +257,9 @@ public final class CWNLPEngine<T extends INLPText> {
      * @return engine
      */
     public CWNLPEngine<T> rebuild() {
+        // clear cache to make sure doMatching will always perform on updated data
+        clearCache();
+
         // rebuild pre-loaded texts
         for (T tx : mTargetList) {
             mTextMap.put(tx.nlpTextId(mContext), preProcess(tx));
@@ -264,10 +272,13 @@ public final class CWNLPEngine<T extends INLPText> {
     /**
      * Rebuild only the given target
      *
-     * @param target NLP text
+     * @param target NLP text which should be loaded before
      * @return engine
      */
     public CWNLPEngine<T> rebuild(T target) {
+        // clear cache to make sure doMatching will always perform on updated data
+        clearCache();
+        // pre-process only this given target
         mTextMap.put(target.nlpTextId(mContext), preProcess(target));
         return this;
     }
@@ -369,9 +380,9 @@ public final class CWNLPEngine<T extends INLPText> {
             return;
         } else if (mOptions.cache > 0) {
             mCaches.put(_search, new LinkedList<NLPMatchResult<T>>());
-            mCacheKeys.add(_search);
-            if (mCacheKeys.size() > mOptions.cache) /* exceed the cache limit */ {
-                mCaches.remove(mCacheKeys.poll()); // remove the oldest one
+            mCacheSearchKeys.add(_search);
+            if (mCacheSearchKeys.size() > mOptions.cache) /* exceed the cache limit */ {
+                mCaches.remove(mCacheSearchKeys.poll()); // remove the oldest one
             }
         }
 
@@ -397,6 +408,7 @@ public final class CWNLPEngine<T extends INLPText> {
      * @see CWNLPEngine#doMatching(CharSequence, List, CWCallback)
      */
     public void doMatching(CharSequence search, CWCallback<NLPMatchResult<T>> callback) {
+        // TODO: search with
         doMatching(search, mTargetList, callback);
     }
 
