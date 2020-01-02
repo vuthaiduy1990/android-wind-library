@@ -491,26 +491,6 @@ public final class CWNLPEngine<T extends INLPText> {
         callback.onEnd();
     }
 
-    /**
-     * Check if the input string matches with search key or not.
-     *
-     * @param searchKey the search input
-     * @see CWNLPEngine#doMatching(CharSequence, CWCallback)
-     */
-    public List<NLPMatchResult<T>> doMatching(CharSequence searchKey) {
-        final List<NLPMatchResult<T>> list = new LinkedList<>();
-        doMatching(searchKey, new CWCallback<NLPMatchResult<T>>() {
-            @Override
-            public NLPMatchResult<T> onSuccess(NLPMatchResult<T> result) {
-                if (result != null) {
-                    list.add(result);
-                }
-                return super.onSuccess(result);
-            }
-        });
-        return list;
-    }
-
     /* ---------------------- INNER CLASS -------------------- */
 
     /**

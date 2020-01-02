@@ -5,10 +5,12 @@ import org.junit.Test;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
 import the.wind.library.nlp.CWNLPEngine;
+import the.wind.library.nlp.INLPText;
 import the.wind.library.nlp.NLPMatchResult;
 import the.wind.library.nlp.NLPString;
 import the.wind.library.utils.CWMathUtils;
@@ -136,10 +138,10 @@ public final class NlpEngineTest {
             engine.load(new NLPString("color the wind"));
             engine.build();
 
-            List<NLPMatchResult<NLPString>> results = engine.doMatching("  ");
+            List<NLPMatchResult<NLPString>> results = doMatching(engine, "  ");
             Assert.assertEquals(0, results.size());
 
-            results = engine.doMatching("~!@#$%^&*()_+=}{~!@#$%^&*()_+=}{");
+            results = doMatching(engine, "~!@#$%^&*()_+=}{~!@#$%^&*()_+=}{");
             Assert.assertEquals(0, results.size());
         }
 
@@ -150,7 +152,7 @@ public final class NlpEngineTest {
             engine.load(new NLPString("color the wind"));
             engine.build();
 
-            List<NLPMatchResult<NLPString>> results = engine.doMatching("color");
+            List<NLPMatchResult<NLPString>> results = doMatching(engine, "color");
             NLPMatchResult<NLPString> r = results.get(0);
             Assert.assertEquals(1, results.size());
             Assert.assertTrue(r.isFullMatched());
@@ -167,7 +169,7 @@ public final class NlpEngineTest {
             };
             engine.load(inputs).build();
 
-            List<NLPMatchResult<NLPString>> results = engine.doMatching("  wind-風color %^color&風\n%*Y(  ");
+            List<NLPMatchResult<NLPString>> results = doMatching(engine, "  wind-風color %^color&風\n%*Y(  ");
             Assert.assertEquals(2, results.size());
             NLPMatchResult<NLPString> r1 = results.get(0);
             NLPMatchResult<NLPString> r2 = results.get(1);
@@ -196,7 +198,7 @@ public final class NlpEngineTest {
             engine.load(new NLPString("color the wind"));
             engine.build();
 
-            List<NLPMatchResult<NLPString>> results = engine.doMatching("wind color");
+            List<NLPMatchResult<NLPString>> results = doMatching(engine, "wind color");
             NLPMatchResult<NLPString> r = results.get(0);
             Assert.assertEquals(1, results.size());
             Assert.assertFalse(r.isPartialMatched());
@@ -214,7 +216,7 @@ public final class NlpEngineTest {
             engine.load(new NLPString("color the wind"));
             engine.build();
 
-            List<NLPMatchResult<NLPString>> results = engine.doMatching("red color");
+            List<NLPMatchResult<NLPString>> results = doMatching(engine, "red color");
             NLPMatchResult<NLPString> r = results.get(0);
             Assert.assertEquals(1, results.size());
             Assert.assertTrue(r.isPartialMatched());
@@ -231,7 +233,7 @@ public final class NlpEngineTest {
             engine.load(new NLPString("color the wind"));
             engine.build();
 
-            List<NLPMatchResult<NLPString>> results = engine.doMatching("storm");
+            List<NLPMatchResult<NLPString>> results = doMatching(engine, "storm");
             Assert.assertEquals(0, results.size());
         }
         // Not matched item is include in the result
@@ -242,7 +244,7 @@ public final class NlpEngineTest {
             engine.load(new NLPString("color the wind"));
             engine.build();
 
-            List<NLPMatchResult<NLPString>> results = engine.doMatching("storm");
+            List<NLPMatchResult<NLPString>> results = doMatching(engine, "storm");
             Assert.assertEquals(1, results.size());
             Assert.assertFalse(results.get(0).isMatched());
         }
@@ -255,13 +257,13 @@ public final class NlpEngineTest {
             engine.build();
 
             // search with 1 key
-            List<NLPMatchResult<NLPString>> results = engine.doMatching("風");
+            List<NLPMatchResult<NLPString>> results = doMatching(engine, "風");
             Assert.assertEquals(1, results.size());
             Assert.assertTrue(results.get(0).isFullMatched());
             Assert.assertEquals(1, results.get(0).keys.size());
 
             // search with 2 key
-            results = engine.doMatching("を風");
+            results = doMatching(engine, "を風");
             Assert.assertEquals(1, results.size());
             Assert.assertTrue(results.get(0).isFullMatched());
             Assert.assertEquals(2, results.get(0).keys.size());
@@ -275,13 +277,13 @@ public final class NlpEngineTest {
             engine.build();
 
             // search with 1 key
-            List<NLPMatchResult<NLPString>> results = engine.doMatching("ก");
+            List<NLPMatchResult<NLPString>> results = doMatching(engine, "ก");
             Assert.assertEquals(1, results.size());
             Assert.assertTrue(results.get(0).isFullMatched());
             Assert.assertEquals(1, results.get(0).keys.size());
 
             // search with 2 key
-            results = engine.doMatching("กร");
+            results = doMatching(engine, "กร");
             Assert.assertEquals(1, results.size());
             Assert.assertTrue(results.get(0).isFullMatched());
             Assert.assertEquals(2, results.get(0).keys.size());
@@ -295,13 +297,13 @@ public final class NlpEngineTest {
             engine.build();
 
             // search with 1 key
-            List<NLPMatchResult<NLPString>> results = engine.doMatching("Tô");
+            List<NLPMatchResult<NLPString>> results = doMatching(engine, "Tô");
             Assert.assertEquals(1, results.size());
             Assert.assertTrue(results.get(0).isFullMatched());
             Assert.assertEquals(1, results.get(0).keys.size());
 
             // search with 2 key
-            results = engine.doMatching("Tô cho");
+            results = doMatching(engine, "Tô cho");
             Assert.assertEquals(1, results.size());
             Assert.assertTrue(results.get(0).isFullMatched());
             Assert.assertEquals(2, results.get(0).keys.size());
@@ -315,31 +317,31 @@ public final class NlpEngineTest {
             engine.build();
 
             // only English
-            List<NLPMatchResult<NLPString>> results = engine.doMatching("color the");
+            List<NLPMatchResult<NLPString>> results = doMatching(engine, "color the");
             Assert.assertEquals(1, results.size());
             Assert.assertTrue(results.get(0).isFullMatched());
             Assert.assertEquals(2, results.get(0).keys.size());
 
             // Only Japanese
-            results = engine.doMatching("命勉");
+            results = doMatching(engine, "命勉");
             Assert.assertEquals(1, results.size());
             Assert.assertTrue(results.get(0).isFullMatched());
             Assert.assertEquals(2, results.get(0).keys.size());
 
             // Only Russian
-            results = engine.doMatching("аиболее");
+            results = doMatching(engine, "аиболее");
             Assert.assertEquals(1, results.size());
             Assert.assertTrue(results.get(0).isFullMatched());
             Assert.assertEquals(1, results.get(0).keys.size());
 
             // Only number
-            results = engine.doMatching("1508");
+            results = doMatching(engine, "1508");
             Assert.assertEquals(1, results.size());
             Assert.assertTrue(results.get(0).isFullMatched());
             Assert.assertEquals(1, results.get(0).keys.size());
 
             // space and non-space breaking languages
-            results = engine.doMatching("命color勉1508zzz");
+            results = doMatching(engine, "命color勉1508zzz");
             Assert.assertEquals(1, results.size());
             Assert.assertTrue(results.get(0).isPartialMatched());
             Assert.assertEquals(4, results.get(0).keys.size());
@@ -359,10 +361,10 @@ public final class NlpEngineTest {
         engine.build();
 
         // do matching in the first time
-        List<NLPMatchResult<NLPString>> result1 = engine.doMatching("you");
-        List<NLPMatchResult<NLPString>> result2 = engine.doMatching("never");
-        List<NLPMatchResult<NLPString>> result3 = engine.doMatching("know");
-        List<NLPMatchResult<NLPString>> result4 = engine.doMatching("what");
+        List<NLPMatchResult<NLPString>> result1 = doMatching(engine, "you");
+        List<NLPMatchResult<NLPString>> result2 = doMatching(engine, "never");
+        List<NLPMatchResult<NLPString>> result3 = doMatching(engine, "know");
+        List<NLPMatchResult<NLPString>> result4 = doMatching(engine, "what");
         Assert.assertEquals(3, engine.getCaches().size());
         Assert.assertEquals(6, result1.size());
         Assert.assertNull(engine.getCaches().get("you"));
@@ -376,7 +378,7 @@ public final class NlpEngineTest {
 
         // do matching again.
         // These value should
-        result3 = engine.doMatching("know");
+        result3 = doMatching(engine, "know");
         Assert.assertEquals(3, engine.getCaches().size());
         Assert.assertEquals(4, result3.size());
         Assert.assertNull(engine.getCaches().get("you"));
@@ -385,7 +387,7 @@ public final class NlpEngineTest {
         Assert.assertEquals(3, Objects.requireNonNull(engine.getCaches().get("what")).size());
 
         // do matching with other difference key
-        result3 = engine.doMatching("know what");
+        result3 = doMatching(engine, "know what");
         Assert.assertNull(engine.getCaches().get("never"));
         Assert.assertEquals(4, Objects.requireNonNull(engine.getCaches().get("know")).size());
         Assert.assertEquals(3, Objects.requireNonNull(engine.getCaches().get("what")).size());
@@ -401,7 +403,7 @@ public final class NlpEngineTest {
         engine.load(new NLPString("what the hell?"));
         engine.build();
         Assert.assertEquals(0, engine.getCaches().size());
-        result4 = engine.doMatching("what");
+        result4 = doMatching(engine, "what");
         Assert.assertEquals(4, result4.size());
         Assert.assertEquals(4, Objects.requireNonNull(engine.getCaches().get("what")).size());
         Assert.assertEquals(1, engine.getCaches().size());
@@ -426,13 +428,13 @@ public final class NlpEngineTest {
             }
             engine.build();
             long startTime = System.currentTimeMillis();
-            List<NLPMatchResult<NLPString>> results = engine.doMatching("never know");
+            List<NLPMatchResult<NLPString>> results = doMatching(engine, "never know");
             Assert.assertEquals(10000, results.size());
             long costWithoutCache = System.currentTimeMillis() - startTime;
 
             // do matching again with the same search key
             startTime = System.currentTimeMillis();
-            results = engine.doMatching("never know");
+            results = doMatching(engine, "never know");
             Assert.assertEquals(10000, results.size());
             long costWithCache = System.currentTimeMillis() - startTime;
 
@@ -460,16 +462,16 @@ public final class NlpEngineTest {
 
             // do matching with the new search key which wrap the previous one without using cache
             long startTime = System.currentTimeMillis();
-            List<NLPMatchResult<NLPString>> results = engine.doMatching("color");
+            List<NLPMatchResult<NLPString>> results = doMatching(engine, "color");
             long costWithoutCache = System.currentTimeMillis() - startTime;
             engine.clearCache();
             Assert.assertEquals(5000, results.size());
 
             // do matching again with the new search key which wrap the previous one with using cache
-            results = engine.doMatching("col");
+            results = doMatching(engine, "col");
             Assert.assertEquals(10000, results.size());
             startTime = System.currentTimeMillis();
-            results = engine.doMatching("color");
+            results = doMatching(engine, "color");
             long costWithCache = System.currentTimeMillis() - startTime;
             Assert.assertEquals(5000, results.size());
 
@@ -479,5 +481,19 @@ public final class NlpEngineTest {
             Assert.assertTrue(costWithCache < costWithoutCache);
         }
 
+    }
+
+    public <T extends INLPText> List<NLPMatchResult<T>> doMatching(CWNLPEngine<T> engine, CharSequence searchKey) {
+        final List<NLPMatchResult<T>> list = new LinkedList<>();
+        engine.doMatching(searchKey, new CWCallback<NLPMatchResult<T>>() {
+            @Override
+            public NLPMatchResult<T> onSuccess(NLPMatchResult<T> result) {
+                if (result != null) {
+                    list.add(result);
+                }
+                return super.onSuccess(result);
+            }
+        });
+        return list;
     }
 }
