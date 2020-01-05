@@ -58,7 +58,6 @@ public class CWindson {
 
     // gson and parser
     private Gson Gson;
-    private JsonParser mJsonParse;
 
     /**
      * Constructor
@@ -66,7 +65,6 @@ public class CWindson {
      * @param debug true -> debug mode
      */
     protected CWindson(boolean debug) {
-        mJsonParse = new JsonParser();
         GsonBuilder builder = new GsonBuilder();
         setBuilder(builder);
 
@@ -130,7 +128,7 @@ public class CWindson {
      * @return json element
      */
     public JsonElement parse(@NonNull String jsonString) {
-        return mJsonParse.parse(jsonString);
+        return JsonParser.parseString(jsonString);
     }
 
     /**
@@ -152,7 +150,7 @@ public class CWindson {
      * @return json element
      */
     public JsonElement parse(@NonNull File jsonFile) throws FileNotFoundException {
-        return mJsonParse.parse(new FileReader(jsonFile));
+        return JsonParser.parseReader(new FileReader(jsonFile));
     }
 
     /**

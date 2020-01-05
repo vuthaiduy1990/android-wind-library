@@ -483,7 +483,7 @@ public final class NlpEngineTest {
 
     }
 
-    public <T extends INLPText> List<NLPMatchResult<T>> doMatching(CWNLPEngine<T> engine, CharSequence searchKey) {
+    private <T extends INLPText> List<NLPMatchResult<T>> doMatching(CWNLPEngine<T> engine, CharSequence searchKey) {
         final List<NLPMatchResult<T>> list = new LinkedList<>();
         engine.doMatching(searchKey, new CWCallback<NLPMatchResult<T>>() {
             @Override
