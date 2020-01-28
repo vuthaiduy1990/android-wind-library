@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CheckboxView">
+        <attr name="animType" format="enum">
+            <enum name="DEFAULT_CIRCLE" value="0" />
+            <enum name="TAKAYA_DEGUCHI_1" value="1" />
+            <enum name="TAKAYA_DEGUCHI_2" value="2" />
+            <enum name="VICTOR_KAI" value="3" />
+            <enum name="LORIN" value="4" />
+            <enum name="DARIUS_AFCHAR" value="5" />
+            <enum name="GILSON_SANTOS_1" value="6" />
+            <enum name="GILSON_SANTOS_2" value="7" />
+            <enum name="DEFAULT_SQUARE" value="8" />
+            <enum name="DEFAULT_CHECKLIST" value="9" />
+        </attr>
+        <attr name="animColor" format="color" />
+    </declare-styleable>
+</resources>
