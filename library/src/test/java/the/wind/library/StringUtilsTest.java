@@ -244,4 +244,17 @@ public class StringUtilsTest {
         Assert.assertFalse(CWStringUtils.isLowerCase("Color The Wind"));
         Assert.assertTrue(CWStringUtils.isLowerCase("color the wind"));
     }
+
+    @Test
+    public void hasText() {
+        Assert.assertFalse(CWStringUtils.hasText(null));
+        Assert.assertFalse(CWStringUtils.hasText(""));
+        Assert.assertFalse(CWStringUtils.hasText("   "));
+        Assert.assertFalse(CWStringUtils.hasText("\n"));
+        Assert.assertFalse(CWStringUtils.hasText("\t"));
+        Assert.assertTrue(CWStringUtils.hasText("1235"));
+        Assert.assertTrue(CWStringUtils.hasText("xyz"));
+        Assert.assertTrue(CWStringUtils.hasText(" xyz "));
+
+    }
 }

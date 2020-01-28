@@ -232,4 +232,36 @@ public class CWStringUtils {
         return value.equals(value.toLowerCase());
     }
 
+    /**
+     * Check if the input contains text or not
+     * <pre>
+     *     hasText(null) = false
+     *     hasText("") = false
+     *     hasText(" ") = false
+     *     hasText("12345") = true
+     *     hasText(" 12345 ") = true
+     * </pre>
+     *
+     * @param input string input
+     * @return true if the input is not null and contains text, otherwise return false
+     */
+    public static boolean hasText(CharSequence input) {
+        return (input != null && input.length() > 0 && containsText(input));
+    }
+
+    /**
+     * Check if the string contains text or not
+     *
+     * @param input string
+     * @return true if the input contains text, otherwise return false
+     */
+    private static boolean containsText(CharSequence input) {
+        int strLen = input.length();
+        for (int i = 0; i < strLen; i++) {
+            if (!Character.isWhitespace(input.charAt(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
