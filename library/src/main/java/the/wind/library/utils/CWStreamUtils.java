@@ -68,6 +68,16 @@ public final class CWStreamUtils {
     }
 
     /**
+     * Convert string to bytes
+     *
+     * @param data string data
+     * @return byte data
+     */
+    public static byte[] stringToBytes(String data) {
+        return data.getBytes(StandardCharsets.UTF_8);
+    }
+
+    /**
      * Convert stream to bitmap
      *
      * @param stream input stream

@@ -1,9 +1,11 @@
 package the.wind.library.utils;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,6 +13,9 @@ import the.wind.library.CWRegex;
 import the.wind.library.CWUnicode;
 
 public class CWStringUtils {
+
+    // a random generator
+    private static final Random mRand = new Random();
 
     /**
      * Join strings with given delimiter
@@ -190,6 +195,20 @@ public class CWStringUtils {
         while (m.find()) {
             result.add(m.group());
         }
+        return result;
+    }
+
+    /**
+     * Generate random unbounded string with given length (bytes)
+     *
+     * @param length the number of bytes
+     * @return random string
+     */
+    public static String random(int length) {
+        byte[] array = new byte[length]; // length is bounded by 7
+        mRand.nextBytes(array);
+        String result = CWStreamUtils.bytesToString(array);
+        Arrays.fill(array, (byte) 0);
         return result;
     }
 

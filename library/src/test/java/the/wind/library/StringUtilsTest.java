@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import the.wind.library.utils.CWStreamUtils;
 import the.wind.library.utils.CWStringUtils;
 
 public class StringUtilsTest {
@@ -198,6 +199,34 @@ public class StringUtilsTest {
             Assert.assertEquals(expected.length, actual.size());
             for (int i = 0; i < expected.length; i++) {
                 Assert.assertEquals(expected[i], actual.get(i));
+            }
+        }
+    }
+
+    @Test
+    public void random() {
+        // Testcase: unique random string
+        {
+            int length = 128;
+            String firstRandom = CWStringUtils.random(length);
+            //System.out.println("unbounded random string: " + firstRandom);
+            for (int i = 0; i < 1000; i++) {
+                Assert.assertNotEquals(firstRandom, CWStringUtils.random(length));
+            }
+        }
+
+        // Testcase: check length
+        {
+            int[] lengths = new int[]{
+                    1,
+                    128, // bytes
+                    128 * 1024, // kbs
+                    5 * 1024 * 1024 // mbs
+            };
+            for (int len : lengths) {
+                String random = CWStringUtils.random(len);
+                System.out.println(random);
+                Assert.assertTrue(CWStreamUtils.stringToBytes(random).length >= len);
             }
         }
     }
