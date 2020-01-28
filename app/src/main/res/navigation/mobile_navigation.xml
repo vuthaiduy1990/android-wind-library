@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/_navHome">
+
+    <fragment
+        android:id="@+id/_navHome"
+        android:name="the.wind.library.sample.activity.fragment.HomePage"
+        android:label="@string/nav_header_title"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/_navCheckboxView"
+        android:name="the.wind.library.sample.activity.fragment.CheckboxViewPage"
+        android:label="@string/drawer_checkbox"
+        tools:layout="@layout/fragment_checkbox_layout" />
+</navigation>

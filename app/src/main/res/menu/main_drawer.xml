@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item
+        android:id="@+id/_navHome"
+        android:icon="@drawable/ic_home"
+        android:title="@string/drawer_home" />
+
+    <item android:title="@string/drawer_widget_components">
+        <menu>
+            <item
+                android:id="@+id/_navCheckboxView"
+                android:icon="@drawable/ic_checkbox"
+                android:title="@string/drawer_checkbox" />
+        </menu>
+    </item>
+
+</menu>

@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">AndroidLibrary</string>
+    <string name="app_name">WindLibrary</string>
+    <string name="nav_header_title">Wind Library</string>
+    <string name="nav_header_subtitle">vuthaiduy1990@gmail.com</string>
+    <string name="nav_header_desc">The wind library which can speedup your app development</string>
+
+    <string name="drawer_widget_components">Widget Components</string>
+    <string name="drawer_home">Home</string>
+    <string name="drawer_checkbox">Checkbox</string>
+
+    <string name="action_menu_settings">Settings</string>
 </resources>
