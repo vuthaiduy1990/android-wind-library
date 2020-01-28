@@ -1,7 +1,23 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <!-- |||||||||||||||||||||||||| Common ||||||||||||||||||||||||||| -->
+    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <dimen name="com_margin_hoz">8dp</dimen>
+    <dimen name="com_margin_ver">10dp</dimen>
+    <dimen name="com_spacing">8dp</dimen>
+    <dimen name="com_pad_ver">10dp</dimen>
+    <dimen name="com_pad_hoz">8dp</dimen>
+    <!-- Text Box -->
+    <dimen name="com_text_pad_ver">6dp</dimen>
+    <dimen name="com_text_pad_hoz">10dp</dimen>
+    <dimen name="com_border_radius">6dp</dimen>
+    <dimen name="com_title_size">22sp</dimen>
+    <dimen name="com_label_size">18sp</dimen>
+    <!-- Icon -->
+    <dimen name="com_icon_size">24dp</dimen>
+
+    <!-- |||||||||||||||||||||||| Navigation ||||||||||||||||||||||||| -->
+    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="checkbox_view_size">50dp</dimen>
 </resources>

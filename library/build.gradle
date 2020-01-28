@@ -41,5 +41,5 @@ dependencies {
 
     // Lottie Animation
     // https://github.com/airbnb/lottie-android/
-    implementation 'com.airbnb.android:lottie:3.3.0'
+    api 'com.airbnb.android:lottie:3.3.0'
 }

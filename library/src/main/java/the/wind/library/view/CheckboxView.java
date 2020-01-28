@@ -66,7 +66,7 @@ public class CheckboxView extends LottieAnimationView {
         setAnimType(mAnimType);
         setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         setRepeatCount(0);
-        configColor();
+        setAnimColor(mAnimColor);
 
         // set event listeners
         setOnClickListener(new View.OnClickListener() {
@@ -125,12 +125,13 @@ public class CheckboxView extends LottieAnimationView {
         setProgress(type.getInitialProgress());
     }
 
-    /* ---------------------- METHOD ------------------------- */
-
     /**
-     * Config the color
+     * Set animation color
+     *
+     * @param color color
      */
-    private void configColor() {
+    public void setAnimColor(int color) {
+        mAnimColor = color;
         if (mAnimColor == 0 || mAnimType == null) return;
         if (mAnimType.getProperties() != null) {
             for (String prop : mAnimType.getProperties()) {
@@ -144,6 +145,8 @@ public class CheckboxView extends LottieAnimationView {
             }
         }
     }
+
+    /* ---------------------- METHOD ------------------------- */
 
     /* ---------------------- INNER CLASS -------------------- */
 
@@ -193,6 +196,7 @@ public class CheckboxView extends LottieAnimationView {
                 new String[]{"circle-base"}
         ),
         // https://lottiefiles.com/8729-checkbox-animation
+        // VAISHAK_SHETTY_K
         DEFAULT_SQUARE(
                 R.raw.checkbox_view_default_square,
                 0f, 30f / 55f, 10f / 55f,
