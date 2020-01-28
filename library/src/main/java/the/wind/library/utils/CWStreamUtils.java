@@ -50,6 +50,7 @@ public final class CWStreamUtils {
      *
      * @param is input stream
      * @return string content
+     *
      * @throws IOException exception
      */
     public static String streamToString(InputStream is) throws IOException {

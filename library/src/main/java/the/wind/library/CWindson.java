@@ -160,6 +160,7 @@ public class CWindson {
      * @param clazz    model class
      * @param <T>      class type
      * @return mapped object
+     *
      * @throws FileNotFoundException exception
      */
     public <T> T parse(@NonNull File jsonFile, Class<T> clazz) throws FileNotFoundException {

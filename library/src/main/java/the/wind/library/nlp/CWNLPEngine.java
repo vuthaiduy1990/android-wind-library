@@ -134,6 +134,7 @@ public final class CWNLPEngine<T extends INLPText> {
      *
      * @param targets array of targets which implement {@link INLPText}
      * @return engine
+     *
      * @see CWNLPEngine#build
      * @see CWNLPEngine#rebuild
      */
@@ -152,6 +153,7 @@ public final class CWNLPEngine<T extends INLPText> {
      *
      * @param targetIt iterator
      * @return engine
+     *
      * @see CWNLPEngine#build
      * @see CWNLPEngine#rebuild
      */
