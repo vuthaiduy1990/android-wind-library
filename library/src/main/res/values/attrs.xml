@@ -10,8 +10,9 @@
             <enum name="DARIUS_AFCHAR" value="5" />
             <enum name="GILSON_SANTOS_1" value="6" />
             <enum name="GILSON_SANTOS_2" value="7" />
-            <enum name="DEFAULT_SQUARE" value="8" />
-            <enum name="DEFAULT_CHECKLIST" value="9" />
+            <enum name="AVIRAL_BAHUGUNA" value="8" />
+            <enum name="DEFAULT_SQUARE" value="9" />
+            <enum name="DEFAULT_CHECKLIST" value="10" />
         </attr>
         <attr name="animColor" format="color" />
     </declare-styleable>

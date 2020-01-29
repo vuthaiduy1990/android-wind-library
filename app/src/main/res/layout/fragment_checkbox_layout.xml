@@ -130,6 +130,33 @@
 
         </LinearLayout>
 
+        <!--  ======================= Darius Afchar ======================  -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Darius Afchar"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/com_title_size"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/com_spacing">
+
+            <the.wind.library.view.CheckboxView
+                android:layout_width="@dimen/checkbox_view_size"
+                android:layout_height="@dimen/checkbox_view_size"
+                app:animType="DARIUS_AFCHAR" />
+
+            <the.wind.library.view.CheckboxView
+                android:layout_width="@dimen/checkbox_view_size"
+                android:layout_height="@dimen/checkbox_view_size"
+                app:animColor="@color/colorAccent"
+                app:animType="DARIUS_AFCHAR" />
+
+        </LinearLayout>
+
         <!--  ======================= Gilson Santos ======================  -->
         <TextView
             android:layout_width="wrap_content"
@@ -165,6 +192,33 @@
                 android:layout_height="@dimen/checkbox_view_size"
                 app:animColor="@color/colorAccent"
                 app:animType="GILSON_SANTOS_2" />
+
+        </LinearLayout>
+
+        <!--  ====================== Aviral Bahuguna =====================  -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aviral Bahuguna"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/com_title_size"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/com_spacing">
+
+            <the.wind.library.view.CheckboxView
+                android:layout_width="@dimen/checkbox_view_size"
+                android:layout_height="@dimen/checkbox_view_size"
+                app:animType="AVIRAL_BAHUGUNA" />
+
+            <the.wind.library.view.CheckboxView
+                android:layout_width="@dimen/checkbox_view_size"
+                android:layout_height="@dimen/checkbox_view_size"
+                app:animColor="@color/colorAccent"
+                app:animType="AVIRAL_BAHUGUNA" />
 
         </LinearLayout>
 

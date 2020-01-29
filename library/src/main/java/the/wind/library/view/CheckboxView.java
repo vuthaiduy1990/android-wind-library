@@ -158,7 +158,7 @@ public class CheckboxView extends LottieAnimationView {
         // VICTOR_VINNHED
         DEFAULT_CIRCLE(
                 R.raw.checkbox_view_victor_vinnhed,
-                0f, 46f / 73f, 24f / 73f,
+                0f, 46f / 72f, 24f / 72f,
                 new String[]{"Rectangle 6 Copy"}),
         // https://lottiefiles.com/2492-check
         TAKAYA_DEGUCHI_1(
@@ -177,7 +177,7 @@ public class CheckboxView extends LottieAnimationView {
         // https://lottiefiles.com/3253-uploading-and-done
         LORIN(
                 R.raw.checkbox_view_lorin,
-                140f / 210f, 180f / 210f, 159f / 210f,
+                145f / 210f, 180f / 210f, 159f / 210f,
                 new String[]{"glod 6"}),
         // https://lottiefiles.com/1127-success
         DARIUS_AFCHAR(
@@ -194,6 +194,12 @@ public class CheckboxView extends LottieAnimationView {
                 R.raw.checkbox_view_gilson_santos,
                 0f, 72f / 130f, 22f / 130f,
                 new String[]{"circle-base"}
+        ),
+        // https://lottiefiles.com/9613-tick
+        AVIRAL_BAHUGUNA(
+                R.raw.checkbox_view_aviral_bahuguna,
+                0f, 35f / 40f, 16f / 40f,
+                new String[]{"Circle Stroke", "Circle Green Fill", "Circle Flash"}
         ),
         // https://lottiefiles.com/8729-checkbox-animation
         // VAISHAK_SHETTY_K
