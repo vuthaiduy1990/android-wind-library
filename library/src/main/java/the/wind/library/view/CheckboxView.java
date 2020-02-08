@@ -20,7 +20,7 @@ import the.wind.library.utils.CWStringUtils;
 public class CheckboxView extends LottieAnimationView {
 
     // checkbox status. true -> checked else unchecked
-    private boolean isChecked = false;
+    private boolean mChecked = false;
 
     // animation type
     private AnimType mAnimType = AnimType.DEFAULT_CIRCLE;
@@ -75,13 +75,13 @@ public class CheckboxView extends LottieAnimationView {
                 if (isAnimating()) {
                     return;
                 }
-                if (isChecked) {
+                if (mChecked) {
                     setProgress(mAnimType.getInitialProgress());
                 } else {
                     playAnimation();
                 }
-                isChecked = !isChecked;
-                mCheckedListener.onChecked(v, isChecked);
+                mChecked = !mChecked;
+                mCheckedListener.onChecked(v, mChecked);
             }
         });
     }
@@ -93,6 +93,29 @@ public class CheckboxView extends LottieAnimationView {
     /* ---------------------- EVENT -------------------------- */
 
     /* ---------------------- GET-SET ------------------------ */
+
+    /**
+     * Check if the checkbox is checked or not
+     *
+     * @return true if checked else return false
+     */
+    public boolean isChecked() {
+        return mChecked;
+    }
+
+    /**
+     * Set checked
+     *
+     * @param checked true -> checked
+     */
+    public void setChecked(boolean checked) {
+        mChecked = checked;
+        if (mChecked) {
+            setProgress(mAnimType.getMaxProgress());
+        } else {
+            setProgress(mAnimType.getInitialProgress());
+        }
+    }
 
     /**
      * Set checked listener

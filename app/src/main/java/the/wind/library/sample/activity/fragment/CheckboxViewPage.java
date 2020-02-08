@@ -24,6 +24,7 @@ public class CheckboxViewPage extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         CheckboxView checkboxView = view.findViewById(R.id._defaultCheckbox);
+        checkboxView.setChecked(true);
         checkboxView.setOnCheckedListener(new CheckboxView.OnCheckedListener() {
             @Override
             public void onChecked(View view, boolean checked) {

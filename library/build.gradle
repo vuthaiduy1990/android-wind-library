@@ -24,7 +24,7 @@ dependencies {
 
     // Android library
     implementation 'androidx.annotation:annotation:1.1.0'
-    implementation 'androidx.core:core:1.1.0'
+    implementation 'androidx.core:core:1.2.0'
 
     // Required for test
     testImplementation 'junit:junit:4.12'
