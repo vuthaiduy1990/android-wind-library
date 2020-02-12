@@ -3,16 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/_navHome">
+    app:startDestination="@+id/_navHomeMenu">
 
+    <!-- id must be the same as item in main_drawer.xml -->
     <fragment
-        android:id="@+id/_navHome"
+        android:id="@+id/_navHomeMenu"
         android:name="the.wind.library.sample.activity.fragment.HomePage"
         android:label="@string/nav_header_title"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/_navCheckboxView"
+        android:id="@+id/_navCheckboxViewMenu"
         android:name="the.wind.library.sample.activity.fragment.CheckboxViewPage"
         android:label="@string/drawer_checkbox"
         tools:layout="@layout/fragment_checkbox_layout" />
