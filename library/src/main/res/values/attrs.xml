@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="CheckboxView">
+    <declare-styleable name="Checkbox">
         <attr name="animType" format="enum">
             <enum name="DEFAULT_CIRCLE" value="0" />
             <enum name="TAKAYA_DEGUCHI_1" value="1" />

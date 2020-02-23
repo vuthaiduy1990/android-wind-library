@@ -24,13 +24,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/com_spacing">
 
-            <the.wind.library.view.CheckboxView
+            <the.wind.library.view.Checkbox
                 android:id="@+id/_defaultCheckbox"
                 android:layout_width="@dimen/checkbox_view_size"
                 android:layout_height="@dimen/checkbox_view_size"
                 app:animType="DEFAULT_CIRCLE" />
 
-            <the.wind.library.view.CheckboxView
+            <the.wind.library.view.Checkbox
                 android:layout_width="@dimen/checkbox_view_size"
                 android:layout_height="@dimen/checkbox_view_size"
                 app:animColor="@color/colorAccent"
@@ -52,23 +52,23 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/com_spacing">
 
-            <the.wind.library.view.CheckboxView
+            <the.wind.library.view.Checkbox
                 android:layout_width="@dimen/checkbox_view_size"
                 android:layout_height="@dimen/checkbox_view_size"
                 app:animType="TAKAYA_DEGUCHI_1" />
 
-            <the.wind.library.view.CheckboxView
+            <the.wind.library.view.Checkbox
                 android:layout_width="@dimen/checkbox_view_size"
                 android:layout_height="@dimen/checkbox_view_size"
                 app:animColor="@color/colorAccent"
                 app:animType="TAKAYA_DEGUCHI_1" />
 
-            <the.wind.library.view.CheckboxView
+            <the.wind.library.view.Checkbox
                 android:layout_width="@dimen/checkbox_view_size"
                 android:layout_height="@dimen/checkbox_view_size"
                 app:animType="TAKAYA_DEGUCHI_2" />
 
-            <the.wind.library.view.CheckboxView
+            <the.wind.library.view.Checkbox
                 android:layout_width="@dimen/checkbox_view_size"
                 android:layout_height="@dimen/checkbox_view_size"
                 app:animColor="@color/colorAccent"
@@ -90,12 +90,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/com_spacing">
 
-            <the.wind.library.view.CheckboxView
+            <the.wind.library.view.Checkbox
                 android:layout_width="@dimen/checkbox_view_size"
                 android:layout_height="@dimen/checkbox_view_size"
                 app:animType="VICTOR_KAI" />
 
-            <the.wind.library.view.CheckboxView
+            <the.wind.library.view.Checkbox
                 android:layout_width="@dimen/checkbox_view_size"
                 android:layout_height="@dimen/checkbox_view_size"
                 app:animColor="@color/colorAccent"
@@ -117,12 +117,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/com_spacing">
 
-            <the.wind.library.view.CheckboxView
+            <the.wind.library.view.Checkbox
                 android:layout_width="@dimen/checkbox_view_size"
                 android:layout_height="@dimen/checkbox_view_size"
                 app:animType="LORIN" />
 
-            <the.wind.library.view.CheckboxView
+            <the.wind.library.view.Checkbox
                 android:layout_width="@dimen/checkbox_view_size"
                 android:layout_height="@dimen/checkbox_view_size"
                 app:animColor="@color/colorAccent"
@@ -144,12 +144,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/com_spacing">
 
-            <the.wind.library.view.CheckboxView
+            <the.wind.library.view.Checkbox
                 android:layout_width="@dimen/checkbox_view_size"
                 android:layout_height="@dimen/checkbox_view_size"
                 app:animType="DARIUS_AFCHAR" />
 
-            <the.wind.library.view.CheckboxView
+            <the.wind.library.view.Checkbox
                 android:layout_width="@dimen/checkbox_view_size"
                 android:layout_height="@dimen/checkbox_view_size"
                 app:animColor="@color/colorAccent"
@@ -171,23 +171,23 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/com_spacing">
 
-            <the.wind.library.view.CheckboxView
+            <the.wind.library.view.Checkbox
                 android:layout_width="@dimen/checkbox_view_size"
                 android:layout_height="@dimen/checkbox_view_size"
                 app:animType="GILSON_SANTOS_1" />
 
-            <the.wind.library.view.CheckboxView
+            <the.wind.library.view.Checkbox
                 android:layout_width="@dimen/checkbox_view_size"
                 android:layout_height="@dimen/checkbox_view_size"
                 app:animColor="@color/colorAccent"
                 app:animType="GILSON_SANTOS_1" />
 
-            <the.wind.library.view.CheckboxView
+            <the.wind.library.view.Checkbox
                 android:layout_width="@dimen/checkbox_view_size"
                 android:layout_height="@dimen/checkbox_view_size"
                 app:animType="GILSON_SANTOS_2" />
 
-            <the.wind.library.view.CheckboxView
+            <the.wind.library.view.Checkbox
                 android:layout_width="@dimen/checkbox_view_size"
                 android:layout_height="@dimen/checkbox_view_size"
                 app:animColor="@color/colorAccent"
@@ -209,12 +209,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/com_spacing">
 
-            <the.wind.library.view.CheckboxView
+            <the.wind.library.view.Checkbox
                 android:layout_width="@dimen/checkbox_view_size"
                 android:layout_height="@dimen/checkbox_view_size"
                 app:animType="AVIRAL_BAHUGUNA" />
 
-            <the.wind.library.view.CheckboxView
+            <the.wind.library.view.Checkbox
                 android:layout_width="@dimen/checkbox_view_size"
                 android:layout_height="@dimen/checkbox_view_size"
                 app:animColor="@color/colorAccent"
@@ -236,12 +236,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/com_spacing">
 
-            <the.wind.library.view.CheckboxView
+            <the.wind.library.view.Checkbox
                 android:layout_width="@dimen/checkbox_view_size"
                 android:layout_height="@dimen/checkbox_view_size"
                 app:animType="DEFAULT_SQUARE" />
 
-            <the.wind.library.view.CheckboxView
+            <the.wind.library.view.Checkbox
                 android:layout_width="@dimen/checkbox_view_size"
                 android:layout_height="@dimen/checkbox_view_size"
                 app:animColor="@color/colorAccent"
@@ -263,12 +263,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/com_spacing">
 
-            <the.wind.library.view.CheckboxView
+            <the.wind.library.view.Checkbox
                 android:layout_width="@dimen/checkbox_view_size"
                 android:layout_height="@dimen/checkbox_view_size"
                 app:animType="DEFAULT_CHECKLIST" />
 
-            <the.wind.library.view.CheckboxView
+            <the.wind.library.view.Checkbox
                 android:layout_width="@dimen/checkbox_view_size"
                 android:layout_height="@dimen/checkbox_view_size"
                 app:animColor="@color/colorAccent"

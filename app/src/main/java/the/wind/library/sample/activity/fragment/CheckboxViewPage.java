@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import the.wind.library.sample.R;
-import the.wind.library.view.CheckboxView;
+import the.wind.library.view.Checkbox;
 
 public class CheckboxViewPage extends Fragment {
 
@@ -23,9 +23,9 @@ public class CheckboxViewPage extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        CheckboxView checkboxView = view.findViewById(R.id._defaultCheckbox);
+        Checkbox checkboxView = view.findViewById(R.id._defaultCheckbox);
         checkboxView.setChecked(true);
-        checkboxView.setOnCheckedListener(new CheckboxView.OnCheckedListener() {
+        checkboxView.setOnCheckedListener(new Checkbox.OnCheckedListener() {
             @Override
             public void onChecked(View view, boolean checked) {
                 Toast.makeText(view.getContext(), Boolean.toString(checked), Toast.LENGTH_SHORT).show();

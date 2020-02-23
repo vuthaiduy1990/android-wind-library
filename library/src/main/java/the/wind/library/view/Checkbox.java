@@ -17,7 +17,7 @@ import the.wind.library.utils.CWStringUtils;
 /**
  * Checkbox view
  */
-public class CheckboxView extends LottieAnimationView {
+public class Checkbox extends LottieAnimationView {
 
     // checkbox status. true -> checked else unchecked
     private boolean mChecked = false;
@@ -36,25 +36,25 @@ public class CheckboxView extends LottieAnimationView {
         }
     };
 
-    public CheckboxView(Context context) {
+    public Checkbox(Context context) {
         this(context, null);
     }
 
-    public CheckboxView(Context context, AttributeSet attrs) {
+    public Checkbox(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public CheckboxView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public Checkbox(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray typeArray = context.getTheme().obtainStyledAttributes(
-                attrs, R.styleable.CheckboxView,
+                attrs, R.styleable.Checkbox,
                 0, 0);
         try {
             // get anim type;
-            int animIdx = typeArray.getInt(R.styleable.CheckboxView_animType, 0);
+            int animIdx = typeArray.getInt(R.styleable.Checkbox_animType, 0);
             mAnimType = AnimType.values()[animIdx];
             // get anim color
-            mAnimColor = typeArray.getColor(R.styleable.CheckboxView_animColor, 0);
+            mAnimColor = typeArray.getColor(R.styleable.Checkbox_animColor, 0);
 
         } catch (Exception ex) {
             ex.printStackTrace();
