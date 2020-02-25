@@ -7,6 +7,7 @@
     <string name="drawer_widget_components">Widget Components</string>
     <string name="drawer_home">Home</string>
     <string name="drawer_checkbox">Checkbox</string>
+    <string name="drawer_wind_color">Wind Color</string>
 
     <string name="action_menu_settings">Settings</string>
 </resources>

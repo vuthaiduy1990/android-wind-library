@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import the.wind.library.sample.R;
 import the.wind.library.view.Checkbox;
 
-public class CheckboxViewPage extends Fragment {
+public class CheckboxPage extends Fragment {
 
     @Nullable
     @Override

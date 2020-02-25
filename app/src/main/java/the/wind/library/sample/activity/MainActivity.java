@@ -19,8 +19,9 @@ import the.wind.library.sample.R;
 public class MainActivity extends AppCompatActivity {
 
     private final int[] NAVIGATION_ITEMS = new int[]{
-            R.id._navCheckboxViewMenu,
-            R.id._navHomeMenu
+            R.id._navHomeMenu,
+            R.id._navCheckboxMenu,
+            R.id._navColorMenu
     };
     private AppBarConfiguration mAppBarConfiguration;
 

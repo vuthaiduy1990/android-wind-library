@@ -11,9 +11,13 @@
     <item android:title="@string/drawer_widget_components">
         <menu>
             <item
-                android:id="@+id/_navCheckboxViewMenu"
+                android:id="@+id/_navCheckboxMenu"
                 android:icon="@drawable/ic_checkbox"
                 android:title="@string/drawer_checkbox" />
+            <item
+                android:id="@+id/_navColorMenu"
+                android:icon="@drawable/ic_color"
+                android:title="@string/drawer_wind_color" />
         </menu>
     </item>
 
