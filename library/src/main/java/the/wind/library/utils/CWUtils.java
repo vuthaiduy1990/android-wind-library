@@ -14,6 +14,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.Settings;
+import android.util.Size;
 import android.view.Display;
 import android.view.View;
 
@@ -102,11 +103,11 @@ public final class CWUtils {
      * @param context android activity
      * @return size of current screen
      */
-    public static Point getScreenSize(Activity context) {
+    public static Size getScreenSize(Activity context) {
         Display display = context.getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        return size;
+        return new Size(size.x, size.y);
     }
 
     /**
