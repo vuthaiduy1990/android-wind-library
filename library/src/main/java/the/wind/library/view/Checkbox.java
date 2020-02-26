@@ -15,7 +15,15 @@ import the.wind.library.R;
 import the.wind.library.utils.CWStringUtils;
 
 /**
- * Checkbox view
+ * Checkbox view.
+ * Basic usage:
+ * <pre>
+ *     <the.wind.library.view.Checkbox
+ *          android:layout_width="wrap_content"
+ *          android:layout_height="wrap_content"
+ *          app:animColor="#3191bf"
+ *          app:animType="VICTOR_KAI" />
+ * </pre>
  */
 public class Checkbox extends LottieAnimationView {
 
@@ -180,61 +188,61 @@ public class Checkbox extends LottieAnimationView {
         // https://lottiefiles.com/4964-check-mark-success-animation
         // VICTOR_VINNHED
         DEFAULT_CIRCLE(
-                R.raw.checkbox_view_victor_vinnhed,
+                R.raw.checkbox_victor_vinnhed,
                 0f, 46f / 72f, 24f / 72f,
                 new String[]{"Rectangle 6 Copy"}),
         // https://lottiefiles.com/2492-check
         TAKAYA_DEGUCHI_1(
-                R.raw.checkbox_view_takaya_deguchi,
+                R.raw.checkbox_takaya_deguchi,
                 0f, 35f / 60f, 12f / 60f,
                 new String[]{"circle fill", "circle stroke"}),
         TAKAYA_DEGUCHI_2(
-                R.raw.checkbox_view_takaya_deguchi,
+                R.raw.checkbox_takaya_deguchi,
                 0f, 35f / 60f, 25f / 60f,
                 new String[]{"circle fill", "circle stroke"}),
         // https://lottiefiles.com/527-check
         VICTOR_KAI(
-                R.raw.checkbox_view_victor_kai,
+                R.raw.checkbox_victor_kai,
                 0f, 23f / 60f, 6f / 60f,
                 null),
         // https://lottiefiles.com/3253-uploading-and-done
         LORIN(
-                R.raw.checkbox_view_lorin,
+                R.raw.checkbox_lorin,
                 145f / 210f, 180f / 210f, 159f / 210f,
                 new String[]{"glod 6"}),
         // https://lottiefiles.com/1127-success
         DARIUS_AFCHAR(
-                R.raw.checkbox_view_darius_afchar,
+                R.raw.checkbox_darius_afchar,
                 0f, 34f / 45f, 14f / 45f,
                 new String[]{"Shape Layer 1"}),
         // https://lottiefiles.com/13820-icon-check
         GILSON_SANTOS_1(
-                R.raw.checkbox_view_gilson_santos,
+                R.raw.checkbox_gilson_santos,
                 0f, 72f / 130f, 15f / 130f,
                 new String[]{"circle-base"}
         ),
         GILSON_SANTOS_2(
-                R.raw.checkbox_view_gilson_santos,
+                R.raw.checkbox_gilson_santos,
                 0f, 72f / 130f, 22f / 130f,
                 new String[]{"circle-base"}
         ),
         // https://lottiefiles.com/9613-tick
         AVIRAL_BAHUGUNA(
-                R.raw.checkbox_view_aviral_bahuguna,
+                R.raw.checkbox_aviral_bahuguna,
                 0f, 35f / 40f, 16f / 40f,
                 new String[]{"Circle Stroke", "Circle Green Fill", "Circle Flash"}
         ),
         // https://lottiefiles.com/8729-checkbox-animation
         // VAISHAK_SHETTY_K
         DEFAULT_SQUARE(
-                R.raw.checkbox_view_default_square,
+                R.raw.checkbox_default_square,
                 0f, 30f / 55f, 10f / 55f,
                 new String[]{"Layer 3/check Outlines 2", "Layer 3/check Outlines"}
         ),
         // https://lottiefiles.com/8600-check-list
         // ILYA_PAVLOV
         DEFAULT_CHECKLIST(
-                R.raw.checkbox_view_default_checklist,
+                R.raw.checkbox_default_checklist,
                 0f, 56f / 60f, 0f,
                 new String[]{"Sheet"}
         );
