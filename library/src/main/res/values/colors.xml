@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- |||||||||||||||||||||||||| Button ||||||||||||||||||||||||||| -->
+    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <color name="button_text">#ffffff</color>
+    <color name="primary">#3191bf</color>
+    <color name="primary_pressed">#1b85b8</color>
+    <color name="success">#41b3a3</color>
+    <color name="success_pressed">#3aa192</color>
+    <color name="info">#30a3b2</color>
+    <color name="info_pressed">#1a99aa</color>
+    <color name="highlight">#ecd06f</color>
+    <color name="highlight_pressed">#d4bb63</color>
+    <color name="warning">#e8a87c</color>
+    <color name="warning_pressed">#d0976f</color>
+    <color name="danger">#e26060</color>
+    <color name="danger_pressed">#cb5656</color>
+    <color name="gray">#afafaf</color>
+    <color name="gray_pressed">#9d9d9d</color>
+</resources>

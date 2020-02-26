@@ -11,9 +11,9 @@ import android.graphics.Color;
  */
 public class CWindColor {
 
-    public static final CWindColor PRIMARY = CWindColor.fromHex("#1b85b8");
+    public static final CWindColor PRIMARY = CWindColor.fromHex("#3191bf");
     public static final CWindColor SUCCESS = CWindColor.fromHex("#41b3a3");
-    public static final CWindColor INFO = CWindColor.fromHex("#1a99aa");
+    public static final CWindColor INFO = CWindColor.fromHex("#30a3b2");
     public static final CWindColor HIGHLIGHT = CWindColor.fromHex("#ecd06f");
     public static final CWindColor WARNING = CWindColor.fromHex("#e8a87c");
     public static final CWindColor DANGER = CWindColor.fromHex("#e26060");

@@ -16,4 +16,30 @@
         </attr>
         <attr name="animColor" format="color" />
     </declare-styleable>
+    <declare-styleable name="Button">
+        <attr name="type" format="enum">
+            <enum name="PRIMARY" value="0" />
+            <enum name="SUCCESS" value="1" />
+            <enum name="INFO" value="2" />
+            <enum name="HIGHLIGHT" value="3" />
+            <enum name="WARNING" value="4" />
+            <enum name="DANGER" value="5" />
+            <enum name="GRAY" value="6" />
+        </attr>
+        <attr name="customIcon" format="reference" />
+        <attr name="customAnim" format="reference" />
+        <attr name="iconSize" format="dimension" />
+        <attr name="inlineIcon" format="enum">
+            <enum name="OK" value="0" />
+            <enum name="EDIT" value="1" />
+            <enum name="SAVE" value="2" />
+            <enum name="TRASH" value="3" />
+            <enum name="WAITING" value="4" />
+            <enum name="SEARCH" value="5" />
+        </attr>
+        <attr name="text" format="reference" />
+        <attr name="textColor" format="color" />
+        <attr name="textSize" format="reference" />
+        <attr name="spacing" format="dimension" />
+    </declare-styleable>
 </resources>

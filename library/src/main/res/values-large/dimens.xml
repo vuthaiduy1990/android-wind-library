@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- |||||||||||||||||||||||||| Default |||||||||||||||||||||||||| -->
+    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <dimen name="button_border_radius">8dp</dimen>
+    <dimen name="button_icon_size">20dp</dimen>
+    <dimen name="button_icon_text">18sp</dimen>
+    <dimen name="button_spacing">7dp</dimen>
+    <dimen name="button_padding_start">14dp</dimen>
+    <dimen name="button_padding_end">14dp</dimen>
+    <dimen name="button_padding_top">10dp</dimen>
+    <dimen name="button_padding_bottom">11dp</dimen>
+</resources>

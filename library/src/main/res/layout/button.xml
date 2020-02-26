@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <!-- Icon -->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <!-- Static Icon -->
+        <ImageView
+            android:id="@+id/_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            tools:ignore="ContentDescription" />
+
+        <!-- Animation Icon -->
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/_lottieIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:visibility="gone"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true" />
+
+    </RelativeLayout>
+
+    <!-- spacing -->
+    <RelativeLayout
+        android:id="@+id/_space"
+        android:layout_width="0dp"
+        android:layout_height="1dp" />
+
+    <!-- Text -->
+    <TextView
+        android:id="@+id/_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center" />
+
+</LinearLayout>
