@@ -253,8 +253,12 @@ public class Button extends LinearLayout {
      * @param visible true -> show else hide
      */
     public void setIconVisible(boolean visible) {
-        _icon.setVisibility(visible ? VISIBLE : GONE);
-        _lottieIcon.setVisibility(visible ? VISIBLE : GONE);
+        if (visible) {
+            judgeIcon();
+        } else {
+            _icon.setVisibility(GONE);
+            _lottieIcon.setVisibility(GONE);
+        }
         _space.setVisibility(isSpacing() ? VISIBLE : GONE);
     }
 

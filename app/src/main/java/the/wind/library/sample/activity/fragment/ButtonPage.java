@@ -43,15 +43,19 @@ public class ButtonPage extends Fragment {
             public void onClick(View v) {
                 if (state == 0) /* animate icon */ {
                     state = 1;
+                    _eventButton.setIconVisible(true);
                     _eventButton.icon().startAnimation(anim);
 
                 } else if (state == 1) /*hide text*/ {
                     state = 2;
                     _eventButton.icon().clearAnimation();
                     _eventButton.setTextVisible(false);
-                } else /*show text again*/ {
-                    state = 0;
+                } else if (state == 2) /*show text again*/ {
+                    state = 3;
                     _eventButton.setTextVisible(true);
+                } else /* hide icon */ {
+                    state = 0;
+                    _eventButton.setIconVisible(false);
                 }
             }
         });
