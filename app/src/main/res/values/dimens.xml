@@ -20,4 +20,9 @@
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="checkbox_view_size">50dp</dimen>
+
+    <!-- |||||||||||||||||||||||| Button Demo |||||||||||||||||||||||| -->
+    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <dimen name="button_custom_text_size">32sp</dimen>
+
 </resources>

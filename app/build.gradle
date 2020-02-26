@@ -36,4 +36,8 @@ dependencies {
 
     // Wind library
     implementation project(path: ':library')
+
+    // Flexbox layout
+    // https://github.com/google/flexbox-layout
+    implementation 'com.google.android:flexbox:2.0.1'
 }

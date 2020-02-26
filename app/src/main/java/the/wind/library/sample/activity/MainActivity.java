@@ -21,7 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private final int[] NAVIGATION_ITEMS = new int[]{
             R.id._navHomeMenu,
             R.id._navCheckboxMenu,
-            R.id._navColorMenu
+            R.id._navColorMenu,
+            R.id._navButtonMenu
     };
     private AppBarConfiguration mAppBarConfiguration;
 

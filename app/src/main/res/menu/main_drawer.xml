@@ -5,19 +5,23 @@
 
     <item
         android:id="@+id/_navHomeMenu"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_nav_home"
         android:title="@string/drawer_home" />
 
     <item android:title="@string/drawer_widget_components">
         <menu>
             <item
                 android:id="@+id/_navCheckboxMenu"
-                android:icon="@drawable/ic_checkbox"
+                android:icon="@drawable/ic_nav_checkbox"
                 android:title="@string/drawer_checkbox" />
             <item
                 android:id="@+id/_navColorMenu"
-                android:icon="@drawable/ic_color"
+                android:icon="@drawable/ic_nav_color"
                 android:title="@string/drawer_wind_color" />
+            <item
+                android:id="@+id/_navButtonMenu"
+                android:icon="@drawable/ic_nav_button"
+                android:title="@string/drawer_button" />
         </menu>
     </item>
 

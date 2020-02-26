@@ -8,6 +8,22 @@
     <string name="drawer_home">Home</string>
     <string name="drawer_checkbox">Checkbox</string>
     <string name="drawer_wind_color">Wind Color</string>
+    <string name="drawer_button">Button</string>
 
     <string name="action_menu_settings">Settings</string>
+
+    <string name="button_primary">Primary</string>
+    <string name="button_success">Success</string>
+    <string name="button_info">Info</string>
+    <string name="button_highlight">Highlight</string>
+    <string name="button_warning">Warning</string>
+    <string name="button_danger">Danger</string>
+    <string name="button_gray">Gray</string>
+    <string name="button_delete">Yes,Delete it!</string>
+    <string name="button_ok">Apply</string>
+    <string name="button_edit">Edit</string>
+    <string name="button_save">Save</string>
+    <string name="button_loading">Loading</string>
+    <string name="button_search">Cancel</string>
+    <string name="button_yahoo">Yahoooo !!!</string>
 </resources>

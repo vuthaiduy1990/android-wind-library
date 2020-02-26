@@ -9,3 +9,21 @@
 /* ---------------------- METHOD ------------------------- */
 
 /* ---------------------- INNER CLASS -------------------- */
+
+
+<!-- ||||||||||||||||||||||| Main Activity ||||||||||||||||||||||| -->
+<!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+
+
+<!-- |||||||||||||||||||||||| Coding Rule |||||||||||||||||||||||| -->
+<!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+Activity Class: MainActivity
+Activity Resource: main_activity
+View: _fabMenu  [component][function]
+View ID: _fabMenu
+Attribute: mColor
+Resource ID: ma_fab_setting [parent][component][function]
+Resource String: ma_fab_setting [parent][component][function]
+Resource Drawable: ma_fab_setting
+
+Common: com_[function]

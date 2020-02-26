@@ -23,4 +23,10 @@
         android:name="the.wind.library.sample.activity.fragment.ColorPage"
         android:label="@string/drawer_wind_color"
         tools:layout="@layout/fragment_color_layout" />
+
+    <fragment
+        android:id="@+id/_navButtonMenu"
+        android:name="the.wind.library.sample.activity.fragment.ButtonPage"
+        android:label="@string/drawer_button"
+        tools:layout="@layout/fragment_button_layout" />
 </navigation>
