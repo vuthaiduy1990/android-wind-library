@@ -129,6 +129,27 @@
                 app:inlineIcon="SEARCH"
                 app:type="INFO" />
 
+            <the.wind.library.view.Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                app:inlineIcon="SETTING"
+                app:type="GRAY" />
+
+            <the.wind.library.view.Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                app:inlineIcon="LOCK"
+                app:type="PRIMARY" />
+
+            <the.wind.library.view.Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                app:inlineIcon="INFO"
+                app:type="INFO" />
+
         </com.google.android.flexbox.FlexboxLayout>
 
         <!-- icon + text -->
@@ -189,6 +210,30 @@
                 android:layout_margin="1dp"
                 app:inlineIcon="SEARCH"
                 app:text="@string/button_search"
+                app:type="INFO" />
+
+            <the.wind.library.view.Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                app:inlineIcon="SETTING"
+                app:text="@string/button_setting"
+                app:type="GRAY" />
+
+            <the.wind.library.view.Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                app:inlineIcon="LOCK"
+                app:text="@string/button_lock"
+                app:type="PRIMARY" />
+
+            <the.wind.library.view.Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                app:inlineIcon="INFO"
+                app:text="@string/button_info"
                 app:type="INFO" />
 
         </com.google.android.flexbox.FlexboxLayout>

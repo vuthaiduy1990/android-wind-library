@@ -36,6 +36,9 @@
             <enum name="TRASH" value="3" />
             <enum name="WAITING" value="4" />
             <enum name="SEARCH" value="5" />
+            <enum name="INFO" value="6" />
+            <enum name="LOCK" value="7" />
+            <enum name="SETTING" value="8" />
         </attr>
         <attr name="text" format="reference" />
         <attr name="textColor" format="color" />

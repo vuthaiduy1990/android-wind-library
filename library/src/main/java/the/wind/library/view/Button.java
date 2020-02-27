@@ -396,7 +396,10 @@ public class Button extends LinearLayout {
         SAVE(R.drawable.com_ic_save, false),
         TRASH(R.drawable.com_ic_trash, false),
         WAITING(R.raw.button_waiting, true),
-        SEARCH(R.drawable.com_ic_search, false);
+        SEARCH(R.drawable.com_ic_search, false),
+        INFO(R.drawable.com_ic_info, false),
+        LOCK(R.drawable.com_ic_lock, false),
+        SETTING(R.drawable.com_ic_setting, false);
 
         private int iconRes;
         private boolean useAnim;

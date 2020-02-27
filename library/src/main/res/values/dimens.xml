@@ -9,5 +9,5 @@
     <dimen name="button_padding_start">10dp</dimen>
     <dimen name="button_padding_end">10dp</dimen>
     <dimen name="button_padding_top">6dp</dimen>
-    <dimen name="button_padding_bottom">7dp</dimen>
+    <dimen name="button_padding_bottom">6dp</dimen>
 </resources>
