@@ -24,8 +24,8 @@
     <string name="button_edit">Edit</string>
     <string name="button_save">Save</string>
     <string name="button_loading">Loading</string>
-    <string name="button_search">Cancel</string>
-    <string name="button_setting">Setting</string>
-    <string name="button_lock">Lock</string>
+    <string name="button_search">Search</string>
+    <string name="button_setting">日本語</string>
+    <string name="button_lock">Tôi là người Việt Nam</string>
     <string name="button_yahoo">Yahoooo !!!</string>
 </resources>

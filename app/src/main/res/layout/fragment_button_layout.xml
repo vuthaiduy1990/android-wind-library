@@ -256,7 +256,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
                 app:inlineIcon="TRASH"
-                app:text="@string/button_delete"
+                app:text="Are you sure?"
+                app:textSize="15sp"
                 app:type="DANGER" />
         </com.google.android.flexbox.FlexboxLayout>
 

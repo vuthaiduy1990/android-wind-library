@@ -104,20 +104,20 @@ public class Button extends LinearLayout {
             judgeIcon();
 
             // bind text attributes
-            int textRes = btTypeArray.getResourceId(R.styleable.Button_text, 0);
+            String textValue = btTypeArray.getString(R.styleable.Button_text);
             int textColorRes = btTypeArray.getColor(
                     R.styleable.Button_textColor,
                     ContextCompat.getColor(context, R.color.button_text));
-            int textSize = btTypeArray.getResourceId(
+            float textSize = btTypeArray.getDimension(
                     R.styleable.Button_textSize,
-                    R.dimen.button_icon_text);
+                    getResources().getDimension(R.dimen.button_icon_text));
             LinearLayout.LayoutParams textLayout = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
             _textView.setLayoutParams(textLayout);
-            setText(textRes);
+            setText(textValue);
             setTextColor(textColorRes);
-            setTextSize(textSize);
+            _textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 
             // bind space attribute
             float spacing = btTypeArray.getDimension(
@@ -284,29 +284,27 @@ public class Button extends LinearLayout {
     }
 
     /**
+     * Set text value
+     *
+     * @param text text value
+     */
+    public void setText(CharSequence text) {
+        _textView.setText(text);
+        if (text == null || text.toString().isEmpty()) {
+            _textView.setVisibility(GONE);
+        } else {
+            _textView.setVisibility(VISIBLE);
+        }
+        _space.setVisibility(isSpacing() ? VISIBLE : GONE);
+    }
+
+    /**
      * Set text color
      *
      * @param resId color resource id
      */
     public void setTextColor(int resId) {
         _textView.setTextColor(resId);
-    }
-
-    /**
-     * Set text size
-     *
-     * @param textRes text size resource. Should you sp unit
-     */
-    public void setTextSize(int textRes) {
-        if (textRes != 0) {
-            _textView.setTextSize(
-                    TypedValue.COMPLEX_UNIT_PX,
-                    getResources().getDimension(textRes));
-        } else {
-            _textView.setTextSize(
-                    TypedValue.COMPLEX_UNIT_PX,
-                    getResources().getDimension(R.dimen.button_icon_text));
-        }
     }
 
     /**

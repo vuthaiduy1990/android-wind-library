@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Checkbox's attributes -->
     <declare-styleable name="Checkbox">
         <attr name="animType" format="enum">
             <enum name="DEFAULT_CIRCLE" value="0" />
@@ -16,6 +17,8 @@
         </attr>
         <attr name="animColor" format="color" />
     </declare-styleable>
+
+    <!-- Button's attributes -->
     <declare-styleable name="Button">
         <attr name="type" format="enum">
             <enum name="PRIMARY" value="0" />
@@ -40,9 +43,9 @@
             <enum name="LOCK" value="7" />
             <enum name="SETTING" value="8" />
         </attr>
-        <attr name="text" format="reference" />
+        <attr name="text" format="string" />
         <attr name="textColor" format="color" />
-        <attr name="textSize" format="reference" />
+        <attr name="textSize" format="dimension" />
         <attr name="spacing" format="dimension" />
     </declare-styleable>
 </resources>
