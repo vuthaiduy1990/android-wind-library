@@ -29,4 +29,10 @@
         android:name="the.wind.library.sample.activity.fragment.ButtonPage"
         android:label="@string/drawer_button"
         tools:layout="@layout/fragment_button_layout" />
+
+    <fragment
+        android:id="@+id/_navDialogMenu"
+        android:name="the.wind.library.sample.activity.fragment.DialogPage"
+        android:label="@string/drawer_dialog"
+        tools:layout="@layout/fragment_dialog_layout" />
 </navigation>
