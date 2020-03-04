@@ -110,7 +110,7 @@ public class Button extends LinearLayout {
                     ContextCompat.getColor(context, R.color.button_text));
             float textSize = btTypeArray.getDimension(
                     R.styleable.Button_textSize,
-                    getResources().getDimension(R.dimen.button_icon_text));
+                    getResources().getDimension(R.dimen.button_text));
             LinearLayout.LayoutParams textLayout = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);

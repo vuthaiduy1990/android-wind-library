@@ -4,7 +4,7 @@
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     <dimen name="button_border_radius">8dp</dimen>
     <dimen name="button_icon_size">24dp</dimen>
-    <dimen name="button_icon_text">22sp</dimen>
+    <dimen name="button_text">22sp</dimen>
     <dimen name="button_spacing">9dp</dimen>
     <dimen name="button_padding_start">16dp</dimen>
     <dimen name="button_padding_end">18dp</dimen>
