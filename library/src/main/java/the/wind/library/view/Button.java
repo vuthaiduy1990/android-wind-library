@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +87,9 @@ public class Button extends LinearLayout {
         try {
             // retrieve button type
             int typeIdx = btTypeArray.getInt(R.styleable.Button_type, 0);
-            setType(Type.values()[typeIdx]);
+            if (getBackground() == null) {
+                setType(Type.values()[typeIdx]);
+            }
 
             // bind icon's attributes
             int iconIdx = btTypeArray.getInt(R.styleable.Button_inlineIcon, -1);
@@ -132,7 +135,7 @@ public class Button extends LinearLayout {
             btTypeArray.recycle();
         }
         setClickable(true);
-
+        setGravity(Gravity.CENTER);
         // set default padding
         setDefaultPadding(
                 R.dimen.button_padding_start,
@@ -140,7 +143,6 @@ public class Button extends LinearLayout {
                 R.dimen.button_padding_end,
                 R.dimen.button_padding_bottom
         );
-
     }
 
     /* ---------------------- OVERRIDE ----------------------- */
@@ -176,9 +178,7 @@ public class Button extends LinearLayout {
      * @param type type
      */
     public void setType(Type type) {
-        if (getBackground() == null) {
-            setBackgroundResource(type.getBackground());
-        }
+        setBackgroundResource(type.getBackground());
     }
 
     /**
