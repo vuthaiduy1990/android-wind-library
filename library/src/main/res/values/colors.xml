@@ -17,4 +17,10 @@
     <color name="danger_pressed">#cb5656</color>
     <color name="gray">#afafaf</color>
     <color name="gray_pressed">#9d9d9d</color>
+
+    <!-- ||||||||||||||||||||||| Wind Dialog ||||||||||||||||||||||||| -->
+    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <color name="wind_dialog_background">#ffffff</color>
+    <color name="wind_dialog_title">#2d2d2d</color>
+    <color name="wind_dialog_text">#575757</color>
 </resources>

@@ -10,4 +10,21 @@
     <dimen name="button_padding_end">14dp</dimen>
     <dimen name="button_padding_top">10dp</dimen>
     <dimen name="button_padding_bottom">10dp</dimen>
+
+    <!-- |||||||||||||||||||||||| Wind Dialog |||||||||||||||||||||||| -->
+    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <dimen name="wind_dialog_width">480dp</dimen>
+    <dimen name="wind_dialog_border_radius">8dp</dimen>
+    <dimen name="wind_dialog_padding_start">18dp</dimen>
+    <dimen name="wind_dialog_padding_end">18dp</dimen>
+    <dimen name="wind_dialog_padding_top">14dp</dimen>
+    <dimen name="wind_dialog_padding_bottom">14dp</dimen>
+    <dimen name="wind_dialog_tatsumaki_icon_size">84dp</dimen>
+    <dimen name="wind_dialog_tatsumaki_title_size">26sp</dimen>
+    <dimen name="wind_dialog_tatsumaki_title_margin_top">14dp</dimen>
+    <dimen name="wind_dialog_tatsumaki_text_size">18sp</dimen>
+    <dimen name="wind_dialog_tatsumaki_text_margin_top">8dp</dimen>
+    <dimen name="wind_dialog_button_spacing">5dp</dimen>
+    <dimen name="wind_dialog_button_margin">18dp</dimen>
+    <dimen name="wind_dialog_button_min_width">100dp</dimen>
 </resources>
