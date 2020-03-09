@@ -15,7 +15,8 @@ public class CWindColor {
     public static final CWindColor SUCCESS = CWindColor.fromHex("#41b3a3");
     public static final CWindColor INFO = CWindColor.fromHex("#30a3b2");
     public static final CWindColor HIGHLIGHT = CWindColor.fromHex("#ecd06f");
-    public static final CWindColor WARNING = CWindColor.fromHex("#e8a87c");
+    public static final CWindColor WARNING = CWindColor.fromHex("#FFC71F");
+    public static final CWindColor NOTIFICATION = CWindColor.fromHex("#e8a87c");
     public static final CWindColor DANGER = CWindColor.fromHex("#e26060");
     public static final CWindColor LIGHT = CWindColor.fromHex("#dfdfde");
     public static final CWindColor GRAY = CWindColor.fromHex("#afafaf");

@@ -11,8 +11,10 @@
     <color name="info_pressed">#1a99aa</color>
     <color name="highlight">#ecd06f</color>
     <color name="highlight_pressed">#d4bb63</color>
-    <color name="warning">#e8a87c</color>
-    <color name="warning_pressed">#d0976f</color>
+    <color name="notification">#e8a87c</color>
+    <color name="notification_pressed">#d0976f</color>
+    <color name="warning">#ffcc00</color>
+    <color name="warning_pressed">#e5b700</color>
     <color name="danger">#e26060</color>
     <color name="danger_pressed">#cb5656</color>
     <color name="gray">#afafaf</color>

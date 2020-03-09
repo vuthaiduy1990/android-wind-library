@@ -369,7 +369,8 @@ public class Button extends LinearLayout {
         HIGHLIGHT(R.drawable.button_background_highlight),
         WARNING(R.drawable.button_background_warning),
         DANGER(R.drawable.button_background_danger),
-        GRAY(R.drawable.button_background_gray);
+        GRAY(R.drawable.button_background_gray),
+        NOTIFICATION(R.drawable.button_background_notification);
 
         private int background;
 
