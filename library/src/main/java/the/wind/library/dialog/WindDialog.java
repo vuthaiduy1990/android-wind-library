@@ -29,7 +29,7 @@ public class WindDialog extends Dialog {
 
     // layout
     private ViewGroup _layout;
-    private View _customBodyView;
+    private View _customContentView;
     private int mWidth;
     private int mHeight;
     private int mPaddingLeft;
@@ -53,11 +53,11 @@ public class WindDialog extends Dialog {
     private boolean mFooterVisible = true;
 
     // model
-    private Type mType;
+    private LayoutType mLayoutType;
     private Timer mTimer;
-    private int mIconRes;
+    private int mIconResId;
     private Bitmap mIconBitmap;
-    private int mLottieIcon;
+    private int mLottieIconResId;
     private CharSequence mTitle = "";
 
     // Animation
@@ -72,19 +72,19 @@ public class WindDialog extends Dialog {
      * @param context application context
      */
     public WindDialog(@NonNull Context context) {
-        this(context, Type.TATSUMAKI);
+        this(context, LayoutType.TATSUMAKI);
     }
 
     /**
      * Constructor
      *
-     * @param context application context
-     * @param type    dialog type
+     * @param context    application context
+     * @param layoutType dialog layout type
      */
-    public WindDialog(@NonNull Context context, Type type) {
+    public WindDialog(@NonNull Context context, LayoutType layoutType) {
         super(context, R.style.wind_dialog);
         mTimer = new Timer();
-        mType = type;
+        mLayoutType = layoutType;
         setWidth((int) context.getResources().getDimension(R.dimen.wind_dialog_width));
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         setPadding(
@@ -94,7 +94,7 @@ public class WindDialog extends Dialog {
                 (int) context.getResources().getDimension(R.dimen.wind_dialog_padding_bottom)
         );
         setInOutAnimType(InOutAnimType.SWEET_ALERT);
-        setCustomBodyView(mType.getContentLayout());
+        setContentView(mLayoutType.getContentLayout());
         setCancelable(false);
         setCanceledOnTouchOutside(false);
     }
@@ -104,7 +104,7 @@ public class WindDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(mType.getDialogLayout());
+        super.setContentView(mLayoutType.getDialogLayout());
 
         // Config the layout
         _layout = findViewById(R.id._layout);
@@ -123,7 +123,7 @@ public class WindDialog extends Dialog {
         _footerHolder = findViewById(R.id._footerHolder);
 
         // Add custom content view
-        setCustomBodyView(_customBodyView);
+        setContentView(_customContentView);
 
         // add button
         Button btn;
@@ -141,8 +141,11 @@ public class WindDialog extends Dialog {
     @Override
     protected void onStart() {
         super.onStart();
-        if (_dialogView != null && mInAnim != null) {
-            _dialogView.startAnimation(mInAnim);
+        if (_dialogView != null) {
+            if (mInAnim != null) _dialogView.startAnimation(mInAnim);
+            if (_lottieIcon != null && _lottieIcon.getVisibility() == View.VISIBLE) {
+                _lottieIcon.playAnimation();
+            }
         }
     }
 
@@ -166,6 +169,32 @@ public class WindDialog extends Dialog {
     @Override
     public void setTitle(int titleId) {
         setTitle(getContext().getString(titleId));
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        if (layoutResID != 0) {
+            View view = getLayoutInflater().inflate(layoutResID, null);
+            setContentView(view);
+        }
+    }
+
+    @Override
+    public void setContentView(@NonNull View view) {
+        setContentView(view, null);
+    }
+
+    @Override
+    public void setContentView(@NonNull View view, @Nullable ViewGroup.LayoutParams params) {
+        _customContentView = view;
+        if (_bodyHolder != null) {
+            _bodyHolder.removeAllViews();
+            if (params != null) {
+                _bodyHolder.addView(view, params);
+            } else {
+                _bodyHolder.addView(view);
+            }
+        }
     }
 
     /* ---------------------- STATIC ------------------------- */
@@ -312,7 +341,7 @@ public class WindDialog extends Dialog {
      * @return dialog
      */
     public WindDialog setIcon(int resId) {
-        mIconRes = resId;
+        mIconResId = resId;
         if (_icon != null && _lottieIcon != null) {
             judgeIcon();
         }
@@ -340,7 +369,7 @@ public class WindDialog extends Dialog {
      * @return dialog
      */
     public WindDialog setLottieIcon(int resId) {
-        mLottieIcon = resId;
+        mLottieIconResId = resId;
         if (_icon != null && _lottieIcon != null) {
             judgeIcon();
         }
@@ -359,15 +388,15 @@ public class WindDialog extends Dialog {
 
         // lottie icon -> static icon -> bitmap icon
         boolean useAnim;
-        if (mLottieIcon != 0) {
+        if (mLottieIconResId != 0) {
             // use animation icon
             useAnim = true;
-            _lottieIcon.setAnimation(mLottieIcon);
+            _lottieIcon.setAnimation(mLottieIconResId);
 
-        } else if (mIconRes != 0) {
+        } else if (mIconResId != 0) {
             // use static icon
             useAnim = false;
-            _icon.setImageResource(mIconRes);
+            _icon.setImageResource(mIconResId);
 
         } else if (mIconBitmap != null) {
             // use bitmap icon
@@ -407,37 +436,38 @@ public class WindDialog extends Dialog {
     /**
      * @return body view
      */
-    public View bodyView() {
-        return _customBodyView;
+    public View contentView() {
+        return _customContentView;
     }
 
     /**
-     * Set custom body view
+     * Set content text
+     * Available for tatsumaki layout only
      *
-     * @param view body view
+     * @param resId string resource id
+     * @return dialog
      */
-    public void setCustomBodyView(@NonNull View view) {
-        _customBodyView = view;
-        if (_bodyHolder != null) {
-            _bodyHolder.removeAllViews();
-            _bodyHolder.addView(view);
-        }
+    public WindDialog setContentText(int resId) {
+        return setContentText(getContext().getString(resId));
     }
 
     /**
-     * Set custom body view
+     * Set content text
+     * Available for tatsumaki layout only
      *
-     * @param layoutId body layout
+     * @param text string value
+     * @return dialog
      */
-    @Nullable
-    public View setCustomBodyView(int layoutId) {
-        if (layoutId != 0) {
-            View view = getLayoutInflater().inflate(layoutId, null);
-            setCustomBodyView(view);
-            return view;
+    public WindDialog setContentText(CharSequence text) {
+        if (LayoutType.TATSUMAKI.equals(mLayoutType)) {
+            TextView textView = _customContentView.findViewById(R.id._content);
+            if (textView != null) {
+                textView.setText(text);
+            }
         }
-        return null;
+        return this;
     }
+
 
     /**
      * Set footer visibility
@@ -458,7 +488,6 @@ public class WindDialog extends Dialog {
      *
      * @return first button
      */
-    @Nullable
     public Button button() {
         return _btnList.size() > 0 ? _btnList.get(0) : null;
     }
@@ -547,14 +576,14 @@ public class WindDialog extends Dialog {
     /**
      * Dialog type
      */
-    public enum Type {
+    public enum LayoutType {
         TATSUMAKI(R.layout.wind_dialog_tatsumaki, R.layout.wind_dialog_tatsumaki_content),
         FUBUKI(R.layout.wind_dialog_fubuki, 0);
 
         private int layout;
         private int content;
 
-        Type(int layout, int content) {
+        LayoutType(int layout, int content) {
             this.layout = layout;
             this.content = content;
         }
