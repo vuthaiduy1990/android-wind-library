@@ -45,8 +45,9 @@ public class WindDialog extends Dialog {
     private ViewGroup _footerHolder;
     private List<Button> _btnList = new LinkedList<>();
 
-    // visibility
+    // view attribute
     private boolean mIconVisible = true;
+    private boolean mShowImmediately = false;
 
     // model
     private LayoutType mLayoutType;
@@ -125,11 +126,22 @@ public class WindDialog extends Dialog {
     @Override
     protected void onStart() {
         super.onStart();
-        if (_dialogView != null) {
-            if (mInAnim != null) _dialogView.startAnimation(mInAnim);
-            if (_lottieIcon != null && _lottieIcon.getVisibility() == View.VISIBLE) {
-                _lottieIcon.playAnimation();
-            }
+        if (_dialogView == null) return;
+
+        // Show dialog with animation in case the animation is available and the showing status is not immediately
+        if (mInAnim != null && !mShowImmediately) {
+            _dialogView.startAnimation(mInAnim);
+        }
+        mShowImmediately = false;
+
+        // Animate the lottie icon
+        if (_lottieIcon != null && _lottieIcon.getVisibility() == View.VISIBLE) {
+            _lottieIcon.post(new Runnable() {
+                @Override
+                public void run() {
+                    _lottieIcon.playAnimation();
+                }
+            });
         }
     }
 
@@ -419,6 +431,17 @@ public class WindDialog extends Dialog {
     }
 
     /**
+     * Set content view visibility
+     *
+     * @param visible true/false
+     * @return dialog
+     */
+    public WindDialog setContentViewVisible(boolean visible) {
+        _bodyHolder.setVisibility(visible ? View.VISIBLE : View.GONE);
+        return this;
+    }
+
+    /**
      * Set content text
      * Available for tatsumaki layout only
      *
@@ -517,6 +540,31 @@ public class WindDialog extends Dialog {
         return addButton(btn);
     }
 
+    /**
+     * Set button text
+     *
+     * @param idx   the button number
+     * @param resId string resource id
+     * @return dialog
+     */
+    public WindDialog setButtonText(int idx, int resId) {
+        return setButtonText(idx, getContext().getString(resId));
+    }
+
+    /**
+     * Set button text
+     *
+     * @param idx  @param idx the button number
+     * @param text string value
+     * @return dialog
+     */
+    public WindDialog setButtonText(int idx, CharSequence text) {
+        if (idx < _btnList.size()) {
+            _btnList.get(idx).setText(text);
+        }
+        return this;
+    }
+
     /* ---------------------- METHOD ------------------------- */
 
     /**
@@ -540,6 +588,43 @@ public class WindDialog extends Dialog {
                 });
             }
         }, timeout);
+    }
+
+    /**
+     * Show dialog immediately without animation
+     */
+    public void showImmediately() {
+        mShowImmediately = true;
+        show();
+    }
+
+    /**
+     * Show dialog immediately without animation
+     * After timeout, the dialog will be auto dismissed
+     *
+     * @param timeout in milliseconds
+     */
+    public void showImmediately(long timeout) {
+        mShowImmediately = true;
+        show(timeout);
+    }
+
+    /**
+     * Dismiss immediately
+     */
+    public void dismissImmediately() {
+        super.dismiss();
+    }
+
+    /**
+     * Apply custom template
+     *
+     * @param template dialog template
+     * @return dialog
+     */
+    public WindDialog apply(ITemplate template) {
+        template.onSetting(this);
+        return this;
     }
 
     /* ---------------------- INNER CLASS -------------------- */
@@ -610,4 +695,17 @@ public class WindDialog extends Dialog {
             return AnimationUtils.loadAnimation(context, outAnimResId);
         }
     }
+
+    /**
+     * Dialog Template
+     */
+    public interface ITemplate {
+        /**
+         * On setting dialog
+         *
+         * @param dialog wind dialog
+         */
+        void onSetting(WindDialog dialog);
+    }
+
 }

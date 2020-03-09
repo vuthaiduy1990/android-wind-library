@@ -19,7 +19,9 @@
     <dimen name="wind_dialog_padding_end">18dp</dimen>
     <dimen name="wind_dialog_padding_top">14dp</dimen>
     <dimen name="wind_dialog_padding_bottom">14dp</dimen>
-    <dimen name="wind_dialog_tatsumaki_icon_size">84dp</dimen>
+    <dimen name="wind_dialog_tatsumaki_icon_size">96dp</dimen>
+    <dimen name="wind_dialog_tatsumaki_full_loading_icon_size">172dp</dimen>
+    <dimen name="wind_dialog_tatsumaki_full_loading_icon_margin">24dp</dimen>
     <dimen name="wind_dialog_tatsumaki_title_size">26sp</dimen>
     <dimen name="wind_dialog_tatsumaki_title_margin_top">14dp</dimen>
     <dimen name="wind_dialog_tatsumaki_text_size">18sp</dimen>
