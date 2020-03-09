@@ -16,7 +16,6 @@ import com.airbnb.lottie.LottieAnimationView;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -44,13 +43,10 @@ public class WindDialog extends Dialog {
     private TextView _tvTitle;
     private ViewGroup _bodyHolder;
     private ViewGroup _footerHolder;
-    private Queue<Button> _buttonQueue = new LinkedList<>();
     private List<Button> _btnList = new LinkedList<>();
 
     // visibility
     private boolean mIconVisible = true;
-    private boolean mTitleVisible = true;
-    private boolean mFooterVisible = true;
 
     // model
     private LayoutType mLayoutType;
@@ -58,7 +54,6 @@ public class WindDialog extends Dialog {
     private int mIconResId;
     private Bitmap mIconBitmap;
     private int mLottieIconResId;
-    private CharSequence mTitle = "";
 
     // Animation
     @Nullable
@@ -83,8 +78,12 @@ public class WindDialog extends Dialog {
      */
     public WindDialog(@NonNull Context context, LayoutType layoutType) {
         super(context, R.style.wind_dialog);
-        mTimer = new Timer();
+        super.setContentView(layoutType.getDialogLayout());
         mLayoutType = layoutType;
+        mTimer = new Timer();
+
+        // Bind the layout and set default layout's size, padding, etc.
+        _layout = findViewById(R.id._layout);
         setWidth((int) context.getResources().getDimension(R.dimen.wind_dialog_width));
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         setPadding(
@@ -93,26 +92,6 @@ public class WindDialog extends Dialog {
                 (int) context.getResources().getDimension(R.dimen.wind_dialog_padding_end),
                 (int) context.getResources().getDimension(R.dimen.wind_dialog_padding_bottom)
         );
-        setInOutAnimType(InOutAnimType.SWEET_ALERT);
-        setContentView(mLayoutType.getContentLayout());
-        setCancelable(false);
-        setCanceledOnTouchOutside(false);
-    }
-
-    /* ---------------------- OVERRIDE ----------------------- */
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        super.setContentView(mLayoutType.getDialogLayout());
-
-        // Config the layout
-        _layout = findViewById(R.id._layout);
-        ViewGroup.LayoutParams layoutParams = _layout.getLayoutParams();
-        layoutParams.width = mWidth;
-        layoutParams.height = mHeight;
-        _layout.setLayoutParams(layoutParams);
-        _layout.setPadding(mPaddingLeft, mPaddingTop, mPaddingRight, mPaddingBottom);
 
         // bind views
         _dialogView = findViewById(android.R.id.content);
@@ -122,20 +101,25 @@ public class WindDialog extends Dialog {
         _bodyHolder = findViewById(R.id._bodyHolder);
         _footerHolder = findViewById(R.id._footerHolder);
 
-        // Add custom content view
-        setContentView(_customContentView);
+        // default values
+        setContentView(mLayoutType.getContentLayout());
+        setInOutAnimType(InOutAnimType.SWEET_ALERT);
+        setCancelable(false);
+        setCanceledOnTouchOutside(false);
+    }
 
-        // add button
-        Button btn;
-        while ((btn = _buttonQueue.poll()) != null) {
-            _footerHolder.addView(btn);
-        }
+    /* ---------------------- OVERRIDE ----------------------- */
 
-        // bind value
-        setTitle(mTitle);
-        setTitleVisible(mTitleVisible);
-        judgeIcon();
-        setFooterVisible(mFooterVisible);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Configure the layout
+        ViewGroup.LayoutParams layoutParams = _layout.getLayoutParams();
+        layoutParams.width = mWidth;
+        layoutParams.height = mHeight;
+        _layout.setLayoutParams(layoutParams);
+        _layout.setPadding(mPaddingLeft, mPaddingTop, mPaddingRight, mPaddingBottom);
     }
 
     @Override
@@ -160,10 +144,7 @@ public class WindDialog extends Dialog {
 
     @Override
     public void setTitle(@Nullable CharSequence title) {
-        mTitle = title;
-        if (_tvTitle != null) {
-            _tvTitle.setText(mTitle);
-        }
+        _tvTitle.setText(title);
     }
 
     @Override
@@ -426,10 +407,7 @@ public class WindDialog extends Dialog {
      * @return dialog
      */
     public WindDialog setTitleVisible(boolean visible) {
-        mTitleVisible = visible;
-        if (_tvTitle != null) {
-            _tvTitle.setVisibility(visible ? View.VISIBLE : View.GONE);
-        }
+        _tvTitle.setVisibility(visible ? View.VISIBLE : View.GONE);
         return this;
     }
 
@@ -476,10 +454,7 @@ public class WindDialog extends Dialog {
      * @return dialog
      */
     public WindDialog setFooterVisible(boolean visible) {
-        mFooterVisible = visible;
-        if (_footerHolder != null) {
-            _footerHolder.setVisibility(visible ? View.VISIBLE : View.GONE);
-        }
+        _footerHolder.setVisibility(visible ? View.VISIBLE : View.GONE);
         return this;
     }
 
@@ -506,11 +481,7 @@ public class WindDialog extends Dialog {
      * @return added button
      */
     public Button addButton(Button btn) {
-        if (_footerHolder != null) {
-            _footerHolder.addView(btn);
-        } else {
-            _buttonQueue.add(btn);
-        }
+        _footerHolder.addView(btn);
         _btnList.add(btn);
         return btn;
     }
