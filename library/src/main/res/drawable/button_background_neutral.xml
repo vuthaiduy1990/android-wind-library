@@ -2,13 +2,13 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <solid android:color="@color/notification_pressed" />
+            <solid android:color="@color/neutral_pressed" />
             <corners android:radius="@dimen/button_border_radius" />
         </shape>
     </item>
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@color/notification" />
+            <solid android:color="@color/neutral" />
             <corners android:radius="@dimen/button_border_radius" />
         </shape>
     </item>

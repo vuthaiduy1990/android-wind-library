@@ -18,9 +18,10 @@
     <string name="button_info">Info</string>
     <string name="button_highlight">Highlight</string>
     <string name="button_warning">Warning</string>
+    <string name="button_neutral">Neutral</string>
     <string name="button_danger">Danger</string>
     <string name="button_gray">Gray</string>
-    <string name="button_delete">Yes,Delete it!</string>
+    <string name="button_delete">Yes,delete it!</string>
     <string name="button_ok">Apply</string>
     <string name="button_edit">Edit</string>
     <string name="button_save">Save</string>
@@ -29,4 +30,5 @@
     <string name="button_setting">日本語</string>
     <string name="button_lock">Tôi là người Việt Nam</string>
     <string name="button_yahoo">Yahoooo !!!</string>
+    <string name="button_close">Close</string>
 </resources>

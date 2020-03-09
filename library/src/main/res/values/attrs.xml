@@ -28,7 +28,7 @@
             <enum name="WARNING" value="4" />
             <enum name="DANGER" value="5" />
             <enum name="GRAY" value="6" />
-            <enum name="NOTIFICATION" value="7" />
+            <enum name="NEUTRAL" value="7" />
         </attr>
         <attr name="customIcon" format="reference" />
         <attr name="customAnim" format="reference" />

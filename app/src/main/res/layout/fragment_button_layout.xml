@@ -56,6 +56,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
+                app:text="@string/button_neutral"
+                app:type="NEUTRAL" />
+
+            <the.wind.library.view.Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
                 app:text="@string/button_warning"
                 app:type="WARNING" />
 
@@ -120,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
                 app:inlineIcon="WAITING"
-                app:type="WARNING" />
+                app:type="NEUTRAL" />
 
             <the.wind.library.view.Button
                 android:layout_width="wrap_content"
@@ -202,7 +209,7 @@
                 android:layout_margin="1dp"
                 app:inlineIcon="WAITING"
                 app:text="@string/button_loading"
-                app:type="WARNING" />
+                app:type="NEUTRAL" />
 
             <the.wind.library.view.Button
                 android:layout_width="wrap_content"

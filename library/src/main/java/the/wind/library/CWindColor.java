@@ -15,14 +15,15 @@ public class CWindColor {
     public static final CWindColor SUCCESS = CWindColor.fromHex("#41b3a3");
     public static final CWindColor INFO = CWindColor.fromHex("#30a3b2");
     public static final CWindColor HIGHLIGHT = CWindColor.fromHex("#ecd06f");
-    public static final CWindColor WARNING = CWindColor.fromHex("#FFC71F");
-    public static final CWindColor NOTIFICATION = CWindColor.fromHex("#e8a87c");
+    public static final CWindColor WARNING = CWindColor.fromHex("#ffcc00");
     public static final CWindColor DANGER = CWindColor.fromHex("#e26060");
+    public static final CWindColor NEUTRAL = CWindColor.fromHex("#e8a87c");
     public static final CWindColor LIGHT = CWindColor.fromHex("#dfdfde");
     public static final CWindColor GRAY = CWindColor.fromHex("#afafaf");
     public static final CWindColor DARK = CWindColor.fromHex("#191919");
     public static final CWindColor PURPLE = CWindColor.fromHex("#c38d9e");
     public static final CWindColor PEA = CWindColor.fromHex("#c3cb71");
+
     // shade factors
     private static final float[] SHADE_FACTORS = new float[]{
             0.9f, 0.8f, 0.7f, 0.6f, 0.5f

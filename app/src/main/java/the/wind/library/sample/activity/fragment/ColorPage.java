@@ -37,6 +37,7 @@ public class ColorPage extends Fragment {
         colors.put("INFO", CWindColor.INFO);
         colors.put("HIGHLIGHT", CWindColor.HIGHLIGHT);
         colors.put("WARNING", CWindColor.WARNING);
+        colors.put("NEUTRAL", CWindColor.NEUTRAL);
         colors.put("DANGER", CWindColor.DANGER);
         colors.put("LIGHT", CWindColor.LIGHT);
         colors.put("GRAY", CWindColor.GRAY);
