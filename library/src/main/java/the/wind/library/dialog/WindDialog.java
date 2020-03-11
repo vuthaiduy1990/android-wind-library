@@ -38,12 +38,15 @@ public class WindDialog extends Dialog {
 
     // views
     private View _dialogView;
+    private ViewGroup _mainView;
     private ImageView _icon;
     private LottieAnimationView _lottieIcon;
     private TextView _tvTitle;
     private ViewGroup _bodyHolder;
     private ViewGroup _footerHolder;
     private List<Button> _btnList = new LinkedList<>();
+    private ViewGroup _waitingView;
+    private LottieAnimationView _waitingIcon;
 
     // view attribute
     private boolean mIconVisible = true;
@@ -96,17 +99,22 @@ public class WindDialog extends Dialog {
 
         // bind views
         _dialogView = findViewById(android.R.id.content);
-        _icon = findViewById(R.id._icon);
-        _lottieIcon = findViewById(R.id._lottieIcon);
-        _tvTitle = findViewById(R.id._tvTitle);
-        _bodyHolder = findViewById(R.id._bodyHolder);
-        _footerHolder = findViewById(R.id._footerHolder);
+        _mainView = _layout.findViewById(R.id._mainView);
+        _icon = _layout.findViewById(R.id._icon);
+        _lottieIcon = _layout.findViewById(R.id._lottieIcon);
+        _tvTitle = _layout.findViewById(R.id._tvTitle);
+        _bodyHolder = _layout.findViewById(R.id._bodyHolder);
+        _footerHolder = _layout.findViewById(R.id._footerHolder);
+        _waitingView = _layout.findViewById(R.id._waitingView);
+        _waitingIcon = _waitingView.findViewById(R.id._waitingIcon);
 
         // default values
         setContentView(mLayoutType.getContentLayout());
         setInOutAnimType(InOutAnimType.SWEET_ALERT);
         setCancelable(false);
         setCanceledOnTouchOutside(false);
+        setCustomWaitingIcon(R.raw.wind_dialog_icon_waiting);
+        _waitingIcon.setMaxProgress(310f / 841f);
     }
 
     /* ---------------------- OVERRIDE ----------------------- */
@@ -565,6 +573,17 @@ public class WindDialog extends Dialog {
         return this;
     }
 
+    /**
+     * Set custom waiting icon
+     *
+     * @param resId resource lottie animtion id
+     * @return dialog
+     */
+    public WindDialog setCustomWaitingIcon(int resId) {
+        _waitingIcon.setAnimation(resId);
+        return this;
+    }
+
     /* ---------------------- METHOD ------------------------- */
 
     /**
@@ -617,15 +636,103 @@ public class WindDialog extends Dialog {
     }
 
     /**
-     * Apply custom template
+     * Show waiting icon
+     */
+    public void waitMe() {
+        // update waiting mask's size to current dialog size
+        int width = _mainView.getWidth();
+        int height = _mainView.getHeight();
+        ViewGroup.LayoutParams layout = _waitingView.getLayoutParams();
+        layout.height = height;
+        _waitingView.setLayoutParams(layout);
+
+        int iconSize = (int) (((width < height) ? width : height) * 0.6f);
+        int maxIconSize = (int) getContext().getResources().getDimension(R.dimen.wind_dialog__waiting_icon_size);
+        iconSize = iconSize < maxIconSize ? iconSize : maxIconSize;
+        ViewGroup.LayoutParams iconLayout = _waitingIcon.getLayoutParams();
+        iconLayout.width = iconSize;
+        iconLayout.height = iconSize;
+        _waitingIcon.setLayoutParams(iconLayout);
+
+        _mainView.setVisibility(View.GONE);
+        _waitingView.setVisibility(View.VISIBLE);
+        _waitingIcon.playAnimation();
+    }
+
+    /**
+     * Show waiting icon with timeout in milliseconds.
+     * It means that after timeout, the waiting will be auto dismissed
+     *
+     * @param timeout in milliseconds
+     * @param quit    true -> close dialog else keep opening
+     */
+    public void waitMe(long timeout, final boolean quit) {
+        waitMe();
+        mTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                _dialogView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        imDone(quit);
+                    }
+                });
+            }
+        }, timeout);
+    }
+
+    /**
+     * Hide waiting icon
+     *
+     * @param quit true -> close dialog else keep opening
+     */
+    public void imDone(boolean quit) {
+        if (quit) {
+            dismissImmediately();
+        }
+        _waitingView.setVisibility(View.GONE);
+        _mainView.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Apply custom template.
+     * This function is available for tatsumaki layout type only
      *
      * @param template dialog template
      * @return dialog
      */
     public WindDialog apply(ITemplate template) {
-        template.onSetting(this);
+        if (LayoutType.TATSUMAKI.equals(mLayoutType)) {
+            template.onSetting(this);
+        }
         return this;
     }
+
+    /**
+     * Override post method of view
+     *
+     * @param action runnable
+     * @return Returns true if the Runnable was successfully placed in to the
+     * message queue.  Returns false on failure, usually because the
+     * looper processing the message queue is exiting.
+     */
+    public boolean post(Runnable action) {
+        return _dialogView.post(action);
+    }
+
+    /**
+     * Override post method of view
+     *
+     * @param action      runnable
+     * @param delayMillis The delay (in milliseconds) until the Runnable will be executed.
+     * @return Returns true if the Runnable was successfully placed in to the
+     * message queue.  Returns false on failure, usually because the
+     * looper processing the message queue is exiting.
+     */
+    public boolean postDelayed(Runnable action, long delayMillis) {
+        return _dialogView.postDelayed(action, delayMillis);
+    }
+
 
     /* ---------------------- INNER CLASS -------------------- */
 

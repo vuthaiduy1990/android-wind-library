@@ -1,69 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/_layout"
     android:layout_width="@dimen/wind_dialog_width"
     android:layout_height="wrap_content"
-    android:background="@drawable/wind_dialog_background"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:background="@drawable/wind_dialog_background">
 
-    <!-- icon -->
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <!-- Static Icon -->
-        <ImageView
-            android:id="@+id/_icon"
-            android:layout_width="@dimen/wind_dialog_tatsumaki_icon_size"
-            android:layout_height="@dimen/wind_dialog_tatsumaki_icon_size"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:visibility="gone"
-            tools:ignore="ContentDescription" />
-
-        <!-- Animation Icon -->
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/_lottieIcon"
-            android:layout_width="@dimen/wind_dialog_tatsumaki_icon_size"
-            android:layout_height="@dimen/wind_dialog_tatsumaki_icon_size"
-            android:scaleType="centerInside"
-            android:visibility="gone"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="false" />
-
-    </RelativeLayout>
-
-    <!-- title -->
-    <TextView
-        android:id="@+id/_tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/wind_dialog_tatsumaki_title_margin_top"
-        android:gravity="center"
-        android:textColor="@color/wind_dialog_title"
-        android:textSize="@dimen/wind_dialog_tatsumaki_title_size" />
-
-    <!-- body -->
-    <RelativeLayout
-        android:id="@+id/_bodyHolder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/wind_dialog_tatsumaki_text_margin_top">
-
-    </RelativeLayout>
-
-    <!-- footer -->
     <LinearLayout
-        android:id="@+id/_footerHolder"
+        android:id="@+id/_mainView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/wind_dialog_button_margin"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+
+        <!-- icon -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <!-- Static Icon -->
+            <ImageView
+                android:id="@+id/_icon"
+                android:layout_width="@dimen/wind_dialog_tatsumaki_icon_size"
+                android:layout_height="@dimen/wind_dialog_tatsumaki_icon_size"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:visibility="gone"
+                tools:ignore="ContentDescription" />
+
+            <!-- Animation Icon -->
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/_lottieIcon"
+                android:layout_width="@dimen/wind_dialog_tatsumaki_icon_size"
+                android:layout_height="@dimen/wind_dialog_tatsumaki_icon_size"
+                android:scaleType="centerInside"
+                android:visibility="gone"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="false" />
+
+        </RelativeLayout>
+
+        <!-- title -->
+        <TextView
+            android:id="@+id/_tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/wind_dialog_tatsumaki_title_margin_top"
+            android:gravity="center"
+            android:textColor="@color/wind_dialog_title"
+            android:textSize="@dimen/wind_dialog_tatsumaki_title_size" />
+
+        <!-- body -->
+        <RelativeLayout
+            android:id="@+id/_bodyHolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/wind_dialog_tatsumaki_text_margin_top">
+
+        </RelativeLayout>
+
+        <!-- footer -->
+        <LinearLayout
+            android:id="@+id/_footerHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/wind_dialog_button_margin"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+    <RelativeLayout
+
+        android:id="@+id/_waitingView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <!-- Animation Icon -->
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/_waitingIcon"
+            android:layout_width="@dimen/wind_dialog_tatsumaki_icon_size"
+            android:layout_height="@dimen/wind_dialog_tatsumaki_icon_size"
+            android:layout_centerInParent="true"
+            android:scaleType="centerInside"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="true" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

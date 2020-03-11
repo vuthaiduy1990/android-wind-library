@@ -33,8 +33,8 @@ public class ProgressTemplate implements WindDialog.ITemplate {
         LottieAnimationView icon = ((LottieAnimationView) dialog.icon());
         icon.setRepeatCount(LottieDrawable.INFINITE);
         icon.setMaxProgress(310f / 841f);
-        int size = (int) context.getResources().getDimension(R.dimen.wind_dialog_tatsumaki_full_loading_icon_size);
-        int margin = (int) context.getResources().getDimension(R.dimen.wind_dialog_tatsumaki_full_loading_icon_margin);
+        int size = (int) context.getResources().getDimension(R.dimen.wind_dialog__waiting_icon_size);
+        int margin = (int) context.getResources().getDimension(R.dimen.wind_dialog_tatsumaki_big_waiting_icon_margin);
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) icon.getLayoutParams();
         params.width = size;
         params.height = size;
