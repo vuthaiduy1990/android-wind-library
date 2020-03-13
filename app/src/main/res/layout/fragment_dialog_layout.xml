@@ -107,5 +107,20 @@
         app:text="Wait me"
         app:type="PRIMARY" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/info_pressed" />
+
+    <the.wind.library.view.Button
+        android:id="@+id/_fubukiDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        app:text="Fubuki"
+        app:type="PRIMARY" />
+
 
 </com.google.android.flexbox.FlexboxLayout>

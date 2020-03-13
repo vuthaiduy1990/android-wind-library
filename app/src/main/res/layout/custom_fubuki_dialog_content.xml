@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choose the following options"
+        android:textColor="@color/wind_dialog_text"
+        android:textSize="@dimen/wind_dialog_tatsumaki_text_size" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <the.wind.library.view.Checkbox
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:animColor="@color/info"
+                app:animType="TAKAYA_DEGUCHI_1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Hiking in the mountain"
+                android:textColor="@color/wind_dialog_text"
+                android:textSize="@dimen/wind_dialog_tatsumaki_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <the.wind.library.view.Checkbox
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:animColor="@color/success"
+                app:animType="TAKAYA_DEGUCHI_1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Walking in the moon"
+                android:textColor="@color/wind_dialog_text"
+                android:textSize="@dimen/wind_dialog_tatsumaki_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <the.wind.library.view.Checkbox
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:animColor="@color/danger"
+                app:animType="TAKAYA_DEGUCHI_1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Fly with the wind"
+                android:textColor="@color/wind_dialog_text"
+                android:textSize="@dimen/wind_dialog_tatsumaki_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <the.wind.library.view.Checkbox
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:animColor="@color/neutral"
+                app:animType="TAKAYA_DEGUCHI_1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Fighting to dead"
+                android:textColor="@color/wind_dialog_text"
+                android:textSize="@dimen/wind_dialog_tatsumaki_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <the.wind.library.view.Checkbox
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:animColor="@color/primary"
+                app:animType="TAKAYA_DEGUCHI_1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Chase the last light"
+                android:textColor="@color/wind_dialog_text"
+                android:textSize="@dimen/wind_dialog_tatsumaki_text_size" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

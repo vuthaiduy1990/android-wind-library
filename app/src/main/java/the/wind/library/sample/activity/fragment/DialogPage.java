@@ -36,6 +36,8 @@ public class DialogPage extends Fragment {
     private WindDialog _progressDialog2;
     private WindDialog _waitingDialog;
 
+    private WindDialog _fubukiDialog;
+
     private boolean openNotificationFromSuccess = false;
 
     @Nullable
@@ -59,6 +61,8 @@ public class DialogPage extends Fragment {
         progressDialog1(view);
         progressDialog2(view);
         showWaiting(view);
+
+        fubukiDialog(view);
     }
 
     private void simpleDialog(View view) {
@@ -113,6 +117,7 @@ public class DialogPage extends Fragment {
                 .apply(WarnTemplate.instance())
                 .setContentText("Be-careful!\nThe data maybe lost due to this action")
                 .setButtonText(1, "Migrate");
+        _warnDialog.addButton(Button.Type.DANGER, "", Button.InlineIcon.TRASH).setMinimumWidth(0);
         _warnDialog.setTitle("Migrate Database");
         view.findViewById(R.id._warnDialog).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -259,6 +264,29 @@ public class DialogPage extends Fragment {
             @Override
             public void onClick(View v) {
                 _waitingDialog.show();
+            }
+        });
+    }
+
+    private void fubukiDialog(View view) {
+        _fubukiDialog = new WindDialog(view.getContext(), WindDialog.LayoutType.FUBUKI);
+        _fubukiDialog.setTitle("The adventure");
+        _fubukiDialog.setIcon(R.drawable.treasure_map);
+        _fubukiDialog
+                .addButton(Button.Type.NEUTRAL, "Thinking", null)
+                .setCustomIcon(R.drawable.ic_question)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        _fubukiDialog.waitMe(3000, false);
+                    }
+                });
+        _fubukiDialog.addButton(Button.Type.SUCCESS, "Let's go", null).setCustomIcon(R.drawable.ic_rocket);
+        _fubukiDialog.setContentView(R.layout.custom_fubuki_dialog_content);
+        view.findViewById(R.id._fubukiDialog).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _fubukiDialog.show();
             }
         });
     }
