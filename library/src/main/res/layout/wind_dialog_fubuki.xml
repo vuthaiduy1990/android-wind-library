@@ -1,7 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-</LinearLayout>
+    <!-- Main Content View -->
+    <LinearLayout
+        android:id="@+id/_layout"
+        android:layout_width="@dimen/wind_dialog_fubuki_width"
+        android:layout_height="wrap_content"
+        android:background="@drawable/wind_dialog_background"
+        android:orientation="vertical">
+
+        <!-- icon -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Static Icon -->
+            <ImageView
+                android:id="@+id/_icon"
+                android:layout_width="@dimen/wind_dialog_fubuki_icon_size"
+                android:layout_height="@dimen/wind_dialog_fubuki_icon_size"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:visibility="gone"
+                tools:ignore="ContentDescription" />
+
+            <!-- Animation Icon -->
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/_lottieIcon"
+                android:layout_width="@dimen/wind_dialog_fubuki_icon_size"
+                android:layout_height="@dimen/wind_dialog_fubuki_icon_size"
+                android:scaleType="centerInside"
+                android:visibility="gone"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="false" />
+
+            <!-- title -->
+            <TextView
+                android:id="@+id/_tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/wind_dialog_fubuki_title_margin_left"
+                android:gravity="center"
+                android:textColor="@color/wind_dialog_title"
+                android:textSize="@dimen/wind_dialog_fubuki_title_size" />
+
+        </LinearLayout>
+
+        <!-- Custom Content Body -->
+        <!-- The use can customize this content view -->
+        <RelativeLayout
+            android:id="@+id/_bodyHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/wind_dialog_fubuki_body_margin_top">
+
+        </RelativeLayout>
+
+        <!-- footer -->
+        <LinearLayout
+            android:id="@+id/_footerHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/wind_dialog_footer_margin_top"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Waiting View -->
+    <RelativeLayout
+        android:id="@+id/_waitingMask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/wind_dialog_waiting_mask"
+        android:visibility="gone">
+
+        <!-- Animation Icon -->
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/_waitingIcon"
+            android:layout_width="@dimen/wind_dialog_tatsumaki_icon_size"
+            android:layout_height="@dimen/wind_dialog_tatsumaki_icon_size"
+            android:layout_centerInParent="true"
+            android:scaleType="centerInside"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="true" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

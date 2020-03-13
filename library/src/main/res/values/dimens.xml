@@ -13,20 +13,28 @@
 
     <!-- |||||||||||||||||||||||| Wind Dialog |||||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <dimen name="wind_dialog_width">290dp</dimen>
     <dimen name="wind_dialog_border_radius">6dp</dimen>
     <dimen name="wind_dialog_padding_start">14dp</dimen>
     <dimen name="wind_dialog_padding_end">14dp</dimen>
     <dimen name="wind_dialog_padding_top">10dp</dimen>
     <dimen name="wind_dialog_padding_bottom">10dp</dimen>
     <dimen name="wind_dialog_tatsumaki_icon_size">64dp</dimen>
-    <dimen name="wind_dialog__waiting_icon_size">96dp</dimen>
-    <dimen name="wind_dialog_tatsumaki_big_waiting_icon_margin">18dp</dimen>
+    <dimen name="wind_dialog_waiting_icon_size">96dp</dimen>
+    <dimen name="wind_dialog_button_spacing">5dp</dimen>
+    <dimen name="wind_dialog_footer_margin_top">14dp</dimen>
+    <dimen name="wind_dialog_button_min_width">80dp</dimen>
+    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <dimen name="wind_dialog_tatsumaki_width">290dp</dimen>
+    <dimen name="wind_dialog_tatsumaki_big_progress_icon_margin">18dp</dimen>
     <dimen name="wind_dialog_tatsumaki_title_size">20sp</dimen>
     <dimen name="wind_dialog_tatsumaki_title_margin_top">10dp</dimen>
     <dimen name="wind_dialog_tatsumaki_text_size">14sp</dimen>
-    <dimen name="wind_dialog_tatsumaki_text_margin_top">4dp</dimen>
-    <dimen name="wind_dialog_button_spacing">5dp</dimen>
-    <dimen name="wind_dialog_button_margin">14dp</dimen>
-    <dimen name="wind_dialog_button_min_width">80dp</dimen>
+    <dimen name="wind_dialog_tatsumaki_body_margin_top">4dp</dimen>
+    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <dimen name="wind_dialog_fubuki_width">320dp</dimen>
+    <dimen name="wind_dialog_fubuki_icon_size">48dp</dimen>
+    <dimen name="wind_dialog_fubuki_title_size">22sp</dimen>
+    <dimen name="wind_dialog_fubuki_title_margin_left">10dp</dimen>
+    <dimen name="wind_dialog_fubuki_body_margin_top">10dp</dimen>
+
 </resources>

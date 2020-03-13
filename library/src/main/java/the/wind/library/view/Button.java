@@ -195,10 +195,12 @@ public class Button extends LinearLayout {
      * Set custom static icon
      *
      * @param resId drawable resource
+     * @return button
      */
-    public void setCustomIcon(int resId) {
+    public Button setCustomIcon(int resId) {
         mCustomIconRes = resId;
         judgeIcon();
+        return this;
     }
 
     /**

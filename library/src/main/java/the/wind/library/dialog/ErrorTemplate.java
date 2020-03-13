@@ -3,7 +3,6 @@ package the.wind.library.dialog;
 import android.content.Context;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.airbnb.lottie.LottieDrawable;
 
 import the.wind.library.R;
 import the.wind.library.view.Button;
@@ -26,7 +25,7 @@ public class ErrorTemplate implements WindDialog.ITemplate {
         // https://lottiefiles.com/4970-unapproved-cross
         dialog.setLottieIcon(R.raw.wind_dialog_icon_error);
         LottieAnimationView icon = ((LottieAnimationView) dialog.icon());
-        icon.setRepeatCount(LottieDrawable.INFINITE);
+        icon.setRepeatCount(1);
         icon.setMinProgress(7f / 89f);
         icon.setMaxProgress(75f / 89f);
         dialog.addButton(Button.Type.GRAY, context.getString(R.string.wind_dialog_button_close), null);

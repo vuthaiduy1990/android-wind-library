@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -38,14 +39,13 @@ public class WindDialog extends Dialog {
 
     // views
     private View _dialogView;
-    private ViewGroup _mainView;
     private ImageView _icon;
     private LottieAnimationView _lottieIcon;
     private TextView _tvTitle;
     private ViewGroup _bodyHolder;
     private ViewGroup _footerHolder;
     private List<Button> _btnList = new LinkedList<>();
-    private ViewGroup _waitingView;
+    private ViewGroup _waitingMask;
     private LottieAnimationView _waitingIcon;
 
     // view attribute
@@ -88,7 +88,11 @@ public class WindDialog extends Dialog {
 
         // Bind the layout and set default layout's size, padding, etc.
         _layout = findViewById(R.id._layout);
-        setWidth((int) context.getResources().getDimension(R.dimen.wind_dialog_width));
+        if (LayoutType.FUBUKI.equals(layoutType)) {
+            setWidth((int) context.getResources().getDimension(R.dimen.wind_dialog_fubuki_width));
+        } else {
+            setWidth((int) context.getResources().getDimension(R.dimen.wind_dialog_tatsumaki_width));
+        }
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         setPadding(
                 (int) context.getResources().getDimension(R.dimen.wind_dialog_padding_start),
@@ -99,14 +103,22 @@ public class WindDialog extends Dialog {
 
         // bind views
         _dialogView = findViewById(android.R.id.content);
-        _mainView = _layout.findViewById(R.id._mainView);
         _icon = _layout.findViewById(R.id._icon);
         _lottieIcon = _layout.findViewById(R.id._lottieIcon);
         _tvTitle = _layout.findViewById(R.id._tvTitle);
         _bodyHolder = _layout.findViewById(R.id._bodyHolder);
         _footerHolder = _layout.findViewById(R.id._footerHolder);
-        _waitingView = _layout.findViewById(R.id._waitingView);
-        _waitingIcon = _waitingView.findViewById(R.id._waitingIcon);
+
+        // bind waiting mask
+        _waitingMask = findViewById(R.id._waitingMask);
+        _waitingIcon = _waitingMask.findViewById(R.id._waitingIcon);
+        _waitingMask.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.performClick();
+                return true;
+            }
+        });
 
         // default values
         setContentView(mLayoutType.getContentLayout());
@@ -640,22 +652,22 @@ public class WindDialog extends Dialog {
      */
     public void waitMe() {
         // update waiting mask's size to current dialog size
-        int width = _mainView.getWidth();
-        int height = _mainView.getHeight();
-        ViewGroup.LayoutParams layout = _waitingView.getLayoutParams();
+        int width = _layout.getWidth();
+        int height = _layout.getHeight();
+        ViewGroup.LayoutParams layout = _waitingMask.getLayoutParams();
+        layout.width = width;
         layout.height = height;
-        _waitingView.setLayoutParams(layout);
+        _waitingMask.setLayoutParams(layout);
 
         int iconSize = (int) (((width < height) ? width : height) * 0.6f);
-        int maxIconSize = (int) getContext().getResources().getDimension(R.dimen.wind_dialog__waiting_icon_size);
+        int maxIconSize = (int) getContext().getResources().getDimension(R.dimen.wind_dialog_waiting_icon_size);
         iconSize = iconSize < maxIconSize ? iconSize : maxIconSize;
         ViewGroup.LayoutParams iconLayout = _waitingIcon.getLayoutParams();
         iconLayout.width = iconSize;
         iconLayout.height = iconSize;
         _waitingIcon.setLayoutParams(iconLayout);
 
-        _mainView.setVisibility(View.GONE);
-        _waitingView.setVisibility(View.VISIBLE);
+        _waitingMask.setVisibility(View.VISIBLE);
         _waitingIcon.playAnimation();
     }
 
@@ -690,8 +702,7 @@ public class WindDialog extends Dialog {
         if (quit) {
             dismissImmediately();
         }
-        _waitingView.setVisibility(View.GONE);
-        _mainView.setVisibility(View.VISIBLE);
+        _waitingMask.setVisibility(View.GONE);
     }
 
     /**
