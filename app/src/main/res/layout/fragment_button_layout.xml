@@ -16,8 +16,8 @@
         <com.google.android.flexbox.FlexboxLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:orientation="horizontal"
             app:alignContent="stretch"
             app:alignItems="stretch"
@@ -86,8 +86,8 @@
         <com.google.android.flexbox.FlexboxLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:orientation="horizontal"
             app:alignContent="stretch"
             app:alignItems="stretch"
@@ -163,8 +163,8 @@
         <com.google.android.flexbox.FlexboxLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:orientation="horizontal"
             app:alignContent="stretch"
             app:alignItems="stretch"
@@ -245,40 +245,29 @@
 
         </com.google.android.flexbox.FlexboxLayout>
 
-        <!-- Animation for static icon -->
-        <com.google.android.flexbox.FlexboxLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:orientation="horizontal"
-            app:alignContent="stretch"
-            app:alignItems="stretch"
-            app:flexWrap="wrap"
-            app:justifyContent="center">
-
-            <the.wind.library.view.Button
-                android:id="@+id/_eventButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="1dp"
-                app:inlineIcon="TRASH"
-                app:text="Are you sure?"
-                app:textSize="15sp"
-                app:type="DANGER" />
-        </com.google.android.flexbox.FlexboxLayout>
-
         <!-- custom button -->
         <com.google.android.flexbox.FlexboxLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="8dp"
             android:orientation="horizontal"
             app:alignContent="stretch"
             app:alignItems="stretch"
             app:flexWrap="wrap"
             app:justifyContent="center">
+
+            <!-- Animation for static icon -->
+            <the.wind.library.view.Button
+                android:id="@+id/_eventButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:padding="20dp"
+                app:inlineIcon="TRASH"
+                app:text="Are you sure?"
+                app:textSize="15sp"
+                app:type="DANGER" />
 
             <the.wind.library.view.Button
                 android:layout_width="wrap_content"

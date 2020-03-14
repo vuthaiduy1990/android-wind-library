@@ -206,7 +206,7 @@ public class DialogPage extends Fragment {
         view.findViewById(R.id._loadingDialog).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                _loadingDialog.show(10000);
+                _loadingDialog.show(5000);
             }
         });
     }
@@ -217,7 +217,7 @@ public class DialogPage extends Fragment {
         view.findViewById(R.id._progressDialog1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                _progressDialog1.show(10000);
+                _progressDialog1.show(5000);
             }
         });
     }
@@ -229,7 +229,7 @@ public class DialogPage extends Fragment {
         view.findViewById(R.id._progressDialog2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                _progressDialog2.show(10000);
+                _progressDialog2.show(5000);
             }
         });
     }
