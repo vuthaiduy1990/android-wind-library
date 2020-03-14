@@ -10,7 +10,9 @@
     <!-- Icon -->
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp">
 
         <!-- Static Icon -->
         <ImageView
