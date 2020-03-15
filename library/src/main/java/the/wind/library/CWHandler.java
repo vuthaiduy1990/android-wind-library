@@ -45,7 +45,7 @@ package the.wind.library;
  */
 public abstract class CWHandler<T> {
 
-    private CWAttach mTag = new CWAttach();
+    private CWBundle mBundle = new CWBundle();
     private State mState = State.RUNNING;
 
     /* ---------------------- STATIC ------------------------- */
@@ -80,10 +80,10 @@ public abstract class CWHandler<T> {
     /* ---------------------- GET-SET ------------------------ */
 
     /**
-     * @return attach
+     * @return bundle
      */
-    public CWAttach tag() {
-        return mTag;
+    public CWBundle bundle() {
+        return mBundle;
     }
 
     /**

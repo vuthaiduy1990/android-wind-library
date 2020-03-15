@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import androidx.annotation.NonNull;
-import the.wind.library.CWAttach;
+import the.wind.library.CWBundle;
 
 /**
  * Define structure of table.
@@ -40,13 +40,13 @@ public abstract class CWTable implements Serializable {
     private transient boolean mOffline = false;
 
     // attaching
-    private transient CWAttach mAttach;
+    private transient CWBundle mBundle;
 
     /**
      * Constructor
      */
     protected CWTable() {
-        mAttach = new CWAttach();
+        mBundle = new CWBundle();
         setHash(new Date().getTime() + Math.random() + "");
         Date now = new Date();
         setCreatedDate(now);
@@ -62,10 +62,10 @@ public abstract class CWTable implements Serializable {
     /* ---------------------- GET-SET ------------------------ */
 
     /**
-     * @return attach
+     * @return bundle
      */
-    public CWAttach attach() {
-        return mAttach;
+    public CWBundle bundle() {
+        return mBundle;
     }
 
     /**

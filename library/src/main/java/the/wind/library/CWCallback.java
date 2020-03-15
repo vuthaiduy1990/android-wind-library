@@ -31,7 +31,7 @@ package the.wind.library;
 public class CWCallback<T> {
 
     // tagged object
-    private CWAttach mTag = new CWAttach();
+    private CWBundle mBundle = new CWBundle();
 
     /* ---------------------- STATIC ------------------------- */
 
@@ -84,10 +84,10 @@ public class CWCallback<T> {
     /* ---------------------- GET-SET ------------------------ */
 
     /**
-     * @return attach
+     * @return bundle
      */
-    public CWAttach tag() {
-        return mTag;
+    public CWBundle bundle() {
+        return mBundle;
     }
 
     /* ---------------------- STATIC ------------------------- */
