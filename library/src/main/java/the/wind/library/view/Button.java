@@ -176,19 +176,23 @@ public class Button extends LinearLayout {
      * Set button type
      *
      * @param type type
+     * @return button
      */
-    public void setType(Type type) {
+    public Button setType(Type type) {
         setBackgroundResource(type.getBackground());
+        return this;
     }
 
     /**
      * Set inline icon type
      *
      * @param type type
+     * @return button
      */
-    public void setIconType(InlineIcon type) {
+    public Button setIconType(InlineIcon type) {
         mInlineIcon = type;
         judgeIcon();
+        return this;
     }
 
     /**
@@ -207,10 +211,12 @@ public class Button extends LinearLayout {
      * Set custom animation icon
      *
      * @param resId resource id
+     * @return button
      */
-    public void setCustomAnim(int resId) {
+    public Button setCustomAnim(int resId) {
         mCustomAnimRes = resId;
         judgeIcon();
+        return this;
     }
 
     /**
@@ -253,8 +259,9 @@ public class Button extends LinearLayout {
      * Show/hide icon
      *
      * @param visible true -> show else hide
+     * @return button
      */
-    public void setIconVisible(boolean visible) {
+    public Button setIconVisible(boolean visible) {
         if (visible) {
             judgeIcon();
         } else {
@@ -262,6 +269,7 @@ public class Button extends LinearLayout {
             _lottieIcon.setVisibility(GONE);
         }
         _space.setVisibility(isSpacing() ? VISIBLE : GONE);
+        return this;
     }
 
     /**
@@ -269,28 +277,33 @@ public class Button extends LinearLayout {
      *
      * @param style type face. Ex, Typeface.BOLD
      * @see {{{@link Typeface}}}
+     * @return button
      */
-    public void setTextStyle(int style) {
+    public Button setTextStyle(int style) {
         _textView.setTypeface(_textView.getTypeface(), style);
+        return this;
     }
 
     /**
      * Set text resource
      *
      * @param resId string resource id
+     * @return button
      */
-    public void setText(int resId) {
+    public Button setText(int resId) {
         _textView.setText(resId);
         _textView.setVisibility(resId != 0 ? VISIBLE : GONE);
         _space.setVisibility(isSpacing() ? VISIBLE : GONE);
+        return this;
     }
 
     /**
      * Set text value
      *
      * @param text text value
+     * @return button
      */
-    public void setText(CharSequence text) {
+    public Button setText(CharSequence text) {
         _textView.setText(text);
         if (text == null || text.toString().isEmpty()) {
             _textView.setVisibility(GONE);
@@ -298,25 +311,30 @@ public class Button extends LinearLayout {
             _textView.setVisibility(VISIBLE);
         }
         _space.setVisibility(isSpacing() ? VISIBLE : GONE);
+        return this;
     }
 
     /**
      * Set text color
      *
      * @param resId color resource id
+     * @return button
      */
-    public void setTextColor(int resId) {
+    public Button setTextColor(int resId) {
         _textView.setTextColor(resId);
+        return this;
     }
 
     /**
      * Show/hide text
      *
      * @param visible true -> show else hide
+     * @return button
      */
-    public void setTextVisible(boolean visible) {
+    public Button setTextVisible(boolean visible) {
         _textView.setVisibility(visible ? VISIBLE : GONE);
         _space.setVisibility(isSpacing() ? VISIBLE : GONE);
+        return this;
     }
 
     /**
