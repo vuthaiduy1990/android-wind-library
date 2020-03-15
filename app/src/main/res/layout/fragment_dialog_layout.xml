@@ -151,6 +151,14 @@
         app:text="Fubuki"
         app:type="PRIMARY" />
 
+    <the.wind.library.view.Button
+        android:id="@+id/_fullScreenDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        app:text="Full Screen"
+        app:type="HIGHLIGHT" />
+
     <!-- Divider -->
     <RelativeLayout
         android:layout_width="match_parent"
@@ -200,6 +208,5 @@
         android:layout_margin="3dp"
         app:text="Top 2 Bottom"
         app:type="INFO" />
-
 
 </com.google.android.flexbox.FlexboxLayout>

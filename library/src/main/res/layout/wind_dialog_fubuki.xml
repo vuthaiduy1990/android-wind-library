@@ -17,6 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="0"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -58,8 +59,8 @@
             android:id="@+id/_bodyHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/wind_dialog_fubuki_body_margin_top">
+            android:layout_marginTop="@dimen/wind_dialog_fubuki_body_margin_top"
+            android:layout_weight="1">
 
         </RelativeLayout>
 
@@ -69,6 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/wind_dialog_footer_margin_top"
+            android:layout_weight="0"
             android:gravity="end"
             android:orientation="horizontal">
 

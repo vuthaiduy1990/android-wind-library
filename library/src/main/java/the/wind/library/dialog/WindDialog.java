@@ -141,6 +141,11 @@ public class WindDialog extends Dialog {
         layoutParams.height = mHeight;
         _layout.setLayoutParams(layoutParams);
         _layout.setPadding(mPaddingLeft, mPaddingTop, mPaddingRight, mPaddingBottom);
+        // Config the root dialog layout
+        ViewGroup.LayoutParams _dialogLayoutParams = _dialogView.getLayoutParams();
+        _dialogLayoutParams.width = mWidth;
+        _dialogLayoutParams.height = mHeight;
+        _dialogView.setLayoutParams(_dialogLayoutParams);
     }
 
     @Override
@@ -234,9 +239,11 @@ public class WindDialog extends Dialog {
      * Set dialog's width
      *
      * @param width pixel value
+     * @return dialog
      */
-    public void setWidth(int width) {
+    public WindDialog setWidth(int width) {
         mWidth = width;
+        return this;
     }
 
     /**
@@ -250,9 +257,11 @@ public class WindDialog extends Dialog {
      * Set dialog's height
      *
      * @param height dialog's height
+     * @return dialog
      */
-    public void setHeight(int height) {
+    public WindDialog setHeight(int height) {
         mHeight = height;
+        return this;
     }
 
     /**
@@ -271,12 +280,14 @@ public class WindDialog extends Dialog {
      * @param top    padding top
      * @param right  padding right
      * @param bottom padding bottom
+     * @return dialog
      */
-    public void setPadding(int left, int top, int right, int bottom) {
+    public WindDialog setPadding(int left, int top, int right, int bottom) {
         mPaddingLeft = left;
         mPaddingTop = top;
         mPaddingRight = right;
         mPaddingBottom = bottom;
+        return this;
     }
 
     /**

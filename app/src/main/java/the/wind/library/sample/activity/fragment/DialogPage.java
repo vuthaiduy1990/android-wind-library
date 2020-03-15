@@ -1,9 +1,12 @@
 package the.wind.library.sample.activity.fragment;
 
 import android.os.Bundle;
+import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +22,7 @@ import the.wind.library.dialog.SuccessTemplate;
 import the.wind.library.dialog.WarnTemplate;
 import the.wind.library.dialog.WindDialog;
 import the.wind.library.sample.R;
+import the.wind.library.utils.CWUtils;
 import the.wind.library.view.Button;
 
 public class DialogPage extends Fragment {
@@ -39,6 +43,7 @@ public class DialogPage extends Fragment {
 
     // Fubuki layout
     private WindDialog _fubukiDialog;
+    private WindDialog _fullScreenDialog;
 
     private boolean openNotificationFromSuccess = false;
 
@@ -51,6 +56,7 @@ public class DialogPage extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         // tatsumaki dialog
         simpleDialog(view);
         simpleTaskDialog(view);
@@ -67,6 +73,7 @@ public class DialogPage extends Fragment {
 
         // fubuki dialog
         fubukiDialog(view);
+        fullScreenDialog(view);
 
         // custom animation dialog
         customAnimDialog(view);
@@ -275,26 +282,45 @@ public class DialogPage extends Fragment {
         });
     }
 
-    private void fubukiDialog(View view) {
-        _fubukiDialog = new WindDialog(view.getContext(), WindDialog.LayoutType.FUBUKI);
-        _fubukiDialog.setTitle("The adventure");
-        _fubukiDialog.setIcon(R.drawable.treasure_map);
-        _fubukiDialog
+    private WindDialog createFubukiDialog(View view) {
+        final WindDialog dialog = new WindDialog(view.getContext(), WindDialog.LayoutType.FUBUKI);
+        dialog.setTitle("The adventure");
+        dialog
+                .setIcon(R.drawable.treasure_map)
                 .addButton(Button.Type.NEUTRAL, "Thinking", null)
                 .setCustomIcon(R.drawable.ic_question)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        _fubukiDialog.waitMe(3000, false);
+                        dialog.waitMe(3000, false);
                     }
                 });
-        _fubukiDialog.addButton(Button.Type.SUCCESS, "Let's go", null).setCustomIcon(R.drawable.ic_rocket);
-        _fubukiDialog.setContentView(R.layout.custom_fubuki_dialog_content);
+        dialog.addButton(Button.Type.SUCCESS, "Let's go", null).setCustomIcon(R.drawable.ic_rocket);
+        dialog.setContentView(R.layout.custom_fubuki_dialog_content);
+        return dialog;
+    }
+
+    private void fubukiDialog(View view) {
+        _fubukiDialog = createFubukiDialog(view);
         view.findViewById(R.id._fubukiDialog).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 _fubukiDialog.setInOutAnimType(WindDialog.InOutAnimType.SWEET_ALERT);
                 _fubukiDialog.show();
+            }
+        });
+    }
+
+    private void fullScreenDialog(View view) {
+        _fullScreenDialog = createFubukiDialog(view);
+        Size screenSize = CWUtils.getScreenSize(Objects.requireNonNull(getActivity()));
+        _fullScreenDialog.setWidth(screenSize.getWidth()).setHeight(screenSize.getHeight());
+        _fullScreenDialog.setLottieIcon(R.raw.cycle_ahead);
+        _fullScreenDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_TOP_2_BOTTOM);
+        view.findViewById(R.id._fullScreenDialog).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _fullScreenDialog.show();
             }
         });
     }
