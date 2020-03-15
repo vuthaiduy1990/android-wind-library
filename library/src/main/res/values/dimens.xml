@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- |||||||||||||||||||||||||| Checkbox ||||||||||||||||||||||||| -->
+    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <dimen name="checkbox_vinnhed_size">32dp</dimen>
+    <dimen name="checkbox_takaya_deguchi_size">33dp</dimen>
+    <dimen name="checkbox_victor_kai_size">35dp</dimen>
+    <dimen name="checkbox_lorin_size">29dp</dimen>
+    <dimen name="checkbox_darius_afchar_size">42dp</dimen>
+    <dimen name="checkbox_gilson_santos_size">34dp</dimen>
+    <dimen name="checkbox_aviral_bahuguna_size">34dp</dimen>
+    <dimen name="checkbox_default_square_size">35dp</dimen>
+    <dimen name="checkbox_default_checklist_size">27dp</dimen>
+
     <!-- ||||||||||||||||||||||||||| Button |||||||||||||||||||||||||| -->
     <!-- Icon size = text size + 3dp > -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->

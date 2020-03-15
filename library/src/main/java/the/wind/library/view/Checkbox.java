@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -96,6 +97,13 @@ public class Checkbox extends LottieAnimationView {
 
     /* ---------------------- OVERRIDE ----------------------- */
 
+    @Override
+    protected void onAttachedToWindow() {
+        // set default width/height
+        setDefaultSize();
+        super.onAttachedToWindow();
+    }
+
     /* ---------------------- STATIC ------------------------- */
 
     /* ---------------------- EVENT -------------------------- */
@@ -115,23 +123,27 @@ public class Checkbox extends LottieAnimationView {
      * Set checked
      *
      * @param checked true -> checked
+     * @return checkbox
      */
-    public void setChecked(boolean checked) {
+    public Checkbox setChecked(boolean checked) {
         mChecked = checked;
         if (mChecked) {
             setProgress(mAnimType.getMaxProgress());
         } else {
             setProgress(mAnimType.getInitialProgress());
         }
+        return this;
     }
 
     /**
      * Set checked listener
      *
      * @param listener listener
+     * @return checkbox
      */
-    public void setOnCheckedListener(OnCheckedListener listener) {
+    public Checkbox setOnCheckedListener(OnCheckedListener listener) {
         mCheckedListener = listener;
+        return this;
     }
 
     /**
@@ -147,23 +159,26 @@ public class Checkbox extends LottieAnimationView {
      * Set anim type
      *
      * @param type type
+     * @return checkbox
      */
-    public void setAnimType(AnimType type) {
+    public Checkbox setAnimType(AnimType type) {
         mAnimType = type;
         setAnimation(type.getResource());
         setMinProgress(type.getMinProgress());
         setMaxProgress(type.getMaxProgress());
         setProgress(type.getInitialProgress());
+        return this;
     }
 
     /**
      * Set animation color
      *
      * @param color color
+     * @return checkbox
      */
-    public void setAnimColor(int color) {
+    public Checkbox setAnimColor(int color) {
         mAnimColor = color;
-        if (mAnimColor == 0 || mAnimType == null) return;
+        if (mAnimColor == 0 || mAnimType == null) return this;
         if (mAnimType.getProperties() != null) {
             for (String prop : mAnimType.getProperties()) {
                 if (!CWStringUtils.hasText(prop)) continue;
@@ -174,6 +189,20 @@ public class Checkbox extends LottieAnimationView {
                         new KeyPath(prop.trim(), "**"),
                         LottieProperty.STROKE_COLOR, new LottieValueCallback<>(mAnimColor));
             }
+        }
+        return this;
+    }
+
+    /**
+     * Set default size
+     */
+    protected void setDefaultSize() {
+        ViewGroup.LayoutParams layoutParams = getLayoutParams();
+        if (layoutParams.width == -2 && layoutParams.height == -2) {
+            int size = mAnimType.getDefaultSize(getContext());
+            layoutParams.width = size;
+            layoutParams.height = size;
+            setLayoutParams(layoutParams);
         }
     }
 
@@ -188,46 +217,55 @@ public class Checkbox extends LottieAnimationView {
         // https://lottiefiles.com/4964-check-mark-success-animation
         // VICTOR_VINNHED
         DEFAULT_CIRCLE(
+                R.dimen.checkbox_vinnhed_size,
                 R.raw.checkbox_victor_vinnhed,
                 0f, 46f / 72f, 24f / 72f,
                 new String[]{"Rectangle 6 Copy"}),
         // https://lottiefiles.com/2492-check
         TAKAYA_DEGUCHI_1(
+                R.dimen.checkbox_takaya_deguchi_size,
                 R.raw.checkbox_takaya_deguchi,
                 0f, 35f / 60f, 12f / 60f,
                 new String[]{"circle fill", "circle stroke"}),
         TAKAYA_DEGUCHI_2(
+                R.dimen.checkbox_takaya_deguchi_size,
                 R.raw.checkbox_takaya_deguchi,
                 0f, 35f / 60f, 25f / 60f,
                 new String[]{"circle fill", "circle stroke"}),
         // https://lottiefiles.com/527-check
         VICTOR_KAI(
+                R.dimen.checkbox_victor_kai_size,
                 R.raw.checkbox_victor_kai,
                 0f, 23f / 60f, 6f / 60f,
                 null),
         // https://lottiefiles.com/3253-uploading-and-done
         LORIN(
+                R.dimen.checkbox_lorin_size,
                 R.raw.checkbox_lorin,
                 145f / 210f, 180f / 210f, 159f / 210f,
                 new String[]{"glod 6"}),
         // https://lottiefiles.com/1127-success
         DARIUS_AFCHAR(
+                R.dimen.checkbox_darius_afchar_size,
                 R.raw.checkbox_darius_afchar,
                 0f, 34f / 45f, 14f / 45f,
                 new String[]{"Shape Layer 1"}),
         // https://lottiefiles.com/13820-icon-check
         GILSON_SANTOS_1(
+                R.dimen.checkbox_gilson_santos_size,
                 R.raw.checkbox_gilson_santos,
                 0f, 72f / 130f, 15f / 130f,
                 new String[]{"circle-base"}
         ),
         GILSON_SANTOS_2(
+                R.dimen.checkbox_gilson_santos_size,
                 R.raw.checkbox_gilson_santos,
                 0f, 72f / 130f, 22f / 130f,
                 new String[]{"circle-base"}
         ),
         // https://lottiefiles.com/9613-tick
         AVIRAL_BAHUGUNA(
+                R.dimen.checkbox_aviral_bahuguna_size,
                 R.raw.checkbox_aviral_bahuguna,
                 0f, 35f / 40f, 16f / 40f,
                 new String[]{"Circle Stroke", "Circle Green Fill", "Circle Flash"}
@@ -235,6 +273,7 @@ public class Checkbox extends LottieAnimationView {
         // https://lottiefiles.com/8729-checkbox-animation
         // VAISHAK_SHETTY_K
         DEFAULT_SQUARE(
+                R.dimen.checkbox_default_square_size,
                 R.raw.checkbox_default_square,
                 0f, 30f / 55f, 10f / 55f,
                 new String[]{"Layer 3/check Outlines 2", "Layer 3/check Outlines"}
@@ -242,10 +281,14 @@ public class Checkbox extends LottieAnimationView {
         // https://lottiefiles.com/8600-check-list
         // ILYA_PAVLOV
         DEFAULT_CHECKLIST(
+                R.dimen.checkbox_default_checklist_size,
                 R.raw.checkbox_default_checklist,
                 0f, 56f / 60f, 0f,
                 new String[]{"Sheet"}
         );
+
+        // default size
+        private int defaultSize;
 
         // animation resource
         private int resource;
@@ -258,15 +301,26 @@ public class Checkbox extends LottieAnimationView {
         // props
         private String[] props;
 
-        AnimType(int resource,
+        AnimType(int defaultSize,
+                 int resource,
                  float minProgress, float maxProgress, float initialProgress,
                  String[] props) {
-
+            this.defaultSize = defaultSize;
             this.resource = resource;
             this.minProgress = minProgress;
             this.maxProgress = maxProgress;
             this.initialProgress = initialProgress;
             this.props = props;
+        }
+
+        /**
+         * Get default size
+         *
+         * @param context application context
+         * @return default size
+         */
+        public int getDefaultSize(Context context) {
+            return (int) context.getResources().getDimension(defaultSize);
         }
 
         /**
