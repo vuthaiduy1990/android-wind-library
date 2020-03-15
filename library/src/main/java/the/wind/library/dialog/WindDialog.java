@@ -783,7 +783,10 @@ public class WindDialog extends Dialog {
     public enum InOutAnimType {
         // Sweet Alert Dialog
         // https://github.com/pedant/sweet-alert-dialog
-        SWEET_ALERT(R.anim.wind_dialog_in_anim_sweet_alert, R.anim.wind_dialog_out_anim_sweet_alert);
+        SWEET_ALERT(R.anim.wind_dialog_in_anim_sweet_alert, R.anim.wind_dialog_out_anim_sweet_alert),
+        FADE(android.R.anim.fade_in, android.R.anim.fade_out),
+        SLIDE_LEFT_2_RIGHT(android.R.anim.slide_in_left, android.R.anim.slide_out_right),
+        SLIDE_TOP_2_BOTTOM(R.anim.wind_dialog_in_anim_slide_top_bottom, R.anim.wind_dialog_out_anim_slide_top_bottom);
 
         private int inAnimResId;
         private int outAnimResId;

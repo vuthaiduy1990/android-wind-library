@@ -10,6 +10,24 @@
     app:flexWrap="wrap"
     app:justifyContent="space_between">
 
+    <!-- Divider -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/gray"
+        android:padding="3dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Tatsumaki Layout"
+            android:textColor="#fff"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
     <the.wind.library.view.Button
         android:id="@+id/_simpleDialog"
         android:layout_width="wrap_content"
@@ -107,12 +125,23 @@
         app:text="Wait me"
         app:type="PRIMARY" />
 
+    <!-- Divider -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="3dp"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_marginBottom="5dp"
-        android:background="@color/info_pressed" />
+        android:background="@color/gray"
+        android:padding="3dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Fubuki Layout"
+            android:textColor="#fff"
+            android:textSize="14sp" />
+    </RelativeLayout>
 
     <the.wind.library.view.Button
         android:id="@+id/_fubukiDialog"
@@ -121,6 +150,56 @@
         android:layout_margin="3dp"
         app:text="Fubuki"
         app:type="PRIMARY" />
+
+    <!-- Divider -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/gray"
+        android:padding="3dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Custom Animation"
+            android:textColor="#fff"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <the.wind.library.view.Button
+        android:id="@+id/_animSweetAlert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        app:text="Sweet Alert"
+        app:type="NEUTRAL" />
+
+    <the.wind.library.view.Button
+        android:id="@+id/_animFade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        app:text="Fade"
+        app:type="SUCCESS" />
+
+    <the.wind.library.view.Button
+        android:id="@+id/_animLeftRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        app:text="Left 2 Right"
+        app:type="HIGHLIGHT" />
+
+    <the.wind.library.view.Button
+        android:id="@+id/_animTopBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        app:text="Top 2 Bottom"
+        app:type="INFO" />
 
 
 </com.google.android.flexbox.FlexboxLayout>

@@ -23,6 +23,7 @@ import the.wind.library.view.Button;
 
 public class DialogPage extends Fragment {
 
+    // Tatsumaki layout
     private WindDialog _simpleDialog;
     private WindDialog _simpleTaskDialog;
     private WindDialog _infoDialog;
@@ -36,6 +37,7 @@ public class DialogPage extends Fragment {
     private WindDialog _progressDialog2;
     private WindDialog _waitingDialog;
 
+    // Fubuki layout
     private WindDialog _fubukiDialog;
 
     private boolean openNotificationFromSuccess = false;
@@ -49,6 +51,7 @@ public class DialogPage extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        // tatsumaki dialog
         simpleDialog(view);
         simpleTaskDialog(view);
         infoDialog(view);
@@ -62,7 +65,11 @@ public class DialogPage extends Fragment {
         progressDialog2(view);
         showWaiting(view);
 
+        // fubuki dialog
         fubukiDialog(view);
+
+        // custom animation dialog
+        customAnimDialog(view);
     }
 
     private void simpleDialog(View view) {
@@ -286,6 +293,38 @@ public class DialogPage extends Fragment {
         view.findViewById(R.id._fubukiDialog).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                _fubukiDialog.setInOutAnimType(WindDialog.InOutAnimType.SWEET_ALERT);
+                _fubukiDialog.show();
+            }
+        });
+    }
+
+    private void customAnimDialog(View view) {
+        view.findViewById(R.id._animSweetAlert).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _notifyDialog.setInOutAnimType(WindDialog.InOutAnimType.SWEET_ALERT);
+                _notifyDialog.show();
+            }
+        });
+        view.findViewById(R.id._animFade).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _notifyDialog.setInOutAnimType(WindDialog.InOutAnimType.FADE);
+                _notifyDialog.show();
+            }
+        });
+        view.findViewById(R.id._animLeftRight).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _notifyDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_LEFT_2_RIGHT);
+                _notifyDialog.show();
+            }
+        });
+        view.findViewById(R.id._animTopBottom).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _fubukiDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_TOP_2_BOTTOM);
                 _fubukiDialog.show();
             }
         });
