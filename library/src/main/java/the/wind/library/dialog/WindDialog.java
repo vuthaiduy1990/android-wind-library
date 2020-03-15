@@ -22,6 +22,7 @@ import java.util.TimerTask;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import the.wind.library.CWBundle;
 import the.wind.library.R;
 import the.wind.library.view.Button;
 
@@ -58,6 +59,7 @@ public class WindDialog extends Dialog {
     private int mIconResId;
     private Bitmap mIconBitmap;
     private int mLottieIconResId;
+    private CWBundle mBundle = new CWBundle();
 
     // Animation
     @Nullable
@@ -220,6 +222,13 @@ public class WindDialog extends Dialog {
     /* ---------------------- EVENT -------------------------- */
 
     /* ---------------------- GET-SET ------------------------ */
+
+    /**
+     * @return bundle data
+     */
+    public CWBundle bundle() {
+        return mBundle;
+    }
 
     /**
      * @return dialog's layout

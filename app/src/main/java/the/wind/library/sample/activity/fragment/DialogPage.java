@@ -1,10 +1,12 @@
 package the.wind.library.sample.activity.fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -92,17 +94,32 @@ public class DialogPage extends Fragment {
         });
     }
 
-    private void simpleTaskDialog(View view) {
+    private void simpleTaskDialog(final View view) {
         _simpleTaskDialog = new WindDialog(view.getContext())
                 .apply(SimpleTaskTemplate.instance())
                 .setContentText("Try your best and take your money.")
                 .setButtonText(1, "Yes");
         _simpleTaskDialog.setTitle("Buy a chance?");
+        _simpleTaskDialog.buttons().get(0).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _simpleTaskDialog.bundle().set("button", ((Button) v).textView().getText());
+                _simpleTaskDialog.dismiss();
+            }
+        });
         _simpleTaskDialog.buttons().get(1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                _simpleTaskDialog.bundle().set("button", ((Button) v).textView().getText());
                 _simpleTaskDialog.dismissImmediately();
                 _errorDialog.show();
+            }
+        });
+        _simpleTaskDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                String buttonText = (String) _simpleTaskDialog.bundle().get("button");
+                Toast.makeText(view.getContext(), "dismiss - " + buttonText, Toast.LENGTH_SHORT).show();
             }
         });
         view.findViewById(R.id._simpleTaskDialog).setOnClickListener(new View.OnClickListener() {
