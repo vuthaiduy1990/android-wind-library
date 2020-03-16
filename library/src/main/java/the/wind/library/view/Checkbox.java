@@ -12,6 +12,7 @@ import com.airbnb.lottie.LottieProperty;
 import com.airbnb.lottie.model.KeyPath;
 import com.airbnb.lottie.value.LottieValueCallback;
 
+import androidx.core.content.ContextCompat;
 import the.wind.library.R;
 import the.wind.library.utils.CWStringUtils;
 
@@ -75,6 +76,9 @@ public class Checkbox extends LottieAnimationView {
         setAnimType(mAnimType);
         setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         setRepeatCount(0);
+        if (mAnimColor == 0) {
+            mAnimColor = ContextCompat.getColor(getContext(), R.color.success);
+        }
         setAnimColor(mAnimColor);
 
         // set event listeners
@@ -236,8 +240,9 @@ public class Checkbox extends LottieAnimationView {
         VICTOR_KAI(
                 R.dimen.checkbox_victor_kai_size,
                 R.raw.checkbox_victor_kai,
-                0f, 23f / 60f, 6f / 60f,
-                null),
+                0f, 23f / 60f, 17f / 60f,
+                new String[]{"Shape Layer 4"}
+        ),
         // https://lottiefiles.com/3253-uploading-and-done
         LORIN(
                 R.dimen.checkbox_lorin_size,
