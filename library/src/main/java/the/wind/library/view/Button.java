@@ -70,8 +70,7 @@ public class Button extends LinearLayout {
 
     public Button(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        assert inflater != null;
+        LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.button, this);
 
         // bind views
@@ -276,8 +275,9 @@ public class Button extends LinearLayout {
      * Set text style (italic/bold/normal/etc.)
      *
      * @param style type face. Ex, Typeface.BOLD
-     * @see {{{@link Typeface}}}
      * @return button
+     *
+     * @see {{{@link Typeface}}}
      */
     public Button setTextStyle(int style) {
         _textView.setTypeface(_textView.getTypeface(), style);

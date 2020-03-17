@@ -39,12 +39,7 @@ public class Checkbox extends LottieAnimationView {
     private int mAnimColor;
 
     // listener
-    private OnCheckedListener mCheckedListener = new OnCheckedListener() {
-        @Override
-        public void onChecked(View view, boolean checked) {
-
-        }
-    };
+    private OnCheckedListener mCheckedListener;
 
     public Checkbox(Context context) {
         this(context, null);
@@ -94,7 +89,7 @@ public class Checkbox extends LottieAnimationView {
                     playAnimation();
                 }
                 mChecked = !mChecked;
-                mCheckedListener.onChecked(v, mChecked);
+                if (mCheckedListener != null) mCheckedListener.onChecked(v, mChecked);
             }
         });
     }
