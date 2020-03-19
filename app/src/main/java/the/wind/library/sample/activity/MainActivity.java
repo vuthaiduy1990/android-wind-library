@@ -11,11 +11,14 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import the.wind.library.sample.R;
+import the.wind.library.sample.activity.fragment.RecycleViewPage;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
             R.id._navCheckboxMenu,
             R.id._navColorMenu,
             R.id._navButtonMenu,
-            R.id._navDialogMenu
+            R.id._navDialogMenu,
+            R.id._navRecycleViewMenu
     };
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -68,10 +72,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        NavController navController = Navigation.findNavController(this, R.id._navHostFragment);
+        NavDestination navDes = navController.getCurrentDestination();
+
+        // Show action item respective to recycle view page
+        boolean rvItemVisible = navDes != null && navDes.getId() == R.id._navRecycleViewMenu;
+        menu.findItem(R.id.action_menu_recycle_list_view).setVisible(rvItemVisible);
+        menu.findItem(R.id.action_menu_recycle_grid_view).setVisible(rvItemVisible);
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Fragment hostFrag = getSupportFragmentManager().findFragmentById(R.id._navHostFragment);
+        Fragment currentPage = null;
+        if (hostFrag != null) {
+            currentPage = hostFrag.getChildFragmentManager().getFragments().get(0);
+        }
+
         switch (item.getItemId()) {
-            case R.id.action_settings:
+            case R.id.action_menu_settings:
                 Toast.makeText(this, R.string.action_menu_settings, Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_menu_recycle_list_view:
+                if (currentPage instanceof RecycleViewPage) {
+                    ((RecycleViewPage) currentPage).changeViewType(RecycleViewPage.ViewType.LIST_VIEW);
+                }
+                break;
+            case R.id.action_menu_recycle_grid_view:
+                if (currentPage instanceof RecycleViewPage) {
+                    ((RecycleViewPage) currentPage).changeViewType(RecycleViewPage.ViewType.GRID_VIEW);
+                }
                 break;
             default:
                 break;

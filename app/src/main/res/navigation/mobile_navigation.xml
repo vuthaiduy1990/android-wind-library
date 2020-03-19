@@ -35,4 +35,10 @@
         android:name="the.wind.library.sample.activity.fragment.DialogPage"
         android:label="@string/drawer_dialog"
         tools:layout="@layout/fragment_dialog_layout" />
+
+    <fragment
+        android:id="@+id/_navRecycleViewMenu"
+        android:name="the.wind.library.sample.activity.fragment.RecycleViewPage"
+        android:label="@string/drawer_recycle_view"
+        tools:layout="@layout/fragment_recycle_view" />
 </navigation>

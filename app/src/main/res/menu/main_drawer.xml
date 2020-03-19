@@ -26,6 +26,10 @@
                 android:id="@+id/_navDialogMenu"
                 android:icon="@drawable/ic_nav_dialog"
                 android:title="@string/drawer_dialog" />
+            <item
+                android:id="@+id/_navRecycleViewMenu"
+                android:icon="@drawable/ic_nav_recycle_view"
+                android:title="@string/drawer_recycle_view" />
         </menu>
     </item>
 

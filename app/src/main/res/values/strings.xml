@@ -10,7 +10,10 @@
     <string name="drawer_wind_color">Wind Color</string>
     <string name="drawer_button">Button</string>
     <string name="drawer_dialog">Dialog Screen</string>
+    <string name="drawer_recycle_view">Recycle View</string>
 
+    <string name="action_menu_recycle_list_view">List View</string>
+    <string name="action_menu_recycle_grid_view">Grid View</string>
     <string name="action_menu_settings">Settings</string>
 
     <string name="button_primary">Primary</string>
