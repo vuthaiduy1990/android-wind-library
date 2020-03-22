@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -617,6 +618,21 @@ public class WindDialog extends Dialog {
     }
 
     /* ---------------------- METHOD ------------------------- */
+
+    /**
+     * Check if this dialog is initiated in given context or not
+     *
+     * @param context activity context
+     * @return true if in context otherwise return false
+     */
+    public boolean isInContext(Context context) {
+        Context dialogContext = getContext();
+        if (dialogContext.equals(context)) return true;
+        if (dialogContext instanceof ContextThemeWrapper) {
+            return ((ContextThemeWrapper) dialogContext).getBaseContext().equals(context);
+        }
+        return false;
+    }
 
     /**
      * Show dialog with timeout in milliseconds.
