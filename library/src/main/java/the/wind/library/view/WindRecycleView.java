@@ -2,7 +2,9 @@ package the.wind.library.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -201,8 +203,8 @@ public class WindRecycleView extends RecyclerView {
     public abstract static class Adapter<T> extends RecyclerView.Adapter<ViewHolder<T>> {
 
         // view type
-        public static final int VIEW_TYPE_ITEM = 0;
-        public static final int VIEW_TYPE_LOADING = 1;
+        protected static final int VIEW_TYPE_ITEM = 0;
+        protected static final int VIEW_TYPE_LOADING = 1;
 
         // dataset
         private List<T> mDataset;
@@ -212,6 +214,8 @@ public class WindRecycleView extends RecyclerView {
 
         // listener
         private OnItemClickListener<T> mItemClickListener;
+        private OnItemLongClickListener<T> mItemLongClickListener;
+        private OnItemDoubleClickListener<T> mItemDoubleClickListener;
 
         /**
          * Constructor
@@ -239,6 +243,8 @@ public class WindRecycleView extends RecyclerView {
         @Override
         public void onBindViewHolder(@NonNull ViewHolder<T> holder, int position) {
             holder.bindClickListener(mItemClickListener, mDataset.get(position), position);
+            holder.bindLongClickListener(mItemLongClickListener, mDataset.get(position), position);
+            holder.bindDoubleClickListener(mItemDoubleClickListener, mDataset.get(position), position);
         }
 
         @Override
@@ -376,6 +382,28 @@ public class WindRecycleView extends RecyclerView {
             return this;
         }
 
+        /**
+         * Set on item long click listener
+         *
+         * @param listener listener
+         * @return adapter
+         */
+        public Adapter<T> setOnItemLongClickListener(OnItemLongClickListener<T> listener) {
+            mItemLongClickListener = listener;
+            return this;
+        }
+
+        /**
+         * Set on item long click listener
+         *
+         * @param listener listener
+         * @return adapter
+         */
+        public Adapter<T> setOnItemDoubleClickListener(OnItemDoubleClickListener<T> listener) {
+            mItemDoubleClickListener = listener;
+            return this;
+        }
+
         /* ---------------------- METHOD ------------------------- */
 
         /* ---------------------- INNER CLASS -------------------- */
@@ -394,31 +422,92 @@ public class WindRecycleView extends RecyclerView {
              */
             void onClick(View itemView, View view, T data, int position);
         }
+
+        /**
+         * On item long click listener
+         */
+        public interface OnItemLongClickListener<T> {
+            /**
+             * Trigger when user long press on item view
+             *
+             * @param itemView item view layout
+             * @param view     clicked view
+             * @param data     data
+             * @param position item's position
+             */
+            void onLongClick(View itemView, View view, T data, int position);
+        }
+
+        /**
+         * On item double click listener
+         */
+        public interface OnItemDoubleClickListener<T> {
+            /**
+             * Trigger when user double click on item view
+             *
+             * @param itemView item view layout
+             * @param view     clicked view
+             * @param data     data
+             * @param position item's position
+             */
+            void onDoubleClick(View itemView, View view, T data, int position);
+        }
     }
 
     /**
      * ViewHolder wrapper
      */
-    public static class ViewHolder<T> extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ViewHolder<T> extends RecyclerView.ViewHolder {
+
+        // touched view
+        private View mView;
 
         // item click listener
         private Adapter.OnItemClickListener<T> mItemClickListener;
+        private Adapter.OnItemLongClickListener<T> mItemLongClickListener;
+        private Adapter.OnItemDoubleClickListener<T> mItemDoubleClickListener;
+        private GestureDetector mGestureDetector = new GestureDetector(itemView.getContext(), new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public void onLongPress(MotionEvent e) {
+                if (mItemLongClickListener != null) {
+                    mItemLongClickListener.onLongClick(itemView, mView, mData, mPosition);
+                }
+            }
+
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                if (mItemDoubleClickListener != null) {
+                    mItemDoubleClickListener.onDoubleClick(itemView, mView, mData, mPosition);
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent e) {
+                if (mItemClickListener != null) {
+                    mItemClickListener.onClick(itemView, mView, mData, mPosition);
+                }
+                return true;
+            }
+        });
 
         // data model
         private T mData;
         private int mPosition;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull final View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
+            itemView.setOnTouchListener(new OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    v.performClick();
+                    mView = v;
+                    mGestureDetector.onTouchEvent(event);
+                    return true;
+                }
+            });
         }
 
-        @Override
-        public void onClick(View v) {
-            if (mItemClickListener != null) {
-                mItemClickListener.onClick(itemView, v, mData, mPosition);
-            }
-        }
 
         /**
          * Bind item click listener from adapter
@@ -431,6 +520,32 @@ public class WindRecycleView extends RecyclerView {
             mData = data;
             mPosition = position;
             mItemClickListener = listener;
+        }
+
+        /**
+         * Bind item long click listener from adapter
+         *
+         * @param listener item  long click listener
+         * @param data     item data
+         * @param position item's position
+         */
+        public void bindLongClickListener(Adapter.OnItemLongClickListener<T> listener, T data, int position) {
+            mData = data;
+            mPosition = position;
+            mItemLongClickListener = listener;
+        }
+
+        /**
+         * Bind item double click listener from adapter
+         *
+         * @param listener item  double click listener
+         * @param data     item data
+         * @param position item's position
+         */
+        public void bindDoubleClickListener(Adapter.OnItemDoubleClickListener<T> listener, T data, int position) {
+            mData = data;
+            mPosition = position;
+            mItemDoubleClickListener = listener;
         }
     }
 
