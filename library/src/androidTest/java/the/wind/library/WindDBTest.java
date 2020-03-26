@@ -71,11 +71,11 @@ public class WindDBTest {
                 CWTestTable.class,
                 new String[]{"stringObj", "intPrim"},
                 "stringObj like ?", new String[]{"%wind"}).get(0);
-        for (Field field : CWindDB.$.getColumnFields(CWTestTable.class)) {
+        for (Field field : CWindDB.getColumnFields(CWTestTable.class)) {
             Class<?> type = field.getType();
             field.setAccessible(true);
-            if (CWindDB.$.getColumnName(field).equals("stringObj")
-                    || CWindDB.$.getColumnName(field).equals("stringObj")) {
+            if (CWindDB.getColumnName(field).equals("stringObj")
+                    || CWindDB.getColumnName(field).equals("stringObj")) {
                 Assert.assertNotNull(field.get(fromDB));
             } else if (!type.isPrimitive()) {
                 Assert.assertNull(field.get(fromDB));

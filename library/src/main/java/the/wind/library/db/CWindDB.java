@@ -93,6 +93,17 @@ public class CWindDB extends SQLiteOpenHelper {
     /* ---------------------- STATIC ------------------------- */
 
     /**
+     * Init database
+     *
+     * @param context  android context
+     * @param database database name
+     * @param version  database version
+     */
+    public static void init(@NonNull Context context, @NonNull String database, int version) {
+        $ = new CWindDB(context, database, version);
+    }
+
+    /**
      * Add tables
      * setTables(CWTestTable.class)
      *
@@ -115,27 +126,12 @@ public class CWindDB extends SQLiteOpenHelper {
     }
 
     /**
-     * Init database
-     *
-     * @param context  android context
-     * @param database database name
-     * @param version  database version
-     */
-    public static void init(@NonNull Context context, @NonNull String database, int version) {
-        $ = new CWindDB(context, database, version);
-    }
-
-    /* ---------------------- EVENT -------------------------- */
-
-    /* ---------------------- GET-SET ------------------------ */
-
-    /**
      * Get table name
      *
      * @param clazz table class
      * @return table name
      */
-    public String getTableName(Class<? extends CWTable> clazz) {
+    public static String getTableName(Class<? extends CWTable> clazz) {
         Entity def = clazz.getAnnotation(Entity.class);
         String name = def != null ? def.name().trim() : "";
         name = name.isEmpty() ? clazz.getSimpleName() : name;
@@ -148,7 +144,7 @@ public class CWindDB extends SQLiteOpenHelper {
      * @param columnField column field in model class
      * @return column's name
      */
-    public String getColumnName(Field columnField) {
+    public static String getColumnName(Field columnField) {
         Column colDef = columnField.getAnnotation(Column.class);
         String name = colDef != null ? colDef.name().trim() : "";
         name = name.isEmpty() ? CWClazzUtils.toCamelCase(columnField) : name;
@@ -163,7 +159,7 @@ public class CWindDB extends SQLiteOpenHelper {
      * @param clazz class
      * @return list of field
      */
-    public Set<Field> getColumnFields(Class<?> clazz) {
+    public static Set<Field> getColumnFields(Class<?> clazz) {
         Set<Field> results = new LinkedHashSet<>();
 
         Class<?> parentClazz = clazz;
@@ -184,6 +180,10 @@ public class CWindDB extends SQLiteOpenHelper {
         }
         return results;
     }
+
+    /* ---------------------- EVENT -------------------------- */
+
+    /* ---------------------- GET-SET ------------------------ */
 
     /* ------------------- METHOD - DLL ---------------------- */
     /* ------------------- ------------ ---------------------- */
@@ -231,7 +231,7 @@ public class CWindDB extends SQLiteOpenHelper {
             }
         }
         String sql = builder.toString();
-        sql = sql.substring(0, sql.lastIndexOf(',')) + ")";
+        sql = sql.substring(0, sql.lastIndexOf(',')) + ");";
 
         // execute script to create new table
         SQLiteDatabase db = getWritableDatabase();
@@ -245,10 +245,21 @@ public class CWindDB extends SQLiteOpenHelper {
      */
     public void dropTable(Class<? extends CWTable> clazz) {
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DROP TABLE IF EXISTS " + getTableName(clazz));
+        db.execSQL(String.format("DROP TABLE IF EXISTS %s;", getTableName(clazz)));
     }
 
-    // TODO: alter table (add/drop/rename column)
+    /**
+     * Add column to table
+     *
+     * @param clazz  table class
+     * @param column column's name
+     * @param type   column's type
+     */
+    public void addColumn(Class<? extends CWTable> clazz, String column, String type) {
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = String.format("ALTER TABLE %s$1 ADD COLUMN %2$s %3$s;", getTableName(clazz), column, type);
+        db.execSQL(sql);
+    }
 
     /* ------------------- METHOD - DQL ---------------------- */
     /* ------------------- ------------ ---------------------- */
