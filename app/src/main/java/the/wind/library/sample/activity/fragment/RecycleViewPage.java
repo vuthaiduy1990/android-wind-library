@@ -100,19 +100,19 @@ public class RecycleViewPage extends Fragment {
         // item click listener
         mAdapter.setOnItemClickListener(new WindRecycleView.Adapter.OnItemClickListener<DummyData>() {
             @Override
-            public void onClick(View itemView, View view, DummyData data, int position) {
-                Toast.makeText(getContext(), "Clicked! - " + data.text, Toast.LENGTH_SHORT).show();
+            public void onClick(WindRecycleView.ViewHolder viewHolder, View view, DummyData data) {
+                Toast.makeText(getContext(), "Clicked! - " + ((CustomViewHolder) viewHolder).TextView.getText(), Toast.LENGTH_SHORT).show();
             }
         });
         mAdapter.setOnItemLongClickListener(new WindRecycleView.Adapter.OnItemLongClickListener<DummyData>() {
             @Override
-            public void onLongClick(View itemView, View view, DummyData data, int position) {
+            public void onLongClick(WindRecycleView.ViewHolder viewHolder, View view, DummyData data) {
                 Toast.makeText(getContext(), "Long Clicked - " + data.text, Toast.LENGTH_SHORT).show();
             }
         });
         mAdapter.setOnItemDoubleClickListener(new WindRecycleView.Adapter.OnItemDoubleClickListener<DummyData>() {
             @Override
-            public void onDoubleClick(View itemView, View view, DummyData data, int position) {
+            public void onDoubleClick(WindRecycleView.ViewHolder viewHolder, View view, DummyData data) {
                 Toast.makeText(getContext(), "Double Clicked - " + data.text, Toast.LENGTH_SHORT).show();
             }
         });

@@ -21,6 +21,16 @@ import the.wind.library.R;
 
 /**
  * RecycleView Wrapper
+ * <p>
+ * Note1:
+ * https://medium.com/@haydar_ai/better-way-to-get-the-item-position-in-androids-recyclerview-820667d435d4
+ * According to this article, we should use holder.getAdapterPosition() to retrieve the item's position in action event
+ * For example: click event
+ * <p>
+ * Note2:
+ * https://android.jlelse.eu/anatomy-of-recyclerview-part-1-a-search-for-a-viewholder-404ba3453714
+ * According to this one, RecycleView implement cache and poll for initiating view holder under the hood.
+ * So be-careful when user user set holder items value without binding via data
  */
 public class WindRecycleView extends RecyclerView {
 
@@ -204,7 +214,7 @@ public class WindRecycleView extends RecyclerView {
 
         // view type
         protected static final int VIEW_TYPE_ITEM = 0;
-        protected static final int VIEW_TYPE_LOADING = 1;
+        protected static final int VIEW_TYPE_LOADING = -1;
 
         // dataset
         private List<T> mDataset;
@@ -242,9 +252,10 @@ public class WindRecycleView extends RecyclerView {
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder<T> holder, int position) {
-            holder.bindClickListener(mItemClickListener, mDataset.get(position), position);
-            holder.bindLongClickListener(mItemLongClickListener, mDataset.get(position), position);
-            holder.bindDoubleClickListener(mItemDoubleClickListener, mDataset.get(position), position);
+            holder.bindData(getData(position));
+            holder.bindClickListener(mItemClickListener);
+            holder.bindLongClickListener(mItemLongClickListener);
+            holder.bindDoubleClickListener(mItemDoubleClickListener);
         }
 
         @Override
@@ -335,6 +346,16 @@ public class WindRecycleView extends RecyclerView {
         }
 
         /**
+         * Remove an item at given position
+         *
+         * @param position item's position
+         */
+        public void removeData(int position) {
+            mDataset.remove(position);
+            notifyItemRemoved(position);
+        }
+
+        /**
          * Clear all dataset
          */
         public void clearData() {
@@ -345,14 +366,14 @@ public class WindRecycleView extends RecyclerView {
         /**
          * Add loading item
          */
-        public void addLoading() {
+        private void addLoading() {
             addData(null);
         }
 
         /**
          * Remove loading item
          */
-        public void removeLoading() {
+        private void removeLoading() {
             int size = mDataset.size();
             if (size > 0 && mDataset.get(size - 1) == null) {
                 mDataset.remove(size - 1);
@@ -415,12 +436,11 @@ public class WindRecycleView extends RecyclerView {
             /**
              * Trigger when user click on item view
              *
-             * @param itemView item view layout
-             * @param view     clicked view
-             * @param data     data
-             * @param position item's position
+             * @param viewHolder item view holder
+             * @param view       clicked view
+             * @param data       data
              */
-            void onClick(View itemView, View view, T data, int position);
+            void onClick(ViewHolder<T> viewHolder, View view, T data);
         }
 
         /**
@@ -430,12 +450,11 @@ public class WindRecycleView extends RecyclerView {
             /**
              * Trigger when user long press on item view
              *
-             * @param itemView item view layout
-             * @param view     clicked view
-             * @param data     data
-             * @param position item's position
+             * @param viewHolder item view holder
+             * @param view       clicked view
+             * @param data       data
              */
-            void onLongClick(View itemView, View view, T data, int position);
+            void onLongClick(ViewHolder<T> viewHolder, View view, T data);
         }
 
         /**
@@ -445,12 +464,11 @@ public class WindRecycleView extends RecyclerView {
             /**
              * Trigger when user double click on item view
              *
-             * @param itemView item view layout
-             * @param view     clicked view
-             * @param data     data
-             * @param position item's position
+             * @param viewHolder item view holder
+             * @param view       clicked view
+             * @param data       data
              */
-            void onDoubleClick(View itemView, View view, T data, int position);
+            void onDoubleClick(ViewHolder<T> viewHolder, View view, T data);
         }
     }
 
@@ -470,14 +488,14 @@ public class WindRecycleView extends RecyclerView {
             @Override
             public void onLongPress(MotionEvent e) {
                 if (mItemLongClickListener != null) {
-                    mItemLongClickListener.onLongClick(itemView, mView, mData, mPosition);
+                    mItemLongClickListener.onLongClick(ViewHolder.this, mView, mData);
                 }
             }
 
             @Override
             public boolean onDoubleTap(MotionEvent e) {
                 if (mItemDoubleClickListener != null) {
-                    mItemDoubleClickListener.onDoubleClick(itemView, mView, mData, mPosition);
+                    mItemDoubleClickListener.onDoubleClick(ViewHolder.this, mView, mData);
                 }
                 return true;
             }
@@ -485,7 +503,7 @@ public class WindRecycleView extends RecyclerView {
             @Override
             public boolean onSingleTapConfirmed(MotionEvent e) {
                 if (mItemClickListener != null) {
-                    mItemClickListener.onClick(itemView, mView, mData, mPosition);
+                    mItemClickListener.onClick(ViewHolder.this, mView, mData);
                 }
                 return true;
             }
@@ -493,7 +511,6 @@ public class WindRecycleView extends RecyclerView {
 
         // data model
         private T mData;
-        private int mPosition;
 
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
@@ -508,17 +525,31 @@ public class WindRecycleView extends RecyclerView {
             });
         }
 
+        /**
+         * Get adapter data
+         *
+         * @return data
+         */
+        @NonNull
+        public final T getAdapterData() {
+            return mData;
+        }
+
+        /**
+         * Bind data
+         *
+         * @param data data
+         */
+        private void bindData(T data) {
+            mData = data;
+        }
 
         /**
          * Bind item click listener from adapter
          *
          * @param listener item click listener
-         * @param data     item data
-         * @param position item's position
          */
-        public void bindClickListener(Adapter.OnItemClickListener<T> listener, T data, int position) {
-            mData = data;
-            mPosition = position;
+        private void bindClickListener(Adapter.OnItemClickListener<T> listener) {
             mItemClickListener = listener;
         }
 
@@ -526,12 +557,8 @@ public class WindRecycleView extends RecyclerView {
          * Bind item long click listener from adapter
          *
          * @param listener item  long click listener
-         * @param data     item data
-         * @param position item's position
          */
-        public void bindLongClickListener(Adapter.OnItemLongClickListener<T> listener, T data, int position) {
-            mData = data;
-            mPosition = position;
+        private void bindLongClickListener(Adapter.OnItemLongClickListener<T> listener) {
             mItemLongClickListener = listener;
         }
 
@@ -539,12 +566,8 @@ public class WindRecycleView extends RecyclerView {
          * Bind item double click listener from adapter
          *
          * @param listener item  double click listener
-         * @param data     item data
-         * @param position item's position
          */
-        public void bindDoubleClickListener(Adapter.OnItemDoubleClickListener<T> listener, T data, int position) {
-            mData = data;
-            mPosition = position;
+        private void bindDoubleClickListener(Adapter.OnItemDoubleClickListener<T> listener) {
             mItemDoubleClickListener = listener;
         }
     }
@@ -554,7 +577,7 @@ public class WindRecycleView extends RecyclerView {
      */
     private static class LoadingViewHolder<T> extends ViewHolder<T> {
 
-        public LoadingViewHolder(@NonNull View itemView) {
+        private LoadingViewHolder(@NonNull View itemView) {
             super(itemView);
         }
     }
