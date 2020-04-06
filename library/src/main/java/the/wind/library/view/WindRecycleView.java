@@ -630,7 +630,7 @@ public class WindRecycleView extends RecyclerView {
          *
          * @param data data
          */
-        private void bindData(T data) {
+        protected void bindData(T data) {
             mData = data;
         }
 
