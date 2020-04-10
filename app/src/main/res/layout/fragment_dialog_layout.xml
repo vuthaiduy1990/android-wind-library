@@ -202,11 +202,85 @@
         app:type="HIGHLIGHT" />
 
     <the.wind.library.view.Button
+        android:id="@+id/_animRightLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        app:text="Right 2 Left"
+        app:type="HIGHLIGHT" />
+
+    <the.wind.library.view.Button
         android:id="@+id/_animTopBottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
         app:text="Top 2 Bottom"
         app:type="INFO" />
+
+    <the.wind.library.view.Button
+        android:id="@+id/_animBottomTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        app:text="Bottom 2 Top"
+        app:type="INFO" />
+
+    <!-- Divider -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/gray"
+        android:padding="3dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Custom Dialog Gravity"
+            android:textColor="#fff"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <the.wind.library.view.Button
+        android:id="@+id/_gravityLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        app:text="Left"
+        app:type="PRIMARY" />
+
+    <the.wind.library.view.Button
+        android:id="@+id/_gravityTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        app:text="Top"
+        app:type="PRIMARY" />
+
+    <the.wind.library.view.Button
+        android:id="@+id/_gravityRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        app:text="Right"
+        app:type="PRIMARY" />
+
+    <the.wind.library.view.Button
+        android:id="@+id/_gravityBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        app:text="Bottom"
+        app:type="PRIMARY" />
+
+    <the.wind.library.view.Button
+        android:id="@+id/_gravityCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        app:text="Center"
+        app:type="PRIMARY" />
 
 </com.google.android.flexbox.FlexboxLayout>

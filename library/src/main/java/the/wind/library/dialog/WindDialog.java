@@ -5,9 +5,12 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -297,6 +300,24 @@ public class WindDialog extends Dialog {
         mPaddingTop = top;
         mPaddingRight = right;
         mPaddingBottom = bottom;
+        return this;
+    }
+
+    /**
+     * Set dialog's gravity
+     *
+     * @param gravity gravity.
+     * @return dialog
+     *
+     * @see {{{@link Gravity}}}
+     */
+    public WindDialog setGravity(int gravity) {
+        Window window = getWindow();
+        if (window != null) {
+            WindowManager.LayoutParams wlp = window.getAttributes();
+            wlp.gravity = gravity;
+            window.setAttributes(wlp);
+        }
         return this;
     }
 
@@ -822,7 +843,9 @@ public class WindDialog extends Dialog {
         SWEET_ALERT(R.anim.wind_dialog_in_anim_sweet_alert, R.anim.wind_dialog_out_anim_sweet_alert),
         FADE(R.anim.wind_dialog_in_anim_fade, R.anim.wind_dialog_out_anim_fade),
         SLIDE_LEFT_2_RIGHT(R.anim.wind_dialog_in_anim_slide_left_right, R.anim.wind_dialog_out_anim_slide_left_right),
-        SLIDE_TOP_2_BOTTOM(R.anim.wind_dialog_in_anim_slide_top_bottom, R.anim.wind_dialog_out_anim_slide_top_bottom);
+        SLIDE_RIGHT_2_LEFT(R.anim.wind_dialog_in_anim_slide_right_left, R.anim.wind_dialog_out_anim_slide_right_left),
+        SLIDE_TOP_2_BOTTOM(R.anim.wind_dialog_in_anim_slide_top_bottom, R.anim.wind_dialog_out_anim_slide_top_bottom),
+        SLIDE_BOTTOM_2_TOP(R.anim.wind_dialog_in_anim_slide_bottom_top, R.anim.wind_dialog_out_anim_slide_bottom_top);
 
         private int inAnimResId;
         private int outAnimResId;

@@ -3,6 +3,7 @@ package the.wind.library.sample.activity.fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Size;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,7 @@ public class DialogPage extends Fragment {
     // Fubuki layout
     private WindDialog _fubukiDialog;
     private WindDialog _fullScreenDialog;
+    private WindDialog _gravityDialog;
 
     private boolean openNotificationFromSuccess = false;
 
@@ -79,6 +81,9 @@ public class DialogPage extends Fragment {
 
         // custom animation dialog
         customAnimDialog(view);
+
+        // custom gravity
+        customGravityDialog(view);
     }
 
     private void simpleDialog(View view) {
@@ -323,6 +328,7 @@ public class DialogPage extends Fragment {
             @Override
             public void onClick(View v) {
                 _fubukiDialog.setInOutAnimType(WindDialog.InOutAnimType.SWEET_ALERT);
+                _fubukiDialog.setGravity(Gravity.CENTER);
                 _fubukiDialog.show();
             }
         });
@@ -364,11 +370,69 @@ public class DialogPage extends Fragment {
                 _notifyDialog.show();
             }
         });
+        view.findViewById(R.id._animRightLeft).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _notifyDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_RIGHT_2_LEFT);
+                _notifyDialog.show();
+            }
+        });
         view.findViewById(R.id._animTopBottom).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 _fubukiDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_TOP_2_BOTTOM);
                 _fubukiDialog.show();
+            }
+        });
+        view.findViewById(R.id._animBottomTop).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _fubukiDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_BOTTOM_2_TOP);
+                _fubukiDialog.show();
+            }
+        });
+    }
+
+    private void customGravityDialog(View view) {
+        _gravityDialog = createFubukiDialog(view);
+        view.findViewById(R.id._gravityLeft).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _gravityDialog.setGravity(Gravity.START);
+                _gravityDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_LEFT_2_RIGHT);
+                _gravityDialog.show();
+            }
+        });
+        view.findViewById(R.id._gravityTop).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _gravityDialog.setGravity(Gravity.TOP);
+                _gravityDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_TOP_2_BOTTOM);
+                _gravityDialog.show();
+            }
+        });
+        view.findViewById(R.id._gravityRight).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _gravityDialog.setGravity(Gravity.END);
+                _gravityDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_RIGHT_2_LEFT);
+                _gravityDialog.show();
+            }
+        });
+        view.findViewById(R.id._gravityBottom).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _gravityDialog.setGravity(Gravity.BOTTOM);
+                _gravityDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_BOTTOM_2_TOP);
+                _gravityDialog.show();
+            }
+        });
+        view.findViewById(R.id._gravityCenter).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _gravityDialog.setGravity(Gravity.CENTER);
+                _gravityDialog.setInOutAnimType(WindDialog.InOutAnimType.SWEET_ALERT);
+                _gravityDialog.show();
             }
         });
     }

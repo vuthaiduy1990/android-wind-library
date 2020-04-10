@@ -5,8 +5,8 @@
     android:shareInterpolator="true">
     <translate
         android:duration="@android:integer/config_shortAnimTime"
-        android:fromXDelta="0"
-        android:toXDelta="50%p" />
+        android:fromYDelta="0"
+        android:toYDelta="-50%p" />
     <alpha
         android:duration="@android:integer/config_shortAnimTime"
         android:fromAlpha="1.0"
