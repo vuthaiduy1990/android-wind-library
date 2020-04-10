@@ -373,11 +373,11 @@ public class WindRecycleView extends RecyclerView {
          * Remove an item
          *
          * @param data item data
+         * @return removed data
          */
-        public void removeData(T data) {
+        public T removeData(T data) {
             int position = mDataset.indexOf(data);
-            mDataset.remove(data);
-            notifyItemRemoved(position);
+            return removeData(position);
         }
 
         /**
@@ -385,7 +385,8 @@ public class WindRecycleView extends RecyclerView {
          *
          * @param position item's position
          */
-        public void removeData(int position) {
+        public T removeData(int position) {
+            T data = mDataset.get(position);
             mDataset.remove(position);
             notifyItemRemoved(position);
 
@@ -404,6 +405,7 @@ public class WindRecycleView extends RecyclerView {
                     mSelectedItem.mPosition -= 1;
                 }
             }
+            return data;
         }
 
         /**
