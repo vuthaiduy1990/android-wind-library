@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="wind_menu_item_setting" type="id" />
+    <item name="wind_menu_item_delete" type="id" />
+    <item name="wind_menu_item_track_time" type="id" />
+    <item name="wind_menu_item_set_money" type="id" />
+    <item name="wind_menu_item_set_color" type="id" />
+    <item name="wind_menu_item_set_background" type="id" />
+    <item name="wind_menu_item_more" type="id" />
+</resources>

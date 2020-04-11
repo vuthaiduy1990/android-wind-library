@@ -41,4 +41,10 @@
         android:name="the.wind.library.sample.activity.fragment.RecycleViewPage"
         android:label="@string/drawer_recycle_view"
         tools:layout="@layout/fragment_recycle_view" />
+
+    <fragment
+        android:id="@+id/_navActionMenu"
+        android:name="the.wind.library.sample.activity.fragment.ActionMenuPage"
+        android:label="@string/drawer_action_menu"
+        tools:layout="@layout/fragment_action_menu" />
 </navigation>

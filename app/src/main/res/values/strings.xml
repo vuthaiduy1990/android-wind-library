@@ -11,6 +11,7 @@
     <string name="drawer_button">Button</string>
     <string name="drawer_dialog">Dialog Screen</string>
     <string name="drawer_recycle_view">Recycle View</string>
+    <string name="drawer_action_menu">Action Menu</string>
 
     <string name="action_menu_recycle_list_view">List View</string>
     <string name="action_menu_recycle_grid_view">Grid View</string>
@@ -38,4 +39,12 @@
     <string name="button_lock">Tôi là người Việt Nam</string>
     <string name="button_yahoo">Yahoooo !!!</string>
     <string name="button_close">Close</string>
+
+    <string name="wind_menu_item_setting">Settings</string>
+    <string name="wind_menu_item_delete">Delete item</string>
+    <string name="wind_menu_item_track_time">Track time</string>
+    <string name="wind_menu_item_set_money">Set money</string>
+    <string name="wind_menu_item_set_color">Set color</string>
+    <string name="wind_menu_item_set_background">Set background</string>
+    <string name="wind_menu_more_item">more item here more item here more item here more item here</string>
 </resources>

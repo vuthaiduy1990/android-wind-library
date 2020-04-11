@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
             R.id._navColorMenu,
             R.id._navButtonMenu,
             R.id._navDialogMenu,
-            R.id._navRecycleViewMenu
+            R.id._navRecycleViewMenu,
+            R.id._navActionMenu,
     };
     private AppBarConfiguration mAppBarConfiguration;
 
