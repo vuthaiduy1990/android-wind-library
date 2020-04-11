@@ -15,6 +15,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -216,7 +217,10 @@ public class WindDialog extends Dialog {
             if (params != null) {
                 _bodyHolder.addView(view, params);
             } else {
-                _bodyHolder.addView(view);
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
+                _bodyHolder.addView(view, layoutParams);
             }
         }
     }

@@ -50,4 +50,14 @@
     <dimen name="wind_dialog_fubuki_title_margin_left">10dp</dimen>
     <dimen name="wind_dialog_fubuki_body_margin_top">10dp</dimen>
 
+    <!-- ||||||||||||||||||||| Wind Action Menu |||||||||||||||||||||| -->
+    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <dimen name="wind_action_menu_padding_hoz">20dp</dimen>
+    <dimen name="wind_action_menu_icon_size">20dp</dimen>
+    <dimen name="wind_action_menu_text_size">16sp</dimen>
+    <dimen name="wind_action_menu_item_spacing">8dp</dimen>
+    <dimen name="wind_action_menu_item_padding_ver">6dp</dimen>
+    <dimen name="wind_action_menu_item_padding_hoz">10dp</dimen>
+    <dimen name="wind_action_menu_item_margin_ver">2dp</dimen>
+
 </resources>

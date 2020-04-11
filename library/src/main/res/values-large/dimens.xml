@@ -12,7 +12,7 @@
     <dimen name="checkbox_default_square_size">37dp</dimen>
     <dimen name="checkbox_default_checklist_size">29dp</dimen>
 
-    <!-- |||||||||||||||||||||||||| Default |||||||||||||||||||||||||| -->
+    <!-- ||||||||||||||||||||||||||| Button |||||||||||||||||||||||||| -->
     <!-- Icon size = text size + 3dp > -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     <dimen name="button_border_radius">7dp</dimen>
@@ -49,4 +49,14 @@
     <dimen name="wind_dialog_fubuki_title_size">23sp</dimen>
     <dimen name="wind_dialog_fubuki_title_margin_left">12dp</dimen>
     <dimen name="wind_dialog_fubuki_body_margin_top">12dp</dimen>
+
+    <!-- ||||||||||||||||||||| Wind Action Menu |||||||||||||||||||||| -->
+    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <dimen name="wind_action_menu_padding_hoz">20dp</dimen>
+    <dimen name="wind_action_menu_icon_size">22dp</dimen>
+    <dimen name="wind_action_menu_text_size">18sp</dimen>
+    <dimen name="wind_action_menu_item_spacing">10dp</dimen>
+    <dimen name="wind_action_menu_item_padding_ver">8dp</dimen>
+    <dimen name="wind_action_menu_item_padding_hoz">12dp</dimen>
+    <dimen name="wind_action_menu_item_margin_ver">4dp</dimen>
 </resources>
