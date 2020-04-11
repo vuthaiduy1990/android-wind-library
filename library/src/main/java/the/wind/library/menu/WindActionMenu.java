@@ -1,6 +1,7 @@
 package the.wind.library.menu;
 
 import android.content.Context;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,8 @@ public class WindActionMenu extends WindDialog {
     private LayoutInflater mInflater;
     private int mItemBackground;
     private int mItemTextColor;
+    private int mItemTextSize;
+    private int mItemIconSize;
 
 
     // listener
@@ -50,7 +53,9 @@ public class WindActionMenu extends WindDialog {
         // bind view
         _menuHolder = contentView().findViewById(R.id._menuHolder);
         setItemBackground(R.drawable.wind_action_menu_item_background);
-        setTextColor(R.color.text);
+        setItemTextColor(R.color.text);
+        setItemTextSize(R.dimen.wind_action_menu_text_size);
+        setItemIconSize(R.dimen.wind_action_menu_icon_size);
     }
 
     /* ---------------------- OVERRIDE ----------------------- */
@@ -87,6 +92,11 @@ public class WindActionMenu extends WindDialog {
         ImageView icon = itemView.findViewById(R.id._icon);
         if (iconResId != 0) {
             icon.setImageResource(iconResId);
+            int iconSize = (int) getContext().getResources().getDimension(mItemIconSize);
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) icon.getLayoutParams();
+            params.width = iconSize;
+            params.height = iconSize;
+            icon.setLayoutParams(params);
         } else {
             icon.setVisibility(View.GONE);
         }
@@ -94,6 +104,7 @@ public class WindActionMenu extends WindDialog {
         if (textResId != 0) {
             textView.setText(textResId);
             textView.setTextColor(ContextCompat.getColor(getContext(), mItemTextColor));
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getContext().getResources().getDimension(mItemTextSize));
         } else {
             textView.setVisibility(View.GONE);
         }
@@ -130,8 +141,30 @@ public class WindActionMenu extends WindDialog {
      * @param colorResId color resource id
      * @return menu
      */
-    public WindActionMenu setTextColor(int colorResId) {
+    public WindActionMenu setItemTextColor(int colorResId) {
         mItemTextColor = colorResId;
+        return this;
+    }
+
+    /**
+     * Set text size
+     *
+     * @param size resource dimentsion id
+     * @return menu
+     */
+    public WindActionMenu setItemTextSize(int size) {
+        mItemTextSize = size;
+        return this;
+    }
+
+    /**
+     * Set icon size
+     *
+     * @param size resource dimension id
+     * @return menu
+     */
+    public WindActionMenu setItemIconSize(int size) {
+        mItemIconSize = size;
         return this;
     }
 
