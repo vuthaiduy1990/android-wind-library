@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
 import java.util.List;
 
@@ -58,6 +60,9 @@ public class WindRecycleView extends RecyclerView {
         super(context, attrs, defStyleAttr);
         // set default layout manager
         setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+
+        // set default animation
+        setLayoutAnimation(LayoutAnim.SWEET_ALERT.getAnim(context));
 
         // listen the scroll event and handle loadmore
         addOnScrollListener(new OnScrollListener() {
@@ -192,6 +197,37 @@ public class WindRecycleView extends RecyclerView {
     /* ---------------------- METHOD ------------------------- */
 
     /* ---------------------- INNER CLASS -------------------- */
+
+    /**
+     * Layout animation
+     * Thanks https://proandroiddev.com/enter-animation-using-recyclerview-and-layoutanimation-part-1-list-75a874a5d213
+     * Thanks https://github.com/pedant/sweet-alert-dialog
+     */
+    public enum LayoutAnim {
+        SWEET_ALERT(R.anim.recycle_view_item_anim_sweet_alert),
+        FADE(R.anim.recycle_view_item_anim_fade),
+        LEFT_2_RIGHT(R.anim.recycle_view_item_anim_left_right),
+        RIGHT_2_LEFT(R.anim.recycle_view_item_anim_right_left);
+
+        private int anim;
+
+        LayoutAnim(int anim) {
+            this.anim = anim;
+        }
+
+        /**
+         * Get animation
+         *
+         * @param context application context
+         * @return animation
+         */
+        public LayoutAnimationController getAnim(Context context) {
+            LayoutAnimationController layoutAnim = AnimationUtils.loadLayoutAnimation(context, R.anim.recycle_view_layout_anim);
+            layoutAnim.setAnimation(context, anim);
+            return layoutAnim;
+        }
+
+    }
 
     /**
      * On load more listener

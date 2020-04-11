@@ -19,6 +19,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import the.wind.library.sample.R;
 import the.wind.library.sample.activity.fragment.RecycleViewPage;
+import the.wind.library.view.WindRecycleView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -80,6 +81,10 @@ public class MainActivity extends AppCompatActivity {
         boolean rvItemVisible = navDes != null && navDes.getId() == R.id._navRecycleViewMenu;
         menu.findItem(R.id.action_menu_recycle_list_view).setVisible(rvItemVisible);
         menu.findItem(R.id.action_menu_recycle_grid_view).setVisible(rvItemVisible);
+        menu.findItem(R.id.action_menu_recycle_anim_sweet_alert).setVisible(rvItemVisible);
+        menu.findItem(R.id.action_menu_recycle_anim_fade).setVisible(rvItemVisible);
+        menu.findItem(R.id.action_menu_recycle_anim_left_right).setVisible(rvItemVisible);
+        menu.findItem(R.id.action_menu_recycle_anim_right_left).setVisible(rvItemVisible);
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -104,6 +109,26 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_menu_recycle_grid_view:
                 if (currentPage instanceof RecycleViewPage) {
                     ((RecycleViewPage) currentPage).changeViewType(RecycleViewPage.ViewType.GRID_VIEW);
+                }
+                break;
+            case R.id.action_menu_recycle_anim_sweet_alert:
+                if (currentPage instanceof RecycleViewPage) {
+                    ((RecycleViewPage) currentPage).changeLayoutAnim(WindRecycleView.LayoutAnim.SWEET_ALERT);
+                }
+                break;
+            case R.id.action_menu_recycle_anim_fade:
+                if (currentPage instanceof RecycleViewPage) {
+                    ((RecycleViewPage) currentPage).changeLayoutAnim(WindRecycleView.LayoutAnim.FADE);
+                }
+                break;
+            case R.id.action_menu_recycle_anim_left_right:
+                if (currentPage instanceof RecycleViewPage) {
+                    ((RecycleViewPage) currentPage).changeLayoutAnim(WindRecycleView.LayoutAnim.LEFT_2_RIGHT);
+                }
+                break;
+            case R.id.action_menu_recycle_anim_right_left:
+                if (currentPage instanceof RecycleViewPage) {
+                    ((RecycleViewPage) currentPage).changeLayoutAnim(WindRecycleView.LayoutAnim.RIGHT_2_LEFT);
                 }
                 break;
             default:

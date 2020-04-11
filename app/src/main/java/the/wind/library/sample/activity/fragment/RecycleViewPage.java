@@ -174,6 +174,16 @@ public class RecycleViewPage extends Fragment {
         }
     }
 
+    /**
+     * Change layout animation
+     *
+     * @param anim layout animation
+     */
+    public void changeLayoutAnim(WindRecycleView.LayoutAnim anim) {
+        _recycleView.setLayoutAnimation(anim.getAnim(getContext()));
+        mAdapter.notifyDataSetChanged();
+    }
+
     public enum ViewType {
         LIST_VIEW,
         GRID_VIEW
