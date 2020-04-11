@@ -6,7 +6,7 @@
     <translate
         android:duration="@android:integer/config_shortAnimTime"
         android:fromYDelta="0"
-        android:toYDelta="-50%p" />
+        android:toYDelta="50%p" />
     <alpha
         android:duration="@android:integer/config_shortAnimTime"
         android:fromAlpha="1.0"
