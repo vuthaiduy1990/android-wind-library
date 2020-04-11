@@ -236,6 +236,8 @@ public class WindRecycleView extends RecyclerView {
                 return onMiddlewareItemSelection(viewHolder);
             }
         };
+        private OnItemTouchDownListener<T> mItemTouchDownListener;
+        private OnItemTouchUpListener<T> mItemTouchUpListener;
 
         /**
          * Constructor
@@ -267,6 +269,8 @@ public class WindRecycleView extends RecyclerView {
             holder.bindLongClickListener(mItemLongClickListener);
             holder.bindDoubleClickListener(mItemDoubleClickListener);
             holder.bindItemSelection(mItemSelectionListener);
+            holder.bindItemTouchDownListener(mItemTouchDownListener);
+            holder.bindItemTouchUpListener(mItemTouchUpListener);
         }
 
         @Override
@@ -494,12 +498,36 @@ public class WindRecycleView extends RecyclerView {
             return this;
         }
 
+        /**
+         * Set on item touch down listener
+         *
+         * @param listener listener
+         * @return adapter
+         */
+        public Adapter<T> setOnItemTouchDownListener(OnItemTouchDownListener<T> listener) {
+            mItemTouchDownListener = listener;
+            return this;
+        }
+
+        /**
+         * Set on item touch up listener
+         *
+         * @param listener listener
+         * @return adapter
+         */
+        public Adapter<T> setOnItemTouchUpListener(OnItemTouchUpListener<T> listener) {
+            mItemTouchUpListener = listener;
+            return this;
+        }
+
         /* ---------------------- METHOD ------------------------- */
 
         /* ---------------------- INNER CLASS -------------------- */
 
         /**
          * Item selection listener (click/double click/long click);
+         *
+         * @param <T> data model
          */
         private interface OnItemSelectionListener<T> {
             /**
@@ -513,6 +541,8 @@ public class WindRecycleView extends RecyclerView {
 
         /**
          * On item click listener
+         *
+         * @param <T> data model
          */
         public interface OnItemClickListener<T> {
             /**
@@ -527,6 +557,8 @@ public class WindRecycleView extends RecyclerView {
 
         /**
          * On item long click listener
+         *
+         * @param <T> data model
          */
         public interface OnItemLongClickListener<T> {
             /**
@@ -541,6 +573,8 @@ public class WindRecycleView extends RecyclerView {
 
         /**
          * On item double click listener
+         *
+         * @param <T> data model
          */
         public interface OnItemDoubleClickListener<T> {
             /**
@@ -551,6 +585,38 @@ public class WindRecycleView extends RecyclerView {
              * @param data       data
              */
             void onDoubleClick(ViewHolder<T> viewHolder, View view, T data);
+        }
+
+        /**
+         * On mouse down listener
+         *
+         * @param <T> data model
+         */
+        public interface OnItemTouchDownListener<T> {
+            /**
+             * Trigger when user touch down on itm
+             *
+             * @param viewHolder item view holder
+             * @param view       clicked view
+             * @param data       data
+             */
+            void onTouchDown(ViewHolder<T> viewHolder, View view, T data);
+        }
+
+        /**
+         * On mouse up listener
+         *
+         * @param <T> data model
+         */
+        public interface OnItemTouchUpListener<T> {
+            /**
+             * Trigger when user touch up on itm
+             *
+             * @param viewHolder item view holder
+             * @param view       clicked view
+             * @param data       data
+             */
+            void onTouchUp(ViewHolder<T> viewHolder, View view, T data);
         }
     }
 
@@ -570,6 +636,8 @@ public class WindRecycleView extends RecyclerView {
         private Adapter.OnItemClickListener<T> mItemClickListener;
         private Adapter.OnItemLongClickListener<T> mItemLongClickListener;
         private Adapter.OnItemDoubleClickListener<T> mItemDoubleClickListener;
+        private Adapter.OnItemTouchDownListener<T> mItemTouchDownListener;
+        private Adapter.OnItemTouchUpListener<T> mItemTouchUpListener;
         private GestureDetector mGestureDetector = new GestureDetector(itemView.getContext(), new GestureDetector.SimpleOnGestureListener() {
             @Override
             public void onLongPress(MotionEvent e) {
@@ -611,6 +679,19 @@ public class WindRecycleView extends RecyclerView {
                 public boolean onTouch(View v, MotionEvent event) {
                     v.performClick();
                     mView = v;
+                    switch (event.getActionMasked()) {
+                        case MotionEvent.ACTION_DOWN:
+                            if (mItemTouchDownListener != null) {
+                                mItemTouchDownListener.onTouchDown(ViewHolder.this, mView, getAdapterData());
+                            }
+                            break;
+                        case MotionEvent.ACTION_UP:
+                        case MotionEvent.ACTION_CANCEL:
+                            if (mItemTouchUpListener != null) {
+                                mItemTouchUpListener.onTouchUp(ViewHolder.this, mView, getAdapterData());
+                            }
+                            break;
+                    }
                     mGestureDetector.onTouchEvent(event);
                     return true;
                 }
@@ -670,6 +751,24 @@ public class WindRecycleView extends RecyclerView {
          */
         private void bindItemSelection(Adapter.OnItemSelectionListener<T> listener) {
             mItemSelectionListener = listener;
+        }
+
+        /**
+         * Bind item touch down listener
+         *
+         * @param listener on item touch down listener
+         */
+        private void bindItemTouchDownListener(Adapter.OnItemTouchDownListener<T> listener) {
+            mItemTouchDownListener = listener;
+        }
+
+        /**
+         * Bind item touch up listener
+         *
+         * @param listener on item touch down listener
+         */
+        private void bindItemTouchUpListener(Adapter.OnItemTouchUpListener<T> listener) {
+            mItemTouchUpListener = listener;
         }
     }
 

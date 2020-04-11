@@ -103,17 +103,26 @@ public class RecycleViewPage extends Fragment {
             public void onClick(WindRecycleView.ViewHolder viewHolder, View view, DummyData data) {
                 Toast.makeText(getContext(), "Clicked! - " + ((CustomViewHolder) viewHolder).TextView.getText(), Toast.LENGTH_SHORT).show();
             }
-        });
-        mAdapter.setOnItemLongClickListener(new WindRecycleView.Adapter.OnItemLongClickListener<DummyData>() {
+        }).setOnItemLongClickListener(new WindRecycleView.Adapter.OnItemLongClickListener<DummyData>() {
             @Override
             public void onLongClick(WindRecycleView.ViewHolder viewHolder, View view, DummyData data) {
                 Toast.makeText(getContext(), "Long Clicked - " + data.text, Toast.LENGTH_SHORT).show();
             }
-        });
-        mAdapter.setOnItemDoubleClickListener(new WindRecycleView.Adapter.OnItemDoubleClickListener<DummyData>() {
+        }).setOnItemDoubleClickListener(new WindRecycleView.Adapter.OnItemDoubleClickListener<DummyData>() {
             @Override
             public void onDoubleClick(WindRecycleView.ViewHolder viewHolder, View view, DummyData data) {
                 Toast.makeText(getContext(), "Double Clicked - " + data.text, Toast.LENGTH_SHORT).show();
+            }
+        });
+        mAdapter.setOnItemTouchDownListener(new WindRecycleView.Adapter.OnItemTouchDownListener<DummyData>() {
+            @Override
+            public void onTouchDown(WindRecycleView.ViewHolder<DummyData> viewHolder, View view, DummyData data) {
+                viewHolder.itemView.setBackgroundResource(R.drawable.button_background_success);
+            }
+        }).setOnItemTouchUpListener(new WindRecycleView.Adapter.OnItemTouchUpListener<DummyData>() {
+            @Override
+            public void onTouchUp(WindRecycleView.ViewHolder<DummyData> viewHolder, View view, DummyData data) {
+                viewHolder.itemView.setBackgroundResource(data.background);
             }
         });
     }
