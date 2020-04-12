@@ -31,13 +31,13 @@ public class WindsonTest {
         {
             // empty object
             String json = "{}";
-            JsonElement el = CWindson.$.parse(json);
+            JsonElement el = Windson.$.parse(json);
             Assert.assertTrue(el.isJsonObject());
             Assert.assertEquals(json, el.toString());
 
             // empty array`
             json = "[]";
-            el = CWindson.$.parse(json);
+            el = Windson.$.parse(json);
             Assert.assertTrue(el.isJsonArray());
             Assert.assertEquals(0, el.getAsJsonArray().size());
             Assert.assertEquals(json, el.toString());
@@ -46,24 +46,24 @@ public class WindsonTest {
         // Testcase: parse primitive type
         {
             // number
-            String json = CWindson.$.serialize(15).toString();
-            JsonElement el = CWindson.$.parse(json);
+            String json = Windson.$.serialize(15).toString();
+            JsonElement el = Windson.$.parse(json);
             Assert.assertTrue(el.isJsonPrimitive());
             Assert.assertEquals(15, el.getAsInt());
             Assert.assertEquals(json, el.toString());
             Assert.assertEquals("15", json);
 
             // string
-            json = CWindson.$.serialize("color the wind").toString();
-            el = CWindson.$.parse(json);
+            json = Windson.$.serialize("color the wind").toString();
+            el = Windson.$.parse(json);
             Assert.assertTrue(el.isJsonPrimitive());
             Assert.assertEquals("color the wind", el.getAsString());
             Assert.assertEquals(json, el.toString());
             Assert.assertEquals("\"color the wind\"", json);
 
             // boolean
-            json = CWindson.$.serialize(true).toString();
-            el = CWindson.$.parse(json);
+            json = Windson.$.serialize(true).toString();
+            el = Windson.$.parse(json);
             Assert.assertTrue(el.isJsonPrimitive());
             Assert.assertTrue(el.getAsBoolean());
             Assert.assertEquals(json, el.toString());
@@ -72,8 +72,8 @@ public class WindsonTest {
 
         // Testcase: parse enum type
         {
-            String json = CWindson.$.serialize(CWTable.SyncState.MODIFIED).toString();
-            JsonElement el = CWindson.$.parse(json);
+            String json = Windson.$.serialize(CWTable.SyncState.MODIFIED).toString();
+            JsonElement el = Windson.$.parse(json);
             Assert.assertEquals("MODIFIED", el.getAsString());
             Assert.assertEquals(json, el.toString());
             Assert.assertEquals("\"MODIFIED\"", json);
@@ -82,8 +82,8 @@ public class WindsonTest {
         // Testcase: parse date type
         {
             Date now = new Date();
-            String json = CWindson.$.serialize(now).toString();
-            JsonElement el = CWindson.$.parse(json);
+            String json = Windson.$.serialize(now).toString();
+            JsonElement el = Windson.$.parse(json);
             Assert.assertEquals(now.getTime(), el.getAsLong());
             Assert.assertEquals(json, el.toString());
         }
@@ -92,8 +92,8 @@ public class WindsonTest {
         {
             // number array
             double[] dbArray = new double[]{0.56124, 0.3529};
-            String json = CWindson.$.serialize(dbArray).toString();
-            JsonElement el = CWindson.$.parse(json);
+            String json = Windson.$.serialize(dbArray).toString();
+            JsonElement el = Windson.$.parse(json);
             Assert.assertTrue(el.isJsonArray());
             Assert.assertEquals(2, el.getAsJsonArray().size());
             Assert.assertEquals(json, el.toString());
@@ -101,8 +101,8 @@ public class WindsonTest {
 
             // string array
             String[] strArray = new String[]{"color the wind", "風を彩る。"};
-            json = CWindson.$.serialize(strArray).toString();
-            el = CWindson.$.parse(json);
+            json = Windson.$.serialize(strArray).toString();
+            el = Windson.$.parse(json);
             Assert.assertTrue(el.isJsonArray());
             Assert.assertEquals(2, el.getAsJsonArray().size());
             Assert.assertEquals(json, el.toString());
@@ -115,8 +115,8 @@ public class WindsonTest {
             List<String> list = new LinkedList<>();
             list.add("color the wind");
             list.add("風を彩る。");
-            String json = CWindson.$.serialize(list).toString();
-            JsonElement el = CWindson.$.parse(json);
+            String json = Windson.$.serialize(list).toString();
+            JsonElement el = Windson.$.parse(json);
             Assert.assertTrue(el.isJsonArray());
             Assert.assertEquals(2, el.getAsJsonArray().size());
             Assert.assertEquals(json, el.toString());
@@ -126,8 +126,8 @@ public class WindsonTest {
             Set<Float> set = new HashSet<>();
             set.add(10.256f);
             set.add(0.6969f);
-            json = CWindson.$.serialize(set).toString();
-            el = CWindson.$.parse(json);
+            json = Windson.$.serialize(set).toString();
+            el = Windson.$.parse(json);
             Assert.assertTrue(el.isJsonArray());
             Assert.assertEquals(2, el.getAsJsonArray().size());
             Assert.assertEquals(json, el.toString());
@@ -139,8 +139,8 @@ public class WindsonTest {
             Map<String, Double> map = new LinkedHashMap<>();
             map.put("風を彩る。", 0.9696);
             map.put("color the wind", 0.6969);
-            String json = CWindson.$.serialize(map).toString();
-            JsonElement el = CWindson.$.parse(json);
+            String json = Windson.$.serialize(map).toString();
+            JsonElement el = Windson.$.parse(json);
             Assert.assertTrue(el.isJsonObject());
             Assert.assertEquals(2, el.getAsJsonObject().size());
             Assert.assertEquals(json, el.toString());
@@ -151,8 +151,8 @@ public class WindsonTest {
         {
             // test table object
             CWTestTable origin = new CWTestTable();
-            String json = CWindson.$.serialize(origin).toString();
-            JsonObject el = CWindson.$.parse(json).getAsJsonObject();
+            String json = Windson.$.serialize(origin).toString();
+            JsonObject el = Windson.$.parse(json).getAsJsonObject();
             Assert.assertTrue(el.isJsonObject());
             Assert.assertEquals(json, el.toString());
         }
@@ -160,8 +160,8 @@ public class WindsonTest {
         // Testcase: Parse complex json bytes
         {
             CWTestTable origin = new CWTestTable();
-            String json = CWindson.$.serialize(origin).toString();
-            JsonObject el = CWindson.$.parse(json.getBytes(StandardCharsets.UTF_8)).getAsJsonObject();
+            String json = Windson.$.serialize(origin).toString();
+            JsonObject el = Windson.$.parse(json.getBytes(StandardCharsets.UTF_8)).getAsJsonObject();
             Assert.assertTrue(el.isJsonObject());
             Assert.assertEquals(json, el.toString());
         }
@@ -171,14 +171,14 @@ public class WindsonTest {
     public void serialize_deserialize() {
         // Testcase: null object
         {
-            JsonElement el = CWindson.$.serialize(null);
+            JsonElement el = Windson.$.serialize(null);
             Assert.assertEquals(JsonNull.class, el.getClass());
             Assert.assertEquals("null", el.toString());
 
-            String value = CWindson.$.deserialize(null, String.class);
+            String value = Windson.$.deserialize(null, String.class);
             Assert.assertNull(value);
 
-            Assert.assertNull(CWindson.$.deserialize(CWindson.$.serialize(null), String.class));
+            Assert.assertNull(Windson.$.deserialize(Windson.$.serialize(null), String.class));
         }
 
         // Testcase: serialize/deserialize primitive type
@@ -186,30 +186,30 @@ public class WindsonTest {
             Date now = new Date();
             double dbVal = Math.random();
             String strVal = "color the wind";
-            Assert.assertEquals(1, (int) CWindson.$.deserialize(CWindson.$.serialize(1), int.class));
-            Assert.assertEquals(1, (int) CWindson.$.deserialize(CWindson.$.serialize(1), Integer.class));
-            Assert.assertEquals(now.getTime(), (long) CWindson.$.deserialize(CWindson.$.serialize(now.getTime()), long.class));
-            Assert.assertEquals(now.getTime(), (long) CWindson.$.deserialize(CWindson.$.serialize(now.getTime()), Long.class));
-            Assert.assertEquals(1.1f, CWindson.$.deserialize(CWindson.$.serialize(1.1f), float.class), 0);
-            Assert.assertEquals(1.1f, CWindson.$.deserialize(CWindson.$.serialize(1.1f), Float.class), 0);
-            Assert.assertEquals(dbVal, CWindson.$.deserialize(CWindson.$.serialize(dbVal), double.class), 0);
-            Assert.assertEquals(dbVal, CWindson.$.deserialize(CWindson.$.serialize(dbVal), Double.class), 0);
-            Assert.assertTrue(CWindson.$.deserialize(CWindson.$.serialize(true), boolean.class));
-            Assert.assertFalse(CWindson.$.deserialize(CWindson.$.serialize(false), Boolean.class));
-            Assert.assertEquals(strVal, CWindson.$.deserialize(CWindson.$.serialize(strVal), String.class));
+            Assert.assertEquals(1, (int) Windson.$.deserialize(Windson.$.serialize(1), int.class));
+            Assert.assertEquals(1, (int) Windson.$.deserialize(Windson.$.serialize(1), Integer.class));
+            Assert.assertEquals(now.getTime(), (long) Windson.$.deserialize(Windson.$.serialize(now.getTime()), long.class));
+            Assert.assertEquals(now.getTime(), (long) Windson.$.deserialize(Windson.$.serialize(now.getTime()), Long.class));
+            Assert.assertEquals(1.1f, Windson.$.deserialize(Windson.$.serialize(1.1f), float.class), 0);
+            Assert.assertEquals(1.1f, Windson.$.deserialize(Windson.$.serialize(1.1f), Float.class), 0);
+            Assert.assertEquals(dbVal, Windson.$.deserialize(Windson.$.serialize(dbVal), double.class), 0);
+            Assert.assertEquals(dbVal, Windson.$.deserialize(Windson.$.serialize(dbVal), Double.class), 0);
+            Assert.assertTrue(Windson.$.deserialize(Windson.$.serialize(true), boolean.class));
+            Assert.assertFalse(Windson.$.deserialize(Windson.$.serialize(false), Boolean.class));
+            Assert.assertEquals(strVal, Windson.$.deserialize(Windson.$.serialize(strVal), String.class));
         }
 
         // Testcase: serialize/deserialize enum type
         {
             CWTable.SyncState state = CWTable.SyncState.DELETED;
-            Assert.assertEquals(state, CWindson.$.deserialize(CWindson.$.serialize(state), CWTable.SyncState.class));
+            Assert.assertEquals(state, Windson.$.deserialize(Windson.$.serialize(state), CWTable.SyncState.class));
         }
 
         // Testcase: serialize/deserialize datetime type
         {
             Date now = new Date();
-            Assert.assertEquals(now.getTime(), CWindson.$.serialize(now).getAsLong());
-            Assert.assertEquals(now, CWindson.$.deserialize(CWindson.$.serialize(now), Date.class));
+            Assert.assertEquals(now.getTime(), Windson.$.serialize(now).getAsLong());
+            Assert.assertEquals(now, Windson.$.deserialize(Windson.$.serialize(now), Date.class));
         }
 
         // Testcase: serialize/deserialize json object
@@ -217,7 +217,7 @@ public class WindsonTest {
 
             JsonObject origin = new JsonObject();
             origin.addProperty("color", "wind");
-            JsonObject json = CWindson.$.deserialize(origin, JsonObject.class);
+            JsonObject json = Windson.$.deserialize(origin, JsonObject.class);
             Assert.assertEquals(origin.toString(), json.toString());
         }
 
@@ -226,12 +226,12 @@ public class WindsonTest {
             // double array
             double[] dbArray = new double[]{Math.random(), Math.random()};
             Assert.assertEquals(dbArray.getClass(), double[].class);
-            Assert.assertArrayEquals(dbArray, CWindson.$.deserialize(CWindson.$.serialize(dbArray), double[].class), 0);
+            Assert.assertArrayEquals(dbArray, Windson.$.deserialize(Windson.$.serialize(dbArray), double[].class), 0);
 
             // String array
             String[] strArray = new String[]{"color the wind", "風を彩る。"};
             Assert.assertEquals(strArray.getClass(), String[].class);
-            Assert.assertArrayEquals(strArray, CWindson.$.deserialize(CWindson.$.serialize(strArray), String[].class));
+            Assert.assertArrayEquals(strArray, Windson.$.deserialize(Windson.$.serialize(strArray), String[].class));
 
             // object array
             CWTestTable.SubClass[] objArr = new CWTestTable.SubClass[]{
@@ -239,10 +239,10 @@ public class WindsonTest {
                     new CWTestTable.SubClass(2, "wind")
             };
             Assert.assertEquals(objArr.getClass(), CWTestTable.SubClass[].class);
-            CWTestTable.SubClass[] obArrActual = CWindson.$.deserialize(CWindson.$.serialize(objArr), objArr.getClass());
+            CWTestTable.SubClass[] obArrActual = Windson.$.deserialize(Windson.$.serialize(objArr), objArr.getClass());
             Assert.assertEquals(
-                    CWindson.$.serialize(objArr),
-                    CWindson.$.serialize(obArrActual));
+                    Windson.$.serialize(objArr),
+                    Windson.$.serialize(obArrActual));
         }
 
         // Testcase: serialize/deserialize generic type (collection)
@@ -254,7 +254,7 @@ public class WindsonTest {
 
             Assert.assertEquals(list.getClass(), LinkedList.class);
             Type type = new TypeToken<List<String>>() {}.getType();
-            List<String> jsonList = CWindson.$.deserialize(CWindson.$.serialize(list), type);
+            List<String> jsonList = Windson.$.deserialize(Windson.$.serialize(list), type);
 
             Assert.assertEquals(jsonList.get(0).getClass(), String.class);
             Assert.assertEquals(2, jsonList.size());
@@ -268,7 +268,7 @@ public class WindsonTest {
 
             Assert.assertEquals(set.getClass(), HashSet.class);
             type = new TypeToken<HashSet<String>>() {}.getType();
-            Set<String> jsonSet = CWindson.$.deserialize(CWindson.$.serialize(set), type);
+            Set<String> jsonSet = Windson.$.deserialize(Windson.$.serialize(set), type);
 
             Assert.assertEquals(2, jsonSet.size());
             Assert.assertTrue(jsonSet.contains("color the wind"));
@@ -283,10 +283,10 @@ public class WindsonTest {
             Assert.assertEquals(objList.getClass(), LinkedList.class);
             type = new TypeToken<List<CWTestTable.SubClass>>() {}.getType();
 
-            List<CWTestTable.SubClass> objListActual = CWindson.$.deserialize(CWindson.$.serialize(objList), type);
+            List<CWTestTable.SubClass> objListActual = Windson.$.deserialize(Windson.$.serialize(objList), type);
             Assert.assertEquals(
-                    CWindson.$.serialize(objList).toString(),
-                    CWindson.$.serialize(objListActual).toString());
+                    Windson.$.serialize(objList).toString(),
+                    Windson.$.serialize(objListActual).toString());
         }
 
         // Testcase: serialize/deserialize map type
@@ -297,7 +297,7 @@ public class WindsonTest {
 
             Assert.assertEquals(map.getClass(), HashMap.class);
             Type type = new TypeToken<Map<String, Double>>() {}.getType();
-            Map<String, Double> jsonMap = CWindson.$.deserialize(CWindson.$.serialize(map), type);
+            Map<String, Double> jsonMap = Windson.$.deserialize(Windson.$.serialize(map), type);
 
             Assert.assertEquals(2, jsonMap.size());
             Assert.assertEquals((Double) 0.6969, jsonMap.get("color the wind"));
@@ -307,35 +307,35 @@ public class WindsonTest {
         // Testcase: serialize/deserialize complex object type with null value
         {
             CWTestTable origin = new CWTestTable();
-            JsonElement el = CWindson.$.serialize(origin);
-            CWTestTable json = CWindson.$.deserialize(el, CWTestTable.class);
-            Assert.assertEquals(el.toString(), CWindson.$.serialize(json).toString());
+            JsonElement el = Windson.$.serialize(origin);
+            CWTestTable json = Windson.$.deserialize(el, CWTestTable.class);
+            Assert.assertEquals(el.toString(), Windson.$.serialize(json).toString());
         }
 
         // Testcase: serialize/deserialize complex object type with not-null value
         {
             CWTestTable origin = CWTestTable.newTestTable();
-            JsonElement el = CWindson.$.serialize(origin);
+            JsonElement el = Windson.$.serialize(origin);
             System.out.println(el.toString());
-            CWTestTable json = CWindson.$.deserialize(el, CWTestTable.class);
-            Assert.assertEquals(el.toString(), CWindson.$.serialize(json).toString());
+            CWTestTable json = Windson.$.deserialize(el, CWTestTable.class);
+            Assert.assertEquals(el.toString(), Windson.$.serialize(json).toString());
         }
 
     }
 
     @Test
     public void mock() {
-        CWindson.mock(new CWindson(true) {
+        Windson.mock(new Windson(true) {
             @Override
             protected void setBuilder(GsonBuilder builder) {
                 super.setBuilder(builder);
             }
         });
         CWTestTable origin = new CWTestTable();
-        JsonElement el = CWindson.$.serialize(origin);
+        JsonElement el = Windson.$.serialize(origin);
         System.out.println(el.toString());
-        CWTestTable json = CWindson.$.deserialize(el, CWTestTable.class);
-        Assert.assertEquals(el.toString(), CWindson.$.serialize(json).toString());
+        CWTestTable json = Windson.$.deserialize(el, CWTestTable.class);
+        Assert.assertEquals(el.toString(), Windson.$.serialize(json).toString());
     }
 
 }

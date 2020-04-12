@@ -17,30 +17,30 @@ import java.util.List;
 import java.util.Set;
 
 import androidx.annotation.NonNull;
-import the.wind.library.CWindson;
+import the.wind.library.Windson;
 import the.wind.library.utils.CWClazzUtils;
 
 /**
  * Usage
  * <pre>
- *     CWindDB.setTables(CWTestTable.class);
- *     CWindDB.setMigrations(CWBuild.class);
- *     CWindDB.init(context, db-name, db-version)
- *     CWindDB.$.getWritableDatabase();
- *     CWindDB.$.find()
+ *     WindDB.setTables(CWTestTable.class);
+ *     WindDB.setMigrations(CWBuild.class);
+ *     WindDB.init(context, db-name, db-version)
+ *     WindDB.$.getWritableDatabase();
+ *     WindDB.$.find()
  * </pre>
- * - After initializing database, you should call {@link CWindDB#$#getWritableDatabase()}
+ * - After initializing database, you should call {@link WindDB#$#getWritableDatabase()}
  * to run migration if database version is changed
  * - You also should not init database in main thread b/c sometime the migration process may take long time.
  * So, call it in async task of possible
  *
  * @see SQLiteOpenHelper#getWritableDatabase()
  */
-public class CWindDB extends SQLiteOpenHelper {
+public class WindDB extends SQLiteOpenHelper {
 
     // singleton instance of windson
     @NonNull
-    public static CWindDB $;
+    public static WindDB $;
 
     // SQLite database
     private SQLiteDatabase _sqLiteDatabase;
@@ -52,7 +52,7 @@ public class CWindDB extends SQLiteOpenHelper {
      * @param database database name
      * @param version  database version
      */
-    private CWindDB(Context context, String database, int version) {
+    private WindDB(Context context, String database, int version) {
         super(context, database, null, version);
     }
 
@@ -100,7 +100,7 @@ public class CWindDB extends SQLiteOpenHelper {
      * @param version  database version
      */
     public static void init(@NonNull Context context, @NonNull String database, int version) {
-        $ = new CWindDB(context, database, version);
+        $ = new WindDB(context, database, version);
     }
 
     /**
@@ -581,7 +581,7 @@ public class CWindDB extends SQLiteOpenHelper {
                 // other field type which SQLite does not support. Ex, enum, array, collection, date ...
                 // -> convert to json string -> store as string
                 if (val != null) {
-                    values.put(key, CWindson.$.serialize(val).toString());
+                    values.put(key, Windson.$.serialize(val).toString());
                 } else {
                     values.put(key, (String) null);
                 }
@@ -640,9 +640,9 @@ public class CWindDB extends SQLiteOpenHelper {
                 // -> parse json string to object
                 val = cursor.getString(colIndex);
                 if (field.getGenericType() instanceof ParameterizedType) {
-                    val = CWindson.$.deserialize(CWindson.$.parse((String) val), field.getGenericType());
+                    val = Windson.$.deserialize(Windson.$.parse((String) val), field.getGenericType());
                 } else {
-                    val = CWindson.$.deserialize(CWindson.$.parse((String) val), type);
+                    val = Windson.$.deserialize(Windson.$.parse((String) val), type);
                 }
 
             }

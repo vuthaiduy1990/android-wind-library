@@ -12,20 +12,20 @@ import androidx.core.content.ContextCompat;
  * http://colorsafe.co/
  * https://jxnblk.github.io/colorable/demos/text
  */
-public final class CWindColor {
+public final class WindColor {
 
-    public static final CWindColor PRIMARY = CWindColor.fromHex("#3191bf");
-    public static final CWindColor SUCCESS = CWindColor.fromHex("#41b3a3");
-    public static final CWindColor INFO = CWindColor.fromHex("#30a3b2");
-    public static final CWindColor HIGHLIGHT = CWindColor.fromHex("#ecd06f");
-    public static final CWindColor WARNING = CWindColor.fromHex("#f4bb1a");
-    public static final CWindColor DANGER = CWindColor.fromHex("#e26060");
-    public static final CWindColor NEUTRAL = CWindColor.fromHex("#e8a87c");
-    public static final CWindColor LIGHT = CWindColor.fromHex("#dfdfde");
-    public static final CWindColor GRAY = CWindColor.fromHex("#afafaf");
-    public static final CWindColor DARK = CWindColor.fromHex("#191919");
-    public static final CWindColor PURPLE = CWindColor.fromHex("#c38d9e");
-    public static final CWindColor PEA = CWindColor.fromHex("#c3cb71");
+    public static final WindColor PRIMARY = WindColor.fromHex("#3191bf");
+    public static final WindColor SUCCESS = WindColor.fromHex("#41b3a3");
+    public static final WindColor INFO = WindColor.fromHex("#30a3b2");
+    public static final WindColor HIGHLIGHT = WindColor.fromHex("#ecd06f");
+    public static final WindColor WARNING = WindColor.fromHex("#f4bb1a");
+    public static final WindColor DANGER = WindColor.fromHex("#e26060");
+    public static final WindColor NEUTRAL = WindColor.fromHex("#e8a87c");
+    public static final WindColor LIGHT = WindColor.fromHex("#dfdfde");
+    public static final WindColor GRAY = WindColor.fromHex("#afafaf");
+    public static final WindColor DARK = WindColor.fromHex("#191919");
+    public static final WindColor PURPLE = WindColor.fromHex("#c38d9e");
+    public static final WindColor PEA = WindColor.fromHex("#c3cb71");
 
     // shade factors
     private static final float[] SHADE_FACTORS = new float[]{
@@ -40,9 +40,9 @@ public final class CWindColor {
     private int mColor;
 
     // shades and tints
-    private CWindColor[] mShades;
+    private WindColor[] mShades;
     private int[] mShadeValues;
-    private CWindColor[] mTints;
+    private WindColor[] mTints;
     private int[] mTintValues;
 
     /**
@@ -50,7 +50,7 @@ public final class CWindColor {
      *
      * @param color color
      */
-    private CWindColor(int color) {
+    private WindColor(int color) {
         mColor = color;
     }
 
@@ -63,8 +63,8 @@ public final class CWindColor {
      *
      * @return wind color
      */
-    public static CWindColor fromHex(String hex) {
-        return new CWindColor(Color.parseColor(hex));
+    public static WindColor fromHex(String hex) {
+        return new WindColor(Color.parseColor(hex));
     }
 
     /**
@@ -72,8 +72,8 @@ public final class CWindColor {
      *
      * @return wind color
      */
-    public static CWindColor fromRgb(int r, int g, int b) {
-        return new CWindColor(Color.rgb(r, g, b));
+    public static WindColor fromRgb(int r, int g, int b) {
+        return new WindColor(Color.rgb(r, g, b));
     }
 
     /**
@@ -83,8 +83,8 @@ public final class CWindColor {
      * @param colorRes resource color
      * @return wind color
      */
-    public static CWindColor fromRes(Context context, int colorRes) {
-        return new CWindColor(ContextCompat.getColor(context, colorRes));
+    public static WindColor fromRes(Context context, int colorRes) {
+        return new WindColor(ContextCompat.getColor(context, colorRes));
     }
 
     /* ---------------------- ABSTRACT -----------------------*/
@@ -112,7 +112,7 @@ public final class CWindColor {
      *
      * @return array of shades
      */
-    public CWindColor[] shades() {
+    public WindColor[] shades() {
         if (mShades == null) {
             genShades();
         }
@@ -134,7 +134,7 @@ public final class CWindColor {
      *
      * @return array of tints
      */
-    public CWindColor[] tints() {
+    public WindColor[] tints() {
         if (mTints == null) {
             genTints();
         }
@@ -161,11 +161,11 @@ public final class CWindColor {
         int g = Color.green(mColor);
         int b = Color.blue(mColor);
 
-        mShades = new CWindColor[SHADE_FACTORS.length];
+        mShades = new WindColor[SHADE_FACTORS.length];
         mShadeValues = new int[SHADE_FACTORS.length];
         for (int i = 0; i < SHADE_FACTORS.length; i++) {
             float factor = SHADE_FACTORS[i];
-            mShades[i] = CWindColor.fromRgb(
+            mShades[i] = WindColor.fromRgb(
                     Math.round(r * factor),
                     Math.round(g * factor),
                     Math.round(b * factor)
@@ -182,11 +182,11 @@ public final class CWindColor {
         int g = Color.green(mColor);
         int b = Color.blue(mColor);
 
-        mTints = new CWindColor[TINT_FACTORS.length];
+        mTints = new WindColor[TINT_FACTORS.length];
         mTintValues = new int[TINT_FACTORS.length];
         for (int i = 0; i < TINT_FACTORS.length; i++) {
             float factor = TINT_FACTORS[i];
-            mTints[i] = CWindColor.fromRgb(
+            mTints[i] = WindColor.fromRgb(
                     Math.round(r + (255 - r) * factor),
                     Math.round(g + (255 - g) * factor),
                     Math.round(b + (255 - b) * factor)

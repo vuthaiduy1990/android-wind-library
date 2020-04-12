@@ -27,16 +27,16 @@ import the.wind.library.utils.CWStreamUtils;
 
 /**
  * A Gson wrapper.
- * But not wrapper only, we can customize windson and mock it to CWindson class
+ * But not wrapper only, we can customize windson and mock it to Windson class
  * <p>
  * Usage - Call methods
  * <pre>
- *     CWindson.$.serialize();  // we don't need to initialize new object
- *     CWindson.$.deserialize();
+ *     Windson.$.serialize();  // we don't need to initialize new object
+ *     Windson.$.deserialize();
  * </pre>
  * Usage - create a custom windson
  * <pre>
- *     CWindson windson = new CWindson(debug) {
+ *     Windson windson = new Windson(debug) {
  *          @Override
  *          protected void setBuilder(GsonBuilder builder) {
  *              super.setBuilder(builder);
@@ -44,17 +44,17 @@ import the.wind.library.utils.CWStreamUtils;
  *          }
  *     }
  *     // mock custom instance to class
- *     CWindson.mock(windson);
+ *     Windson.mock(windson);
  *     // then call method
- *     CWindson.$.serialize();  // we can access new custom instance everywhere
+ *     Windson.$.serialize();  // we can access new custom instance everywhere
  * </pre>
  */
 
-public class CWindson {
+public class Windson {
 
     // singleton instance of windson
     @NonNull
-    public static CWindson $ = new CWindson(false);
+    public static Windson $ = new Windson(false);
 
     // gson and parser
     private Gson Gson;
@@ -64,7 +64,7 @@ public class CWindson {
      *
      * @param debug true -> debug mode
      */
-    protected CWindson(boolean debug) {
+    protected Windson(boolean debug) {
         GsonBuilder builder = new GsonBuilder();
         setBuilder(builder);
 
@@ -86,7 +86,7 @@ public class CWindson {
      *
      * @param windson windson
      */
-    public static void mock(@NonNull CWindson windson) {
+    public static void mock(@NonNull Windson windson) {
         $ = windson;
     }
 

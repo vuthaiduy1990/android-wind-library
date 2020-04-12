@@ -14,7 +14,7 @@ import java.util.List;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import the.wind.library.db.CWTestTable;
-import the.wind.library.db.CWindDB;
+import the.wind.library.db.WindDB;
 
 @RunWith(AndroidJUnit4.class)
 public class WindDBTest {
@@ -23,59 +23,59 @@ public class WindDBTest {
 
     @BeforeClass
     public static void beforeClass() {
-        CWindDB.setTables(CWTestTable.class);
-        CWindDB.init(context, "test_database", 3);
+        WindDB.setTables(CWTestTable.class);
+        WindDB.init(context, "test_database", 3);
     }
 
     @After
     public void afterMethod() {
         // Clear database
-        CWindDB.$.clear(CWTestTable.class);
+        WindDB.$.clear(CWTestTable.class);
     }
 
     @Test
     public void find() throws IllegalAccessException {
         CWTestTable origin = CWTestTable.newTestTable();
-        Assert.assertTrue(CWindDB.$.insert(origin) >= 0);
+        Assert.assertTrue(WindDB.$.insert(origin) >= 0);
 
         // find by hash
-        CWTestTable fromDB = CWindDB.$.findByHash(CWTestTable.class, origin.getHash());
+        CWTestTable fromDB = WindDB.$.findByHash(CWTestTable.class, origin.getHash());
         Assert.assertEquals(
-                CWindson.$.serialize(origin).toString(),
-                CWindson.$.serialize(fromDB).toString());
+                Windson.$.serialize(origin).toString(),
+                Windson.$.serialize(fromDB).toString());
 
         // find by state
-        fromDB = CWindDB.$.findByState(CWTestTable.class, origin.getSyncState()).get(0);
+        fromDB = WindDB.$.findByState(CWTestTable.class, origin.getSyncState()).get(0);
         Assert.assertEquals(
-                CWindson.$.serialize(origin).toString(),
-                CWindson.$.serialize(fromDB).toString());
+                Windson.$.serialize(origin).toString(),
+                Windson.$.serialize(fromDB).toString());
 
         // find with where condition
-        fromDB = CWindDB.$.find(CWTestTable.class, null, "intPrim = ?", new String[]{"1"}).get(0);
+        fromDB = WindDB.$.find(CWTestTable.class, null, "intPrim = ?", new String[]{"1"}).get(0);
         Assert.assertEquals(
-                CWindson.$.serialize(origin).toString(),
-                CWindson.$.serialize(fromDB).toString());
-        fromDB = CWindDB.$.find(CWTestTable.class, null, "stringObj = ?", new String[]{"Color the wind"}).get(0);
+                Windson.$.serialize(origin).toString(),
+                Windson.$.serialize(fromDB).toString());
+        fromDB = WindDB.$.find(CWTestTable.class, null, "stringObj = ?", new String[]{"Color the wind"}).get(0);
         Assert.assertEquals(
-                CWindson.$.serialize(origin).toString(),
-                CWindson.$.serialize(fromDB).toString());
+                Windson.$.serialize(origin).toString(),
+                Windson.$.serialize(fromDB).toString());
 
         // search with like condition
-        fromDB = CWindDB.$.find(CWTestTable.class, null, "stringObj like ?", new String[]{"%wind"}).get(0);
+        fromDB = WindDB.$.find(CWTestTable.class, null, "stringObj like ?", new String[]{"%wind"}).get(0);
         Assert.assertEquals(
-                CWindson.$.serialize(origin).toString(),
-                CWindson.$.serialize(fromDB).toString());
+                Windson.$.serialize(origin).toString(),
+                Windson.$.serialize(fromDB).toString());
 
         // search with specific column
-        fromDB = CWindDB.$.find(
+        fromDB = WindDB.$.find(
                 CWTestTable.class,
                 new String[]{"stringObj", "intPrim"},
                 "stringObj like ?", new String[]{"%wind"}).get(0);
-        for (Field field : CWindDB.getColumnFields(CWTestTable.class)) {
+        for (Field field : WindDB.getColumnFields(CWTestTable.class)) {
             Class<?> type = field.getType();
             field.setAccessible(true);
-            if (CWindDB.getColumnName(field).equals("stringObj")
-                    || CWindDB.getColumnName(field).equals("stringObj")) {
+            if (WindDB.getColumnName(field).equals("stringObj")
+                    || WindDB.getColumnName(field).equals("stringObj")) {
                 Assert.assertNotNull(field.get(fromDB));
             } else if (!type.isPrimitive()) {
                 Assert.assertNull(field.get(fromDB));
@@ -90,23 +90,23 @@ public class WindDBTest {
         CWTestTable record1 = new CWTestTable();
         CWTestTable record2 = CWTestTable.newTestTable();
         CWTestTable record3 = CWTestTable.newTestTable();
-        CWindDB.$.insert(record1, record2, record3);
+        WindDB.$.insert(record1, record2, record3);
 
         // find many
-        List<CWTestTable> result = CWindDB.$.find(
+        List<CWTestTable> result = WindDB.$.find(
                 CWTestTable.class, null,
                 "stringObj = ?", new String[]{"Color the wind"});
         Assert.assertEquals(2, result.size());
 
         // find with limit
-        result = CWindDB.$.find(
+        result = WindDB.$.find(
                 CWTestTable.class, null,
                 "stringObj = ?", new String[]{"Color the wind"},
                 null, "1");
         Assert.assertEquals(1, result.size());
 
         // find all
-        result = CWindDB.$.findAll(CWTestTable.class);
+        result = WindDB.$.findAll(CWTestTable.class);
         Assert.assertEquals(3, result.size());
     }
 
@@ -115,42 +115,42 @@ public class WindDBTest {
         // Testcase: insert record with null value
         {
             CWTestTable origin = new CWTestTable();
-            long id = CWindDB.$.insert(origin);
+            long id = WindDB.$.insert(origin);
             Assert.assertTrue(id >= 0);
 
-            CWTestTable fromDB = CWindDB.$.findByHash(CWTestTable.class, origin.getHash());
+            CWTestTable fromDB = WindDB.$.findByHash(CWTestTable.class, origin.getHash());
             Assert.assertEquals(
-                    CWindson.$.serialize(origin).toString(),
-                    CWindson.$.serialize(fromDB).toString());
-            CWindDB.$.clear(CWTestTable.class);
+                    Windson.$.serialize(origin).toString(),
+                    Windson.$.serialize(fromDB).toString());
+            WindDB.$.clear(CWTestTable.class);
         }
 
         // Testcase: insert record with not-null value
         {
             CWTestTable origin = CWTestTable.newTestTable();
-            long id = CWindDB.$.insert(origin);
+            long id = WindDB.$.insert(origin);
             Assert.assertTrue(id >= 0);
 
-            CWTestTable fromDB = CWindDB.$.findByHash(CWTestTable.class, origin.getHash());
+            CWTestTable fromDB = WindDB.$.findByHash(CWTestTable.class, origin.getHash());
             Assert.assertEquals(
-                    CWindson.$.serialize(origin).toString(),
-                    CWindson.$.serialize(fromDB).toString());
-            CWindDB.$.clear(CWTestTable.class);
+                    Windson.$.serialize(origin).toString(),
+                    Windson.$.serialize(fromDB).toString());
+            WindDB.$.clear(CWTestTable.class);
         }
 
         // Testcase: insert many table
         // Testcase: insert record with not-null value
         {
-            long id = CWindDB.$.insert(
+            long id = WindDB.$.insert(
                     new CWTestTable(),
                     new CWTestTable(),
                     CWTestTable.newTestTable(),
                     CWTestTable.newTestTable());
             Assert.assertTrue(id >= 0);
 
-            List<CWTestTable> list = CWindDB.$.findAll(CWTestTable.class);
+            List<CWTestTable> list = WindDB.$.findAll(CWTestTable.class);
             Assert.assertEquals(4, list.size());
-            CWindDB.$.clear(CWTestTable.class);
+            WindDB.$.clear(CWTestTable.class);
         }
 
     }
@@ -159,7 +159,7 @@ public class WindDBTest {
     public void update() {
         // Testcase: update non-exist record
         {
-            int numberOfRow = CWindDB.$.update(new CWTestTable());
+            int numberOfRow = WindDB.$.update(new CWTestTable());
             Assert.assertEquals(0, numberOfRow);
         }
 
@@ -168,20 +168,20 @@ public class WindDBTest {
             String hash = "dvs156b&*(U";
             CWTestTable record = new CWTestTable();
             record.setHash(hash);
-            Assert.assertTrue(CWindDB.$.insert(record) >= 0);
+            Assert.assertTrue(WindDB.$.insert(record) >= 0);
 
             // update
             record = CWTestTable.newTestTable();
             record.setHash(hash);
-            Assert.assertEquals(1, CWindDB.$.update(record));
+            Assert.assertEquals(1, WindDB.$.update(record));
 
             // check
-            CWTestTable fromDB = CWindDB.$.findByHash(CWTestTable.class, hash);
+            CWTestTable fromDB = WindDB.$.findByHash(CWTestTable.class, hash);
             Assert.assertEquals(
-                    CWindson.$.serialize(record).toString(),
-                    CWindson.$.serialize(fromDB).toString());
+                    Windson.$.serialize(record).toString(),
+                    Windson.$.serialize(fromDB).toString());
 
-            CWindDB.$.clear(CWTestTable.class);
+            WindDB.$.clear(CWTestTable.class);
         }
 
         // Testcase: update many records
@@ -189,12 +189,12 @@ public class WindDBTest {
             CWTestTable record1 = new CWTestTable();
             CWTestTable record2 = CWTestTable.newTestTable();
             CWTestTable record3 = CWTestTable.newTestTable();
-            CWindDB.$.insert(record1, record2, record3);
+            WindDB.$.insert(record1, record2, record3);
 
             // update
-            Assert.assertEquals(3, CWindDB.$.update(record1, record2, record3));
+            Assert.assertEquals(3, WindDB.$.update(record1, record2, record3));
 
-            CWindDB.$.clear(CWTestTable.class);
+            WindDB.$.clear(CWTestTable.class);
         }
     }
 
@@ -202,13 +202,13 @@ public class WindDBTest {
     public void upsert() {
         CWTestTable record1 = new CWTestTable();
         CWTestTable record2 = CWTestTable.newTestTable();
-        CWindDB.$.insert(record1, record2);
+        WindDB.$.insert(record1, record2);
 
         // upsert exist record
-        Assert.assertTrue(CWindDB.$.upsert(record1));
+        Assert.assertTrue(WindDB.$.upsert(record1));
 
         // update non-exist record
-        Assert.assertTrue(CWindDB.$.upsert(record2));
+        Assert.assertTrue(WindDB.$.upsert(record2));
     }
 
     @Test
@@ -218,17 +218,17 @@ public class WindDBTest {
             CWTestTable record1 = new CWTestTable();
             CWTestTable record2 = CWTestTable.newTestTable();
             CWTestTable record3 = CWTestTable.newTestTable();
-            CWindDB.$.insert(record1, record2, record3);
+            WindDB.$.insert(record1, record2, record3);
 
-            List<CWTestTable> list = CWindDB.$.findAll(CWTestTable.class);
+            List<CWTestTable> list = WindDB.$.findAll(CWTestTable.class);
             Assert.assertEquals(3, list.size());
 
-            int numberOfRow = CWindDB.$.delete(record1);
+            int numberOfRow = WindDB.$.delete(record1);
             Assert.assertEquals(1, numberOfRow);
 
-            list = CWindDB.$.findAll(CWTestTable.class);
+            list = WindDB.$.findAll(CWTestTable.class);
             Assert.assertEquals(2, list.size());
-            CWindDB.$.clear(CWTestTable.class);
+            WindDB.$.clear(CWTestTable.class);
         }
 
         // Testcase: delete multiple records
@@ -236,40 +236,40 @@ public class WindDBTest {
             CWTestTable record1 = new CWTestTable();
             CWTestTable record2 = CWTestTable.newTestTable();
             CWTestTable record3 = CWTestTable.newTestTable();
-            CWindDB.$.insert(record1, record2, record3);
+            WindDB.$.insert(record1, record2, record3);
 
-            List<CWTestTable> list = CWindDB.$.findAll(CWTestTable.class);
+            List<CWTestTable> list = WindDB.$.findAll(CWTestTable.class);
             Assert.assertEquals(3, list.size());
 
-            int numberOfRow = CWindDB.$.delete(record1, record2, record3);
+            int numberOfRow = WindDB.$.delete(record1, record2, record3);
             Assert.assertEquals(3, numberOfRow);
 
-            list = CWindDB.$.findAll(CWTestTable.class);
+            list = WindDB.$.findAll(CWTestTable.class);
             Assert.assertEquals(0, list.size());
-            CWindDB.$.clear(CWTestTable.class);
+            WindDB.$.clear(CWTestTable.class);
         }
 
         // Testcase: delete non-exist record
         {
-            int numberOfRow = CWindDB.$.delete(new CWTestTable());
+            int numberOfRow = WindDB.$.delete(new CWTestTable());
             Assert.assertEquals(0, numberOfRow);
         }
     }
 
     @Test
     public void clear() {
-        long id = CWindDB.$.insert(
+        long id = WindDB.$.insert(
                 new CWTestTable(),
                 new CWTestTable(),
                 CWTestTable.newTestTable(),
                 CWTestTable.newTestTable());
         Assert.assertTrue(id >= 0);
-        List<CWTestTable> list = CWindDB.$.findAll(CWTestTable.class);
+        List<CWTestTable> list = WindDB.$.findAll(CWTestTable.class);
         Assert.assertEquals(4, list.size());
 
-        int numberOfRow = CWindDB.$.clear(CWTestTable.class);
+        int numberOfRow = WindDB.$.clear(CWTestTable.class);
         Assert.assertEquals(4, numberOfRow);
-        list = CWindDB.$.findAll(CWTestTable.class);
+        list = WindDB.$.findAll(CWTestTable.class);
         Assert.assertEquals(0, list.size());
     }
 }

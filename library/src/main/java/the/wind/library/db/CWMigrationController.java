@@ -60,7 +60,7 @@ final class CWMigrationController {
      */
     void doInitialization() {
         for (Class<? extends CWTable> clazz : tables) {
-            CWindDB.$.createTable(clazz);
+            WindDB.$.createTable(clazz);
         }
     }
 

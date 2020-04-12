@@ -16,7 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import the.wind.library.CWindColor;
+import the.wind.library.WindColor;
 import the.wind.library.sample.R;
 
 public class ColorPage extends Fragment {
@@ -31,21 +31,21 @@ public class ColorPage extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ViewGroup _colorLayout = view.findViewById(R.id._colorLayout);
-        Map<String, CWindColor> colors = new LinkedHashMap<>();
-        colors.put("PRIMARY", CWindColor.PRIMARY);
-        colors.put("SUCCESS", CWindColor.SUCCESS);
-        colors.put("INFO", CWindColor.INFO);
-        colors.put("HIGHLIGHT", CWindColor.HIGHLIGHT);
-        colors.put("WARNING", CWindColor.WARNING);
-        colors.put("NEUTRAL", CWindColor.NEUTRAL);
-        colors.put("DANGER", CWindColor.DANGER);
-        colors.put("LIGHT", CWindColor.LIGHT);
-        colors.put("GRAY", CWindColor.GRAY);
-        colors.put("DARK", CWindColor.DARK);
-        colors.put("PURPLE", CWindColor.PURPLE);
-        colors.put("PEA", CWindColor.PEA);
+        Map<String, WindColor> colors = new LinkedHashMap<>();
+        colors.put("PRIMARY", WindColor.PRIMARY);
+        colors.put("SUCCESS", WindColor.SUCCESS);
+        colors.put("INFO", WindColor.INFO);
+        colors.put("HIGHLIGHT", WindColor.HIGHLIGHT);
+        colors.put("WARNING", WindColor.WARNING);
+        colors.put("NEUTRAL", WindColor.NEUTRAL);
+        colors.put("DANGER", WindColor.DANGER);
+        colors.put("LIGHT", WindColor.LIGHT);
+        colors.put("GRAY", WindColor.GRAY);
+        colors.put("DARK", WindColor.DARK);
+        colors.put("PURPLE", WindColor.PURPLE);
+        colors.put("PEA", WindColor.PEA);
 
-        for (Map.Entry<String, CWindColor> entry : colors.entrySet()) {
+        for (Map.Entry<String, WindColor> entry : colors.entrySet()) {
             EditText item = new EditText(view.getContext());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
