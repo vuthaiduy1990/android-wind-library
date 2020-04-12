@@ -1,6 +1,9 @@
 package the.wind.library;
 
+import android.content.Context;
 import android.graphics.Color;
+
+import androidx.core.content.ContextCompat;
 
 /**
  * Thanks to
@@ -9,7 +12,7 @@ import android.graphics.Color;
  * http://colorsafe.co/
  * https://jxnblk.github.io/colorable/demos/text
  */
-public class CWindColor {
+public final class CWindColor {
 
     public static final CWindColor PRIMARY = CWindColor.fromHex("#3191bf");
     public static final CWindColor SUCCESS = CWindColor.fromHex("#41b3a3");
@@ -38,7 +41,9 @@ public class CWindColor {
 
     // shades and tints
     private CWindColor[] mShades;
+    private int[] mShadeValues;
     private CWindColor[] mTints;
+    private int[] mTintValues;
 
     /**
      * Constructor
@@ -69,6 +74,17 @@ public class CWindColor {
      */
     public static CWindColor fromRgb(int r, int g, int b) {
         return new CWindColor(Color.rgb(r, g, b));
+    }
+
+    /**
+     * Convert resource color to wind color
+     *
+     * @param context  application context
+     * @param colorRes resource color
+     * @return wind color
+     */
+    public static CWindColor fromRes(Context context, int colorRes) {
+        return new CWindColor(ContextCompat.getColor(context, colorRes));
     }
 
     /* ---------------------- ABSTRACT -----------------------*/
@@ -104,6 +120,16 @@ public class CWindColor {
     }
 
     /**
+     * Array of 5 shades
+     *
+     * @return array of shades
+     */
+    public int[] shadeValues() {
+        shades();
+        return mShadeValues;
+    }
+
+    /**
      * Array of 5 tints
      *
      * @return array of tints
@@ -113,6 +139,16 @@ public class CWindColor {
             genTints();
         }
         return mTints;
+    }
+
+    /**
+     * Array of 5 tints
+     *
+     * @return tints
+     */
+    public int[] tintValues() {
+        tints();
+        return mTintValues;
     }
 
     /* ---------------------- METHOD ------------------------- */
@@ -126,6 +162,7 @@ public class CWindColor {
         int b = Color.blue(mColor);
 
         mShades = new CWindColor[SHADE_FACTORS.length];
+        mShadeValues = new int[SHADE_FACTORS.length];
         for (int i = 0; i < SHADE_FACTORS.length; i++) {
             float factor = SHADE_FACTORS[i];
             mShades[i] = CWindColor.fromRgb(
@@ -133,6 +170,7 @@ public class CWindColor {
                     Math.round(g * factor),
                     Math.round(b * factor)
             );
+            mShadeValues[i] = mShades[i].value();
         }
     }
 
@@ -145,6 +183,7 @@ public class CWindColor {
         int b = Color.blue(mColor);
 
         mTints = new CWindColor[TINT_FACTORS.length];
+        mTintValues = new int[TINT_FACTORS.length];
         for (int i = 0; i < TINT_FACTORS.length; i++) {
             float factor = TINT_FACTORS[i];
             mTints[i] = CWindColor.fromRgb(
@@ -152,6 +191,7 @@ public class CWindColor {
                     Math.round(g + (255 - g) * factor),
                     Math.round(b + (255 - b) * factor)
             );
+            mTintValues[i] = mTints[i].value();
         }
     }
 
