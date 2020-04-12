@@ -735,6 +735,13 @@ public class WindRecycleView extends RecyclerView {
         }
 
         /**
+         * @return application context
+         */
+        public Context getContext() {
+            return itemView.getContext();
+        }
+
+        /**
          * Get adapter data
          *
          * @return data
