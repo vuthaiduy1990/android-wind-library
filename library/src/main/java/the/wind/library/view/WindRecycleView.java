@@ -310,6 +310,11 @@ public class WindRecycleView extends RecyclerView {
         }
 
         @Override
+        public void onBindViewHolder(@NonNull ViewHolder<T> holder, int position, @NonNull List<Object> payloads) {
+            this.onBindViewHolder(holder, position);
+        }
+
+        @Override
         public int getItemViewType(int position) {
             if (mDataset.get(position) == null) {
                 return VIEW_TYPE_LOADING;
