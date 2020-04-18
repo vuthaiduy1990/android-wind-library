@@ -114,9 +114,9 @@ public class WindActionMenu extends WindDialog {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dismiss();
                 if (mItemSelectListener != null) {
                     mItemSelectListener.onSelect(id);
-                    dismiss();
                 }
             }
         });
