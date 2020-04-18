@@ -317,11 +317,11 @@ public class Button extends LinearLayout {
     /**
      * Set text color
      *
-     * @param resId color resource id
+     * @param color color
      * @return button
      */
-    public Button setTextColor(int resId) {
-        _textView.setTextColor(resId);
+    public Button setTextColor(int color) {
+        _textView.setTextColor(color);
         return this;
     }
 

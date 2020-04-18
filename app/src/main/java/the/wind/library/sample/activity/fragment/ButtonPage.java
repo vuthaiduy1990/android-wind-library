@@ -9,6 +9,7 @@ import android.view.animation.ScaleAnimation;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import the.wind.library.sample.R;
 import the.wind.library.view.Button;
@@ -28,6 +29,7 @@ public class ButtonPage extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final Button _eventButton = view.findViewById(R.id._eventButton);
+        _eventButton.setTextColor(ContextCompat.getColor(view.getContext(), R.color.button_text));
 
         anim = new ScaleAnimation(
                 0.5f, 1f, 0.5f, 1f,

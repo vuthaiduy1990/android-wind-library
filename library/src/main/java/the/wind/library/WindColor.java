@@ -35,6 +35,8 @@ public final class WindColor {
     private static final float[] TINT_FACTORS = new float[]{
             0.1f, 0.2f, 0.3f, 0.4f, 0.5f
     };
+    private static final int BALANCE_COLOR_NUM = 5;
+
     // int ARGB color
     // https://developer.android.com/reference/android/graphics/Color
     private int mColor;
@@ -44,6 +46,8 @@ public final class WindColor {
     private int[] mShadeValues;
     private WindColor[] mTints;
     private int[] mTintValues;
+    private WindColor[] mBalances;
+    private int[] mBalancesValues;
 
     /**
      * Constructor
@@ -151,6 +155,28 @@ public final class WindColor {
         return mTintValues;
     }
 
+    /**
+     * Array of 5 balances
+     *
+     * @return balanced colors
+     */
+    public WindColor[] balances() {
+        if (mBalances == null) {
+            genBalances();
+        }
+        return mBalances;
+    }
+
+    /**
+     * Array of 5 balances
+     *
+     * @return balanced colors
+     */
+    public int[] balancesValues() {
+        balances();
+        return mBalancesValues;
+    }
+
     /* ---------------------- METHOD ------------------------- */
 
     /**
@@ -192,6 +218,29 @@ public final class WindColor {
                     Math.round(b + (255 - b) * factor)
             );
             mTintValues[i] = mTints[i].value();
+        }
+    }
+
+    /**
+     * Generate balanced colors
+     */
+    private void genBalances() {
+        if (mShades == null) {
+            genShades();
+        }
+        if (mTints == null) {
+            genTints();
+        }
+        mBalances = new WindColor[BALANCE_COLOR_NUM];
+        mBalancesValues = new int[BALANCE_COLOR_NUM];
+        int middle = BALANCE_COLOR_NUM / 2;
+        mBalances[middle] = this;
+        mBalancesValues[middle] = value();
+        for (int i = 0; i < middle; i++) {
+            mBalances[i] = mShades[middle - i - 1];
+            mBalancesValues[i] = mShadeValues[middle - i - 1];
+            mBalances[middle + i + 1] = mTints[i];
+            mBalancesValues[middle + i + 1] = mTintValues[i];
         }
     }
 
