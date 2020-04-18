@@ -59,8 +59,7 @@
             android:id="@+id/_bodyHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/wl_dialog_tatsumaki_body_margin_top"
-            android:gravity="center">
+            android:layout_marginTop="@dimen/wl_dialog_tatsumaki_body_margin_top">
 
         </RelativeLayout>
 
