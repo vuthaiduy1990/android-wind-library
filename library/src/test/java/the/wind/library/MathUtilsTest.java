@@ -5,6 +5,10 @@ import org.hamcrest.core.IsNot;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 import the.wind.library.utils.CWMathUtils;
 
 public class MathUtilsTest {
@@ -295,14 +299,75 @@ public class MathUtilsTest {
             Assert.assertEquals(0, shuffle.length);
         }
 
-        // Testcase: shuffle non-empty string array
+        // Testcase: shuffle non-empty string array without modifying the input
         {
             String[] origin = new String[]{"The", "never", "ending", "story"};
             for (int i = 0; i < 1000; i++) {
                 String[] shuffle = CWMathUtils.shuffle(String.class, origin);
-                Assert.assertThat(origin, IsNot.not(IsEqual.equalTo(shuffle)));
+                Assert.assertEquals(origin.length, shuffle.length);
+                Assert.assertFalse(compareShuffle(origin, shuffle));
             }
         }
+
+        // Testcase: shuffle non-empty string array with modifying the input array itself
+        {
+            String[] origin = new String[]{"The", "never", "ending", "story"};
+            for (int i = 0; i < 1000; i++) {
+                String[] shuffle = CWMathUtils.shuffle(String.class, origin, false);
+                Assert.assertEquals(4, shuffle.length);
+                Assert.assertEquals(origin.length, shuffle.length);
+                Assert.assertTrue(compareShuffle(origin, shuffle));
+            }
+        }
+
+        // Testcase: shuffle empty list
+        {
+            List<String> shuffle = CWMathUtils.shuffle(new LinkedList<String>());
+            Assert.assertEquals(0, shuffle.size());
+        }
+
+        // Testcase: shuffle non-empty list without modifying the input
+        {
+            List<String> origin = Arrays.asList("The", "never", "ending", "story");
+            for (int i = 0; i < 1000; i++) {
+                List<String> shuffle = CWMathUtils.shuffle(origin);
+                Assert.assertEquals(origin.size(), shuffle.size());
+                Assert.assertFalse(compareShuffle(origin, shuffle));
+            }
+        }
+
+        // Testcase: shuffle non-empty list with modifying the input array itself
+        {
+            String[] origin = new String[]{"The", "never", "ending", "story"};
+            for (int i = 0; i < 1000; i++) {
+                String[] shuffle = CWMathUtils.shuffle(String.class, origin, false);
+                Assert.assertEquals(4, shuffle.length);
+                Assert.assertEquals(origin.length, shuffle.length);
+                Assert.assertTrue(compareShuffle(origin, shuffle));
+            }
+        }
+    }
+
+    private boolean compareShuffle(String[] origin, String[] shuffle) {
+        boolean equal = true;
+        for (int i = 0; i < origin.length; i++) {
+            if (!origin[i].equals(shuffle[i])) {
+                equal = false;
+                break;
+            }
+        }
+        return equal;
+    }
+
+    private boolean compareShuffle(List<String> origin, List<String> shuffle) {
+        boolean equal = true;
+        for (int i = 0; i < origin.size(); i++) {
+            if (!origin.get(i).equals(shuffle.get(i))) {
+                equal = false;
+                break;
+            }
+        }
+        return equal;
     }
 
 }

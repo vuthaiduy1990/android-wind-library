@@ -1,22 +1,11 @@
-/**
- * Copyright (c) 2014 Google, Inc. All rights reserved.
- * <p/>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p/>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package the.wind.library.utils;
 
 import java.lang.reflect.Array;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public final class CWMathUtils {
     // a random generator
@@ -164,6 +153,54 @@ public final class CWMathUtils {
     /**
      * Shuffle an array
      * <pre>
+     *     String[] shuffle = shuffle(String.class, array, true)
+     *     Color[] shuffle = shuffle(Color.class, array, false)
+     * </pre>
+     *
+     * @param clazz      type of array's elements
+     * @param array      array
+     * @param keepOrigin true -> this operation will not change the input array
+     * @param <T>        generic type
+     * @return shuffled array
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T[] shuffle(Class<T> clazz, T[] array, boolean keepOrigin) {
+        int length = array.length;
+        int[] shuffleIndexes = shuffle(0, length); // generate shuffle indexes
+
+        T[] result;
+        if (keepOrigin) {
+            // shuffle array based on the shuffle indexes
+            result = (T[]) Array.newInstance(clazz, length);
+            for (int idx = 0; idx < length; idx++) {
+                result[idx] = array[shuffleIndexes[idx]];
+            }
+
+        } else {
+            result = array;
+            Set<Integer> idxSet = new HashSet<>();
+            for (int idx = 0; idx < length; idx++) {
+                int shuffleIdx = shuffleIndexes[idx];
+
+                if (idxSet.add(idx) && idxSet.add(shuffleIdx)) {
+                    // have not swapped items at given index -> do swap
+                    T temp = result[idx];
+                    result[idx] = result[shuffleIdx];
+                    result[shuffleIdx] = temp;
+                }
+
+                // finish if all items are swapped
+                if (idxSet.size() == shuffleIndexes.length) {
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Shuffle an array without changing the input array
+     * <pre>
      *     String[] shuffle = shuffle(String.class, array)
      *     Color[] shuffle = shuffle(Color.class, array)
      * </pre>
@@ -173,16 +210,67 @@ public final class CWMathUtils {
      * @param <T>   generic type
      * @return shuffled array
      */
-    @SuppressWarnings("unchecked")
     public static <T> T[] shuffle(Class<T> clazz, T[] array) {
-        int length = array.length;
-        int[] shuffleIndexes = shuffle(0, length); // generate shuffle indexes
+        return shuffle(clazz, array, true);
+    }
 
-        // shuffle array based on the shuffle indexes
-        T[] result = (T[]) Array.newInstance(clazz, length);
-        for (int idx = 0; idx < length; idx++) {
-            result[idx] = array[shuffleIndexes[idx]];
+    /**
+     * Shuffle a list
+     * <pre>
+     *     List<String> shuffle = shuffle(list of string, true)
+     *     List<Color> shuffle = shuffle(list of color, false)
+     * </pre>
+     *
+     * @param list       list
+     * @param keepOrigin true -> this operation will not change the input list
+     * @param <T>        generic type
+     * @return shuffled list
+     */
+    public static <T> List<T> shuffle(List<T> list, boolean keepOrigin) {
+        int length = list.size();
+        int[] shuffleIndexes = shuffle(0, length); // generate shuffle indexes
+        List<T> result;
+        if (keepOrigin) {
+            // shuffle array based on the shuffle indexes
+            result = new LinkedList<>();
+            for (int idx = 0; idx < length; idx++) {
+                result.add(list.get(shuffleIndexes[idx]));
+            }
+
+        } else {
+            result = list;
+            Set<Integer> idxSet = new HashSet<>();
+            for (int idx = 0; idx < length; idx++) {
+                int shuffleIdx = shuffleIndexes[idx];
+
+                if (idxSet.add(idx) && idxSet.add(shuffleIdx)) {
+                    // have not swapped items at given index -> do swap
+                    T temp = result.get(idx);
+                    result.set(idx, result.get(shuffleIdx));
+                    result.set(shuffleIdx, temp);
+                }
+
+                // finish if all items are swapped
+                if (idxSet.size() == shuffleIndexes.length) {
+                    break;
+                }
+            }
         }
         return result;
+    }
+
+    /**
+     * Shuffle a list without changing the input list
+     * <pre>
+     *     List<String> shuffle = shuffle(list of string)
+     *     List<Color> shuffle = shuffle(list of color)
+     * </pre>
+     *
+     * @param list a list
+     * @param <T>  generic type
+     * @return shuffled list
+     */
+    public static <T> List<T> shuffle(List<T> list) {
+        return shuffle(list, true);
     }
 }
