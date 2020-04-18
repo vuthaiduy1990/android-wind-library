@@ -24,11 +24,11 @@ public class NotificationTemplate implements WindDialog.ITemplate {
     public void onSetting(final WindDialog dialog) {
         Context context = dialog.getContext();
         // https://lottiefiles.com/15268-notification
-        dialog.setLottieIcon(R.raw.wind_dialog_icon_notification);
+        dialog.setLottieIcon(R.raw.wl_dialog_icon_notification);
         LottieAnimationView icon = ((LottieAnimationView) dialog.icon());
         icon.setRepeatCount(LottieDrawable.INFINITE);
         icon.setMaxProgress(40f / 48f);
-        dialog.addButton(Button.Type.GRAY, context.getString(R.string.wind_dialog_button_close), null);
+        dialog.addButton(Button.Type.GRAY, context.getString(R.string.wl_dialog_button_close), null);
     }
 
     /**

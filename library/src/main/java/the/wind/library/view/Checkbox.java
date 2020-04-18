@@ -52,14 +52,14 @@ public class Checkbox extends LottieAnimationView {
     public Checkbox(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray typeArray = context.getTheme().obtainStyledAttributes(
-                attrs, R.styleable.Checkbox,
+                attrs, R.styleable.wl_checkbox,
                 0, 0);
         try {
             // get anim type;
-            int animIdx = typeArray.getInt(R.styleable.Checkbox_animType, 0);
+            int animIdx = typeArray.getInt(R.styleable.wl_checkbox_animType, 0);
             mAnimType = AnimType.values()[animIdx];
             // get anim color
-            mAnimColor = typeArray.getColor(R.styleable.Checkbox_animColor, 0);
+            mAnimColor = typeArray.getColor(R.styleable.wl_checkbox_animColor, 0);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -72,7 +72,7 @@ public class Checkbox extends LottieAnimationView {
         setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         setRepeatCount(0);
         if (mAnimColor == 0) {
-            mAnimColor = ContextCompat.getColor(getContext(), R.color.success);
+            mAnimColor = ContextCompat.getColor(getContext(), R.color.wl_success);
         }
         setAnimColor(mAnimColor);
 
@@ -216,73 +216,73 @@ public class Checkbox extends LottieAnimationView {
         // https://lottiefiles.com/4964-check-mark-success-animation
         // VICTOR_VINNHED
         DEFAULT_CIRCLE(
-                R.dimen.checkbox_vinnhed_size,
-                R.raw.checkbox_victor_vinnhed,
+                R.dimen.wl_checkbox_vinnhed_size,
+                R.raw.wl_checkbox_victor_vinnhed,
                 0f, 46f / 72f, 24f / 72f,
                 new String[]{"Rectangle 6 Copy"}),
         // https://lottiefiles.com/2492-check
         TAKAYA_DEGUCHI_1(
-                R.dimen.checkbox_takaya_deguchi_size,
-                R.raw.checkbox_takaya_deguchi,
+                R.dimen.wl_checkbox_takaya_deguchi_size,
+                R.raw.wl_checkbox_takaya_deguchi,
                 0f, 35f / 60f, 12f / 60f,
                 new String[]{"circle fill", "circle stroke"}),
         TAKAYA_DEGUCHI_2(
-                R.dimen.checkbox_takaya_deguchi_size,
-                R.raw.checkbox_takaya_deguchi,
+                R.dimen.wl_checkbox_takaya_deguchi_size,
+                R.raw.wl_checkbox_takaya_deguchi,
                 0f, 35f / 60f, 25f / 60f,
                 new String[]{"circle fill", "circle stroke"}),
         // https://lottiefiles.com/527-check
         VICTOR_KAI(
-                R.dimen.checkbox_victor_kai_size,
-                R.raw.checkbox_victor_kai,
+                R.dimen.wl_checkbox_victor_kai_size,
+                R.raw.wl_checkbox_victor_kai,
                 0f, 23f / 60f, 17f / 60f,
                 new String[]{"Shape Layer 4"}
         ),
         // https://lottiefiles.com/3253-uploading-and-done
         LORIN(
-                R.dimen.checkbox_lorin_size,
-                R.raw.checkbox_lorin,
+                R.dimen.wl_checkbox_lorin_size,
+                R.raw.wl_checkbox_lorin,
                 145f / 210f, 180f / 210f, 159f / 210f,
                 new String[]{"glod 6"}),
         // https://lottiefiles.com/1127-success
         DARIUS_AFCHAR(
-                R.dimen.checkbox_darius_afchar_size,
-                R.raw.checkbox_darius_afchar,
+                R.dimen.wl_checkbox_darius_afchar_size,
+                R.raw.wl_checkbox_darius_afchar,
                 0f, 34f / 45f, 14f / 45f,
                 new String[]{"Shape Layer 1"}),
         // https://lottiefiles.com/13820-icon-check
         GILSON_SANTOS_1(
-                R.dimen.checkbox_gilson_santos_size,
-                R.raw.checkbox_gilson_santos,
+                R.dimen.wl_checkbox_gilson_santos_size,
+                R.raw.wl_checkbox_gilson_santos,
                 0f, 72f / 130f, 15f / 130f,
                 new String[]{"circle-base"}
         ),
         GILSON_SANTOS_2(
-                R.dimen.checkbox_gilson_santos_size,
-                R.raw.checkbox_gilson_santos,
+                R.dimen.wl_checkbox_gilson_santos_size,
+                R.raw.wl_checkbox_gilson_santos,
                 0f, 72f / 130f, 22f / 130f,
                 new String[]{"circle-base"}
         ),
         // https://lottiefiles.com/9613-tick
         AVIRAL_BAHUGUNA(
-                R.dimen.checkbox_aviral_bahuguna_size,
-                R.raw.checkbox_aviral_bahuguna,
+                R.dimen.wl_checkbox_aviral_bahuguna_size,
+                R.raw.wl_checkbox_aviral_bahuguna,
                 0f, 35f / 40f, 16f / 40f,
                 new String[]{"Circle Stroke", "Circle Green Fill", "Circle Flash"}
         ),
         // https://lottiefiles.com/8729-checkbox-animation
         // VAISHAK_SHETTY_K
         DEFAULT_SQUARE(
-                R.dimen.checkbox_default_square_size,
-                R.raw.checkbox_default_square,
+                R.dimen.wl_checkbox_default_square_size,
+                R.raw.wl_checkbox_default_square,
                 0f, 30f / 55f, 10f / 55f,
                 new String[]{"Layer 3/check Outlines 2", "Layer 3/check Outlines"}
         ),
         // https://lottiefiles.com/8600-check-list
         // ILYA_PAVLOV
         DEFAULT_CHECKLIST(
-                R.dimen.checkbox_default_checklist_size,
-                R.raw.checkbox_default_checklist,
+                R.dimen.wl_checkbox_default_checklist_size,
+                R.raw.wl_checkbox_default_checklist,
                 0f, 56f / 60f, 0f,
                 new String[]{"Sheet"}
         );

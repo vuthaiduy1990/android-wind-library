@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Choose the following options"
-        android:textColor="@color/wind_dialog_text"
-        android:textSize="@dimen/wind_dialog_tatsumaki_text_size" />
+        android:textColor="@color/wl_dialog_text"
+        android:textSize="@dimen/wl_dialog_tatsumaki_text_size" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
             <the.wind.library.view.Checkbox
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                app:animColor="@color/info"
+                app:animColor="@color/wl_info"
                 app:animType="TAKAYA_DEGUCHI_1" />
 
             <TextView
@@ -37,8 +37,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:text="Hiking in the mountain"
-                android:textColor="@color/wind_dialog_text"
-                android:textSize="@dimen/wind_dialog_tatsumaki_text_size" />
+                android:textColor="@color/wl_dialog_text"
+                android:textSize="@dimen/wl_dialog_tatsumaki_text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -51,7 +51,7 @@
             <the.wind.library.view.Checkbox
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                app:animColor="@color/success"
+                app:animColor="@color/wl_success"
                 app:animType="TAKAYA_DEGUCHI_1" />
 
             <TextView
@@ -59,8 +59,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:text="Walking in the moon"
-                android:textColor="@color/wind_dialog_text"
-                android:textSize="@dimen/wind_dialog_tatsumaki_text_size" />
+                android:textColor="@color/wl_dialog_text"
+                android:textSize="@dimen/wl_dialog_tatsumaki_text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -73,7 +73,7 @@
             <the.wind.library.view.Checkbox
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                app:animColor="@color/danger"
+                app:animColor="@color/wl_danger"
                 app:animType="TAKAYA_DEGUCHI_1" />
 
             <TextView
@@ -81,8 +81,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:text="Fly with the wind"
-                android:textColor="@color/wind_dialog_text"
-                android:textSize="@dimen/wind_dialog_tatsumaki_text_size" />
+                android:textColor="@color/wl_dialog_text"
+                android:textSize="@dimen/wl_dialog_tatsumaki_text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -95,7 +95,7 @@
             <the.wind.library.view.Checkbox
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                app:animColor="@color/neutral"
+                app:animColor="@color/wl_neutral"
                 app:animType="TAKAYA_DEGUCHI_1" />
 
             <TextView
@@ -103,8 +103,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:text="Fighting to dead"
-                android:textColor="@color/wind_dialog_text"
-                android:textSize="@dimen/wind_dialog_tatsumaki_text_size" />
+                android:textColor="@color/wl_dialog_text"
+                android:textSize="@dimen/wl_dialog_tatsumaki_text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -117,7 +117,7 @@
             <the.wind.library.view.Checkbox
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                app:animColor="@color/primary"
+                app:animColor="@color/wl_primary"
                 app:animType="TAKAYA_DEGUCHI_1" />
 
             <TextView
@@ -125,8 +125,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:text="Chase the last light"
-                android:textColor="@color/wind_dialog_text"
-                android:textSize="@dimen/wind_dialog_tatsumaki_text_size" />
+                android:textColor="@color/wl_dialog_text"
+                android:textSize="@dimen/wl_dialog_tatsumaki_text_size" />
         </LinearLayout>
 
 

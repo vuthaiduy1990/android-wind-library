@@ -40,7 +40,7 @@ public class WindActionMenu extends WindDialog {
      */
     public WindActionMenu(@NonNull Context context) {
         super(context, LayoutType.FUBUKI);
-        setContentView(R.layout.wind_action_menu_content_view);
+        setContentView(R.layout.wl_action_menu_content_view);
         mInflater = LayoutInflater.from(context);
         setFooterVisible(false);
         setTitleVisible(false);
@@ -52,10 +52,10 @@ public class WindActionMenu extends WindDialog {
 
         // bind view
         _menuHolder = contentView().findViewById(R.id._menuHolder);
-        setItemBackground(R.drawable.wind_action_menu_item_background);
-        setItemTextColor(R.color.text);
-        setItemTextSize(R.dimen.wind_action_menu_text_size);
-        setItemIconSize(R.dimen.wind_action_menu_icon_size);
+        setItemBackground(R.drawable.wl_action_menu_item_background);
+        setItemTextColor(R.color.wl_text);
+        setItemTextSize(R.dimen.wl_action_menu_text_size);
+        setItemIconSize(R.dimen.wl_action_menu_icon_size);
     }
 
     /* ---------------------- OVERRIDE ----------------------- */
@@ -82,7 +82,7 @@ public class WindActionMenu extends WindDialog {
      * @return menu
      */
     public WindActionMenu addItem(@IdRes final int id, int iconResId, int textResId) {
-        View itemView = mInflater.inflate(R.layout.wind_action_menu_item_view, _menuHolder, false);
+        View itemView = mInflater.inflate(R.layout.wl_action_menu_item_view, _menuHolder, false);
         itemView.setId(id);
         itemView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         itemView.setBackgroundResource(mItemBackground);

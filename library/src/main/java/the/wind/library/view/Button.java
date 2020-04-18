@@ -71,7 +71,7 @@ public class Button extends LinearLayout {
     public Button(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         LayoutInflater inflater = LayoutInflater.from(context);
-        inflater.inflate(R.layout.button, this);
+        inflater.inflate(R.layout.wl_button, this);
 
         // bind views
         _textView = findViewById(R.id._textView);
@@ -81,38 +81,38 @@ public class Button extends LinearLayout {
 
         // bind attributes
         TypedArray btTypeArray = context.getTheme().obtainStyledAttributes(
-                attrs, R.styleable.Button,
+                attrs, R.styleable.wl_button,
                 defStyleAttr, defStyleRes);
         try {
             // retrieve button type
-            int typeIdx = btTypeArray.getInt(R.styleable.Button_type, 0);
+            int typeIdx = btTypeArray.getInt(R.styleable.wl_button_type, 0);
             if (getBackground() == null) {
                 setType(Type.values()[typeIdx]);
             }
 
             // bind icon's attributes
-            int iconIdx = btTypeArray.getInt(R.styleable.Button_inlineIcon, -1);
+            int iconIdx = btTypeArray.getInt(R.styleable.wl_button_inlineIcon, -1);
             if (iconIdx >= 0) {
                 mInlineIcon = InlineIcon.values()[iconIdx];
             }
-            mCustomIconRes = btTypeArray.getResourceId(R.styleable.Button_customIcon, 0);
-            mCustomAnimRes = btTypeArray.getResourceId(R.styleable.Button_customAnim, 0);
+            mCustomIconRes = btTypeArray.getResourceId(R.styleable.wl_button_customIcon, 0);
+            mCustomAnimRes = btTypeArray.getResourceId(R.styleable.wl_button_customAnim, 0);
             float iconSize = btTypeArray.getDimension(
-                    R.styleable.Button_iconSize,
-                    getResources().getDimension(R.dimen.button_icon_size));
+                    R.styleable.wl_button_iconSize,
+                    getResources().getDimension(R.dimen.wl_button_icon_size));
             RelativeLayout.LayoutParams iconLayout = new RelativeLayout.LayoutParams((int) iconSize, (int) iconSize);
             _icon.setLayoutParams(iconLayout);
             _lottieIcon.setLayoutParams(iconLayout);
             judgeIcon();
 
             // bind text attributes
-            String textValue = btTypeArray.getString(R.styleable.Button_text);
+            String textValue = btTypeArray.getString(R.styleable.wl_button_text);
             int textColorRes = btTypeArray.getColor(
-                    R.styleable.Button_textColor,
-                    ContextCompat.getColor(context, R.color.button_text));
+                    R.styleable.wl_button_textColor,
+                    ContextCompat.getColor(context, R.color.wl_button_text));
             float textSize = btTypeArray.getDimension(
-                    R.styleable.Button_textSize,
-                    getResources().getDimension(R.dimen.button_text));
+                    R.styleable.wl_button_textSize,
+                    getResources().getDimension(R.dimen.wl_button_text));
             LinearLayout.LayoutParams textLayout = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -123,8 +123,8 @@ public class Button extends LinearLayout {
 
             // bind space attribute
             float spacing = btTypeArray.getDimension(
-                    R.styleable.Button_spacing,
-                    getResources().getDimension(R.dimen.button_spacing));
+                    R.styleable.wl_button_spacing,
+                    getResources().getDimension(R.dimen.wl_button_spacing));
             _space.setLayoutParams(new LinearLayout.LayoutParams((int) spacing, 1));
             _space.setVisibility(isSpacing() ? VISIBLE : GONE);
 
@@ -137,10 +137,10 @@ public class Button extends LinearLayout {
         setGravity(Gravity.CENTER);
         // set default padding
         setDefaultPadding(
-                R.dimen.button_padding_start,
-                R.dimen.button_padding_top,
-                R.dimen.button_padding_end,
-                R.dimen.button_padding_bottom
+                R.dimen.wl_button_padding_start,
+                R.dimen.wl_button_padding_top,
+                R.dimen.wl_button_padding_end,
+                R.dimen.wl_button_padding_bottom
         );
     }
 
@@ -383,14 +383,14 @@ public class Button extends LinearLayout {
      * Button type
      */
     public enum Type {
-        PRIMARY(R.drawable.button_background_primary),
-        SUCCESS(R.drawable.button_background_success),
-        INFO(R.drawable.button_background_info),
-        HIGHLIGHT(R.drawable.button_background_highlight),
-        WARNING(R.drawable.button_background_warning),
-        DANGER(R.drawable.button_background_danger),
-        GRAY(R.drawable.button_background_gray),
-        NEUTRAL(R.drawable.button_background_neutral);
+        PRIMARY(R.drawable.wl_button_background_primary),
+        SUCCESS(R.drawable.wl_button_background_success),
+        INFO(R.drawable.wl_button_background_info),
+        HIGHLIGHT(R.drawable.wl_button_background_highlight),
+        WARNING(R.drawable.wl_button_background_warning),
+        DANGER(R.drawable.wl_button_background_danger),
+        GRAY(R.drawable.wl_button_background_gray),
+        NEUTRAL(R.drawable.wl_button_background_neutral);
 
         private int background;
 
@@ -410,15 +410,15 @@ public class Button extends LinearLayout {
      * Inline icon type
      */
     public enum InlineIcon {
-        OK(R.drawable.com_ic_ok, false),
-        EDIT(R.drawable.com_ic_edit, false),
-        SAVE(R.drawable.com_ic_save, false),
-        TRASH(R.drawable.com_ic_trash, false),
-        WAITING(R.raw.button_waiting, true),
-        SEARCH(R.drawable.com_ic_search, false),
-        INFO(R.drawable.com_ic_info, false),
-        LOCK(R.drawable.com_ic_lock, false),
-        SETTING(R.drawable.com_ic_setting, false);
+        OK(R.drawable.wl_ic_ok, false),
+        EDIT(R.drawable.wl_ic_edit, false),
+        SAVE(R.drawable.wl_ic_save, false),
+        TRASH(R.drawable.wl_ic_trash, false),
+        WAITING(R.raw.wl_button_waiting, true),
+        SEARCH(R.drawable.wl_ic_search, false),
+        INFO(R.drawable.wl_ic_info, false),
+        LOCK(R.drawable.wl_ic_lock, false),
+        SETTING(R.drawable.wl_ic_setting, false);
 
         private int iconRes;
         private boolean useAnim;

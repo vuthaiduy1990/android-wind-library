@@ -27,13 +27,13 @@ import the.wind.library.view.WindRecycleView;
 public class RecycleViewPage extends Fragment {
 
     public final int[] BACKGROUNDS = new int[]{
-            R.drawable.button_background_gray,
-            R.drawable.button_background_highlight,
-            R.drawable.button_background_info,
-            R.drawable.button_background_danger,
-            R.drawable.button_background_neutral,
-            R.drawable.button_background_primary,
-            R.drawable.button_background_warning,
+            R.drawable.wl_button_background_gray,
+            R.drawable.wl_button_background_highlight,
+            R.drawable.wl_button_background_info,
+            R.drawable.wl_button_background_danger,
+            R.drawable.wl_button_background_neutral,
+            R.drawable.wl_button_background_primary,
+            R.drawable.wl_button_background_warning,
     };
 
     public final String PARAGRAPH = "She closed her eyes,sinking down to her knees. " +
@@ -117,7 +117,7 @@ public class RecycleViewPage extends Fragment {
         mAdapter.setOnItemTouchDownListener(new WindRecycleView.Adapter.OnItemTouchDownListener<DummyData>() {
             @Override
             public void onTouchDown(WindRecycleView.ViewHolder<DummyData> viewHolder, View view, DummyData data) {
-                viewHolder.itemView.setBackgroundResource(R.drawable.button_background_success);
+                viewHolder.itemView.setBackgroundResource(R.drawable.wl_button_background_success);
             }
         }).setOnItemTouchUpListener(new WindRecycleView.Adapter.OnItemTouchUpListener<DummyData>() {
             @Override

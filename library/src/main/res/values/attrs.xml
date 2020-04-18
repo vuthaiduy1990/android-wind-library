@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Checkbox's attributes -->
-    <declare-styleable name="Checkbox">
+    <declare-styleable name="wl_checkbox">
         <attr name="animType" format="enum">
             <enum name="DEFAULT_CIRCLE" value="0" />
             <enum name="TAKAYA_DEGUCHI_1" value="1" />
@@ -19,7 +19,7 @@
     </declare-styleable>
 
     <!-- Button's attributes -->
-    <declare-styleable name="Button">
+    <declare-styleable name="wl_button">
         <attr name="type" format="enum">
             <enum name="PRIMARY" value="0" />
             <enum name="SUCCESS" value="1" />

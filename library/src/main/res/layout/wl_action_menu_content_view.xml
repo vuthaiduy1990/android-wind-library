@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingStart="@dimen/wind_action_menu_padding_hoz"
-        android:paddingEnd="@dimen/wind_action_menu_padding_hoz">
+        android:paddingStart="@dimen/wl_action_menu_padding_hoz"
+        android:paddingEnd="@dimen/wl_action_menu_padding_hoz">
 
     </LinearLayout>
 

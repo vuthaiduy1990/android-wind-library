@@ -21,9 +21,9 @@ public class SimpleTaskTemplate implements WindDialog.ITemplate {
     public void onSetting(final WindDialog dialog) {
         Context context = dialog.getContext();
         // https://www.flaticon.com/free-icon/completed-task_1632670#
-        dialog.setIcon(R.drawable.wind_dialog_icon_task);
-        dialog.addButton(Button.Type.GRAY, context.getString(R.string.wind_dialog_button_cancel), null);
-        dialog.addButton(Button.Type.PRIMARY, context.getString(R.string.wind_dialog_button_confirm), null);
+        dialog.setIcon(R.drawable.wl_dialog_icon_task);
+        dialog.addButton(Button.Type.GRAY, context.getString(R.string.wl_dialog_button_cancel), null);
+        dialog.addButton(Button.Type.PRIMARY, context.getString(R.string.wl_dialog_button_confirm), null);
     }
 
     /**

@@ -20,7 +20,7 @@ public class LoadingTemplate implements WindDialog.ITemplate {
     @Override
     public void onSetting(final WindDialog dialog) {
         // https://lottiefiles.com/627-loading-success-failed
-        dialog.setLottieIcon(R.raw.wind_dialog_icon_waiting);
+        dialog.setLottieIcon(R.raw.wl_dialog_icon_waiting);
         LottieAnimationView icon = ((LottieAnimationView) dialog.icon());
         icon.setRepeatCount(LottieDrawable.INFINITE);
         icon.setMaxProgress(310f / 841f);

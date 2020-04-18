@@ -29,12 +29,12 @@ public class ProgressTemplate implements WindDialog.ITemplate {
 
         // configure waiting icon
         // https://lottiefiles.com/627-loading-success-failed
-        dialog.setLottieIcon(R.raw.wind_dialog_icon_waiting);
+        dialog.setLottieIcon(R.raw.wl_dialog_icon_waiting);
         LottieAnimationView icon = ((LottieAnimationView) dialog.icon());
         icon.setRepeatCount(LottieDrawable.INFINITE);
         icon.setMaxProgress(310f / 841f);
-        int size = (int) context.getResources().getDimension(R.dimen.wind_dialog_waiting_icon_size);
-        int margin = (int) context.getResources().getDimension(R.dimen.wind_dialog_tatsumaki_big_progress_icon_margin);
+        int size = (int) context.getResources().getDimension(R.dimen.wl_dialog_waiting_icon_size);
+        int margin = (int) context.getResources().getDimension(R.dimen.wl_dialog_tatsumaki_big_progress_icon_margin);
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) icon.getLayoutParams();
         params.width = size;
         params.height = size;

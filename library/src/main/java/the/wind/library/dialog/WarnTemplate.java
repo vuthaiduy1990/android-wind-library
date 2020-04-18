@@ -24,13 +24,13 @@ public class WarnTemplate implements WindDialog.ITemplate {
     public void onSetting(final WindDialog dialog) {
         Context context = dialog.getContext();
         // https://lottiefiles.com/11124-error-icon
-        dialog.setLottieIcon(R.raw.wind_dialog_icon_warn);
+        dialog.setLottieIcon(R.raw.wl_dialog_icon_warn);
         LottieAnimationView icon = ((LottieAnimationView) dialog.icon());
         icon.setRepeatCount(LottieDrawable.INFINITE);
         icon.setMinProgress(5f / 80f);
         icon.setMaxProgress(1f);
-        dialog.addButton(Button.Type.GRAY, context.getString(R.string.wind_dialog_button_cancel), null);
-        dialog.addButton(Button.Type.WARNING, context.getString(R.string.wind_dialog_button_confirm), null);
+        dialog.addButton(Button.Type.GRAY, context.getString(R.string.wl_dialog_button_cancel), null);
+        dialog.addButton(Button.Type.WARNING, context.getString(R.string.wl_dialog_button_confirm), null);
     }
 
     /**

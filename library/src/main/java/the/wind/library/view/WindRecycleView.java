@@ -204,10 +204,10 @@ public class WindRecycleView extends RecyclerView {
      * Thanks https://github.com/pedant/sweet-alert-dialog
      */
     public enum LayoutAnim {
-        SWEET_ALERT(R.anim.recycle_view_item_anim_sweet_alert),
-        FADE(R.anim.recycle_view_item_anim_fade),
-        LEFT_2_RIGHT(R.anim.recycle_view_item_anim_left_right),
-        RIGHT_2_LEFT(R.anim.recycle_view_item_anim_right_left);
+        SWEET_ALERT(R.anim.wl_recycle_view_item_anim_sweet_alert),
+        FADE(R.anim.wl_recycle_view_item_anim_fade),
+        LEFT_2_RIGHT(R.anim.wl_recycle_view_item_anim_left_right),
+        RIGHT_2_LEFT(R.anim.wl_recycle_view_item_anim_right_left);
 
         private int anim;
 
@@ -222,7 +222,7 @@ public class WindRecycleView extends RecyclerView {
          * @return animation
          */
         public LayoutAnimationController getAnim(Context context) {
-            LayoutAnimationController layoutAnim = AnimationUtils.loadLayoutAnimation(context, R.anim.recycle_view_layout_anim);
+            LayoutAnimationController layoutAnim = AnimationUtils.loadLayoutAnimation(context, R.anim.wle_view_layout_anim);
             layoutAnim.setAnimation(context, anim);
             return layoutAnim;
         }
@@ -282,7 +282,7 @@ public class WindRecycleView extends RecyclerView {
          */
         public Adapter(List<T> dataset) {
             mDataset = dataset;
-            setCustomLoadingView(R.layout.recycle_view_loading);
+            setCustomLoadingView(R.layout.wl_recycle_view_loading);
         }
 
         /* ---------------------- OVERRIDE ----------------------- */

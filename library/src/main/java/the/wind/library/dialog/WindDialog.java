@@ -96,16 +96,16 @@ public class WindDialog extends Dialog {
         // Bind the layout and set default layout's size, padding, etc.
         _layout = findViewById(R.id._layout);
         if (LayoutType.FUBUKI.equals(layoutType)) {
-            setWidth((int) context.getResources().getDimension(R.dimen.wind_dialog_fubuki_width));
+            setWidth((int) context.getResources().getDimension(R.dimen.wl_dialog_fubuki_width));
         } else {
-            setWidth((int) context.getResources().getDimension(R.dimen.wind_dialog_tatsumaki_width));
+            setWidth((int) context.getResources().getDimension(R.dimen.wl_dialog_tatsumaki_width));
         }
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         setPadding(
-                (int) context.getResources().getDimension(R.dimen.wind_dialog_padding_start),
-                (int) context.getResources().getDimension(R.dimen.wind_dialog_padding_top),
-                (int) context.getResources().getDimension(R.dimen.wind_dialog_padding_end),
-                (int) context.getResources().getDimension(R.dimen.wind_dialog_padding_bottom)
+                (int) context.getResources().getDimension(R.dimen.wl_dialog_padding_start),
+                (int) context.getResources().getDimension(R.dimen.wl_dialog_padding_top),
+                (int) context.getResources().getDimension(R.dimen.wl_dialog_padding_end),
+                (int) context.getResources().getDimension(R.dimen.wl_dialog_padding_bottom)
         );
 
         // bind views
@@ -132,7 +132,7 @@ public class WindDialog extends Dialog {
         setInOutAnimType(InOutAnimType.SWEET_ALERT);
         setCancelable(false);
         setCanceledOnTouchOutside(false);
-        setCustomWaitingIcon(R.raw.wind_dialog_icon_waiting);
+        setCustomWaitingIcon(R.raw.wl_dialog_icon_waiting);
         _waitingIcon.setMaxProgress(310f / 841f);
     }
 
@@ -585,13 +585,13 @@ public class WindDialog extends Dialog {
      */
     public Button addButton(@NonNull Button.Type type, @NonNull CharSequence text, Button.InlineIcon icon) {
         Button btn = new Button(getContext());
-        int margin = (int) getContext().getResources().getDimension(R.dimen.button_spacing);
+        int margin = (int) getContext().getResources().getDimension(R.dimen.wl_button_spacing);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(margin, 0, margin, 0);
         btn.setLayoutParams(params);
-        btn.setMinimumWidth((int) getContext().getResources().getDimension(R.dimen.wind_dialog_button_min_width));
+        btn.setMinimumWidth((int) getContext().getResources().getDimension(R.dimen.wl_dialog_button_min_width));
         btn.setType(type);
         btn.setText(text);
         if (icon != null) {
@@ -721,7 +721,7 @@ public class WindDialog extends Dialog {
         _waitingMask.setLayoutParams(layout);
 
         int iconSize = (int) (((width < height) ? width : height) * 0.6f);
-        int maxIconSize = (int) getContext().getResources().getDimension(R.dimen.wind_dialog_waiting_icon_size);
+        int maxIconSize = (int) getContext().getResources().getDimension(R.dimen.wl_dialog_waiting_icon_size);
         iconSize = iconSize < maxIconSize ? iconSize : maxIconSize;
         ViewGroup.LayoutParams iconLayout = _waitingIcon.getLayoutParams();
         iconLayout.width = iconSize;
@@ -812,8 +812,8 @@ public class WindDialog extends Dialog {
      * Dialog type
      */
     public enum LayoutType {
-        TATSUMAKI(R.layout.wind_dialog_tatsumaki, R.layout.wind_dialog_tatsumaki_content),
-        FUBUKI(R.layout.wind_dialog_fubuki, 0);
+        TATSUMAKI(R.layout.wl_dialog_tatsumaki, R.layout.wl_dialog_tatsumaki_content),
+        FUBUKI(R.layout.wl_dialog_fubuki, 0);
 
         private int layout;
         private int content;
@@ -844,12 +844,12 @@ public class WindDialog extends Dialog {
     public enum InOutAnimType {
         // Sweet Alert Dialog
         // https://github.com/pedant/sweet-alert-dialog
-        SWEET_ALERT(R.anim.wind_dialog_in_anim_sweet_alert, R.anim.wind_dialog_out_anim_sweet_alert),
-        FADE(R.anim.wind_dialog_in_anim_fade, R.anim.wind_dialog_out_anim_fade),
-        SLIDE_LEFT_2_RIGHT(R.anim.wind_dialog_in_anim_slide_left_right, R.anim.wind_dialog_out_anim_slide_left_right),
-        SLIDE_RIGHT_2_LEFT(R.anim.wind_dialog_in_anim_slide_right_left, R.anim.wind_dialog_out_anim_slide_right_left),
-        SLIDE_TOP_2_BOTTOM(R.anim.wind_dialog_in_anim_slide_top_bottom, R.anim.wind_dialog_out_anim_slide_top_bottom),
-        SLIDE_BOTTOM_2_TOP(R.anim.wind_dialog_in_anim_slide_bottom_top, R.anim.wind_dialog_out_anim_slide_bottom_top);
+        SWEET_ALERT(R.anim.wl_dialog_in_anim_sweet_alert, R.anim.wl_dialog_out_anim_sweet_alert),
+        FADE(R.anim.wl_dialog_in_anim_fade, R.anim.wl_dialog_out_anim_fade),
+        SLIDE_LEFT_2_RIGHT(R.anim.wl_dialog_in_anim_slide_left_right, R.anim.wl_dialog_out_anim_slide_left_right),
+        SLIDE_RIGHT_2_LEFT(R.anim.wl_dialog_in_anim_slide_right_left, R.anim.wl_dialog_out_anim_slide_right_left),
+        SLIDE_TOP_2_BOTTOM(R.anim.wl_dialog_in_anim_slide_top_bottom, R.anim.wl_dialog_out_anim_slide_top_bottom),
+        SLIDE_BOTTOM_2_TOP(R.anim.wl_dialog_in_anim_slide_bottom_top, R.anim.wl_dialog_out_anim_slide_bottom_top);
 
         private int inAnimResId;
         private int outAnimResId;

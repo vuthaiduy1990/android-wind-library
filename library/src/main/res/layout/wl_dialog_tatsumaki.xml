@@ -8,9 +8,9 @@
     <!-- Main Content View -->
     <LinearLayout
         android:id="@+id/_layout"
-        android:layout_width="@dimen/wind_dialog_tatsumaki_width"
+        android:layout_width="@dimen/wl_dialog_tatsumaki_width"
         android:layout_height="wrap_content"
-        android:background="@drawable/wind_dialog_background"
+        android:background="@drawable/wl_dialog_background"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -22,8 +22,8 @@
             <!-- Static Icon -->
             <ImageView
                 android:id="@+id/_icon"
-                android:layout_width="@dimen/wind_dialog_tatsumaki_icon_size"
-                android:layout_height="@dimen/wind_dialog_tatsumaki_icon_size"
+                android:layout_width="@dimen/wl_dialog_tatsumaki_icon_size"
+                android:layout_height="@dimen/wl_dialog_tatsumaki_icon_size"
                 android:layout_centerInParent="true"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
@@ -33,8 +33,8 @@
             <!-- Animation Icon -->
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/_lottieIcon"
-                android:layout_width="@dimen/wind_dialog_tatsumaki_icon_size"
-                android:layout_height="@dimen/wind_dialog_tatsumaki_icon_size"
+                android:layout_width="@dimen/wl_dialog_tatsumaki_icon_size"
+                android:layout_height="@dimen/wl_dialog_tatsumaki_icon_size"
                 android:layout_centerInParent="true"
                 android:scaleType="centerInside"
                 android:visibility="gone"
@@ -48,10 +48,10 @@
             android:id="@+id/_tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/wind_dialog_tatsumaki_title_margin_top"
+            android:layout_marginTop="@dimen/wl_dialog_tatsumaki_title_margin_top"
             android:gravity="center"
-            android:textColor="@color/wind_dialog_title"
-            android:textSize="@dimen/wind_dialog_tatsumaki_title_size" />
+            android:textColor="@color/wl_dialog_title"
+            android:textSize="@dimen/wl_dialog_tatsumaki_title_size" />
 
         <!-- Custom Content Body -->
         <!-- The use can customize this content view -->
@@ -59,7 +59,7 @@
             android:id="@+id/_bodyHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/wind_dialog_tatsumaki_body_margin_top"
+            android:layout_marginTop="@dimen/wl_dialog_tatsumaki_body_margin_top"
             android:gravity="center">
 
         </RelativeLayout>
@@ -69,7 +69,7 @@
             android:id="@+id/_footerHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/wind_dialog_footer_margin_top"
+            android:layout_marginTop="@dimen/wl_dialog_footer_margin_top"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -83,14 +83,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@drawable/wind_dialog_waiting_mask"
+        android:background="@drawable/wl_dialog_waiting_mask"
         android:visibility="gone">
 
         <!-- Animation Icon -->
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/_waitingIcon"
-            android:layout_width="@dimen/wind_dialog_tatsumaki_icon_size"
-            android:layout_height="@dimen/wind_dialog_tatsumaki_icon_size"
+            android:layout_width="@dimen/wl_dialog_tatsumaki_icon_size"
+            android:layout_height="@dimen/wl_dialog_tatsumaki_icon_size"
             android:layout_centerInParent="true"
             android:scaleType="centerInside"
             app:lottie_autoPlay="false"

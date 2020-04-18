@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
+    <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <solid android:color="#80eaeaeb" />
-            <corners android:radius="@dimen/wind_dialog_border_radius" />
+            <solid android:color="#c7c7c7" />
+            <corners android:radius="@dimen/wl_button_border_radius" />
         </shape>
     </item>
 </selector>

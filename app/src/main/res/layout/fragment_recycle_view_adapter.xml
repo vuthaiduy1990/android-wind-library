@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        app:animColor="@color/success"
+        app:animColor="@color/wl_success"
         app:animType="VICTOR_KAI" />
 
     <TextView
@@ -29,7 +29,7 @@
         android:layout_marginStart="8dp"
         android:layout_weight="1"
         android:text="@string/drawer_recycle_view"
-        android:textColor="@color/button_text"
-        android:textSize="@dimen/button_text" />
+        android:textColor="@color/wl_button_text"
+        android:textSize="@dimen/wl_button_text" />
 
 </LinearLayout>

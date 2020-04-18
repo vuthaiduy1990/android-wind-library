@@ -2,61 +2,61 @@
 <resources>
     <!-- |||||||||||||||||||||||||| Checkbox ||||||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <dimen name="checkbox_vinnhed_size">36dp</dimen>
-    <dimen name="checkbox_takaya_deguchi_size">37dp</dimen>
-    <dimen name="checkbox_victor_kai_size">39dp</dimen>
-    <dimen name="checkbox_lorin_size">33dp</dimen>
-    <dimen name="checkbox_darius_afchar_size">46dp</dimen>
-    <dimen name="checkbox_gilson_santos_size">38dp</dimen>
-    <dimen name="checkbox_aviral_bahuguna_size">38dp</dimen>
-    <dimen name="checkbox_default_square_size">39dp</dimen>
-    <dimen name="checkbox_default_checklist_size">31dp</dimen>
+    <dimen name="wl_checkbox_vinnhed_size">36dp</dimen>
+    <dimen name="wl_checkbox_takaya_deguchi_size">37dp</dimen>
+    <dimen name="wl_checkbox_victor_kai_size">39dp</dimen>
+    <dimen name="wl_checkbox_lorin_size">33dp</dimen>
+    <dimen name="wl_checkbox_darius_afchar_size">46dp</dimen>
+    <dimen name="wl_checkbox_gilson_santos_size">38dp</dimen>
+    <dimen name="wl_checkbox_aviral_bahuguna_size">38dp</dimen>
+    <dimen name="wl_checkbox_default_square_size">39dp</dimen>
+    <dimen name="wl_checkbox_default_checklist_size">31dp</dimen>
 
     <!-- ||||||||||||||||||||||||||| Button |||||||||||||||||||||||||| -->
     <!-- Icon size = text size + 3dp > -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <dimen name="button_border_radius">8dp</dimen>
-    <dimen name="button_icon_size">21dp</dimen>
-    <dimen name="button_text">18sp</dimen>
-    <dimen name="button_spacing">9dp</dimen>
-    <dimen name="button_padding_start">14dp</dimen>
-    <dimen name="button_padding_end">14dp</dimen>
-    <dimen name="button_padding_top">10dp</dimen>
-    <dimen name="button_padding_bottom">10dp</dimen>
+    <dimen name="wl_button_border_radius">8dp</dimen>
+    <dimen name="wl_button_icon_size">21dp</dimen>
+    <dimen name="wl_button_text">18sp</dimen>
+    <dimen name="wl_button_spacing">9dp</dimen>
+    <dimen name="wl_button_padding_start">14dp</dimen>
+    <dimen name="wl_button_padding_end">14dp</dimen>
+    <dimen name="wl_button_padding_top">10dp</dimen>
+    <dimen name="wl_button_padding_bottom">10dp</dimen>
 
     <!-- |||||||||||||||||||||||| Wind Dialog |||||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <dimen name="wind_dialog_border_radius">8dp</dimen>
-    <dimen name="wind_dialog_padding_start">18dp</dimen>
-    <dimen name="wind_dialog_padding_end">18dp</dimen>
-    <dimen name="wind_dialog_padding_top">14dp</dimen>
-    <dimen name="wind_dialog_padding_bottom">14dp</dimen>
-    <dimen name="wind_dialog_button_spacing">7dp</dimen>
-    <dimen name="wind_dialog_footer_margin_top">20dp</dimen>
-    <dimen name="wind_dialog_button_min_width">96dp</dimen>
-    <dimen name="wind_dialog_waiting_icon_size">128dp</dimen>
+    <dimen name="wl_dialog_border_radius">8dp</dimen>
+    <dimen name="wl_dialog_padding_start">18dp</dimen>
+    <dimen name="wl_dialog_padding_end">18dp</dimen>
+    <dimen name="wl_dialog_padding_top">14dp</dimen>
+    <dimen name="wl_dialog_padding_bottom">14dp</dimen>
+    <dimen name="wl_dialog_button_spacing">7dp</dimen>
+    <dimen name="wl_dialog_footer_margin_top">20dp</dimen>
+    <dimen name="wl_dialog_button_min_width">96dp</dimen>
+    <dimen name="wl_dialog_waiting_icon_size">128dp</dimen>
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <dimen name="wind_dialog_tatsumaki_width">460dp</dimen>
-    <dimen name="wind_dialog_tatsumaki_icon_size">90dp</dimen>
-    <dimen name="wind_dialog_tatsumaki_big_progress_icon_margin">48dp</dimen>
-    <dimen name="wind_dialog_tatsumaki_title_size">26sp</dimen>
-    <dimen name="wind_dialog_tatsumaki_title_margin_top">14dp</dimen>
-    <dimen name="wind_dialog_tatsumaki_text_size">18sp</dimen>
-    <dimen name="wind_dialog_tatsumaki_body_margin_top">8dp</dimen>
+    <dimen name="wl_dialog_tatsumaki_width">460dp</dimen>
+    <dimen name="wl_dialog_tatsumaki_icon_size">90dp</dimen>
+    <dimen name="wl_dialog_tatsumaki_big_progress_icon_margin">48dp</dimen>
+    <dimen name="wl_dialog_tatsumaki_title_size">26sp</dimen>
+    <dimen name="wl_dialog_tatsumaki_title_margin_top">14dp</dimen>
+    <dimen name="wl_dialog_tatsumaki_text_size">18sp</dimen>
+    <dimen name="wl_dialog_tatsumaki_body_margin_top">8dp</dimen>
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <dimen name="wind_dialog_fubuki_width">520dp</dimen>
-    <dimen name="wind_dialog_fubuki_icon_size">72dp</dimen>
-    <dimen name="wind_dialog_fubuki_title_size">26sp</dimen>
-    <dimen name="wind_dialog_fubuki_title_margin_left">14dp</dimen>
-    <dimen name="wind_dialog_fubuki_body_margin_top">14dp</dimen>
+    <dimen name="wl_dialog_fubuki_width">520dp</dimen>
+    <dimen name="wl_dialog_fubuki_icon_size">72dp</dimen>
+    <dimen name="wl_dialog_fubuki_title_size">26sp</dimen>
+    <dimen name="wl_dialog_fubuki_title_margin_left">14dp</dimen>
+    <dimen name="wl_dialog_fubuki_body_margin_top">14dp</dimen>
 
     <!-- ||||||||||||||||||||| Wind Action Menu |||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <dimen name="wind_action_menu_padding_hoz">26dp</dimen>
-    <dimen name="wind_action_menu_icon_size">24dp</dimen>
-    <dimen name="wind_action_menu_text_size">20sp</dimen>
-    <dimen name="wind_action_menu_item_spacing">12dp</dimen>
-    <dimen name="wind_action_menu_item_padding_ver">12dp</dimen>
-    <dimen name="wind_action_menu_item_padding_hoz">14dp</dimen>
-    <dimen name="wind_action_menu_item_margin_ver">4dp</dimen>
+    <dimen name="wl_action_menu_padding_hoz">26dp</dimen>
+    <dimen name="wl_action_menu_icon_size">24dp</dimen>
+    <dimen name="wl_action_menu_text_size">20sp</dimen>
+    <dimen name="wl_action_menu_item_spacing">12dp</dimen>
+    <dimen name="wl_action_menu_item_padding_ver">12dp</dimen>
+    <dimen name="wl_action_menu_item_padding_hoz">14dp</dimen>
+    <dimen name="wl_action_menu_item_margin_ver">4dp</dimen>
 </resources>

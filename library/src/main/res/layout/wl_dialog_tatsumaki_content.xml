@@ -8,6 +8,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="@color/wind_dialog_text"
-        android:textSize="@dimen/wind_dialog_tatsumaki_text_size" />
+        android:textColor="@color/wl_dialog_text"
+        android:textSize="@dimen/wl_dialog_tatsumaki_text_size" />
 </FrameLayout>

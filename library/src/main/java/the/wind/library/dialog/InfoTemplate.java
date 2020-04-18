@@ -20,8 +20,8 @@ public class InfoTemplate implements WindDialog.ITemplate {
     @Override
     public void onSetting(final WindDialog dialog) {
         Context context = dialog.getContext();
-        dialog.setIcon(R.drawable.wind_dialog_icon_info);
-        dialog.addButton(Button.Type.GRAY, context.getString(R.string.wind_dialog_button_close), null);
+        dialog.setIcon(R.drawable.wl_dialog_icon_info);
+        dialog.addButton(Button.Type.GRAY, context.getString(R.string.wl_dialog_button_close), null);
     }
 
     /**
