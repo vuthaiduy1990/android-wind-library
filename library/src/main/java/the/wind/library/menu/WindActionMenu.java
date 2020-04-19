@@ -1,6 +1,7 @@
 package the.wind.library.menu;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,6 +28,9 @@ public class WindActionMenu extends WindDialog {
     private int mItemTextColor;
     private int mItemTextSize;
     private int mItemIconSize;
+
+    // model
+    private int mSelectedId;
 
 
     // listener
@@ -56,6 +60,16 @@ public class WindActionMenu extends WindDialog {
         setItemTextColor(R.color.wl_text);
         setItemTextSize(R.dimen.wl_action_menu_text_size);
         setItemIconSize(R.dimen.wl_action_menu_icon_size);
+
+        setOnDismissListener(new OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if (mItemSelectListener != null && mSelectedId > 0) {
+                    mItemSelectListener.onSelect(mSelectedId);
+                    mSelectedId = -1;
+                }
+            }
+        });
     }
 
     /* ---------------------- OVERRIDE ----------------------- */
@@ -114,12 +128,11 @@ public class WindActionMenu extends WindDialog {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mSelectedId = id;
                 dismiss();
-                if (mItemSelectListener != null) {
-                    mItemSelectListener.onSelect(id);
-                }
             }
         });
+
 
         return this;
     }
