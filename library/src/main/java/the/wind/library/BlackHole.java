@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 /**
  * The center of universe.
@@ -36,9 +35,20 @@ public final class BlackHole {
      * @return garbage
      */
     @SuppressWarnings("unchecked")
-    @Nullable
     public <T> T pull(@NonNull Class<T> clazz) {
         return (T) mGarbages.get(clazz);
+    }
+
+    /**
+     * Pull and remove garbage from black hole
+     *
+     * @param clazz type of garbage
+     * @param <T>   template type
+     * @return garbage
+     */
+    @SuppressWarnings("unchecked")
+    public <T> T poll(@NonNull Class<T> clazz) {
+        return (T) mGarbages.remove(clazz);
     }
 
     /**
@@ -50,6 +60,16 @@ public final class BlackHole {
     public void swallow(Object garbage) {
         if (garbage == null) return;
         mGarbages.put(garbage.getClass(), garbage);
+    }
+
+    /**
+     * Destroy garbage
+     *
+     * @param clazz type of garbage
+     * @param <T>   template type
+     */
+    public <T> void destroy(@NonNull Class<T> clazz) {
+        mGarbages.remove(clazz);
     }
 
 }
