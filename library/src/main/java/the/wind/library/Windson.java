@@ -195,7 +195,10 @@ public class Windson {
      * @param obj object
      */
     public void write(Object obj, @NonNull File file) throws IOException {
-        Gson.toJson(obj, new FileWriter(file.getAbsolutePath()));
+        FileWriter writer = new FileWriter(file);
+        Gson.toJson(obj, writer);
+        writer.flush();
+        writer.close();
     }
 
     /**
