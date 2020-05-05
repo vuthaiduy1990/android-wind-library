@@ -25,8 +25,12 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RawRes;
+import androidx.annotation.StringRes;
 import the.wind.library.CWBundle;
 import the.wind.library.R;
 import the.wind.library.view.Button;
@@ -197,7 +201,7 @@ public class WindDialog extends Dialog {
     }
 
     @Override
-    public void setContentView(int layoutResID) {
+    public void setContentView(@LayoutRes int layoutResID) {
         if (layoutResID != 0) {
             View view = getLayoutInflater().inflate(layoutResID, null);
             setContentView(view);
@@ -399,7 +403,7 @@ public class WindDialog extends Dialog {
      * @param resId resource id
      * @return dialog
      */
-    public WindDialog setIcon(int resId) {
+    public WindDialog setIcon(@DrawableRes int resId) {
         mIconResId = resId;
         if (_icon != null && _lottieIcon != null) {
             judgeIcon();
@@ -427,7 +431,7 @@ public class WindDialog extends Dialog {
      * @param resId resource id
      * @return dialog
      */
-    public WindDialog setLottieIcon(int resId) {
+    public WindDialog setLottieIcon(@RawRes int resId) {
         mLottieIconResId = resId;
         if (_icon != null && _lottieIcon != null) {
             judgeIcon();
@@ -514,7 +518,7 @@ public class WindDialog extends Dialog {
      * @param resId string resource id
      * @return dialog
      */
-    public WindDialog setContentText(int resId) {
+    public WindDialog setContentText(@StringRes int resId) {
         return setContentText(getContext().getString(resId));
     }
 
@@ -613,7 +617,7 @@ public class WindDialog extends Dialog {
      * @param resId string resource id
      * @return dialog
      */
-    public WindDialog setButtonText(int idx, int resId) {
+    public WindDialog setButtonText(int idx, @StringRes int resId) {
         return setButtonText(idx, getContext().getString(resId));
     }
 
@@ -634,10 +638,10 @@ public class WindDialog extends Dialog {
     /**
      * Set custom waiting icon
      *
-     * @param resId resource lottie animtion id
+     * @param resId resource lottie animation id
      * @return dialog
      */
-    public WindDialog setCustomWaitingIcon(int resId) {
+    public WindDialog setCustomWaitingIcon(@RawRes int resId) {
         _waitingIcon.setAnimation(resId);
         return this;
     }

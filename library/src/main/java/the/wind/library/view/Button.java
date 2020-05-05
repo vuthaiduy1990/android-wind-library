@@ -16,7 +16,12 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.DimenRes;
+import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
+import androidx.annotation.RawRes;
+import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
 import the.wind.library.R;
 
@@ -200,7 +205,7 @@ public class Button extends LinearLayout {
      * @param resId drawable resource
      * @return button
      */
-    public Button setCustomIcon(int resId) {
+    public Button setCustomIcon(@DrawableRes int resId) {
         mCustomIconRes = resId;
         judgeIcon();
         return this;
@@ -212,7 +217,7 @@ public class Button extends LinearLayout {
      * @param resId resource id
      * @return button
      */
-    public Button setCustomAnim(int resId) {
+    public Button setCustomAnim(@RawRes int resId) {
         mCustomAnimRes = resId;
         judgeIcon();
         return this;
@@ -290,7 +295,7 @@ public class Button extends LinearLayout {
      * @param resId string resource id
      * @return button
      */
-    public Button setText(int resId) {
+    public Button setText(@StringRes int resId) {
         _textView.setText(resId);
         _textView.setVisibility(resId != 0 ? VISIBLE : GONE);
         _space.setVisibility(isSpacing() ? VISIBLE : GONE);
@@ -320,7 +325,7 @@ public class Button extends LinearLayout {
      * @param color color
      * @return button
      */
-    public Button setTextColor(int color) {
+    public Button setTextColor(@ColorInt int color) {
         _textView.setTextColor(color);
         return this;
     }
@@ -345,7 +350,7 @@ public class Button extends LinearLayout {
      * @param rightRes  dimension resource
      * @param bottomRes dimension resource
      */
-    protected void setDefaultPadding(int leftRes, int topRes, int rightRes, int bottomRes) {
+    protected void setDefaultPadding(@DimenRes int leftRes, @DimenRes int topRes, @DimenRes int rightRes, @DimenRes int bottomRes) {
         int pLeft = getPaddingLeft();
         int pTop = getPaddingTop();
         int pRight = getPaddingRight();

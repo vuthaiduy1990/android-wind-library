@@ -12,6 +12,7 @@ import com.airbnb.lottie.LottieProperty;
 import com.airbnb.lottie.model.KeyPath;
 import com.airbnb.lottie.value.LottieValueCallback;
 
+import androidx.annotation.ColorInt;
 import androidx.core.content.ContextCompat;
 import the.wind.library.R;
 import the.wind.library.utils.CWStringUtils;
@@ -175,7 +176,7 @@ public class Checkbox extends LottieAnimationView {
      * @param color color
      * @return checkbox
      */
-    public Checkbox setAnimColor(int color) {
+    public Checkbox setAnimColor(@ColorInt int color) {
         mAnimColor = color;
         if (mAnimColor == 0 || mAnimType == null) return this;
         if (mAnimType.getProperties() != null) {
