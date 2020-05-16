@@ -53,14 +53,14 @@ public class Checkbox extends LottieAnimationView {
     public Checkbox(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray typeArray = context.getTheme().obtainStyledAttributes(
-                attrs, R.styleable.wl_checkbox,
+                attrs, R.styleable.Checkbox,
                 0, 0);
         try {
             // get anim type;
-            int animIdx = typeArray.getInt(R.styleable.wl_checkbox_animType, 0);
+            int animIdx = typeArray.getInt(R.styleable.Checkbox_animType, 0);
             mAnimType = AnimType.values()[animIdx];
             // get anim color
-            mAnimColor = typeArray.getColor(R.styleable.wl_checkbox_animColor, 0);
+            mAnimColor = typeArray.getColor(R.styleable.Checkbox_animColor, 0);
 
         } catch (Exception ex) {
             ex.printStackTrace();

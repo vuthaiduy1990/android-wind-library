@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Checkbox's attributes -->
-    <declare-styleable name="wl_checkbox">
+    <!-- Should have the same name with View class so that the Android hint can work in layout resource file -->
+    <declare-styleable name="Checkbox">
         <attr name="animType" format="enum">
             <enum name="DEFAULT_CIRCLE" value="0" />
             <enum name="TAKAYA_DEGUCHI_1" value="1" />
@@ -19,7 +20,8 @@
     </declare-styleable>
 
     <!-- Button's attributes -->
-    <declare-styleable name="wl_button">
+    <!-- Should have the same name with View class so that the Android hint can work in layout resource file -->
+    <declare-styleable name="Button">
         <attr name="type" format="enum">
             <enum name="PRIMARY" value="0" />
             <enum name="SUCCESS" value="1" />
