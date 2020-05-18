@@ -5,23 +5,23 @@ import android.content.Context;
 import the.wind.library.R;
 import the.wind.library.view.Button;
 
-public class SimpleTaskTemplate implements WindDialog.ITemplate {
+public class ConfirmTemplate implements WindDialog.ITemplate {
 
     // singleton instance
-    private static final SimpleTaskTemplate _instance = new SimpleTaskTemplate();
+    private static final ConfirmTemplate _instance = new ConfirmTemplate();
 
     /**
      * Private constructor
      * Eliminate initiating template instance from outside
      */
-    private SimpleTaskTemplate() {
+    private ConfirmTemplate() {
     }
 
     @Override
     public void onSetting(final WindDialog dialog) {
         Context context = dialog.getContext();
         // https://www.flaticon.com/free-icon/completed-task_1632670#
-        dialog.setIcon(R.drawable.wl_dialog_icon_task);
+        dialog.setIcon(R.drawable.wl_dialog_icon_confirm);
         dialog.addButton(Button.Type.GRAY, context.getString(R.string.wl_dialog_button_cancel), null);
         dialog.addButton(Button.Type.PRIMARY, context.getString(R.string.wl_dialog_button_confirm), null);
     }
@@ -31,7 +31,7 @@ public class SimpleTaskTemplate implements WindDialog.ITemplate {
      *
      * @return singleton instance
      */
-    public static SimpleTaskTemplate instance() {
+    public static ConfirmTemplate instance() {
         return _instance;
     }
 }

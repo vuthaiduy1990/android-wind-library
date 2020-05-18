@@ -14,13 +14,13 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import the.wind.library.dialog.ConfirmTemplate;
 import the.wind.library.dialog.DangerTemplate;
 import the.wind.library.dialog.ErrorTemplate;
 import the.wind.library.dialog.InfoTemplate;
 import the.wind.library.dialog.LoadingTemplate;
 import the.wind.library.dialog.NotificationTemplate;
 import the.wind.library.dialog.ProgressTemplate;
-import the.wind.library.dialog.SimpleTaskTemplate;
 import the.wind.library.dialog.SuccessTemplate;
 import the.wind.library.dialog.WarnTemplate;
 import the.wind.library.dialog.WindDialog;
@@ -101,7 +101,7 @@ public class DialogPage extends Fragment {
 
     private void simpleTaskDialog(final View view) {
         _simpleTaskDialog = new WindDialog(view.getContext())
-                .apply(SimpleTaskTemplate.instance())
+                .apply(ConfirmTemplate.instance())
                 .setContentText("Try your best and take your money.")
                 .setButtonText(1, "Yes");
         _simpleTaskDialog.setTitle("Buy a chance?");
@@ -272,7 +272,7 @@ public class DialogPage extends Fragment {
 
     private void showWaiting(View view) {
         _waitingDialog = new WindDialog(view.getContext())
-                .apply(SimpleTaskTemplate.instance())
+                .apply(ConfirmTemplate.instance())
                 .setContentText("This process may take a long time")
                 .setButtonText(1, "Update");
         _waitingDialog.setTitle("Update version");
