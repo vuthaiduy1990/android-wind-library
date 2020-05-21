@@ -24,13 +24,21 @@
     <declare-styleable name="Button">
         <attr name="type" format="enum">
             <enum name="PRIMARY" value="0" />
-            <enum name="SUCCESS" value="1" />
-            <enum name="INFO" value="2" />
-            <enum name="HIGHLIGHT" value="3" />
-            <enum name="WARNING" value="4" />
-            <enum name="DANGER" value="5" />
-            <enum name="GRAY" value="6" />
-            <enum name="NEUTRAL" value="7" />
+            <enum name="PRIMARY_LIGHT" value="1" />
+            <enum name="SUCCESS" value="2" />
+            <enum name="SUCCESS_LIGHT" value="3" />
+            <enum name="INFO" value="4" />
+            <enum name="INFO_LIGHT" value="5" />
+            <enum name="HIGHLIGHT" value="6" />
+            <enum name="HIGHLIGHT_LIGHT" value="7" />
+            <enum name="WARNING" value="8" />
+            <enum name="WARNING_LIGHT" value="9" />
+            <enum name="DANGER" value="10" />
+            <enum name="DANGER_LIGHT" value="11" />
+            <enum name="GRAY" value="12" />
+            <enum name="GRAY_LIGHT" value="13" />
+            <enum name="NEUTRAL" value="14" />
+            <enum name="NEUTRAL_LIGHT" value="15" />
         </attr>
         <attr name="customIcon" format="reference" />
         <attr name="customAnim" format="reference" />

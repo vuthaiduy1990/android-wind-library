@@ -82,6 +82,76 @@
 
         </com.google.android.flexbox.FlexboxLayout>
 
+        <!--   Light background -->
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal"
+            app:alignContent="stretch"
+            app:alignItems="stretch"
+            app:flexWrap="wrap"
+            app:justifyContent="space_between">
+
+            <the.wind.library.view.Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                app:text="@string/button_primary"
+                app:type="PRIMARY_LIGHT" />
+
+            <the.wind.library.view.Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                app:text="@string/button_success"
+                app:type="SUCCESS_LIGHT" />
+
+            <the.wind.library.view.Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                app:text="@string/button_info"
+                app:type="INFO_LIGHT" />
+
+            <the.wind.library.view.Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                app:text="@string/button_highlight"
+                app:type="HIGHLIGHT_LIGHT" />
+
+            <the.wind.library.view.Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                app:text="@string/button_neutral"
+                app:type="NEUTRAL_LIGHT" />
+
+            <the.wind.library.view.Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                app:text="@string/button_warning"
+                app:type="WARNING_LIGHT" />
+
+            <the.wind.library.view.Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                app:text="@string/button_danger"
+                app:type="DANGER_LIGHT" />
+
+            <the.wind.library.view.Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                app:text="@string/button_gray"
+                app:type="GRAY_LIGHT" />
+
+        </com.google.android.flexbox.FlexboxLayout>
+
         <!-- icon only -->
         <com.google.android.flexbox.FlexboxLayout
             android:layout_width="match_parent"

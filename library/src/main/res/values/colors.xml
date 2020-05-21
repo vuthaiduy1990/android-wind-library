@@ -9,25 +9,34 @@
     <!-- ||||||||||||||||||||||||| Wind Color |||||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     <color name="wl_primary">#3191bf</color>
+    <color name="wl_primary_light">#83bdd8</color>
     <color name="wl_primary_pressed">#1b85b8</color>
     <color name="wl_success">#41b3a3</color>
+    <color name="wl_success_light">#8dd1c7</color>
     <color name="wl_success_pressed">#3aa192</color>
     <color name="wl_info">#30a3b2</color>
+    <color name="wl_info_light">#82c7d0</color>
     <color name="wl_info_pressed">#1a99aa</color>
     <color name="wl_highlight">#ecd06f</color>
+    <color name="wl_highlight_light">#f3e2a8</color>
     <color name="wl_highlight_pressed">#d4bb63</color>
     <color name="wl_warning">#f4bb1a</color>
+    <color name="wl_warning_light">#f8d675</color>
     <color name="wl_warning_pressed">#dba817</color>
     <color name="wl_danger">#e26060</color>
+    <color name="wl_danger_light">#ed9f9f</color>
     <color name="wl_danger_pressed">#cb5656</color>
     <color name="wl_neutral">#e8a87c</color>
+    <color name="wl_neutral_light">#f1cab0</color>
     <color name="wl_neutral_pressed">#d0976f</color>
     <color name="wl_gray">#afafaf</color>
+    <color name="wl_gray_light">#cfcfcf</color>
     <color name="wl_gray_pressed">#9d9d9d</color>
 
     <!-- |||||||||||||||||||||||||| Button ||||||||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <color name="wl_button_text">#ffffff</color>
+    <color name="wl_button_text_white">#ffffff</color>
+    <color name="wl_button_text_black">#000000</color>
 
     <!-- ||||||||||||||||||||||| Wind Dialog ||||||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->

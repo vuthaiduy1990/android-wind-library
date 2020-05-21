@@ -91,8 +91,9 @@ public class Button extends LinearLayout {
         try {
             // retrieve button type
             int typeIdx = btTypeArray.getInt(R.styleable.Button_type, 0);
+            Type type = Type.values()[typeIdx];
             if (getBackground() == null) {
-                setType(Type.values()[typeIdx]);
+                setType(type);
             }
 
             // bind icon's attributes
@@ -114,7 +115,7 @@ public class Button extends LinearLayout {
             String textValue = btTypeArray.getString(R.styleable.Button_text);
             int textColorRes = btTypeArray.getColor(
                     R.styleable.Button_textColor,
-                    ContextCompat.getColor(context, R.color.wl_button_text));
+                    ContextCompat.getColor(context, type.getColor()));
             float textSize = btTypeArray.getDimension(
                     R.styleable.Button_textSize,
                     getResources().getDimension(R.dimen.wl_button_text));
@@ -184,6 +185,7 @@ public class Button extends LinearLayout {
      */
     public Button setType(Type type) {
         setBackgroundResource(type.getBackground());
+        textView().setTextColor(ContextCompat.getColor(getContext(), type.getColor()));
         return this;
     }
 
@@ -388,19 +390,44 @@ public class Button extends LinearLayout {
      * Button type
      */
     public enum Type {
-        PRIMARY(R.drawable.wl_button_background_primary),
-        SUCCESS(R.drawable.wl_button_background_success),
-        INFO(R.drawable.wl_button_background_info),
-        HIGHLIGHT(R.drawable.wl_button_background_highlight),
-        WARNING(R.drawable.wl_button_background_warning),
-        DANGER(R.drawable.wl_button_background_danger),
-        GRAY(R.drawable.wl_button_background_gray),
-        NEUTRAL(R.drawable.wl_button_background_neutral);
+        // primary
+        PRIMARY(R.color.wl_button_text_white, R.drawable.wl_button_background_primary),
+        PRIMARY_LIGHT(R.color.wl_button_text_black, R.drawable.wl_button_background_primary_light),
+        // success
+        SUCCESS(R.color.wl_button_text_white, R.drawable.wl_button_background_success),
+        SUCCESS_LIGHT(R.color.wl_button_text_black, R.drawable.wl_button_background_success_light),
+        // info
+        INFO(R.color.wl_button_text_white, R.drawable.wl_button_background_info),
+        INFO_LIGHT(R.color.wl_button_text_black, R.drawable.wl_button_background_info_light),
+        // highlight
+        HIGHLIGHT(R.color.wl_button_text_white, R.drawable.wl_button_background_highlight),
+        HIGHLIGHT_LIGHT(R.color.wl_button_text_black, R.drawable.wl_button_background_highlight_light),
+        // warning
+        WARNING(R.color.wl_button_text_white, R.drawable.wl_button_background_warning),
+        WARNING_LIGHT(R.color.wl_button_text_black, R.drawable.wl_button_background_warning_light),
+        // danger
+        DANGER(R.color.wl_button_text_white, R.drawable.wl_button_background_danger),
+        DANGER_LIGHT(R.color.wl_button_text_black, R.drawable.wl_button_background_danger_light),
+        // gray
+        GRAY(R.color.wl_button_text_white, R.drawable.wl_button_background_gray),
+        GRAY_LIGHT(R.color.wl_button_text_black, R.drawable.wl_button_background_gray_light),
+        // gray
+        NEUTRAL(R.color.wl_button_text_white, R.drawable.wl_button_background_neutral),
+        NEUTRAL_LIGHT(R.color.wl_button_text_black, R.drawable.wl_button_background_neutral_light);
 
+        private int color;
         private int background;
 
-        Type(int background) {
+        Type(int color, int background) {
+            this.color = color;
             this.background = background;
+        }
+
+        /**
+         * @return text color
+         */
+        public int getColor() {
+            return this.color;
         }
 
         /**

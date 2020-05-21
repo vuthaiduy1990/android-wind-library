@@ -29,7 +29,7 @@
         android:layout_marginStart="8dp"
         android:layout_weight="1"
         android:text="@string/drawer_recycle_view"
-        android:textColor="@color/wl_button_text"
+        android:textColor="@color/wl_button_text_white"
         android:textSize="@dimen/wl_button_text" />
 
 </LinearLayout>
