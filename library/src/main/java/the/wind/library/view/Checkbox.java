@@ -61,6 +61,10 @@ public class Checkbox extends LottieAnimationView {
             mAnimType = AnimType.values()[animIdx];
             // get anim color
             mAnimColor = typeArray.getColor(R.styleable.Checkbox_animColor, 0);
+            // get checked
+            mChecked = typeArray.getBoolean(R.styleable.Checkbox_checked, false);
+            // get enabled
+            setEnabled(typeArray.getBoolean(R.styleable.Checkbox_enabled, true));
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -76,6 +80,7 @@ public class Checkbox extends LottieAnimationView {
             mAnimColor = ContextCompat.getColor(getContext(), R.color.wl_success);
         }
         setAnimColor(mAnimColor);
+        setChecked(mChecked);
 
         // set event listeners
         setOnClickListener(new View.OnClickListener() {

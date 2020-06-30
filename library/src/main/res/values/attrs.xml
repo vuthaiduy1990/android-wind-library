@@ -17,6 +17,8 @@
             <enum name="DEFAULT_CHECKLIST" value="10" />
         </attr>
         <attr name="animColor" format="color" />
+        <attr name="checked" format="boolean" />
+        <attr name="enabled" format="boolean" />
     </declare-styleable>
 
     <!-- Button's attributes -->
