@@ -116,7 +116,7 @@ public abstract class CWTable implements Serializable {
      *
      * @param createdDate created date
      */
-    protected void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(Date createdDate) {
         mCreatedDate = createdDate;
     }
 
@@ -132,7 +132,7 @@ public abstract class CWTable implements Serializable {
      *
      * @param updatedDate updated date
      */
-    protected void setUpdateDate(Date updatedDate) {
+    public void setUpdateDate(Date updatedDate) {
         mUpdatedDate = updatedDate;
     }
 
