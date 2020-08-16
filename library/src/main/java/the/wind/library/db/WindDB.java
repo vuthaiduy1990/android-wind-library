@@ -186,7 +186,7 @@ public class WindDB extends SQLiteOpenHelper {
         return results;
     }
 
-    /* ---------------------- ABSTRACT -----------------------*/
+    /* ---------------------- ABSTRACT ----------------------- */
 
     /* ---------------------- GET-SET ------------------------ */
 

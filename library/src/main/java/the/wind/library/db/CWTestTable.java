@@ -129,7 +129,7 @@ public final class CWTestTable extends CWTable {
         return table;
     }
 
-    /* ---------------------- ABSTRACT -----------------------*/
+    /* ---------------------- ABSTRACT ----------------------- */
 
     /* ---------------------- GET-SET ------------------------ */
 

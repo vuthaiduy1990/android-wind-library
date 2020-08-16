@@ -91,7 +91,7 @@ public final class WindColor {
         return new WindColor(ContextCompat.getColor(context, colorRes));
     }
 
-    /* ---------------------- ABSTRACT -----------------------*/
+    /* ---------------------- ABSTRACT ----------------------- */
 
     /* ---------------------- GET-SET ------------------------ */
 

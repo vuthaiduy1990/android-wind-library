@@ -48,9 +48,11 @@ public abstract class CWHandler<T> {
     private CWBundle mBundle = new CWBundle();
     private State mState = State.RUNNING;
 
+    /* ---------------------- OVERRIDE ----------------------- */
+
     /* ---------------------- STATIC ------------------------- */
 
-    /* ---------------------- OVERRIDE ----------------------- */
+    /* ---------------------- ABSTRACT ----------------------- */
 
     /**
      * On before handling
@@ -74,8 +76,6 @@ public abstract class CWHandler<T> {
      */
     public void onAfter(T... params) {
     }
-
-    /* ---------------------- ABSTRACT -----------------------*/
 
     /* ---------------------- GET-SET ------------------------ */
 
