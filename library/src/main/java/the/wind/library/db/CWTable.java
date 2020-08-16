@@ -63,6 +63,7 @@ public abstract class CWTable implements Serializable {
     /**
      * @return bundle
      */
+    @NonNull
     public CWBundle bundle() {
         return mBundle;
     }

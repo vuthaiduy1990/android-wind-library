@@ -1,5 +1,7 @@
 package the.wind.library;
 
+import androidx.annotation.NonNull;
+
 /**
  * Example.
  * <pre>
@@ -33,9 +35,9 @@ public class CWCallback<T> {
     // tagged object
     private CWBundle mBundle = new CWBundle();
 
-    /* ---------------------- STATIC ------------------------- */
-
     /* ---------------------- OVERRIDE ----------------------- */
+
+    /* ---------------------- STATIC ------------------------- */
 
     /* ---------------------- ABSTRACT ----------------------- */
 
@@ -86,6 +88,7 @@ public class CWCallback<T> {
     /**
      * @return bundle
      */
+    @NonNull
     public CWBundle bundle() {
         return mBundle;
     }

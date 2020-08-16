@@ -1,5 +1,8 @@
 package the.wind.library;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 /**
  * Example: run a handler repeatedly and you can pause/resume/destroy the executing handler
  * <pre>
@@ -47,6 +50,24 @@ public abstract class CWHandler<T> {
 
     private CWBundle mBundle = new CWBundle();
     private State mState = State.RUNNING;
+    private String mTaskName;
+
+
+    /**
+     * Default constructor
+     */
+    public CWHandler() {
+        this(null);
+    }
+
+    /**
+     * Constructor
+     *
+     * @param taskName task name
+     */
+    public CWHandler(String taskName) {
+        mTaskName = taskName;
+    }
 
     /* ---------------------- OVERRIDE ----------------------- */
 
@@ -80,8 +101,17 @@ public abstract class CWHandler<T> {
     /* ---------------------- GET-SET ------------------------ */
 
     /**
+     * @return task name
+     */
+    @Nullable
+    public String getTaskName() {
+        return mTaskName;
+    }
+
+    /**
      * @return bundle
      */
+    @NonNull
     public CWBundle bundle() {
         return mBundle;
     }
@@ -91,6 +121,7 @@ public abstract class CWHandler<T> {
      *
      * @return handler state
      */
+    @NonNull
     public State state() {
         return mState;
     }
