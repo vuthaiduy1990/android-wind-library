@@ -21,7 +21,7 @@ public abstract class CWTable implements Serializable {
     // and may be changed each time we re-insert (import) data to database
     // ⚠⚠⚠ Do not modify this field
     @Column(name = "hash")
-    private String mHash = "";
+    private String mHash;
 
     // sync state
     private SyncState mSyncState = SyncState.NEW;
@@ -47,7 +47,6 @@ public abstract class CWTable implements Serializable {
      */
     protected CWTable() {
         mBundle = new CWBundle();
-        setHash(new Date().getTime() + Math.random() + "");
         Date now = new Date();
         setCreatedDate(now);
         setUpdateDate(now);
@@ -82,7 +81,7 @@ public abstract class CWTable implements Serializable {
      *
      * @param hash hash string
      */
-    protected void setHash(String hash) {
+    public void setHash(String hash) {
         mHash = hash;
     }
 

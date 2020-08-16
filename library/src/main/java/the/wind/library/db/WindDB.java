@@ -19,6 +19,7 @@ import java.util.Set;
 import androidx.annotation.NonNull;
 import the.wind.library.Windson;
 import the.wind.library.utils.CWClazzUtils;
+import the.wind.library.utils.CWUtils;
 
 /**
  * Usage
@@ -45,6 +46,9 @@ public class WindDB extends SQLiteOpenHelper {
     // SQLite database
     private SQLiteDatabase _sqLiteDatabase;
 
+    // application context
+    private Context mContext;
+
     /**
      * Constructor
      *
@@ -54,6 +58,7 @@ public class WindDB extends SQLiteOpenHelper {
      */
     private WindDB(Context context, String database, int version) {
         super(context, database, null, version);
+        mContext = context;
     }
 
     /* ---------------------- OVERRIDE ----------------------- */
@@ -393,6 +398,9 @@ public class WindDB extends SQLiteOpenHelper {
                 Date date = new Date();
                 entity.setCreatedDate(date);
                 entity.setUpdateDate(date);
+                if (entity.getHash() == null) {
+                    entity.setHash(CWUtils.randomHash(mContext, entity.getClass()));
+                }
 
                 // insert
                 ContentValues values = toRowValue(entity);
@@ -541,7 +549,7 @@ public class WindDB extends SQLiteOpenHelper {
     private <T extends CWTable> ContentValues toRowValue(T entity) {
         ContentValues values = new ContentValues();
 
-        for (Field field : this.getColumnFields(entity.getClass())) {
+        for (Field field : getColumnFields(entity.getClass())) {
             Class<?> type = field.getType();
             String key = getColumnName(field);
 
@@ -603,7 +611,7 @@ public class WindDB extends SQLiteOpenHelper {
         constructor.setAccessible(true);
         T table = constructor.newInstance();
 
-        for (Field field : this.getColumnFields(clazz)) {
+        for (Field field : getColumnFields(clazz)) {
             field.setAccessible(true);
             Object val;
             Class<?> type = field.getType();

@@ -19,6 +19,8 @@ import android.view.Display;
 import android.view.View;
 
 import java.io.File;
+import java.util.Date;
+import java.util.UUID;
 
 /**
  * Provide utility methods
@@ -188,5 +190,21 @@ public final class CWUtils {
      */
     public static String getFullAssetsPath(String path) {
         return "file:///android_asset/" + path;
+    }
+
+    /**
+     * Generate random hash string for given object
+     *
+     * @param context application context
+     * @param clazz   object class
+     * @return random unique hash string
+     */
+    public static String randomHash(Context context, Class<?> clazz) {
+        String hash = UUID.randomUUID().toString()
+                + CWUtils.getDeviceId(context)
+                + clazz.getName()
+                + Math.random()
+                + new Date().getTime();
+        return CWCryptoUtils.sha1(hash);
     }
 }

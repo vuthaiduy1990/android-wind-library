@@ -64,11 +64,6 @@ public final class CWTestTable extends CWTable {
 
     /* ---------------------- OVERRIDE ----------------------- */
 
-    @Override
-    public void setHash(String hash) {
-        super.setHash(hash);
-    }
-
     /* ---------------------- STATIC ------------------------- */
 
     public static CWTestTable newTestTable() {
