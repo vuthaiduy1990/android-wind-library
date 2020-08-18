@@ -13,6 +13,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Looper;
 import android.provider.Settings;
 import android.util.Size;
 import android.view.Display;
@@ -25,7 +26,7 @@ import java.util.UUID;
 /**
  * Provide utility methods
  */
-public final class CWUtils {
+public final class CWAndroidUtils {
 
     /**
      * Check if the internet is available or not
@@ -196,15 +197,24 @@ public final class CWUtils {
      * Generate random hash string for given object
      *
      * @param context application context
-     * @param clazz   object class
+     * @param seed    a key to make hash more unique
      * @return random unique hash string
      */
-    public static String randomHash(Context context, Class<?> clazz) {
+    public static String randomHash(Context context, String seed) {
         String hash = UUID.randomUUID().toString()
-                + CWUtils.getDeviceId(context)
-                + clazz.getName()
+                + CWAndroidUtils.getDeviceId(context)
+                + seed
                 + Math.random()
                 + new Date().getTime();
         return CWCryptoUtils.sha1(hash);
+    }
+
+    /**
+     * Check if current thread is main UI thread or not
+     *
+     * @return true if current thread is main thread
+     */
+    public static boolean isMainThread() {
+        return Looper.getMainLooper() == Looper.myLooper();
     }
 }

@@ -25,7 +25,7 @@ import the.wind.library.dialog.SuccessTemplate;
 import the.wind.library.dialog.WarnTemplate;
 import the.wind.library.dialog.WindDialog;
 import the.wind.library.sample.R;
-import the.wind.library.utils.CWUtils;
+import the.wind.library.utils.CWAndroidUtils;
 import the.wind.library.view.Button;
 
 public class DialogPage extends Fragment {
@@ -336,7 +336,7 @@ public class DialogPage extends Fragment {
 
     private void fullScreenDialog(View view) {
         _fullScreenDialog = createFubukiDialog(view);
-        Size screenSize = CWUtils.getScreenSize(Objects.requireNonNull(getActivity()));
+        Size screenSize = CWAndroidUtils.getScreenSize(Objects.requireNonNull(getActivity()));
         _fullScreenDialog.setWidth(screenSize.getWidth()).setHeight(screenSize.getHeight());
         _fullScreenDialog.setLottieIcon(R.raw.cycle_ahead);
         _fullScreenDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_TOP_2_BOTTOM);

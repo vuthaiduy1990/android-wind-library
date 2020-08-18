@@ -18,8 +18,8 @@ import java.util.Set;
 
 import androidx.annotation.NonNull;
 import the.wind.library.Windson;
+import the.wind.library.utils.CWAndroidUtils;
 import the.wind.library.utils.CWClazzUtils;
-import the.wind.library.utils.CWUtils;
 
 /**
  * Usage
@@ -399,7 +399,7 @@ public class WindDB extends SQLiteOpenHelper {
                 entity.setCreatedDate(date);
                 entity.setUpdateDate(date);
                 if (entity.getHash() == null) {
-                    entity.setHash(CWUtils.randomHash(mContext, entity.getClass()));
+                    entity.setHash(CWAndroidUtils.randomHash(mContext, entity.getClass().getName()));
                 }
 
                 // insert
