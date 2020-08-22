@@ -185,7 +185,7 @@ public final class CWFileUtils {
      * @param destFile absolute new file path
      * @return true if renaming successfully
      */
-    private static boolean renameTo(File srcFile, File destFile) {
+    public static boolean renameTo(File srcFile, File destFile) {
         return srcFile.renameTo(destFile);
     }
 
