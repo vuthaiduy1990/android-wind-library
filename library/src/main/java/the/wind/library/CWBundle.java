@@ -1,10 +1,11 @@
 package the.wind.library;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class CWBundle {
+public final class CWBundle implements Serializable {
 
     // tagged objects
     private Map<String, Object> mTags = new HashMap<>();

@@ -32,6 +32,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RawRes;
 import androidx.annotation.StringRes;
 import the.wind.library.CWBundle;
+import the.wind.library.CWCallback;
 import the.wind.library.R;
 import the.wind.library.view.Button;
 
@@ -670,6 +671,17 @@ public class WindDialog extends Dialog {
      * @param timeout in milliseconds
      */
     public void show(long timeout) {
+        show(timeout, null);
+    }
+
+    /**
+     * Show dialog with timeout in milliseconds.
+     * It means that after timeout, dialog will be auto dismissed
+     *
+     * @param timeout  in milliseconds
+     * @param callback callback when timeout
+     */
+    public void show(long timeout, final CWCallback<?> callback) {
         show();
         mTimer.schedule(new TimerTask() {
             @Override
@@ -680,11 +692,13 @@ public class WindDialog extends Dialog {
                     @Override
                     public void run() {
                         dismiss();
+                        if (callback != null) callback.onEnd();
                     }
                 });
             }
         }, timeout);
     }
+
 
     /**
      * Show dialog immediately without animation
