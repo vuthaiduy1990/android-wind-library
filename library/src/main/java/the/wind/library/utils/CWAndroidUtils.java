@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -18,6 +19,7 @@ import android.provider.Settings;
 import android.util.Size;
 import android.view.Display;
 import android.view.View;
+import android.view.Window;
 
 import java.io.File;
 import java.util.Date;
@@ -111,6 +113,19 @@ public final class CWAndroidUtils {
         Point size = new Point();
         display.getSize(size);
         return new Size(size.x, size.y);
+    }
+
+    /**
+     * get status bar's height
+     *
+     * @param activity activity
+     * @return status bar's height
+     */
+    public static int getStatusBarHeight(Activity activity) {
+        Rect rectangle = new Rect();
+        Window window = activity.getWindow();
+        window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
+        return rectangle.top;
     }
 
     /**
