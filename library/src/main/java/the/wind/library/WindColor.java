@@ -21,7 +21,7 @@ public final class WindColor {
     public static final WindColor WARNING = WindColor.fromHex("#f4bb1a");
     public static final WindColor DANGER = WindColor.fromHex("#e26060");
     public static final WindColor NEUTRAL = WindColor.fromHex("#e8a87c");
-    public static final WindColor LIGHT = WindColor.fromHex("#dfdfde");
+    public static final WindColor LIGHT = WindColor.fromHex("#e5e5e4");
     public static final WindColor GRAY = WindColor.fromHex("#afafaf");
     public static final WindColor DARK = WindColor.fromHex("#191919");
     public static final WindColor PURPLE = WindColor.fromHex("#c38d9e");
