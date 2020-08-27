@@ -691,8 +691,8 @@ public class WindDialog extends Dialog {
                 _dialogView.post(new Runnable() {
                     @Override
                     public void run() {
-                        dismiss();
                         if (callback != null) callback.onEnd();
+                        dismiss();
                     }
                 });
             }
