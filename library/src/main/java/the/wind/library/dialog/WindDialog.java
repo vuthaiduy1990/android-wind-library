@@ -590,7 +590,7 @@ public class WindDialog extends Dialog {
      */
     public Button addButton(@NonNull Button.Type type, @NonNull CharSequence text, Button.InlineIcon icon) {
         Button btn = new Button(getContext());
-        int margin = (int) getContext().getResources().getDimension(R.dimen.wl_button_spacing);
+        int margin = (int) getContext().getResources().getDimension(R.dimen.wl_dialog_button_spacing);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -634,6 +634,17 @@ public class WindDialog extends Dialog {
             _btnList.get(idx).setText(text);
         }
         return this;
+    }
+
+    /**
+     * Add custom view to footer
+     *
+     * @param view view
+     * @return dialog
+     */
+    public View addViewToFooter(View view) {
+        _footerHolder.addView(view);
+        return view;
     }
 
     /**

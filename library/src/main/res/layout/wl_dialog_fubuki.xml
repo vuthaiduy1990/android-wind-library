@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/wl_dialog_footer_margin_top"
             android:layout_weight="0"
-            android:gravity="end"
+            android:gravity="end|center_vertical"
             android:orientation="horizontal">
 
         </LinearLayout>
