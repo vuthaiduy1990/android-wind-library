@@ -13,8 +13,9 @@
         android:background="@drawable/wl_dialog_background"
         android:orientation="vertical">
 
-        <!-- icon -->
+        <!-- header -->
         <LinearLayout
+            android:id="@+id/_headerHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0"

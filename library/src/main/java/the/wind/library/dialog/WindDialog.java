@@ -53,6 +53,7 @@ public class WindDialog extends Dialog {
     private ImageView _icon;
     private LottieAnimationView _lottieIcon;
     private TextView _tvTitle;
+    private ViewGroup _headerHolder;
     private ViewGroup _bodyHolder;
     private ViewGroup _footerHolder;
     private List<Button> _btnList = new LinkedList<>();
@@ -115,8 +116,9 @@ public class WindDialog extends Dialog {
 
         // bind views
         _dialogView = findViewById(android.R.id.content);
-        _icon = _layout.findViewById(R.id._icon);
-        _lottieIcon = _layout.findViewById(R.id._lottieIcon);
+        _headerHolder = _layout.findViewById(R.id._headerHolder);
+        _icon = _headerHolder.findViewById(R.id._icon);
+        _lottieIcon = _headerHolder.findViewById(R.id._lottieIcon);
         _tvTitle = _layout.findViewById(R.id._tvTitle);
         _bodyHolder = _layout.findViewById(R.id._bodyHolder);
         _footerHolder = _layout.findViewById(R.id._footerHolder);
@@ -637,10 +639,21 @@ public class WindDialog extends Dialog {
     }
 
     /**
+     * Add custom view to header
+     *
+     * @param view view
+     * @return inserted view
+     */
+    public View addViewToHeader(View view) {
+        _headerHolder.addView(view);
+        return view;
+    }
+
+    /**
      * Add custom view to footer
      *
      * @param view view
-     * @return dialog
+     * @return inserted view
      */
     public View addViewToFooter(View view) {
         _footerHolder.addView(view);
@@ -833,7 +846,6 @@ public class WindDialog extends Dialog {
     public boolean postDelayed(Runnable action, long delayMillis) {
         return _dialogView.postDelayed(action, delayMillis);
     }
-
 
     /* ---------------------- INNER CLASS -------------------- */
 

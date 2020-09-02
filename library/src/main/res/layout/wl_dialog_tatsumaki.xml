@@ -14,8 +14,9 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <!-- icon -->
+        <!-- header -->
         <RelativeLayout
+            android:id="@+id/_headerHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
