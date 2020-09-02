@@ -130,7 +130,7 @@ public class Button extends LinearLayout {
             // bind space attribute
             float spacing = btTypeArray.getDimension(
                     R.styleable.Button_spacing,
-                    getResources().getDimension(R.dimen.wl_button_spacing));
+                    getResources().getDimension(R.dimen.wl_button_icon_spacing));
             _space.setLayoutParams(new LinearLayout.LayoutParams((int) spacing, 1));
             _space.setVisibility(isSpacing() ? VISIBLE : GONE);
 
