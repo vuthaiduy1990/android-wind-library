@@ -20,10 +20,13 @@ import android.util.Size;
 import android.view.Display;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 
 import java.io.File;
 import java.util.Date;
 import java.util.UUID;
+
+import androidx.annotation.NonNull;
 
 /**
  * Provide utility methods
@@ -231,5 +234,43 @@ public final class CWAndroidUtils {
      */
     public static boolean isMainThread() {
         return Looper.getMainLooper() == Looper.myLooper();
+    }
+
+    /**
+     * Hide soft keyboard
+     *
+     * @param view focused view
+     */
+    public static void hideSoftKeyboard(@NonNull View view) {
+        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            // set flags = 0 to hide soft keyboard in all situations
+            // https://stackoverflow.com/questions/1109022/close-hide-android-soft-keyboard/1109108#1109108
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    /**
+     * Hide soft keyboard in context of an activity
+     *
+     * @param activity activity
+     */
+    public static void hideSoftKeyboard(@NonNull Activity activity) {
+        View focusedView = activity.getCurrentFocus();
+        if (focusedView != null) {
+            hideSoftKeyboard(focusedView);
+        }
+    }
+
+    /**
+     * Show soft keyboard
+     *
+     * @param view view
+     */
+    public static void showSoftKeyboard(@NonNull View view) {
+        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
+        }
     }
 }
