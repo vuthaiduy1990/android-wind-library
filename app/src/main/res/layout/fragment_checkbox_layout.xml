@@ -70,13 +70,13 @@
             android:layout_height="wrap_content"
             android:text="Default Circle (Victor Vinnhed)"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/com_title_size"
+            android:textSize="@dimen/wl_title_big"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/com_spacing">
+            android:layout_marginTop="@dimen/wl_spacing_double">
 
             <the.wind.library.view.Checkbox
                 android:id="@+id/_defaultCheckbox"
@@ -98,13 +98,13 @@
             android:layout_height="wrap_content"
             android:text="Takaya Deguchi "
             android:textColor="@color/textColor"
-            android:textSize="@dimen/com_title_size"
+            android:textSize="@dimen/wl_title_big"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/com_spacing">
+            android:layout_marginTop="@dimen/wl_spacing_double">
 
             <the.wind.library.view.Checkbox
                 android:layout_width="wrap_content"
@@ -137,13 +137,13 @@
             android:layout_height="wrap_content"
             android:text="Victor Kai"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/com_title_size"
+            android:textSize="@dimen/wl_title_big"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/com_spacing">
+            android:layout_marginTop="@dimen/wl_spacing_double">
 
             <the.wind.library.view.Checkbox
                 android:layout_width="wrap_content"
@@ -164,13 +164,13 @@
             android:layout_height="wrap_content"
             android:text="Lorin"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/com_title_size"
+            android:textSize="@dimen/wl_title_big"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/com_spacing">
+            android:layout_marginTop="@dimen/wl_spacing_double">
 
             <the.wind.library.view.Checkbox
                 android:layout_width="wrap_content"
@@ -191,13 +191,13 @@
             android:layout_height="wrap_content"
             android:text="Darius Afchar"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/com_title_size"
+            android:textSize="@dimen/wl_title_big"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/com_spacing">
+            android:layout_marginTop="@dimen/wl_spacing_double">
 
             <the.wind.library.view.Checkbox
                 android:layout_width="wrap_content"
@@ -218,13 +218,13 @@
             android:layout_height="wrap_content"
             android:text="Gilson Santos"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/com_title_size"
+            android:textSize="@dimen/wl_title_big"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/com_spacing">
+            android:layout_marginTop="@dimen/wl_spacing_double">
 
             <the.wind.library.view.Checkbox
                 android:layout_width="wrap_content"
@@ -256,13 +256,13 @@
             android:layout_height="wrap_content"
             android:text="Aviral Bahuguna"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/com_title_size"
+            android:textSize="@dimen/wl_title_big"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/com_spacing">
+            android:layout_marginTop="@dimen/wl_spacing_double">
 
             <the.wind.library.view.Checkbox
                 android:layout_width="wrap_content"
@@ -283,13 +283,13 @@
             android:layout_height="wrap_content"
             android:text="Default Square (Vaishak Shetty K)"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/com_title_size"
+            android:textSize="@dimen/wl_title_big"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/com_spacing">
+            android:layout_marginTop="@dimen/wl_spacing_double">
 
             <the.wind.library.view.Checkbox
                 android:layout_width="wrap_content"
@@ -310,13 +310,13 @@
             android:layout_height="wrap_content"
             android:text="Default Checklist (Ilya Pavlov)"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/com_title_size"
+            android:textSize="@dimen/wl_title_big"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/com_spacing">
+            android:layout_marginTop="@dimen/wl_spacing_double">
 
             <the.wind.library.view.Checkbox
                 android:layout_width="wrap_content"
@@ -337,13 +337,13 @@
             android:layout_height="wrap_content"
             android:text="Custom Width/Height"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/com_title_size"
+            android:textSize="@dimen/wl_title_big"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/com_spacing"
+            android:layout_marginTop="@dimen/wl_spacing_double"
             android:gravity="center">
 
             <the.wind.library.view.Checkbox
