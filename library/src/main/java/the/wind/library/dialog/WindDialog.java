@@ -109,9 +109,9 @@ public class WindDialog extends Dialog {
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         setPadding(
                 (int) context.getResources().getDimension(R.dimen.wl_dialog_padding_start),
-                (int) context.getResources().getDimension(R.dimen.wl_dialog_padding_top),
+                (int) context.getResources().getDimension(R.dimen.wl_padding_ver_big),
                 (int) context.getResources().getDimension(R.dimen.wl_dialog_padding_end),
-                (int) context.getResources().getDimension(R.dimen.wl_dialog_padding_bottom)
+                (int) context.getResources().getDimension(R.dimen.wl_padding_ver_big)
         );
 
         // bind views
@@ -592,7 +592,7 @@ public class WindDialog extends Dialog {
      */
     public Button addButton(@NonNull Button.Type type, @NonNull CharSequence text, Button.InlineIcon icon) {
         Button btn = new Button(getContext());
-        int margin = (int) getContext().getResources().getDimension(R.dimen.wl_dialog_button_spacing);
+        int margin = (int) getContext().getResources().getDimension(R.dimen.wl_spacing);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);

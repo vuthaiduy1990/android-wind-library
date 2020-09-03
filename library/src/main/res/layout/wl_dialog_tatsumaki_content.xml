@@ -10,5 +10,5 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="@color/wl_dialog_text"
-        android:textSize="@dimen/wl_dialog_tatsumaki_text_size" />
+        android:textSize="@dimen/wl_text_small" />
 </FrameLayout>

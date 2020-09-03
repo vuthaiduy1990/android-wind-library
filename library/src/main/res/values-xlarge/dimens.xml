@@ -46,8 +46,6 @@
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     <dimen name="wl_dialog_padding_start">18dp</dimen>
     <dimen name="wl_dialog_padding_end">18dp</dimen>
-    <dimen name="wl_dialog_padding_top">14dp</dimen>
-    <dimen name="wl_dialog_padding_bottom">14dp</dimen>
     <dimen name="wl_dialog_footer_margin_top">20dp</dimen>
     <dimen name="wl_dialog_button_min_width">96dp</dimen>
     <dimen name="wl_dialog_waiting_icon_size">128dp</dimen>
