@@ -58,8 +58,8 @@ public class WindActionMenu extends WindDialog {
         _menuHolder = contentView().findViewById(R.id._menuHolder);
         setItemBackground(R.drawable.wl_action_menu_item_background);
         setItemTextColor(R.color.wl_text);
-        setItemTextSize(R.dimen.wl_action_menu_text_size);
-        setItemIconSize(R.dimen.wl_action_menu_icon_size);
+        setItemTextSize(R.dimen.wl_text);
+        setItemIconSize(R.dimen.wl_icon);
 
         setOnDismissListener(new OnDismissListener() {
             @Override

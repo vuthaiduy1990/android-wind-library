@@ -59,6 +59,6 @@
 
     <!-- ||||||||||||||||||||| Wind Action Menu |||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <dimen name="wl_action_menu_padding_hoz">26dp</dimen>
+    <dimen name="wl_action_menu_padding_hoz">24dp</dimen>
     <dimen name="wl_action_menu_item_margin_ver">4dp</dimen>
 </resources>

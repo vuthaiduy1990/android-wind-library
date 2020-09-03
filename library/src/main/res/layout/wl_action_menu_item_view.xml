@@ -8,16 +8,16 @@
     android:background="@drawable/wl_action_menu_item_background"
     android:gravity="center"
     android:orientation="horizontal"
-    android:paddingStart="@dimen/wl_action_menu_item_padding_hoz"
-    android:paddingTop="@dimen/wl_action_menu_item_padding_ver"
-    android:paddingEnd="@dimen/wl_action_menu_item_padding_hoz"
-    android:paddingBottom="@dimen/wl_action_menu_item_padding_ver">
+    android:paddingStart="@dimen/wl_padding_hoz_big"
+    android:paddingTop="@dimen/wl_padding_ver_big"
+    android:paddingEnd="@dimen/wl_padding_hoz_big"
+    android:paddingBottom="@dimen/wl_padding_ver_big">
 
     <ImageView
         android:id="@+id/_icon"
-        android:layout_width="@dimen/wl_action_menu_icon_size"
-        android:layout_height="@dimen/wl_action_menu_icon_size"
-        android:layout_marginEnd="@dimen/wl_action_menu_item_spacing"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/wl_spacing_double"
         android:layout_weight="0"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
@@ -27,7 +27,7 @@
         android:id="@+id/_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/wl_action_menu_item_spacing"
+        android:layout_marginStart="@dimen/wl_spacing_double"
         android:layout_weight="1"
         android:background="@color/transparent"
         android:ellipsize="end"
@@ -35,7 +35,6 @@
         android:paddingTop="0dp"
         android:paddingBottom="0dp"
         android:textColor="#000000"
-        android:textSize="@dimen/wl_action_menu_text_size"
         tools:ignore="LabelFor" />
 
 </LinearLayout>

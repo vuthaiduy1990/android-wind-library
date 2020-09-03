@@ -59,12 +59,7 @@
 
     <!-- ||||||||||||||||||||| Wind Action Menu |||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <dimen name="wl_action_menu_padding_hoz">20dp</dimen>
-    <dimen name="wl_action_menu_icon_size">@dimen/wl_icon</dimen>
-    <dimen name="wl_action_menu_text_size">@dimen/wl_text</dimen>
-    <dimen name="wl_action_menu_item_spacing">@dimen/wl_spacing_double</dimen>
-    <dimen name="wl_action_menu_item_padding_ver">@dimen/wl_padding_ver_big</dimen>
-    <dimen name="wl_action_menu_item_padding_hoz">@dimen/wl_padding_hoz_big</dimen>
+    <dimen name="wl_action_menu_padding_hoz">16dp</dimen>
     <dimen name="wl_action_menu_item_margin_ver">2dp</dimen>
 
 </resources>
