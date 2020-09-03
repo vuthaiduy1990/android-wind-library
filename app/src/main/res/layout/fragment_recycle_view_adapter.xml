@@ -30,6 +30,6 @@
         android:layout_weight="1"
         android:text="@string/drawer_recycle_view"
         android:textColor="@color/wl_button_text_white"
-        android:textSize="@dimen/wl_button_text" />
+        android:textSize="@dimen/wl_text_small" />
 
 </LinearLayout>

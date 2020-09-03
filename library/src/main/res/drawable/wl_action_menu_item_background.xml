@@ -3,7 +3,7 @@
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
             <solid android:color="@color/com_item_background_hover" />
-            <corners android:radius="@dimen/wl_button_border_radius" />
+            <corners android:radius="@dimen/wl_background_radius" />
         </shape>
     </item>
 </selector>

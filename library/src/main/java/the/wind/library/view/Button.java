@@ -105,7 +105,7 @@ public class Button extends LinearLayout {
             mCustomAnimRes = btTypeArray.getResourceId(R.styleable.Button_customAnim, 0);
             float iconSize = btTypeArray.getDimension(
                     R.styleable.Button_iconSize,
-                    getResources().getDimension(R.dimen.wl_button_icon_size));
+                    getResources().getDimension(R.dimen.wl_icon_small));
             RelativeLayout.LayoutParams iconLayout = new RelativeLayout.LayoutParams((int) iconSize, (int) iconSize);
             _icon.setLayoutParams(iconLayout);
             _lottieIcon.setLayoutParams(iconLayout);
@@ -118,7 +118,7 @@ public class Button extends LinearLayout {
                     ContextCompat.getColor(context, type.getColor()));
             float textSize = btTypeArray.getDimension(
                     R.styleable.Button_textSize,
-                    getResources().getDimension(R.dimen.wl_button_text));
+                    getResources().getDimension(R.dimen.wl_text_small));
             LinearLayout.LayoutParams textLayout = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -130,7 +130,7 @@ public class Button extends LinearLayout {
             // bind space attribute
             float spacing = btTypeArray.getDimension(
                     R.styleable.Button_spacing,
-                    getResources().getDimension(R.dimen.wl_button_icon_spacing));
+                    getResources().getDimension(R.dimen.wl_spacing));
             _space.setLayoutParams(new LinearLayout.LayoutParams((int) spacing, 1));
             _space.setVisibility(isSpacing() ? VISIBLE : GONE);
 
@@ -143,10 +143,10 @@ public class Button extends LinearLayout {
         setGravity(Gravity.CENTER);
         // set default padding
         setDefaultPadding(
-                R.dimen.wl_button_padding_start,
-                R.dimen.wl_button_padding_top,
-                R.dimen.wl_button_padding_end,
-                R.dimen.wl_button_padding_bottom
+                R.dimen.wl_padding_hoz_big,
+                R.dimen.wl_padding_ver,
+                R.dimen.wl_padding_hoz_big,
+                R.dimen.wl_padding_ver
         );
     }
 

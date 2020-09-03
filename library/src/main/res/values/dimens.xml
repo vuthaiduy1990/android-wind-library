@@ -42,17 +42,6 @@
     <dimen name="wl_checkbox_default_square_size">35dp</dimen>
     <dimen name="wl_checkbox_default_checklist_size">27dp</dimen>
 
-    <!-- ||||||||||||||||||||||||||| Button |||||||||||||||||||||||||| -->
-    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <dimen name="wl_button_icon_size">@dimen/wl_icon_small</dimen>
-    <dimen name="wl_button_border_radius">@dimen/wl_background_radius</dimen>
-    <dimen name="wl_button_text">@dimen/wl_text_small</dimen>
-    <dimen name="wl_button_icon_spacing">@dimen/wl_spacing</dimen>
-    <dimen name="wl_button_padding_start">@dimen/wl_padding_hoz_big</dimen>
-    <dimen name="wl_button_padding_end">@dimen/wl_padding_hoz_big</dimen>
-    <dimen name="wl_button_padding_top">@dimen/wl_padding_ver</dimen>
-    <dimen name="wl_button_padding_bottom">@dimen/wl_padding_ver</dimen>
-
     <!-- |||||||||||||||||||||||| Wind Dialog |||||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     <dimen name="wl_dialog_border_radius">@dimen/wl_background_radius</dimen>

@@ -42,9 +42,6 @@
     <dimen name="wl_checkbox_default_square_size">39dp</dimen>
     <dimen name="wl_checkbox_default_checklist_size">31dp</dimen>
 
-    <!-- ||||||||||||||||||||||||||| Button |||||||||||||||||||||||||| -->
-    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-
     <!-- |||||||||||||||||||||||| Wind Dialog |||||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     <dimen name="wl_dialog_padding_start">18dp</dimen>
