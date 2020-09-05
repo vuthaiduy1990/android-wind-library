@@ -34,6 +34,10 @@
                 android:id="@+id/_navActionMenu"
                 android:icon="@drawable/ic_nav_action_menu"
                 android:title="@string/drawer_action_menu" />
+            <item
+                android:id="@+id/_navSearchBox"
+                android:icon="@drawable/wl_ic_search"
+                android:title="@string/drawer_search_box" />
         </menu>
     </item>
 

@@ -12,6 +12,7 @@
     <string name="drawer_dialog">Dialog Screen</string>
     <string name="drawer_recycle_view">Recycle View</string>
     <string name="drawer_action_menu">Action Menu</string>
+    <string name="drawer_search_box">SearchBox</string>
 
     <string name="action_menu_recycle_list_view">List View</string>
     <string name="action_menu_recycle_grid_view">Grid View</string>

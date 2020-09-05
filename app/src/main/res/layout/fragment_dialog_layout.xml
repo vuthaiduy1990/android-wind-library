@@ -283,4 +283,38 @@
         app:text="Center"
         app:type="PRIMARY" />
 
+    <!-- Extra header and footer view-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/wl_gray"
+        android:padding="3dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Extra header and footer view"
+            android:textColor="#fff"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <the.wind.library.view.Button
+        android:id="@+id/_extraHeaderView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        app:text="Extra Header"
+        app:type="WARNING" />
+
+    <the.wind.library.view.Button
+        android:id="@+id/_extraFooterView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        app:text="Extra Footer"
+        app:type="HIGHLIGHT" />
+
 </com.google.android.flexbox.FlexboxLayout>

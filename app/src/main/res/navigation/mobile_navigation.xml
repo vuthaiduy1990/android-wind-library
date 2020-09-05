@@ -47,4 +47,10 @@
         android:name="the.wind.library.sample.activity.fragment.ActionMenuPage"
         android:label="@string/drawer_action_menu"
         tools:layout="@layout/fragment_action_menu" />
+
+    <fragment
+        android:id="@+id/_navSearchBox"
+        android:name="the.wind.library.sample.activity.fragment.SearchBoxPage"
+        android:label="@string/drawer_search_box"
+        tools:layout="@layout/fragment_search_box_layout" />
 </navigation>
