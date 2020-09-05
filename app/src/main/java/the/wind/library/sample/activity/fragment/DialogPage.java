@@ -7,6 +7,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.Objects;
@@ -27,6 +29,7 @@ import the.wind.library.dialog.WindDialog;
 import the.wind.library.sample.R;
 import the.wind.library.utils.CWAndroidUtils;
 import the.wind.library.view.Button;
+import the.wind.library.view.SearchBox;
 
 public class DialogPage extends Fragment {
 
@@ -48,6 +51,8 @@ public class DialogPage extends Fragment {
     private WindDialog _fubukiDialog;
     private WindDialog _fullScreenDialog;
     private WindDialog _gravityDialog;
+    private WindDialog _extraHeaderDialog;
+    private WindDialog _extraFooterDialog;
 
     private boolean openNotificationFromSuccess = false;
 
@@ -84,6 +89,9 @@ public class DialogPage extends Fragment {
 
         // custom gravity
         customGravityDialog(view);
+
+        // extra header and footer view for fubuki layout
+        extraHeaderAndFooterView(view);
     }
 
     private void simpleDialog(View view) {
@@ -433,6 +441,55 @@ public class DialogPage extends Fragment {
                 _gravityDialog.setGravity(Gravity.CENTER);
                 _gravityDialog.setInOutAnimType(WindDialog.InOutAnimType.SWEET_ALERT);
                 _gravityDialog.show();
+            }
+        });
+    }
+
+    private void extraHeaderAndFooterView(View view) {
+        // extra header view
+        _extraHeaderDialog = createFubukiDialog(view);
+        SearchBox headerSearchBox = new SearchBox(view.getContext());
+        LinearLayout.LayoutParams headerSearchBoxLp = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        headerSearchBoxLp.leftMargin = view.getContext().getResources().getDimensionPixelSize(R.dimen.wl_spacing_double);
+        headerSearchBox.setLayoutParams(headerSearchBoxLp);
+        headerSearchBox.setInputBackground(R.drawable.wl_button_background_gray);
+        headerSearchBox.setCompactMode(true);
+        headerSearchBox.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
+        _extraHeaderDialog.addViewToHeader(headerSearchBox);
+        view.findViewById(R.id._extraHeaderView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _extraHeaderDialog.show();
+            }
+        });
+        headerSearchBox.setOnActionListener(new SearchBox.OnActionListener() {
+            @Override
+            public void onSearch(EditText view, String oldInput, String newInput) {
+
+            }
+
+            @Override
+            public void onToggle(boolean compactMode) {
+                _extraHeaderDialog.setTitleVisible(compactMode);
+            }
+        });
+
+        _extraFooterDialog = createFubukiDialog(view);
+        SearchBox footerSearchBox = new SearchBox(view.getContext());
+        LinearLayout.LayoutParams footerSearchBoxLp = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        footerSearchBoxLp.gravity = Gravity.START | Gravity.CENTER_VERTICAL;
+        footerSearchBox.setLayoutParams(footerSearchBoxLp);
+        footerSearchBox.setInputBackground(R.drawable.wl_button_background_gray);
+        footerSearchBox.setCompactMode(true);
+        _extraFooterDialog.addViewToFooter(footerSearchBox);
+        view.findViewById(R.id._extraFooterView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _extraFooterDialog.show();
             }
         });
     }
