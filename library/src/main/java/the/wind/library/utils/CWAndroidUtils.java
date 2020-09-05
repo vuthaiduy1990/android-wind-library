@@ -27,6 +27,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * Provide utility methods
@@ -218,9 +219,9 @@ public final class CWAndroidUtils {
      * @param seed    a key to make hash more unique
      * @return random unique hash string
      */
-    public static String randomHash(Context context, String seed) {
+    public static String randomHash(@Nullable Context context, String seed) {
         String hash = UUID.randomUUID().toString()
-                + CWAndroidUtils.getDeviceId(context)
+                + (context != null ? CWAndroidUtils.getDeviceId(context) : "")
                 + seed
                 + Math.random()
                 + new Date().getTime();
