@@ -114,9 +114,9 @@ public class SearchBox extends RelativeLayout {
 
             // set padding
             int top = getPaddingTop();
-            top = top > 0 ? top : getResources().getDimensionPixelOffset(R.dimen.wl_padding_ver);
+            top = top > 0 ? top : getResources().getDimensionPixelOffset(R.dimen.wl_search_box_padding_ver);
             int bottom = getPaddingBottom();
-            bottom = bottom > 0 ? bottom : getResources().getDimensionPixelOffset(R.dimen.wl_padding_ver);
+            bottom = bottom > 0 ? bottom : getResources().getDimensionPixelOffset(R.dimen.wl_search_box_padding_ver);
             setInputPadding(getPaddingLeft(), top, getPaddingRight(), bottom);
             setPadding(0, 0, 0, 0);
 

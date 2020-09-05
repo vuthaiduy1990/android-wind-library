@@ -1,320 +1,327 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="20dp"
-    android:orientation="horizontal"
-    app:alignContent="stretch"
-    app:alignItems="stretch"
-    app:flexWrap="wrap"
-    app:justifyContent="space_between">
+    android:layout_height="match_parent"
+    android:scrollbars="none">
 
-    <!-- Divider -->
-    <RelativeLayout
+    <com.google.android.flexbox.FlexboxLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@color/wl_gray"
-        android:padding="3dp">
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        app:alignContent="stretch"
+        app:alignItems="stretch"
+        app:flexWrap="wrap"
+        app:justifyContent="space_between">
 
-        <TextView
+        <!-- Divider -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/wl_gray"
+            android:padding="3dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Tatsumaki Layout"
+                android:textColor="#fff"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <the.wind.library.view.Button
+            android:id="@+id/_simpleDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Tatsumaki Layout"
-            android:textColor="#fff"
-            android:textSize="14sp" />
-    </RelativeLayout>
+            android:layout_margin="3dp"
+            app:text="Simple"
+            app:type="GRAY" />
 
-    <the.wind.library.view.Button
-        android:id="@+id/_simpleDialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Simple"
-        app:type="GRAY" />
-
-    <the.wind.library.view.Button
-        android:id="@+id/_infoDialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        app:text="Info"
-        app:type="INFO" />
-
-    <the.wind.library.view.Button
-        android:id="@+id/_simpleTaskDialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Confirm"
-        app:type="PRIMARY" />
-
-    <the.wind.library.view.Button
-        android:id="@+id/_dangerDialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Danger"
-        app:type="DANGER" />
-
-    <the.wind.library.view.Button
-        android:id="@+id/_warnDialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Warning"
-        app:type="WARNING" />
-
-
-    <the.wind.library.view.Button
-        android:id="@+id/_successDialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Success"
-        app:type="SUCCESS" />
-
-    <the.wind.library.view.Button
-        android:id="@+id/_notifyDialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Notification"
-        app:type="HIGHLIGHT" />
-
-    <the.wind.library.view.Button
-        android:id="@+id/_errorDialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Error"
-        app:type="DANGER" />
-
-    <the.wind.library.view.Button
-        android:id="@+id/_loadingDialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Loading"
-        app:type="NEUTRAL" />
-
-    <the.wind.library.view.Button
-        android:id="@+id/_progressDialog1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Progress1"
-        app:type="HIGHLIGHT" />
-
-    <the.wind.library.view.Button
-        android:id="@+id/_progressDialog2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Progress1"
-        app:type="NEUTRAL" />
-
-    <the.wind.library.view.Button
-        android:id="@+id/_waitingDialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Wait me"
-        app:type="PRIMARY" />
-
-    <!-- Divider -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@color/wl_gray"
-        android:padding="3dp">
-
-        <TextView
+        <the.wind.library.view.Button
+            android:id="@+id/_infoDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Fubuki Layout"
-            android:textColor="#fff"
-            android:textSize="14sp" />
-    </RelativeLayout>
+            android:layout_margin="5dp"
+            app:text="Info"
+            app:type="INFO" />
 
-    <the.wind.library.view.Button
-        android:id="@+id/_fubukiDialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Fubuki"
-        app:type="PRIMARY" />
-
-    <the.wind.library.view.Button
-        android:id="@+id/_fullScreenDialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Full Screen"
-        app:type="HIGHLIGHT" />
-
-    <!-- Divider -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@color/wl_gray"
-        android:padding="3dp">
-
-        <TextView
+        <the.wind.library.view.Button
+            android:id="@+id/_simpleTaskDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Custom Animation"
-            android:textColor="#fff"
-            android:textSize="14sp" />
-    </RelativeLayout>
+            android:layout_margin="3dp"
+            app:text="Confirm"
+            app:type="PRIMARY" />
 
-    <the.wind.library.view.Button
-        android:id="@+id/_animSweetAlert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Sweet Alert"
-        app:type="NEUTRAL" />
-
-    <the.wind.library.view.Button
-        android:id="@+id/_animFade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Fade"
-        app:type="SUCCESS" />
-
-    <the.wind.library.view.Button
-        android:id="@+id/_animLeftRight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Left 2 Right"
-        app:type="HIGHLIGHT" />
-
-    <the.wind.library.view.Button
-        android:id="@+id/_animRightLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Right 2 Left"
-        app:type="HIGHLIGHT" />
-
-    <the.wind.library.view.Button
-        android:id="@+id/_animTopBottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Top 2 Bottom"
-        app:type="INFO" />
-
-    <the.wind.library.view.Button
-        android:id="@+id/_animBottomTop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Bottom 2 Top"
-        app:type="INFO" />
-
-    <!-- Divider -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@color/wl_gray"
-        android:padding="3dp">
-
-        <TextView
+        <the.wind.library.view.Button
+            android:id="@+id/_dangerDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Custom Dialog Gravity"
-            android:textColor="#fff"
-            android:textSize="14sp" />
-    </RelativeLayout>
+            android:layout_margin="3dp"
+            app:text="Danger"
+            app:type="DANGER" />
 
-    <the.wind.library.view.Button
-        android:id="@+id/_gravityLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Left"
-        app:type="PRIMARY" />
-
-    <the.wind.library.view.Button
-        android:id="@+id/_gravityTop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Top"
-        app:type="PRIMARY" />
-
-    <the.wind.library.view.Button
-        android:id="@+id/_gravityRight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Right"
-        app:type="PRIMARY" />
-
-    <the.wind.library.view.Button
-        android:id="@+id/_gravityBottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Bottom"
-        app:type="PRIMARY" />
-
-    <the.wind.library.view.Button
-        android:id="@+id/_gravityCenter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Center"
-        app:type="PRIMARY" />
-
-    <!-- Extra header and footer view-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@color/wl_gray"
-        android:padding="3dp">
-
-        <TextView
+        <the.wind.library.view.Button
+            android:id="@+id/_warnDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Extra header and footer view"
-            android:textColor="#fff"
-            android:textSize="14sp" />
-    </RelativeLayout>
+            android:layout_margin="3dp"
+            app:text="Warning"
+            app:type="WARNING" />
 
-    <the.wind.library.view.Button
-        android:id="@+id/_extraHeaderView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Extra Header"
-        app:type="WARNING" />
 
-    <the.wind.library.view.Button
-        android:id="@+id/_extraFooterView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        app:text="Extra Footer"
-        app:type="HIGHLIGHT" />
+        <the.wind.library.view.Button
+            android:id="@+id/_successDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Success"
+            app:type="SUCCESS" />
 
-</com.google.android.flexbox.FlexboxLayout>
+        <the.wind.library.view.Button
+            android:id="@+id/_notifyDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Notification"
+            app:type="HIGHLIGHT" />
+
+        <the.wind.library.view.Button
+            android:id="@+id/_errorDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Error"
+            app:type="DANGER" />
+
+        <the.wind.library.view.Button
+            android:id="@+id/_loadingDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Loading"
+            app:type="NEUTRAL" />
+
+        <the.wind.library.view.Button
+            android:id="@+id/_progressDialog1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Progress1"
+            app:type="HIGHLIGHT" />
+
+        <the.wind.library.view.Button
+            android:id="@+id/_progressDialog2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Progress1"
+            app:type="NEUTRAL" />
+
+        <the.wind.library.view.Button
+            android:id="@+id/_waitingDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Wait me"
+            app:type="PRIMARY" />
+
+        <!-- Divider -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/wl_gray"
+            android:padding="3dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Fubuki Layout"
+                android:textColor="#fff"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <the.wind.library.view.Button
+            android:id="@+id/_fubukiDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Fubuki"
+            app:type="PRIMARY" />
+
+        <the.wind.library.view.Button
+            android:id="@+id/_fullScreenDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Full Screen"
+            app:type="HIGHLIGHT" />
+
+        <!-- Divider -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/wl_gray"
+            android:padding="3dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Custom Animation"
+                android:textColor="#fff"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <the.wind.library.view.Button
+            android:id="@+id/_animSweetAlert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Sweet Alert"
+            app:type="NEUTRAL" />
+
+        <the.wind.library.view.Button
+            android:id="@+id/_animFade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Fade"
+            app:type="SUCCESS" />
+
+        <the.wind.library.view.Button
+            android:id="@+id/_animLeftRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Left 2 Right"
+            app:type="HIGHLIGHT" />
+
+        <the.wind.library.view.Button
+            android:id="@+id/_animRightLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Right 2 Left"
+            app:type="HIGHLIGHT" />
+
+        <the.wind.library.view.Button
+            android:id="@+id/_animTopBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Top 2 Bottom"
+            app:type="INFO" />
+
+        <the.wind.library.view.Button
+            android:id="@+id/_animBottomTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Bottom 2 Top"
+            app:type="INFO" />
+
+        <!-- Divider -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/wl_gray"
+            android:padding="3dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Custom Dialog Gravity"
+                android:textColor="#fff"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <the.wind.library.view.Button
+            android:id="@+id/_gravityLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Left"
+            app:type="PRIMARY" />
+
+        <the.wind.library.view.Button
+            android:id="@+id/_gravityTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Top"
+            app:type="PRIMARY" />
+
+        <the.wind.library.view.Button
+            android:id="@+id/_gravityRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Right"
+            app:type="PRIMARY" />
+
+        <the.wind.library.view.Button
+            android:id="@+id/_gravityBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Bottom"
+            app:type="PRIMARY" />
+
+        <the.wind.library.view.Button
+            android:id="@+id/_gravityCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Center"
+            app:type="PRIMARY" />
+
+        <!-- Extra header and footer view-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/wl_gray"
+            android:padding="3dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Extra header and footer view"
+                android:textColor="#fff"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <the.wind.library.view.Button
+            android:id="@+id/_extraHeaderView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Extra Header"
+            app:type="WARNING" />
+
+        <the.wind.library.view.Button
+            android:id="@+id/_extraFooterView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Extra Footer"
+            app:type="HIGHLIGHT" />
+
+    </com.google.android.flexbox.FlexboxLayout>
+
+</ScrollView>

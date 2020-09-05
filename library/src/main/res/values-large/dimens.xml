@@ -2,26 +2,26 @@
 <resources>
     <!-- |||||||||||||||||||||||||| Common ||||||||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <!-- Padding -->
-    <dimen name="wl_padding_hoz_small">8dp</dimen>
-    <dimen name="wl_padding_hoz">10dp</dimen>
-    <dimen name="wl_padding_hoz_big">12dp</dimen>
-    <dimen name="wl_padding_ver_small">6dp</dimen>
-    <dimen name="wl_padding_ver">8dp</dimen>
-    <dimen name="wl_padding_ver_big">10dp</dimen>
     <!-- Spacing -->
-    <dimen name="wl_spacing">6dp</dimen>
-    <dimen name="wl_spacing_double">12dp</dimen>
-    <dimen name="wl_spacing_neg">-6dp</dimen>
-    <dimen name="wl_spacing_neg_double">-12dp</dimen>
+    <dimen name="wl_spacing_level_0">4dp</dimen>
+    <dimen name="wl_spacing_level_1">6dp</dimen>
+    <dimen name="wl_spacing_level_2">10dp</dimen>
+    <dimen name="wl_spacing_level_3">14dp</dimen>
+    <dimen name="wl_spacing_neg_level_0">-4dp</dimen>
+    <dimen name="wl_spacing_neg_level_1">-6dp</dimen>
+    <dimen name="wl_spacing_neg_level_2">-10dp</dimen>
+    <dimen name="wl_spacing_neg_level_3">-14dp</dimen>
     <!-- Text -->
+    <dimen name="wl_text_tiny">14sp</dimen>
     <dimen name="wl_text_small">16sp</dimen>
     <dimen name="wl_text">18sp</dimen>
     <dimen name="wl_text_big">20sp</dimen>
+    <!-- Title -->
     <dimen name="wl_title_small">20sp</dimen>
     <dimen name="wl_title">22sp</dimen>
     <dimen name="wl_title_big">24sp</dimen>
     <!-- Icon -->
+    <dimen name="wl_icon_tiny">18dp</dimen>
     <dimen name="wl_icon_small">20dp</dimen>
     <dimen name="wl_icon">22dp</dimen>
     <dimen name="wl_icon_big">24dp</dimen>
@@ -60,10 +60,10 @@
     <!-- ||||||||||||||||||||| Wind Action Menu |||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     <dimen name="wl_action_menu_padding_hoz">20dp</dimen>
-    <dimen name="wl_action_menu_item_margin_ver">4dp</dimen>
 
     <!-- ||||||||||||||||||||||| Wind Search Box ||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     <dimen name="wl_search_box_padding_hoz">36dp</dimen>
+    <dimen name="wl_search_box_padding_ver">8dp</dimen>
 
 </resources>

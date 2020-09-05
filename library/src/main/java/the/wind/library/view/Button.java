@@ -130,7 +130,7 @@ public class Button extends LinearLayout {
             // bind space attribute
             float spacing = btTypeArray.getDimension(
                     R.styleable.Button_spacing,
-                    getResources().getDimension(R.dimen.wl_spacing));
+                    getResources().getDimension(R.dimen.wl_spacing_level_1));
             _space.setLayoutParams(new LinearLayout.LayoutParams((int) spacing, 1));
             _space.setVisibility(isSpacing() ? VISIBLE : GONE);
 
@@ -143,10 +143,10 @@ public class Button extends LinearLayout {
         setGravity(Gravity.CENTER);
         // set default padding
         setDefaultPadding(
-                R.dimen.wl_padding_hoz_big,
-                R.dimen.wl_padding_ver,
-                R.dimen.wl_padding_hoz_big,
-                R.dimen.wl_padding_ver
+                R.dimen.wl_spacing_level_3,
+                R.dimen.wl_spacing_level_2,
+                R.dimen.wl_spacing_level_3,
+                R.dimen.wl_spacing_level_2
         );
     }
 

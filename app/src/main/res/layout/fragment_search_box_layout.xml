@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:orientation="vertical"
-        android:paddingStart="@dimen/wl_padding_hoz"
-        android:paddingEnd="@dimen/wl_padding_hoz">
+        android:paddingStart="@dimen/wl_spacing_level_2"
+        android:paddingEnd="@dimen/wl_spacing_level_2">
 
         <!--  Compact Mode -->
         <the.wind.library.view.SearchBox

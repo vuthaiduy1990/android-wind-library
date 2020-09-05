@@ -6,10 +6,10 @@
     android:background="@drawable/side_nav_bar"
     android:gravity="bottom"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/wl_padding_hoz"
-    android:paddingTop="@dimen/wl_padding_ver_big"
-    android:paddingRight="@dimen/wl_padding_hoz"
-    android:paddingBottom="@dimen/wl_padding_ver_big"
+    android:paddingLeft="@dimen/wl_spacing_level_2"
+    android:paddingTop="@dimen/wl_spacing_level_2"
+    android:paddingRight="@dimen/wl_spacing_level_2"
+    android:paddingBottom="@dimen/wl_spacing_level_2"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
@@ -17,13 +17,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/nav_header_desc"
-        android:paddingTop="@dimen/wl_spacing_double"
+        android:paddingTop="@dimen/wl_spacing_level_2"
         app:srcCompat="@mipmap/ic_launcher_round" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/wl_spacing_double"
+        android:paddingTop="@dimen/wl_spacing_level_2"
         android:text="@string/nav_header_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 

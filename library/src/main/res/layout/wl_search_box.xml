@@ -20,7 +20,7 @@
     <!-- spacing -->
     <RelativeLayout
         android:id="@+id/_closeIconSpace"
-        android:layout_width="@dimen/wl_spacing_double"
+        android:layout_width="@dimen/wl_spacing_level_2"
         android:layout_height="1dp" />
 
     <!-- Search Box -->
@@ -54,7 +54,7 @@
             android:layout_width="@dimen/wl_icon_small"
             android:layout_height="@dimen/wl_icon_small"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/wl_padding_hoz_small"
+            android:layout_marginStart="@dimen/wl_spacing_level_2"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             android:src="@drawable/wl_ic_search"
@@ -66,7 +66,7 @@
             android:layout_height="@dimen/wl_icon_small"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/wl_padding_hoz_small"
+            android:layout_marginEnd="@dimen/wl_spacing_level_2"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             android:src="@drawable/wl_ic_remove"

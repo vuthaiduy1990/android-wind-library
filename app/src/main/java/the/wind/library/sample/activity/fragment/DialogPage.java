@@ -452,7 +452,7 @@ public class DialogPage extends Fragment {
         LinearLayout.LayoutParams headerSearchBoxLp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        headerSearchBoxLp.leftMargin = view.getContext().getResources().getDimensionPixelSize(R.dimen.wl_spacing_double);
+        headerSearchBoxLp.leftMargin = view.getContext().getResources().getDimensionPixelSize(R.dimen.wl_spacing_level_2);
         headerSearchBox.setLayoutParams(headerSearchBoxLp);
         headerSearchBox.setInputBackground(R.drawable.wl_button_background_gray);
         headerSearchBox.setCompactMode(true);

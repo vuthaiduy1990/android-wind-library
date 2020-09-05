@@ -47,7 +47,7 @@
                 android:id="@+id/_tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/wl_spacing_double"
+                android:layout_marginStart="@dimen/wl_spacing_level_2"
                 android:gravity="center"
                 android:textColor="@color/wl_dialog_title"
                 android:textSize="@dimen/wl_title_big" />
@@ -60,7 +60,7 @@
             android:id="@+id/_bodyHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/wl_spacing_double"
+            android:layout_marginTop="@dimen/wl_spacing_level_2"
             android:layout_weight="1">
 
         </RelativeLayout>
