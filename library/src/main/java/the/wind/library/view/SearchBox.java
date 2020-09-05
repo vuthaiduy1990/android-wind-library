@@ -182,7 +182,7 @@ public class SearchBox extends RelativeLayout {
         _icCloseSearch.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                setCompactMode(true);
+                closeSearch();
             }
         });
 
@@ -315,6 +315,13 @@ public class SearchBox extends RelativeLayout {
 
     /* ---------------------- METHOD ------------------------- */
 
+    /**
+     * Close search mode
+     */
+    public void closeSearch() {
+        _ipSearch.setText(""); // this will notify a text change
+        setCompactMode(true);
+    }
 
     /**
      * Handle searching
