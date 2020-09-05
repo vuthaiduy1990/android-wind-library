@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical|end"
+    android:orientation="horizontal">
+
+    <!-- Back Button -->
+    <ImageView
+        android:id="@+id/_icCloseSearch"
+        android:layout_width="@dimen/wl_icon"
+        android:layout_height="@dimen/wl_icon"
+        android:layout_weight="0"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/wl_ic_search_close"
+        tools:ignore="ContentDescription" />
+
+    <!-- spacing -->
+    <RelativeLayout
+        android:id="@+id/_closeIconSpace"
+        android:layout_width="@dimen/wl_spacing_double"
+        android:layout_height="1dp" />
+
+    <!-- Search Box -->
+    <RelativeLayout
+        android:id="@+id/_inputBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <!--Text input-->
+        <EditText
+            android:id="@+id/_ipSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@color/transparent"
+            android:gravity="center_vertical"
+            android:imeOptions="actionSearch"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:maxLines="1"
+            android:minLines="1"
+            android:paddingStart="@dimen/wl_search_box_padding_hoz"
+            android:paddingEnd="@dimen/wl_search_box_padding_hoz"
+            android:singleLine="true"
+            android:textColor="@color/wl_text"
+            tools:ignore="LabelFor" />
+
+        <ImageView
+            android:id="@+id/_icSearchBtn"
+            android:layout_width="@dimen/wl_icon_small"
+            android:layout_height="@dimen/wl_icon_small"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/wl_padding_hoz_small"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/wl_ic_search"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/_icClearSearch"
+            android:layout_width="@dimen/wl_icon_small"
+            android:layout_height="@dimen/wl_icon_small"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/wl_padding_hoz_small"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/wl_ic_remove"
+            android:visibility="gone"
+            tools:ignore="ContentDescription" />
+
+    </RelativeLayout>
+
+    <!-- Search Icon -->
+    <ImageView
+        android:id="@+id/_icCompactSearch"
+        android:layout_width="@dimen/wl_icon_big"
+        android:layout_height="@dimen/wl_icon_big"
+        android:layout_weight="0"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/wl_ic_search"
+        tools:ignore="ContentDescription" />
+
+</LinearLayout>

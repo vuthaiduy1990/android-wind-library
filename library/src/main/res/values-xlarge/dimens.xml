@@ -61,4 +61,9 @@
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     <dimen name="wl_action_menu_padding_hoz">24dp</dimen>
     <dimen name="wl_action_menu_item_margin_ver">4dp</dimen>
+
+    <!-- ||||||||||||||||||||||| Wind Search Box ||||||||||||||||||||| -->
+    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <dimen name="wl_search_box_padding_hoz">42dp</dimen>
+
 </resources>

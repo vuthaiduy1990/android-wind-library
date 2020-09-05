@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Common attributes -->
+    <attr name="textSize" format="dimension" />
+
     <!-- Checkbox's attributes -->
     <!-- Should have the same name with View class so that the Android hint can work in layout resource file -->
     <declare-styleable name="Checkbox">
@@ -58,7 +61,14 @@
         </attr>
         <attr name="text" format="string" />
         <attr name="textColor" format="color" />
-        <attr name="textSize" format="dimension" />
+        <attr name="textSize" />
         <attr name="spacing" format="dimension" />
+    </declare-styleable>
+
+    <!--  SearchBox attributes-->
+    <declare-styleable name="SearchBox">
+        <attr name="textSize" />
+        <attr name="closeVisible" format="boolean" />
+        <attr name="compactMode" format="boolean" />
     </declare-styleable>
 </resources>
