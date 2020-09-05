@@ -282,6 +282,15 @@ public class SearchBox extends RelativeLayout {
     }
 
     /**
+     * Check if search box is in compact mode or not
+     *
+     * @return true if in compact mode (display search icon oly)
+     */
+    public boolean isCompactMode() {
+        return _icCompactSearch.getVisibility() == VISIBLE;
+    }
+
+    /**
      * @return previous search input
      */
     public String getOldSearchInput() {
