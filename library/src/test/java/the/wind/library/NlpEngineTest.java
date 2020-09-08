@@ -137,7 +137,27 @@ public final class NlpEngineTest {
             Assert.assertEquals("color the wind", engine.getCookedText(engine.targets().get(0)));
             Assert.assertEquals(1, engine.targets().size());
         }
+    }
 
+    @Test
+    public void remove() {
+        CWNLPEngine.Options opts = new CWNLPEngine.Options();
+        opts.cache = 3;
+
+        CWNLPEngine<NLPString> engine = new CWNLPEngine<>(null, opts);
+        NLPString target = new NLPString("color the wind");
+        engine.load(target);
+        engine.build();
+        List<NLPMatchResult<NLPString>> results = doMatching(engine, "color");
+        Assert.assertEquals(1, results.size());
+        Assert.assertEquals(1, engine.targets().size());
+        Assert.assertEquals(1, Objects.requireNonNull(engine.getCaches().get("color")).size());
+
+        // remove target
+        engine.remove(target);
+        Assert.assertEquals(0, engine.targets().size());
+        Assert.assertEquals(0, engine.getCaches().size());
+        Assert.assertNull(engine.getCookedText(target));
     }
 
     @Test

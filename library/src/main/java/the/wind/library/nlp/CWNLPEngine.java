@@ -126,6 +126,9 @@ public final class CWNLPEngine<T extends INLPText> {
      */
     public void remove(T target) {
         mTargetList.remove(target);
+        mTargetQueue.remove(target);
+        mTextMap.remove(target.nlpTextId(mContext));
+        clearCache();
     }
 
     /**
@@ -286,7 +289,7 @@ public final class CWNLPEngine<T extends INLPText> {
      * @param target NLP text which should be loaded before
      * @return engine
      */
-    public CWNLPEngine<T> rebuild(T target) {
+    public CWNLPEngine<T> rebuild(@NonNull T target) {
         // clear cache to make sure doMatching will always perform on updated data
         clearCache();
 
@@ -455,7 +458,7 @@ public final class CWNLPEngine<T extends INLPText> {
      * @param callback  callback function
      * @see CWNLPEngine#doMatching(CharSequence, List, CWCallback)
      */
-    public void doMatching(CharSequence searchKey, CWCallback<NLPMatchResult<T>> callback) {
+    public void doMatching(@NonNull CharSequence searchKey, CWCallback<NLPMatchResult<T>> callback) {
         callback.onBegin();
         String _search = preProcess(new NLPString(searchKey));
         if (useCache()) {
