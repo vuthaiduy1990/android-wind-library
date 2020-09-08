@@ -99,7 +99,7 @@ public final class NlpEngineTest {
             field.setAccessible(true);
             field.set(target, "Tô màu cho gió");
             engine.build();
-            Assert.assertNull(engine.getCookedText(engine.targets().get(0)));
+            Assert.assertEquals("color the wind", engine.getCookedText(engine.targets().get(0)));
 
             // rebuild will update both pre-loaded and new-loaded text
             engine.load(new NLPString("風を彩る。"));
@@ -110,7 +110,7 @@ public final class NlpEngineTest {
         }
 
         // testcase
-        // rebuild specific text
+        // rebuild specific text which has been processed before
         {
             engine = new CWNLPEngine<>(null, opts);
             NLPString target = new NLPString("color the wind");
@@ -123,8 +123,21 @@ public final class NlpEngineTest {
             field.setAccessible(true);
             field.set(target, "風を彩る。");
             engine.rebuild(target);
+            Assert.assertEquals(1, engine.targets().size());
             Assert.assertEquals("風を彩る。", engine.getCookedText(engine.targets().get(0)));
         }
+
+        // Testcase
+        // Rebuild new target
+        {
+            engine = new CWNLPEngine<>(null, opts);
+            NLPString target = new NLPString("color the wind");
+            engine.rebuild(target);
+            engine.build();
+            Assert.assertEquals("color the wind", engine.getCookedText(engine.targets().get(0)));
+            Assert.assertEquals(1, engine.targets().size());
+        }
+
     }
 
     @Test

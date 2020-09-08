@@ -21,7 +21,7 @@ public class NLPString implements INLPText {
 
     @Override
     public String nlpTextId(@Nullable Context context) {
-        return this.value + hash;
+        return hash;
     }
 
     @Override

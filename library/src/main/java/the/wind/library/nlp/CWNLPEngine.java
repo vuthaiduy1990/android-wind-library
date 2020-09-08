@@ -289,8 +289,13 @@ public final class CWNLPEngine<T extends INLPText> {
     public CWNLPEngine<T> rebuild(T target) {
         // clear cache to make sure doMatching will always perform on updated data
         clearCache();
+
         // pre-process only this given target
-        mTextMap.put(target.nlpTextId(mContext), preProcess(target));
+        String targetId = target.nlpTextId(mContext);
+        if (!mTextMap.containsKey(targetId)) /* new target */ {
+            mTargetList.add(target);
+        }
+        mTextMap.put(targetId, preProcess(target));
         return this;
     }
 
