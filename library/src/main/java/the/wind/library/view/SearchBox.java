@@ -319,8 +319,8 @@ public class SearchBox extends RelativeLayout {
      * Close search mode
      */
     public void closeSearch() {
-        _ipSearch.setText(""); // this will notify a text change
         setCompactMode(true);
+        _ipSearch.setText(""); // this will notify a text change
     }
 
     /**
