@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import the.wind.library.CWBundle;
 import the.wind.library.CWHandler;
 import the.wind.library.R;
 
@@ -47,6 +48,9 @@ public class WindRecycleView extends RecyclerView {
 
     // Listener
     private OnLoadMoreListener mLoadMoreListener;
+
+    // bundle data
+    private CWBundle mBundle = new CWBundle();
 
     public WindRecycleView(@NonNull Context context) {
         this(context, null);
@@ -146,6 +150,13 @@ public class WindRecycleView extends RecyclerView {
     /* ---------------------- ABSTRACT ----------------------- */
 
     /* ---------------------- GET-SET ------------------------ */
+
+    /**
+     * @return bundle data
+     */
+    public CWBundle bundle() {
+        return mBundle;
+    }
 
     /**
      * Set threshold (number of item before to end)
@@ -275,6 +286,9 @@ public class WindRecycleView extends RecyclerView {
         private OnItemTouchDownListener<T> mItemTouchDownListener;
         private OnItemTouchUpListener<T> mItemTouchUpListener;
 
+        // bundle data
+        private CWBundle mBundle = new CWBundle();
+
         /**
          * Constructor
          *
@@ -344,6 +358,13 @@ public class WindRecycleView extends RecyclerView {
         }
 
         /* ---------------------- GET-SET ------------------------ */
+
+        /**
+         * @return bundle data
+         */
+        public CWBundle bundle() {
+            return mBundle;
+        }
 
         /**
          * @return dataset

@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RawRes;
 import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
+import the.wind.library.CWBundle;
 import the.wind.library.R;
 
 /**
@@ -60,6 +61,9 @@ public class Button extends LinearLayout {
     private InlineIcon mInlineIcon;
     private int mCustomIconRes;
     private int mCustomAnimRes;
+
+    // bundle data
+    private CWBundle mBundle = new CWBundle();
 
     public Button(Context context) {
         this(context, null);
@@ -157,6 +161,13 @@ public class Button extends LinearLayout {
     /* ---------------------- ABSTRACT ----------------------- */
 
     /* ---------------------- GET-SET ------------------------ */
+
+    /**
+     * @return bundle data
+     */
+    public CWBundle bundle() {
+        return mBundle;
+    }
 
     /**
      * Get icon

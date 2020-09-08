@@ -20,6 +20,7 @@ import android.widget.TextView;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import the.wind.library.CWBundle;
 import the.wind.library.R;
 import the.wind.library.utils.CWAndroidUtils;
 
@@ -36,6 +37,7 @@ public class SearchBox extends RelativeLayout {
     private boolean mCloseVisible = true;
     private String mOldSearchInput = "";
     private String mNewSearchInput = "";
+    private CWBundle mBundle = new CWBundle();
 
     // listener
     private OnActionListener mActionListener;
@@ -195,6 +197,13 @@ public class SearchBox extends RelativeLayout {
     /* ---------------------- ABSTRACT ----------------------- */
 
     /* ---------------------- GET-SET ------------------------ */
+
+    /**
+     * @return bundle data
+     */
+    public CWBundle bundle() {
+        return mBundle;
+    }
 
     /**
      * Get input text view

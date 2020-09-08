@@ -14,6 +14,7 @@ import com.airbnb.lottie.value.LottieValueCallback;
 
 import androidx.annotation.ColorInt;
 import androidx.core.content.ContextCompat;
+import the.wind.library.CWBundle;
 import the.wind.library.R;
 import the.wind.library.utils.CWStringUtils;
 
@@ -38,6 +39,9 @@ public class Checkbox extends LottieAnimationView {
 
     // animation shape color
     private int mAnimColor;
+
+    // bundle data
+    private CWBundle mBundle = new CWBundle();
 
     // listener
     private OnCheckedListener mCheckedListener;
@@ -114,6 +118,13 @@ public class Checkbox extends LottieAnimationView {
     /* ---------------------- ABSTRACT ----------------------- */
 
     /* ---------------------- GET-SET ------------------------ */
+
+    /**
+     * @return bundle data
+     */
+    public CWBundle bundle() {
+        return mBundle;
+    }
 
     /**
      * Check if the checkbox is checked or not

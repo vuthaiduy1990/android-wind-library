@@ -32,6 +32,16 @@ public final class CWBundle implements Serializable {
     }
 
     /**
+     * Get tagged object by class key
+     *
+     * @param clazz class
+     * @return tagged object
+     */
+    public Object get(Class<?> clazz) {
+        return mTags.get(clazz.getName());
+    }
+
+    /**
      * Add tagged object
      *
      * @param key       tagged key
@@ -39,6 +49,16 @@ public final class CWBundle implements Serializable {
      */
     public void set(String key, Object taggedObj) {
         mTags.put(key, taggedObj);
+    }
+
+    /**
+     * Add tagged object
+     *
+     * @param clazz     class key
+     * @param taggedObj tagged object
+     */
+    public void set(Class<?> clazz, Object taggedObj) {
+        mTags.put(clazz.getName(), taggedObj);
     }
 
     /**
