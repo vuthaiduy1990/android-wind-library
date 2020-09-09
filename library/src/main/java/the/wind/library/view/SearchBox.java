@@ -26,6 +26,8 @@ import the.wind.library.utils.CWAndroidUtils;
 
 public class SearchBox extends RelativeLayout {
 
+    private static final long LAZY_TIME = 600;
+
     // views
     private final ImageView _icCloseSearch, _icCompactSearch;
     private final ViewGroup _inputBox;
@@ -38,9 +40,22 @@ public class SearchBox extends RelativeLayout {
     private String mOldSearchInput = "";
     private String mNewSearchInput = "";
     private CWBundle mBundle = new CWBundle();
+    private long mLazyTime = LAZY_TIME;
+    private boolean isProcessed = true;
 
     // listener
     private OnActionListener mActionListener;
+
+    // on lazy input
+    private Runnable OnLazyInput = new Runnable() {
+        @Override
+        public void run() {
+            if (!isProcessed) /* has not processed new input */ {
+                isProcessed = true;
+                handleSearch(_ipSearch.getText().toString());
+            }
+        }
+    };
 
     /**
      * Constructor
@@ -146,8 +161,10 @@ public class SearchBox extends RelativeLayout {
                 } else {
                     _icClearSearch.setVisibility(View.GONE);
                 }
+
                 // trigger search event
-                handleSearch(s.toString());
+                isProcessed = false;
+                _icCompactSearch.postDelayed(OnLazyInput, mLazyTime);
             }
         });
         _ipSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -311,6 +328,17 @@ public class SearchBox extends RelativeLayout {
      */
     public String getNewSearchInput() {
         return mNewSearchInput;
+    }
+
+    /**
+     * Set lazy time.
+     * If user input the series of words into search box quickly, it will not trigger event for each word.
+     * but trigger event for the final string when reaching the lazy time
+     *
+     * @param milliseconds unit is milliseconds
+     */
+    public void setLazyTime(long milliseconds) {
+        mLazyTime = milliseconds;
     }
 
     /**
