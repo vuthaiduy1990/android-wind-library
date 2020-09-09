@@ -382,6 +382,50 @@ public final class NlpEngineTest {
     }
 
     @Test
+    public void greedyMatching() {
+        CWNLPEngine<NLPString> engine;
+
+        // non greedy matching
+        {
+            CWNLPEngine.Options opts = new CWNLPEngine.Options();
+            opts.greedy = false;
+            engine = new CWNLPEngine<>(null, opts);
+            engine.load(new NLPString("color the wind with light color"));
+            engine.build();
+            List<NLPMatchResult<NLPString>> result = doMatching(engine, "color");
+            NLPMatchResult<NLPString> r1 = result.get(0);
+            Assert.assertTrue(r1.isFullMatched());
+            Assert.assertEquals(1, r1.keys.size());
+            Assert.assertEquals(2, r1.indexes.size());
+            Assert.assertEquals("color", r1.keys.get(0));
+            Assert.assertEquals(0, r1.indexes.get(0).intValue());
+            Assert.assertEquals(5, r1.indexes.get(1).intValue());
+        }
+
+        // greedy matching
+        // non greedy matching
+        {
+            CWNLPEngine.Options opts = new CWNLPEngine.Options();
+            opts.greedy = true;
+            engine = new CWNLPEngine<>(null, opts);
+            engine.load(new NLPString("color the wind with light color"));
+            engine.build();
+            List<NLPMatchResult<NLPString>> result = doMatching(engine, "color");
+            NLPMatchResult<NLPString> r1 = result.get(0);
+            Assert.assertTrue(r1.isFullMatched());
+            Assert.assertEquals(2, r1.keys.size());
+            Assert.assertEquals(4, r1.indexes.size());
+            Assert.assertEquals("color", r1.keys.get(0));
+            Assert.assertEquals("color", r1.keys.get(1));
+            Assert.assertEquals(0, r1.indexes.get(0).intValue());
+            Assert.assertEquals(5, r1.indexes.get(1).intValue());
+            Assert.assertEquals(26, r1.indexes.get(2).intValue());
+            Assert.assertEquals(31, r1.indexes.get(3).intValue());
+        }
+    }
+
+
+    @Test
     public void cache() {
         CWNLPEngine.Options opts = new CWNLPEngine.Options();
         opts.cache = 3;

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -12,6 +13,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -349,17 +351,20 @@ public final class CWNLPEngine<T extends INLPText> {
     @Nullable
     private NLPMatchResult<T> doMatching(Map<String, Pattern> searchPat, T target) {
         NLPMatchResult<T> result = new NLPMatchResult<>(target);
+        Set<String> matchingKeys = new HashSet<>();
         for (Map.Entry<String, Pattern> entry : searchPat.entrySet()) {
             Matcher m = entry.getValue().matcher(Objects.requireNonNull(mTextMap.get(target.nlpTextId(mContext))));
-            if (m.find()) {
+            while (m.find()) {
                 result.indexes.add(m.start());
                 result.indexes.add(m.end());
                 result.keys.add(entry.getKey());
+                matchingKeys.add(entry.getKey());
+                if (!mOptions.greedy) break; // not greedy search
             }
         }
-        if (result.keys.size() == searchPat.size()) {
+        if (matchingKeys.size() == searchPat.size()) {
             result.status = NLPMatchResult.Status.FULL_MATCH;
-        } else if (result.keys.size() > 0) {
+        } else if (matchingKeys.size() > 0) {
             result.status = NLPMatchResult.Status.PARTIAL_MATCH;
         } else {
             if (mOptions.matchOnly) {
@@ -531,6 +536,10 @@ public final class CWNLPEngine<T extends INLPText> {
         // Whether include result which is not matched or not
         // set false if you want to include the not-match item in the returned result
         public boolean matchOnly = true;
+
+        // greedy search
+        // find to the end of text
+        public boolean greedy = false;
 
         // Cache result.
         // 0 -> no caching
