@@ -196,6 +196,13 @@ public class SearchBox extends RelativeLayout {
             @Override
             public void onClick(View v) {
                 setCompactMode(false);
+                _ipSearch.requestFocus();
+                _ipSearch.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        CWAndroidUtils.showSoftKeyboard(_ipSearch);
+                    }
+                });
             }
         });
         _icCloseSearch.setOnClickListener(new OnClickListener() {
