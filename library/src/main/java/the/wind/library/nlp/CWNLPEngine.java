@@ -471,12 +471,6 @@ public final class CWNLPEngine<T extends INLPText> {
                 }
                 callback.onEnd();
                 return;
-            } else {
-                mCaches.put(_search, new LinkedList<NLPMatchResult<T>>());
-                mCacheSearchKeys.add(_search);
-                if (mCacheSearchKeys.size() > mOptions.cache) /* exceed the cache limit */ {
-                    mCaches.remove(mCacheSearchKeys.poll()); // remove the oldest one
-                }
             }
 
             // Check if the search condition wraps the previous search condition or not.
@@ -491,8 +485,19 @@ public final class CWNLPEngine<T extends INLPText> {
                     preSearchKey = key;
                 }
             }
-            if (preSearchKey != null) {
-                doMatchingOnPreResult(_search, mCaches.get(preSearchKey), callback);
+            List<NLPMatchResult<T>> preResults = preSearchKey != null ? mCaches.get(preSearchKey) : null;
+
+            // Remove oldest cache
+            if (mCacheSearchKeys.size() + 1 > mOptions.cache) /* exceed the cache limit */ {
+                mCaches.remove(mCacheSearchKeys.poll()); // remove the oldest one
+            }
+            // then add new one
+            mCacheSearchKeys.add(_search);
+            mCaches.put(_search, new LinkedList<NLPMatchResult<T>>());
+
+            // do searching on previous result
+            if (preResults != null) {
+                doMatchingOnPreResult(_search, preResults, callback);
                 callback.onEnd();
                 return;
             }
