@@ -26,7 +26,7 @@ import the.wind.library.utils.CWAndroidUtils;
 
 public class SearchBox extends RelativeLayout {
 
-    private static final long LAZY_TIME = 600;
+    private static final long LAZY_TIME = 200;
 
     // views
     private final ImageView _icCloseSearch, _icCompactSearch;
@@ -41,7 +41,7 @@ public class SearchBox extends RelativeLayout {
     private String mNewSearchInput = "";
     private CWBundle mBundle = new CWBundle();
     private long mLazyTime = LAZY_TIME;
-    private boolean isProcessed = true;
+    private long mLastInputTime;
 
     // listener
     private OnActionListener mActionListener;
@@ -50,8 +50,8 @@ public class SearchBox extends RelativeLayout {
     private Runnable OnLazyInput = new Runnable() {
         @Override
         public void run() {
-            if (!isProcessed) /* has not processed new input */ {
-                isProcessed = true;
+            // 5 is secure time to make sure the last input will be executed
+            if (System.currentTimeMillis() - mLastInputTime >= mLazyTime - 5) {
                 handleSearch(_ipSearch.getText().toString());
             }
         }
@@ -163,7 +163,7 @@ public class SearchBox extends RelativeLayout {
                 }
 
                 // trigger search event
-                isProcessed = false;
+                mLastInputTime = System.currentTimeMillis();
                 _icCompactSearch.postDelayed(OnLazyInput, mLazyTime);
             }
         });
