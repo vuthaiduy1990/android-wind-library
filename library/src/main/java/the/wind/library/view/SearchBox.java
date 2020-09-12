@@ -365,6 +365,7 @@ public class SearchBox extends RelativeLayout {
     public void closeSearch() {
         setCompactMode(true);
         _ipSearch.setText(""); // this will notify a text change
+        CWAndroidUtils.hideSoftKeyboard(_ipSearch);
     }
 
     /**
