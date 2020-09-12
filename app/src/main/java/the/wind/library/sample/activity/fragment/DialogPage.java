@@ -485,7 +485,7 @@ public class DialogPage extends Fragment {
         footerSearchBox.setLayoutParams(footerSearchBoxLp);
         footerSearchBox.setInputBackground(R.drawable.wl_button_background_gray);
         footerSearchBox.setCompactMode(true);
-        _extraFooterDialog.addViewToFooter(footerSearchBox);
+        _extraFooterDialog.addViewToFooter(0, footerSearchBox);
         view.findViewById(R.id._extraFooterView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

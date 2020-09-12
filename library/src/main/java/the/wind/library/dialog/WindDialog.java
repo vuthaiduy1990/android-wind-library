@@ -573,24 +573,40 @@ public class WindDialog extends Dialog {
     /**
      * Add button
      *
+     * @param idx the position at which to add the button
      * @param btn button
      * @return added button
      */
-    public Button addButton(Button btn) {
-        _footerHolder.addView(btn);
-        _btnList.add(btn);
+    public Button addButton(int idx, Button btn) {
+        _footerHolder.addView(btn, idx);
+        if (idx < 0) {
+            _btnList.add(btn);
+        } else {
+            _btnList.add(idx, btn);
+        }
         return btn;
     }
 
     /**
      * Add button
      *
+     * @param btn button
+     * @return added button
+     */
+    public Button addButton(Button btn) {
+        return addButton(-1, btn);
+    }
+
+    /**
+     * Add button
+     *
+     * @param idx  the position at which to add the button
      * @param type button type
      * @param text text
      * @param icon inline icon
      * @return added button
      */
-    public Button addButton(@NonNull Button.Type type, @NonNull CharSequence text, Button.InlineIcon icon) {
+    public Button addButton(int idx, @NonNull Button.Type type, @NonNull CharSequence text, Button.InlineIcon icon) {
         Button btn = new Button(getContext());
         int margin = (int) getContext().getResources().getDimension(R.dimen.wl_spacing_level_1);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -610,7 +626,19 @@ public class WindDialog extends Dialog {
                 dismiss();
             }
         });
-        return addButton(btn);
+        return addButton(idx, btn);
+    }
+
+    /**
+     * Add button
+     *
+     * @param type button type
+     * @param text text
+     * @param icon inline icon
+     * @return added button
+     */
+    public Button addButton(@NonNull Button.Type type, @NonNull CharSequence text, Button.InlineIcon icon) {
+        return addButton(-1, type, text, icon);
     }
 
     /**
@@ -652,12 +680,23 @@ public class WindDialog extends Dialog {
     /**
      * Add custom view to footer
      *
+     * @param idx  the position at which to add the button
+     * @param view view
+     * @return inserted view
+     */
+    public View addViewToFooter(int idx, View view) {
+        _footerHolder.addView(view, idx);
+        return view;
+    }
+
+    /**
+     * Add custom view to footer
+     *
      * @param view view
      * @return inserted view
      */
     public View addViewToFooter(View view) {
-        _footerHolder.addView(view);
-        return view;
+        return addViewToFooter(-1, view);
     }
 
     /**
