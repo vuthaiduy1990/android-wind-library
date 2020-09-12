@@ -480,7 +480,8 @@ public class DialogPage extends Fragment {
         SearchBox footerSearchBox = new SearchBox(view.getContext());
         LinearLayout.LayoutParams footerSearchBoxLp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                1f);
         footerSearchBoxLp.gravity = Gravity.START | Gravity.CENTER_VERTICAL;
         footerSearchBox.setLayoutParams(footerSearchBoxLp);
         footerSearchBox.setInputBackground(R.drawable.wl_button_background_gray);

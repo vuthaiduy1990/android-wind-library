@@ -612,6 +612,7 @@ public class WindDialog extends Dialog {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.weight = 0;
         params.setMargins(margin, 0, margin, 0);
         btn.setLayoutParams(params);
         btn.setMinimumWidth((int) getContext().getResources().getDimension(R.dimen.wl_dialog_button_min_width));
