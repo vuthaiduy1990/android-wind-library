@@ -2,12 +2,23 @@
 <resources>
     <!-- |||||||||||||||||||||||||| Common ||||||||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <color name="transparent">#00000000</color>
     <color name="wl_icon">#2d2d2d</color>
-    <color name="wl_text">#000000</color>
-    <color name="com_item_background_hover">#c7c7c7</color>
+    <color name="wl_text">@color/wl_black</color>
+    <color name="wl_text_light">#a0a0a0</color>
+    <color name="wl_text_hint">@color/wl_text_light</color>
+    <color name="wl_background_hover">@color/wl_white_highlight</color>
+
+    <!-- |||||||||||||||||||||||||||| Form ||||||||||||||||||||||||||| -->
+    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <color name="form_input">@color/wl_gray_light</color>
 
     <!-- ||||||||||||||||||||||||| Wind Color |||||||||||||||||||||||| -->
+    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <color name="wl_transparent">#00000000</color>
+    <color name="wl_white">#ffffff</color>
+    <color name="wl_white_highlight">#c7c7c7</color>
+    <color name="wl_black">#000000</color>
+    <color name="wl_black_light">#2d2d2d</color>
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     <color name="wl_primary">#3191bf</color>
     <color name="wl_primary_light">#83bdd8</color>
@@ -31,17 +42,17 @@
     <color name="wl_neutral_light">#f1cab0</color>
     <color name="wl_neutral_pressed">#d0976f</color>
     <color name="wl_gray">#afafaf</color>
-    <color name="wl_gray_light">#cfcfcf</color>
+    <color name="wl_gray_light">#e5e5e4</color>
     <color name="wl_gray_pressed">#9d9d9d</color>
 
     <!-- |||||||||||||||||||||||||| Button ||||||||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <color name="wl_button_text_white">#ffffff</color>
-    <color name="wl_button_text_black">#000000</color>
+    <color name="wl_button_text_white">@color/wl_white</color>
+    <color name="wl_button_text_black">@color/wl_black</color>
 
     <!-- ||||||||||||||||||||||| Wind Dialog ||||||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <color name="wl_dialog_background">#ffffff</color>
-    <color name="wl_dialog_title">#2d2d2d</color>
+    <color name="wl_dialog_background">@color/wl_white</color>
+    <color name="wl_dialog_title">@color/wl_black_light</color>
     <color name="wl_dialog_text">#575757</color>
 </resources>

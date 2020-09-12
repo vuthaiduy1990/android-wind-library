@@ -56,7 +56,7 @@ public class WindActionMenu extends WindDialog {
 
         // bind view
         _menuHolder = contentView().findViewById(R.id._menuHolder);
-        setItemBackground(R.drawable.wl_action_menu_item_background);
+        setItemBackground(R.drawable.wl_background_hover);
         setItemTextColor(R.color.wl_text);
         setItemTextSize(R.dimen.wl_text);
         setItemIconSize(R.dimen.wl_icon);
