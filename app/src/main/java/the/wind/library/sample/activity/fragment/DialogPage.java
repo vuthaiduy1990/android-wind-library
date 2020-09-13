@@ -24,6 +24,7 @@ import the.wind.library.dialog.LoadingTemplate;
 import the.wind.library.dialog.NotificationTemplate;
 import the.wind.library.dialog.ProgressTemplate;
 import the.wind.library.dialog.SuccessTemplate;
+import the.wind.library.dialog.SupportTemplate;
 import the.wind.library.dialog.WarnTemplate;
 import the.wind.library.dialog.WindDialog;
 import the.wind.library.sample.R;
@@ -42,6 +43,7 @@ public class DialogPage extends Fragment {
     private WindDialog _errorDialog;
     private WindDialog _successDialog;
     private WindDialog _notifyDialog;
+    private WindDialog _supportDialog;
     private WindDialog _loadingDialog;
     private WindDialog _progressDialog1;
     private WindDialog _progressDialog2;
@@ -73,6 +75,7 @@ public class DialogPage extends Fragment {
         warnDialog(view);
         dangerDialog(view);
         errorDialog(view);
+        supportDialog(view);
         successDialog(view);
         notifyDialog(view);
         loadingDialog(view);
@@ -202,6 +205,19 @@ public class DialogPage extends Fragment {
             @Override
             public void onClick(View v) {
                 _errorDialog.show();
+            }
+        });
+    }
+
+    private void supportDialog(View view) {
+        _supportDialog = new WindDialog(view.getContext())
+                .apply(SupportTemplate.instance())
+                .setContentText("Please insert username and password");
+        _supportDialog.setTitle("Validation");
+        view.findViewById(R.id._supportDialog).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _supportDialog.show();
             }
         });
     }

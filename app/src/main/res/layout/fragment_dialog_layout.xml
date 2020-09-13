@@ -99,6 +99,14 @@
             app:type="DANGER" />
 
         <the.wind.library.view.Button
+            android:id="@+id/_supportDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Idea"
+            app:type="HIGHLIGHT" />
+
+        <the.wind.library.view.Button
             android:id="@+id/_loadingDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
