@@ -36,22 +36,22 @@ public class SearchBox extends RelativeLayout {
     private final View _closeIconSpace;
 
     // data model
-    private boolean mCloseVisible = true;
-    private String mOldSearchInput = "";
-    private String mNewSearchInput = "";
-    private CWBundle mBundle = new CWBundle();
-    private long mLazyTime = LAZY_TIME;
-    private long mLastInputTime;
+    private boolean closeVisible = true;
+    private String oldSearchInput = "";
+    private String newSearchInput = "";
+    private CWBundle bundle = new CWBundle();
+    private long lazyTime = LAZY_TIME;
+    private long lastInputTime;
 
     // listener
-    private OnActionListener mActionListener;
+    private OnActionListener actionListener;
 
     // on lazy input
     private Runnable OnLazyInput = new Runnable() {
         @Override
         public void run() {
             // 5 is secure time to make sure the last input will be executed
-            if (System.currentTimeMillis() - mLastInputTime >= mLazyTime - 5) {
+            if (System.currentTimeMillis() - lastInputTime >= lazyTime - 5) {
                 handleSearch(_ipSearch.getText().toString());
             }
         }
@@ -121,7 +121,7 @@ public class SearchBox extends RelativeLayout {
             _ipSearch.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 
             // compact mode
-            mCloseVisible = typeArray.getBoolean(R.styleable.SearchBox_closeVisible, true);
+            closeVisible = typeArray.getBoolean(R.styleable.SearchBox_closeVisible, true);
             boolean compactMode = typeArray.getBoolean(R.styleable.SearchBox_compactMode, false);
             setCompactMode(compactMode);
 
@@ -163,8 +163,8 @@ public class SearchBox extends RelativeLayout {
                 }
 
                 // trigger search event
-                mLastInputTime = System.currentTimeMillis();
-                _icCompactSearch.postDelayed(OnLazyInput, mLazyTime);
+                lastInputTime = System.currentTimeMillis();
+                _icCompactSearch.postDelayed(OnLazyInput, lazyTime);
             }
         });
         _ipSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -226,7 +226,7 @@ public class SearchBox extends RelativeLayout {
      * @return bundle data
      */
     public CWBundle bundle() {
-        return mBundle;
+        return bundle;
     }
 
     /**
@@ -306,12 +306,12 @@ public class SearchBox extends RelativeLayout {
             _icCompactSearch.setVisibility(VISIBLE);
         } else {
             // show full search mode
-            _icCloseSearch.setVisibility(mCloseVisible ? VISIBLE : GONE);
-            _closeIconSpace.setVisibility(mCloseVisible ? VISIBLE : GONE);
+            _icCloseSearch.setVisibility(closeVisible ? VISIBLE : GONE);
+            _closeIconSpace.setVisibility(closeVisible ? VISIBLE : GONE);
             _inputBox.setVisibility(VISIBLE);
             _icCompactSearch.setVisibility(GONE);
         }
-        if (mActionListener != null) mActionListener.onToggle(compactMode);
+        if (actionListener != null) actionListener.onToggle(compactMode);
     }
 
     /**
@@ -327,14 +327,14 @@ public class SearchBox extends RelativeLayout {
      * @return previous search input
      */
     public String getOldSearchInput() {
-        return mOldSearchInput;
+        return oldSearchInput;
     }
 
     /**
      * @return current search input
      */
     public String getNewSearchInput() {
-        return mNewSearchInput;
+        return newSearchInput;
     }
 
     /**
@@ -345,7 +345,7 @@ public class SearchBox extends RelativeLayout {
      * @param milliseconds unit is milliseconds
      */
     public void setLazyTime(long milliseconds) {
-        mLazyTime = milliseconds;
+        lazyTime = milliseconds;
     }
 
     /**
@@ -354,7 +354,7 @@ public class SearchBox extends RelativeLayout {
      * @param listener action listener
      */
     public void setOnActionListener(OnActionListener listener) {
-        mActionListener = listener;
+        actionListener = listener;
     }
 
     /* ---------------------- METHOD ------------------------- */
@@ -374,9 +374,9 @@ public class SearchBox extends RelativeLayout {
      * @param searchInput search input
      */
     private void handleSearch(@NonNull String searchInput) {
-        mOldSearchInput = mNewSearchInput;
-        mNewSearchInput = searchInput.trim();
-        if (mActionListener != null) mActionListener.onSearch(_ipSearch, mOldSearchInput, mNewSearchInput);
+        oldSearchInput = newSearchInput;
+        newSearchInput = searchInput.trim();
+        if (actionListener != null) actionListener.onSearch(_ipSearch, oldSearchInput, newSearchInput);
     }
 
     /* ---------------------- INNER CLASS -------------------- */

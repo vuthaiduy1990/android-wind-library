@@ -23,19 +23,18 @@ import the.wind.library.dialog.WindDialog;
 public class WindActionMenu extends WindDialog {
 
     private ViewGroup _menuHolder;
-    private LayoutInflater mInflater;
-    private int mItemBackground;
-    private int mItemTextColor;
-    private int mItemTextSize;
-    private int mItemIconSize;
+    private LayoutInflater inflater;
+    private int itemBackground;
+    private int itemTextColor;
+    private int itemTextSize;
+    private int itemIconSize;
 
     // model
-    private int mSelectedId;
-
+    private int selectedId;
 
     // listener
-    private OnItemSelectListener mItemSelectListener;
-    private OnMenuConfigListener mMenuConfigListener;
+    private OnItemSelectListener itemSelectListener;
+    private OnMenuConfigListener menuConfigListener;
 
     /**
      * Constructor
@@ -45,7 +44,7 @@ public class WindActionMenu extends WindDialog {
     public WindActionMenu(@NonNull Context context) {
         super(context, LayoutType.FUBUKI);
         setContentView(R.layout.wl_action_menu_content_view);
-        mInflater = LayoutInflater.from(context);
+        inflater = LayoutInflater.from(context);
         setFooterVisible(false);
         setTitleVisible(false);
         setIconVisible(false);
@@ -64,9 +63,9 @@ public class WindActionMenu extends WindDialog {
         setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                if (mItemSelectListener != null && mSelectedId > 0) {
-                    mItemSelectListener.onSelect(mSelectedId);
-                    mSelectedId = -1;
+                if (itemSelectListener != null && selectedId > 0) {
+                    itemSelectListener.onSelect(selectedId);
+                    selectedId = -1;
                 }
             }
         });
@@ -76,8 +75,8 @@ public class WindActionMenu extends WindDialog {
 
     @Override
     public void show() {
-        if (mMenuConfigListener != null) {
-            mMenuConfigListener.onConfig(_menuHolder);
+        if (menuConfigListener != null) {
+            menuConfigListener.onConfig(_menuHolder);
         }
         super.show();
     }
@@ -96,31 +95,31 @@ public class WindActionMenu extends WindDialog {
      * @return menu
      */
     public WindActionMenu addItem(@IdRes final int id, int iconResId, int textResId) {
-        View itemView = mInflater.inflate(R.layout.wl_action_menu_item_view, _menuHolder, false);
+        View itemView = inflater.inflate(R.layout.wl_action_menu_item_view, _menuHolder, false);
         itemView.setId(id);
         itemView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        itemView.setBackgroundResource(mItemBackground);
+        itemView.setBackgroundResource(itemBackground);
         _menuHolder.addView(itemView);
 
         // bind data
-        ImageView icon = itemView.findViewById(R.id._icon);
+        ImageView _iconView = itemView.findViewById(R.id._iconView);
         if (iconResId != 0) {
-            icon.setImageResource(iconResId);
-            int iconSize = (int) getContext().getResources().getDimension(mItemIconSize);
-            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) icon.getLayoutParams();
+            _iconView.setImageResource(iconResId);
+            int iconSize = (int) getContext().getResources().getDimension(itemIconSize);
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) _iconView.getLayoutParams();
             params.width = iconSize;
             params.height = iconSize;
-            icon.setLayoutParams(params);
+            _iconView.setLayoutParams(params);
         } else {
-            icon.setVisibility(View.GONE);
+            _iconView.setVisibility(View.GONE);
         }
-        TextView textView = itemView.findViewById(R.id._textView);
+        TextView _textView = itemView.findViewById(R.id._textView);
         if (textResId != 0) {
-            textView.setText(textResId);
-            textView.setTextColor(ContextCompat.getColor(getContext(), mItemTextColor));
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getContext().getResources().getDimension(mItemTextSize));
+            _textView.setText(textResId);
+            _textView.setTextColor(ContextCompat.getColor(getContext(), itemTextColor));
+            _textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getContext().getResources().getDimension(itemTextSize));
         } else {
-            textView.setVisibility(View.GONE);
+            _textView.setVisibility(View.GONE);
         }
 
         // bind attribute and listener
@@ -128,7 +127,7 @@ public class WindActionMenu extends WindDialog {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSelectedId = id;
+                selectedId = id;
                 dismiss();
             }
         });
@@ -144,7 +143,7 @@ public class WindActionMenu extends WindDialog {
      * @return menu
      */
     public WindActionMenu setItemBackground(int drawableId) {
-        mItemBackground = drawableId;
+        itemBackground = drawableId;
         return this;
     }
 
@@ -155,7 +154,7 @@ public class WindActionMenu extends WindDialog {
      * @return menu
      */
     public WindActionMenu setItemTextColor(int colorResId) {
-        mItemTextColor = colorResId;
+        itemTextColor = colorResId;
         return this;
     }
 
@@ -166,7 +165,7 @@ public class WindActionMenu extends WindDialog {
      * @return menu
      */
     public WindActionMenu setItemTextSize(int size) {
-        mItemTextSize = size;
+        itemTextSize = size;
         return this;
     }
 
@@ -177,7 +176,7 @@ public class WindActionMenu extends WindDialog {
      * @return menu
      */
     public WindActionMenu setItemIconSize(int size) {
-        mItemIconSize = size;
+        itemIconSize = size;
         return this;
     }
 
@@ -188,7 +187,7 @@ public class WindActionMenu extends WindDialog {
      * @return menu
      */
     public WindActionMenu setOnItemSelectListener(OnItemSelectListener listener) {
-        mItemSelectListener = listener;
+        itemSelectListener = listener;
         return this;
     }
 
@@ -200,7 +199,7 @@ public class WindActionMenu extends WindDialog {
      * @return menu
      */
     public WindActionMenu setOnMenuConfigListener(OnMenuConfigListener listener) {
-        mMenuConfigListener = listener;
+        menuConfigListener = listener;
         return this;
     }
 

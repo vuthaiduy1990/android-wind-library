@@ -39,15 +39,15 @@ public final class WindColor {
 
     // int ARGB color
     // https://developer.android.com/reference/android/graphics/Color
-    private int mColor;
+    private int color;
 
     // shades and tints
-    private WindColor[] mShades;
-    private int[] mShadeValues;
-    private WindColor[] mTints;
-    private int[] mTintValues;
-    private WindColor[] mBalances;
-    private int[] mBalancesValues;
+    private WindColor[] shades;
+    private int[] shadeValues;
+    private WindColor[] tints;
+    private int[] tintValues;
+    private WindColor[] balances;
+    private int[] balancesValues;
 
     /**
      * Constructor
@@ -55,7 +55,7 @@ public final class WindColor {
      * @param color color
      */
     private WindColor(int color) {
-        mColor = color;
+        this.color = color;
     }
 
     /* ---------------------- OVERRIDE ----------------------- */
@@ -99,7 +99,7 @@ public final class WindColor {
      * @return value value
      */
     public int value() {
-        return mColor;
+        return color;
     }
 
     /**
@@ -108,7 +108,7 @@ public final class WindColor {
      * @return hex color
      */
     public String toHex() {
-        return String.format("#%06X", (0xFFFFFF & mColor));
+        return String.format("#%06X", (0xFFFFFF & color));
     }
 
     /**
@@ -117,10 +117,10 @@ public final class WindColor {
      * @return array of shades
      */
     public WindColor[] shades() {
-        if (mShades == null) {
+        if (shades == null) {
             genShades();
         }
-        return mShades;
+        return shades;
     }
 
     /**
@@ -130,7 +130,7 @@ public final class WindColor {
      */
     public int[] shadeValues() {
         shades();
-        return mShadeValues;
+        return shadeValues;
     }
 
     /**
@@ -139,10 +139,10 @@ public final class WindColor {
      * @return array of tints
      */
     public WindColor[] tints() {
-        if (mTints == null) {
+        if (tints == null) {
             genTints();
         }
-        return mTints;
+        return tints;
     }
 
     /**
@@ -152,7 +152,7 @@ public final class WindColor {
      */
     public int[] tintValues() {
         tints();
-        return mTintValues;
+        return tintValues;
     }
 
     /**
@@ -161,10 +161,10 @@ public final class WindColor {
      * @return balanced colors
      */
     public WindColor[] balances() {
-        if (mBalances == null) {
+        if (balances == null) {
             genBalances();
         }
-        return mBalances;
+        return balances;
     }
 
     /**
@@ -174,7 +174,7 @@ public final class WindColor {
      */
     public int[] balancesValues() {
         balances();
-        return mBalancesValues;
+        return balancesValues;
     }
 
     /* ---------------------- METHOD ------------------------- */
@@ -183,20 +183,20 @@ public final class WindColor {
      * Generate shade colors
      */
     private void genShades() {
-        int r = Color.red(mColor);
-        int g = Color.green(mColor);
-        int b = Color.blue(mColor);
+        int r = Color.red(color);
+        int g = Color.green(color);
+        int b = Color.blue(color);
 
-        mShades = new WindColor[SHADE_FACTORS.length];
-        mShadeValues = new int[SHADE_FACTORS.length];
+        shades = new WindColor[SHADE_FACTORS.length];
+        shadeValues = new int[SHADE_FACTORS.length];
         for (int i = 0; i < SHADE_FACTORS.length; i++) {
             float factor = SHADE_FACTORS[i];
-            mShades[i] = WindColor.fromRgb(
+            shades[i] = WindColor.fromRgb(
                     Math.round(r * factor),
                     Math.round(g * factor),
                     Math.round(b * factor)
             );
-            mShadeValues[i] = mShades[i].value();
+            shadeValues[i] = shades[i].value();
         }
     }
 
@@ -204,20 +204,20 @@ public final class WindColor {
      * Generate tint colors
      */
     private void genTints() {
-        int r = Color.red(mColor);
-        int g = Color.green(mColor);
-        int b = Color.blue(mColor);
+        int r = Color.red(color);
+        int g = Color.green(color);
+        int b = Color.blue(color);
 
-        mTints = new WindColor[TINT_FACTORS.length];
-        mTintValues = new int[TINT_FACTORS.length];
+        tints = new WindColor[TINT_FACTORS.length];
+        tintValues = new int[TINT_FACTORS.length];
         for (int i = 0; i < TINT_FACTORS.length; i++) {
             float factor = TINT_FACTORS[i];
-            mTints[i] = WindColor.fromRgb(
+            tints[i] = WindColor.fromRgb(
                     Math.round(r + (255 - r) * factor),
                     Math.round(g + (255 - g) * factor),
                     Math.round(b + (255 - b) * factor)
             );
-            mTintValues[i] = mTints[i].value();
+            tintValues[i] = tints[i].value();
         }
     }
 
@@ -225,22 +225,22 @@ public final class WindColor {
      * Generate balanced colors
      */
     private void genBalances() {
-        if (mShades == null) {
+        if (shades == null) {
             genShades();
         }
-        if (mTints == null) {
+        if (tints == null) {
             genTints();
         }
-        mBalances = new WindColor[BALANCE_COLOR_NUM];
-        mBalancesValues = new int[BALANCE_COLOR_NUM];
+        balances = new WindColor[BALANCE_COLOR_NUM];
+        balancesValues = new int[BALANCE_COLOR_NUM];
         int middle = BALANCE_COLOR_NUM / 2;
-        mBalances[middle] = this;
-        mBalancesValues[middle] = value();
+        balances[middle] = this;
+        balancesValues[middle] = value();
         for (int i = 0; i < middle; i++) {
-            mBalances[i] = mShades[middle - i - 1];
-            mBalancesValues[i] = mShadeValues[middle - i - 1];
-            mBalances[middle + i + 1] = mTints[i];
-            mBalancesValues[middle + i + 1] = mTintValues[i];
+            balances[i] = shades[middle - i - 1];
+            balancesValues[i] = shadeValues[middle - i - 1];
+            balances[middle + i + 1] = tints[i];
+            balancesValues[middle + i + 1] = tintValues[i];
         }
     }
 

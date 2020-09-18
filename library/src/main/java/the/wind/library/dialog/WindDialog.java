@@ -41,18 +41,18 @@ public class WindDialog extends Dialog {
     // layout
     private ViewGroup _layout;
     private View _customContentView;
-    private int mWidth;
-    private int mHeight;
-    private int mPaddingLeft;
-    private int mPaddingTop;
-    private int mPaddingRight;
-    private int mPaddingBottom;
+    private int width;
+    private int height;
+    private int paddingLeft;
+    private int paddingTop;
+    private int paddingRight;
+    private int paddingBottom;
 
     // views
     private View _dialogView;
-    private ImageView _icon;
-    private LottieAnimationView _lottieIcon;
-    private TextView _tvTitle;
+    private ImageView _iconView;
+    private LottieAnimationView _lottieIconView;
+    private TextView _titleView;
     private ViewGroup _headerHolder;
     private ViewGroup _bodyHolder;
     private ViewGroup _footerHolder;
@@ -61,22 +61,22 @@ public class WindDialog extends Dialog {
     private LottieAnimationView _waitingIcon;
 
     // view attribute
-    private boolean mIconVisible = true;
-    private boolean mShowImmediately = false;
+    private boolean iconVisible = true;
+    private boolean showImmediately = false;
 
     // model
-    private LayoutType mLayoutType;
-    private Timer mTimer;
-    private int mIconResId;
-    private Bitmap mIconBitmap;
-    private int mLottieIconResId;
-    private CWBundle mBundle = new CWBundle();
+    private LayoutType layoutType;
+    private Timer timer;
+    private int iconResId;
+    private Bitmap iconBitmap;
+    private int lottieIconResId;
+    private CWBundle bundle = new CWBundle();
 
     // Animation
     @Nullable
-    private Animation mInAnim;
+    private Animation inAnim;
     @Nullable
-    private Animation mOutAnim;
+    private Animation outAnim;
 
     /**
      * Constructor
@@ -96,8 +96,8 @@ public class WindDialog extends Dialog {
     public WindDialog(@NonNull Context context, LayoutType layoutType) {
         super(context, R.style.wind_dialog);
         super.setContentView(layoutType.getDialogLayout());
-        mLayoutType = layoutType;
-        mTimer = new Timer();
+        this.layoutType = layoutType;
+        timer = new Timer();
 
         // Bind the layout and set default layout's size, padding, etc.
         _layout = findViewById(R.id._layout);
@@ -117,9 +117,9 @@ public class WindDialog extends Dialog {
         // bind views
         _dialogView = findViewById(android.R.id.content);
         _headerHolder = _layout.findViewById(R.id._headerHolder);
-        _icon = _headerHolder.findViewById(R.id._icon);
-        _lottieIcon = _headerHolder.findViewById(R.id._lottieIcon);
-        _tvTitle = _layout.findViewById(R.id._tvTitle);
+        _iconView = _headerHolder.findViewById(R.id._iconView);
+        _lottieIconView = _headerHolder.findViewById(R.id._lottieIconView);
+        _titleView = _layout.findViewById(R.id._titleView);
         _bodyHolder = _layout.findViewById(R.id._bodyHolder);
         _footerHolder = _layout.findViewById(R.id._footerHolder);
 
@@ -135,7 +135,7 @@ public class WindDialog extends Dialog {
         });
 
         // default values
-        setContentView(mLayoutType.getContentLayout());
+        setContentView(this.layoutType.getContentLayout());
         setInOutAnimType(InOutAnimType.SWEET_ALERT);
         setCancelable(false);
         setCanceledOnTouchOutside(false);
@@ -146,19 +146,28 @@ public class WindDialog extends Dialog {
     /* ---------------------- OVERRIDE ----------------------- */
 
     @Override
+    public void dismiss() {
+        if (_dialogView != null && outAnim != null) {
+            _dialogView.startAnimation(outAnim);
+        } else {
+            super.dismiss();
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Configure the layout
         ViewGroup.LayoutParams layoutParams = _layout.getLayoutParams();
-        layoutParams.width = mWidth;
-        layoutParams.height = mHeight;
+        layoutParams.width = width;
+        layoutParams.height = height;
         _layout.setLayoutParams(layoutParams);
-        _layout.setPadding(mPaddingLeft, mPaddingTop, mPaddingRight, mPaddingBottom);
+        _layout.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         // Config the root dialog layout
         ViewGroup.LayoutParams _dialogLayoutParams = _dialogView.getLayoutParams();
-        _dialogLayoutParams.width = mWidth;
-        _dialogLayoutParams.height = mHeight;
+        _dialogLayoutParams.width = width;
+        _dialogLayoutParams.height = height;
         _dialogView.setLayoutParams(_dialogLayoutParams);
     }
 
@@ -168,34 +177,25 @@ public class WindDialog extends Dialog {
         if (_dialogView == null) return;
 
         // Show dialog with animation in case the animation is available and the showing status is not immediately
-        if (mInAnim != null && !mShowImmediately) {
-            _dialogView.startAnimation(mInAnim);
+        if (inAnim != null && !showImmediately) {
+            _dialogView.startAnimation(inAnim);
         }
-        mShowImmediately = false;
+        showImmediately = false;
 
         // Animate the lottie icon
-        if (_lottieIcon != null && _lottieIcon.getVisibility() == View.VISIBLE) {
-            _lottieIcon.post(new Runnable() {
+        if (_lottieIconView != null && _lottieIconView.getVisibility() == View.VISIBLE) {
+            _lottieIconView.post(new Runnable() {
                 @Override
                 public void run() {
-                    _lottieIcon.playAnimation();
+                    _lottieIconView.playAnimation();
                 }
             });
         }
     }
 
     @Override
-    public void dismiss() {
-        if (_dialogView != null && mOutAnim != null) {
-            _dialogView.startAnimation(mOutAnim);
-        } else {
-            super.dismiss();
-        }
-    }
-
-    @Override
     public void setTitle(@Nullable CharSequence title) {
-        _tvTitle.setText(title);
+        _titleView.setText(title);
     }
 
     @Override
@@ -242,7 +242,7 @@ public class WindDialog extends Dialog {
      * @return bundle data
      */
     public CWBundle bundle() {
-        return mBundle;
+        return bundle;
     }
 
     /**
@@ -256,7 +256,7 @@ public class WindDialog extends Dialog {
      * @return dialog's width
      */
     public int getWidth() {
-        return mWidth;
+        return width;
     }
 
     /**
@@ -266,7 +266,7 @@ public class WindDialog extends Dialog {
      * @return dialog
      */
     public WindDialog setWidth(int width) {
-        mWidth = width;
+        this.width = width;
         return this;
     }
 
@@ -274,7 +274,7 @@ public class WindDialog extends Dialog {
      * @return dialog's height
      */
     public int getHeight() {
-        return mHeight;
+        return height;
     }
 
     /**
@@ -284,7 +284,7 @@ public class WindDialog extends Dialog {
      * @return dialog
      */
     public WindDialog setHeight(int height) {
-        mHeight = height;
+        this.height = height;
         return this;
     }
 
@@ -294,7 +294,7 @@ public class WindDialog extends Dialog {
      * @return [left, top, right, bottom]
      */
     public int[] getPadding() {
-        return new int[]{mPaddingLeft, mPaddingTop, mPaddingRight, mPaddingBottom};
+        return new int[]{paddingLeft, paddingTop, paddingRight, paddingBottom};
     }
 
     /**
@@ -307,10 +307,10 @@ public class WindDialog extends Dialog {
      * @return dialog
      */
     public WindDialog setPadding(int left, int top, int right, int bottom) {
-        mPaddingLeft = left;
-        mPaddingTop = top;
-        mPaddingRight = right;
-        mPaddingBottom = bottom;
+        paddingLeft = left;
+        paddingTop = top;
+        paddingRight = right;
+        paddingBottom = bottom;
         return this;
     }
 
@@ -340,15 +340,15 @@ public class WindDialog extends Dialog {
      */
     public WindDialog setInOutAnimType(InOutAnimType animType) {
         if (animType == null) /* clear inout animation */ {
-            mInAnim = null;
-            mOutAnim = null;
+            inAnim = null;
+            outAnim = null;
             return this;
         }
 
         // set new animation
-        mInAnim = animType.getInAnim(getContext());
-        mOutAnim = animType.getOutAnim(getContext());
-        mOutAnim.setAnimationListener(new Animation.AnimationListener() {
+        inAnim = animType.getInAnim(getContext());
+        outAnim = animType.getOutAnim(getContext());
+        outAnim.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
 
@@ -380,10 +380,10 @@ public class WindDialog extends Dialog {
      * @return icon (animation or static icon)
      */
     public View icon() {
-        if (_lottieIcon.getVisibility() == View.VISIBLE) {
-            return _lottieIcon;
+        if (_lottieIconView.getVisibility() == View.VISIBLE) {
+            return _lottieIconView;
         }
-        return _icon;
+        return _iconView;
     }
 
     /**
@@ -393,8 +393,8 @@ public class WindDialog extends Dialog {
      * @return dialog
      */
     public WindDialog setIconVisible(boolean visible) {
-        mIconVisible = visible;
-        if (_icon != null && _lottieIcon != null) {
+        iconVisible = visible;
+        if (_iconView != null && _lottieIconView != null) {
             judgeIcon();
         }
         return this;
@@ -407,8 +407,8 @@ public class WindDialog extends Dialog {
      * @return dialog
      */
     public WindDialog setIcon(@DrawableRes int resId) {
-        mIconResId = resId;
-        if (_icon != null && _lottieIcon != null) {
+        iconResId = resId;
+        if (_iconView != null && _lottieIconView != null) {
             judgeIcon();
         }
         return this;
@@ -421,8 +421,8 @@ public class WindDialog extends Dialog {
      * @return dialog
      */
     public WindDialog setIcon(Bitmap bitmap) {
-        mIconBitmap = bitmap;
-        if (_icon != null && _lottieIcon != null) {
+        iconBitmap = bitmap;
+        if (_iconView != null && _lottieIconView != null) {
             judgeIcon();
         }
         return this;
@@ -435,8 +435,8 @@ public class WindDialog extends Dialog {
      * @return dialog
      */
     public WindDialog setLottieIcon(@RawRes int resId) {
-        mLottieIconResId = resId;
-        if (_icon != null && _lottieIcon != null) {
+        lottieIconResId = resId;
+        if (_iconView != null && _lottieIconView != null) {
             judgeIcon();
         }
         return this;
@@ -446,43 +446,43 @@ public class WindDialog extends Dialog {
      * Judge which kind of icon will be used (inline/static/animation)
      */
     private void judgeIcon() {
-        if (!mIconVisible) {
-            _icon.setVisibility(View.GONE);
-            _lottieIcon.setVisibility(View.GONE);
+        if (!iconVisible) {
+            _iconView.setVisibility(View.GONE);
+            _lottieIconView.setVisibility(View.GONE);
             return;
         }
 
         // lottie icon -> static icon -> bitmap icon
         boolean useAnim;
-        if (mLottieIconResId != 0) {
+        if (lottieIconResId != 0) {
             // use animation icon
             useAnim = true;
-            _lottieIcon.setAnimation(mLottieIconResId);
+            _lottieIconView.setAnimation(lottieIconResId);
 
-        } else if (mIconResId != 0) {
+        } else if (iconResId != 0) {
             // use static icon
             useAnim = false;
-            _icon.setImageResource(mIconResId);
+            _iconView.setImageResource(iconResId);
 
-        } else if (mIconBitmap != null) {
+        } else if (iconBitmap != null) {
             // use bitmap icon
             useAnim = false;
-            _icon.setImageBitmap(mIconBitmap);
+            _iconView.setImageBitmap(iconBitmap);
         } else {
             // hide icon
-            _lottieIcon.setVisibility(View.GONE);
-            _icon.setVisibility(View.GONE);
+            _lottieIconView.setVisibility(View.GONE);
+            _iconView.setVisibility(View.GONE);
             return;
         }
-        _lottieIcon.setVisibility(useAnim ? View.VISIBLE : View.GONE);
-        _icon.setVisibility(!useAnim ? View.VISIBLE : View.GONE);
+        _lottieIconView.setVisibility(useAnim ? View.VISIBLE : View.GONE);
+        _iconView.setVisibility(!useAnim ? View.VISIBLE : View.GONE);
     }
 
     /**
      * @return title text view
      */
     public TextView titleView() {
-        return _tvTitle;
+        return _titleView;
     }
 
     /**
@@ -492,7 +492,7 @@ public class WindDialog extends Dialog {
      * @return dialog
      */
     public WindDialog setTitleVisible(boolean visible) {
-        _tvTitle.setVisibility(visible ? View.VISIBLE : View.GONE);
+        _titleView.setVisibility(visible ? View.VISIBLE : View.GONE);
         return this;
     }
 
@@ -533,7 +533,7 @@ public class WindDialog extends Dialog {
      * @return dialog
      */
     public WindDialog setContentText(CharSequence text) {
-        if (LayoutType.TATSUMAKI.equals(mLayoutType)) {
+        if (LayoutType.TATSUMAKI.equals(layoutType)) {
             TextView textView = _customContentView.findViewById(R.id._content);
             if (textView != null) {
                 textView.setText(text);
@@ -747,7 +747,7 @@ public class WindDialog extends Dialog {
      */
     public void show(long timeout, final CWCallback<?> callback) {
         show();
-        mTimer.schedule(new TimerTask() {
+        timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 if (_dialogView == null) return;
@@ -768,7 +768,7 @@ public class WindDialog extends Dialog {
      * Show dialog immediately without animation
      */
     public void showImmediately() {
-        mShowImmediately = true;
+        showImmediately = true;
         show();
     }
 
@@ -779,7 +779,7 @@ public class WindDialog extends Dialog {
      * @param timeout in milliseconds
      */
     public void showImmediately(long timeout) {
-        mShowImmediately = true;
+        showImmediately = true;
         show(timeout);
     }
 
@@ -823,7 +823,7 @@ public class WindDialog extends Dialog {
      */
     public void waitMe(long timeout, final boolean quit) {
         waitMe();
-        mTimer.schedule(new TimerTask() {
+        timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 _dialogView.post(new Runnable() {
@@ -856,7 +856,7 @@ public class WindDialog extends Dialog {
      * @return dialog
      */
     public WindDialog apply(ITemplate template) {
-        if (LayoutType.TATSUMAKI.equals(mLayoutType)) {
+        if (LayoutType.TATSUMAKI.equals(layoutType)) {
             template.onSetting(this);
         }
         return this;

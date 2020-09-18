@@ -15,7 +15,7 @@ public final class BlackHole {
     public static final BlackHole $ = new BlackHole();
 
     // garbage of all universal
-    private Map<Class<?>, Object> mGarbages = new HashMap<>();
+    private Map<Class<?>, Object> garbages = new HashMap<>();
 
     /* ---------------------- OVERRIDE ----------------------- */
 
@@ -36,7 +36,7 @@ public final class BlackHole {
      */
     @SuppressWarnings("unchecked")
     public <T> T pull(@NonNull Class<T> clazz) {
-        return (T) mGarbages.get(clazz);
+        return (T) garbages.get(clazz);
     }
 
     /**
@@ -48,7 +48,7 @@ public final class BlackHole {
      */
     @SuppressWarnings("unchecked")
     public <T> T poll(@NonNull Class<T> clazz) {
-        return (T) mGarbages.remove(clazz);
+        return (T) garbages.remove(clazz);
     }
 
     /**
@@ -59,7 +59,7 @@ public final class BlackHole {
      */
     public void swallow(Object garbage) {
         if (garbage == null) return;
-        mGarbages.put(garbage.getClass(), garbage);
+        garbages.put(garbage.getClass(), garbage);
     }
 
     /**
@@ -69,7 +69,7 @@ public final class BlackHole {
      * @param <T>   template type
      */
     public <T> void destroy(@NonNull Class<T> clazz) {
-        mGarbages.remove(clazz);
+        garbages.remove(clazz);
     }
 
 }

@@ -70,22 +70,22 @@ public final class CWNLPEngine<T extends INLPText> {
 
     // Application context
     @Nullable
-    private Context mContext;
+    private Context context;
 
     // Configuration for the engine
-    private Options mOptions;
+    private Options options;
 
     // the input target for processing
-    private List<T> mTargetList = new LinkedList<>();
-    private Queue<T> mTargetQueue = new LinkedList<>();
+    private List<T> targetList = new LinkedList<>();
+    private Queue<T> targetQueue = new LinkedList<>();
 
     // map target id with processed text
-    private Map<String, String> mTextMap = new HashMap<>();
+    private Map<String, String> textMap = new HashMap<>();
 
     // Map between the search key with results
     private Map<String, List<NLPMatchResult<T>>> mCaches = new HashMap<>();
     // contains search keys which has been pre-processed.
-    private Queue<String> mCacheSearchKeys = new LinkedList<>();
+    private Queue<String> cacheSearchKeys = new LinkedList<>();
 
     /**
      * Construct engine with the default setting
@@ -93,8 +93,10 @@ public final class CWNLPEngine<T extends INLPText> {
      * @param context application context. It can be null
      */
     public CWNLPEngine(@Nullable Context context) {
-        mContext = context;
-        mOptions = new Options();
+        if (context != null) {
+            this.context = context.getApplicationContext();
+        }
+        options = new Options();
     }
 
     /**
@@ -105,7 +107,7 @@ public final class CWNLPEngine<T extends INLPText> {
      */
     public CWNLPEngine(@Nullable Context context, Options options) {
         this(context);
-        mOptions = options;
+        this.options = options;
     }
 
     /* ---------------------- STATIC ------------------------- */
@@ -118,7 +120,7 @@ public final class CWNLPEngine<T extends INLPText> {
      * @return list of targets which implement {@link INLPText} and are loaded into engine
      */
     public List<T> targets() {
-        return Collections.unmodifiableList(mTargetList);
+        return Collections.unmodifiableList(targetList);
     }
 
     /**
@@ -127,9 +129,9 @@ public final class CWNLPEngine<T extends INLPText> {
      * @param target target which implement {@link INLPText}
      */
     public void remove(T target) {
-        mTargetList.remove(target);
-        mTargetQueue.remove(target);
-        mTextMap.remove(target.nlpTextId(mContext));
+        targetList.remove(target);
+        targetQueue.remove(target);
+        textMap.remove(target.nlpTextId(context));
         clearCache();
     }
 
@@ -147,7 +149,7 @@ public final class CWNLPEngine<T extends INLPText> {
     public final CWNLPEngine<T> load(T... targets) {
         for (T tx : targets) {
             if (tx == null) continue;
-            mTargetQueue.add(tx);
+            targetQueue.add(tx);
         }
         return this;
     }
@@ -166,7 +168,7 @@ public final class CWNLPEngine<T extends INLPText> {
         while (targetIt.hasNext()) {
             T tx = targetIt.next();
             if (tx == null) continue;
-            mTargetQueue.add(tx);
+            targetQueue.add(tx);
         }
         return this;
     }
@@ -175,11 +177,11 @@ public final class CWNLPEngine<T extends INLPText> {
      * Free resource (texts, byte data, etc.)
      */
     public void freeMemory() {
-        mTargetList.clear();
-        mTargetQueue.clear();
-        mTextMap.clear();
+        targetList.clear();
+        targetQueue.clear();
+        textMap.clear();
         mCaches.clear();
-        mCacheSearchKeys.clear();
+        cacheSearchKeys.clear();
         System.gc();
     }
 
@@ -191,7 +193,7 @@ public final class CWNLPEngine<T extends INLPText> {
      */
     @Nullable
     public String getCookedText(T target) {
-        return mTextMap.get(target.nlpTextId(mContext));
+        return textMap.get(target.nlpTextId(context));
     }
 
     /**
@@ -210,7 +212,7 @@ public final class CWNLPEngine<T extends INLPText> {
      * @return true if using else return false;
      */
     public boolean useCache() {
-        return mOptions.cache > 0;
+        return options.cache > 0;
     }
 
     /**
@@ -218,7 +220,7 @@ public final class CWNLPEngine<T extends INLPText> {
      */
     public void clearCache() {
         mCaches.clear();
-        mCacheSearchKeys.clear();
+        cacheSearchKeys.clear();
     }
 
     /* ---------------------- METHOD ------------------------- */
@@ -229,18 +231,18 @@ public final class CWNLPEngine<T extends INLPText> {
      * @param target which implement {@link INLPText}
      */
     private <X extends INLPText> String preProcess(X target) {
-        String text = target.nlpRawText(mContext);
+        String text = target.nlpRawText(context);
 
-        if (!mOptions.useSpecialChars) {
-            String regex = "[" + mOptions.specialChars + "]+";
+        if (!options.useSpecialChars) {
+            String regex = "[" + options.specialChars + "]+";
             text = text.replaceAll(regex, " ");
         }
 
-        if (mOptions.strip) {
+        if (options.strip) {
             text = CWStringUtils.strip(text);
         }
 
-        if (!mOptions.caseSensitive) {
+        if (!options.caseSensitive) {
             text = text.toLowerCase();
         }
 
@@ -255,13 +257,13 @@ public final class CWNLPEngine<T extends INLPText> {
      */
     public CWNLPEngine<T> build() {
         // clear cache if new data is added
-        if (mTargetQueue.size() > 0) {
+        if (targetQueue.size() > 0) {
             clearCache();
         }
         T target;
-        while ((target = mTargetQueue.poll()) != null) {
-            mTextMap.put(target.nlpTextId(mContext), preProcess(target));
-            mTargetList.add(target);
+        while ((target = targetQueue.poll()) != null) {
+            textMap.put(target.nlpTextId(context), preProcess(target));
+            targetList.add(target);
         }
         return this;
     }
@@ -277,8 +279,8 @@ public final class CWNLPEngine<T extends INLPText> {
         clearCache();
 
         // rebuild pre-loaded texts
-        for (T tx : mTargetList) {
-            mTextMap.put(tx.nlpTextId(mContext), preProcess(tx));
+        for (T tx : targetList) {
+            textMap.put(tx.nlpTextId(context), preProcess(tx));
         }
 
         // build texts is waiting in queue
@@ -296,11 +298,11 @@ public final class CWNLPEngine<T extends INLPText> {
         clearCache();
 
         // pre-process only this given target
-        String targetId = target.nlpTextId(mContext);
-        if (!mTextMap.containsKey(targetId)) /* new target */ {
-            mTargetList.add(target);
+        String targetId = target.nlpTextId(context);
+        if (!textMap.containsKey(targetId)) /* new target */ {
+            targetList.add(target);
         }
-        mTextMap.put(targetId, preProcess(target));
+        textMap.put(targetId, preProcess(target));
         return this;
     }
 
@@ -353,13 +355,13 @@ public final class CWNLPEngine<T extends INLPText> {
         NLPMatchResult<T> result = new NLPMatchResult<>(target);
         Set<String> matchingKeys = new HashSet<>();
         for (Map.Entry<String, Pattern> entry : searchPat.entrySet()) {
-            Matcher m = entry.getValue().matcher(Objects.requireNonNull(mTextMap.get(target.nlpTextId(mContext))));
+            Matcher m = entry.getValue().matcher(Objects.requireNonNull(textMap.get(target.nlpTextId(context))));
             while (m.find()) {
                 result.indexes.add(m.start());
                 result.indexes.add(m.end());
                 result.keys.add(entry.getKey());
                 matchingKeys.add(entry.getKey());
-                if (!mOptions.greedy) break; // not greedy search
+                if (!options.greedy) break; // not greedy search
             }
         }
         if (matchingKeys.size() == searchPat.size()) {
@@ -367,7 +369,7 @@ public final class CWNLPEngine<T extends INLPText> {
         } else if (matchingKeys.size() > 0) {
             result.status = NLPMatchResult.Status.PARTIAL_MATCH;
         } else {
-            if (mOptions.matchOnly) {
+            if (options.matchOnly) {
                 // do not include the not-match item in the result
                 return null;
             } else {
@@ -484,7 +486,7 @@ public final class CWNLPEngine<T extends INLPText> {
             // List<NLPMatchResult<T>> preResults = engine.doMatching("col");
             // engine.doMatching("color", preResults); // search on previous results because "colors" wrap "col"
             String preSearchKey = null;
-            for (String key : mCacheSearchKeys) {
+            for (String key : cacheSearchKeys) {
                 if (_search.length() > key.length() && _search.startsWith(key)
                         && (preSearchKey == null || preSearchKey.length() < key.length())) {
                     preSearchKey = key;
@@ -493,11 +495,11 @@ public final class CWNLPEngine<T extends INLPText> {
             List<NLPMatchResult<T>> preResults = preSearchKey != null ? mCaches.get(preSearchKey) : null;
 
             // Remove oldest cache
-            if (mCacheSearchKeys.size() + 1 > mOptions.cache) /* exceed the cache limit */ {
-                mCaches.remove(mCacheSearchKeys.poll()); // remove the oldest one
+            if (cacheSearchKeys.size() + 1 > options.cache) /* exceed the cache limit */ {
+                mCaches.remove(cacheSearchKeys.poll()); // remove the oldest one
             }
             // then add new one
-            mCacheSearchKeys.add(_search);
+            cacheSearchKeys.add(_search);
             mCaches.put(_search, new LinkedList<NLPMatchResult<T>>());
 
             // do searching on previous result
@@ -507,7 +509,7 @@ public final class CWNLPEngine<T extends INLPText> {
                 return;
             }
         }
-        doMatching(_search, mTargetList, callback);
+        doMatching(_search, targetList, callback);
         callback.onEnd();
     }
 

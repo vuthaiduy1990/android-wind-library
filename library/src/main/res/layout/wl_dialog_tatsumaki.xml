@@ -22,7 +22,7 @@
 
             <!-- Static Icon -->
             <ImageView
-                android:id="@+id/_icon"
+                android:id="@+id/_iconView"
                 android:layout_width="@dimen/wl_dialog_tatsumaki_icon_size"
                 android:layout_height="@dimen/wl_dialog_tatsumaki_icon_size"
                 android:layout_centerInParent="true"
@@ -33,7 +33,7 @@
 
             <!-- Animation Icon -->
             <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/_lottieIcon"
+                android:id="@+id/_lottieIconView"
                 android:layout_width="@dimen/wl_dialog_tatsumaki_icon_size"
                 android:layout_height="@dimen/wl_dialog_tatsumaki_icon_size"
                 android:layout_centerInParent="true"
@@ -46,7 +46,7 @@
 
         <!-- title -->
         <TextView
-            android:id="@+id/_tvTitle"
+            android:id="@+id/_titleView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/wl_spacing_level_2"

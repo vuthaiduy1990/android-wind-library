@@ -32,19 +32,19 @@ import the.wind.library.utils.CWStringUtils;
 public class Checkbox extends LottieAnimationView {
 
     // checkbox status. true -> checked else unchecked
-    private boolean mChecked = false;
+    private boolean checked = false;
 
     // animation type
-    private AnimType mAnimType = AnimType.DEFAULT_CIRCLE;
+    private AnimType animType = AnimType.DEFAULT_CIRCLE;
 
     // animation shape color
-    private int mAnimColor;
+    private int animColor;
 
     // bundle data
-    private CWBundle mBundle = new CWBundle();
+    private CWBundle bundle = new CWBundle();
 
     // listener
-    private OnCheckedListener mCheckedListener;
+    private OnCheckedListener checkedListener;
 
     public Checkbox(Context context) {
         this(context, null);
@@ -62,11 +62,11 @@ public class Checkbox extends LottieAnimationView {
         try {
             // get anim type;
             int animIdx = typeArray.getInt(R.styleable.Checkbox_animType, 0);
-            mAnimType = AnimType.values()[animIdx];
+            animType = AnimType.values()[animIdx];
             // get anim color
-            mAnimColor = typeArray.getColor(R.styleable.Checkbox_animColor, 0);
+            animColor = typeArray.getColor(R.styleable.Checkbox_animColor, 0);
             // get checked
-            mChecked = typeArray.getBoolean(R.styleable.Checkbox_checked, false);
+            checked = typeArray.getBoolean(R.styleable.Checkbox_checked, false);
             // get enabled
             setEnabled(typeArray.getBoolean(R.styleable.Checkbox_enabled, true));
 
@@ -77,14 +77,14 @@ public class Checkbox extends LottieAnimationView {
         }
 
         // config properties
-        setAnimType(mAnimType);
+        setAnimType(animType);
         setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         setRepeatCount(0);
-        if (mAnimColor == 0) {
-            mAnimColor = ContextCompat.getColor(getContext(), R.color.wl_success);
+        if (animColor == 0) {
+            animColor = ContextCompat.getColor(getContext(), R.color.wl_success);
         }
-        setAnimColor(mAnimColor);
-        setChecked(mChecked);
+        setAnimColor(animColor);
+        setChecked(checked);
 
         // set event listeners
         setOnClickListener(new View.OnClickListener() {
@@ -93,13 +93,13 @@ public class Checkbox extends LottieAnimationView {
                 if (isAnimating()) {
                     return;
                 }
-                if (mChecked) {
-                    setProgress(mAnimType.getInitialProgress());
+                if (checked) {
+                    setProgress(animType.getInitialProgress());
                 } else {
                     playAnimation();
                 }
-                mChecked = !mChecked;
-                if (mCheckedListener != null) mCheckedListener.onChecked(v, mChecked);
+                checked = !checked;
+                if (checkedListener != null) checkedListener.onChecked(v, checked);
             }
         });
     }
@@ -123,7 +123,7 @@ public class Checkbox extends LottieAnimationView {
      * @return bundle data
      */
     public CWBundle bundle() {
-        return mBundle;
+        return bundle;
     }
 
     /**
@@ -132,7 +132,7 @@ public class Checkbox extends LottieAnimationView {
      * @return true if checked else return false
      */
     public boolean isChecked() {
-        return mChecked;
+        return checked;
     }
 
     /**
@@ -142,11 +142,11 @@ public class Checkbox extends LottieAnimationView {
      * @return checkbox
      */
     public Checkbox setChecked(boolean checked) {
-        mChecked = checked;
-        if (mChecked) {
-            setProgress(mAnimType.getMaxProgress());
+        this.checked = checked;
+        if (this.checked) {
+            setProgress(animType.getMaxProgress());
         } else {
-            setProgress(mAnimType.getInitialProgress());
+            setProgress(animType.getInitialProgress());
         }
         return this;
     }
@@ -158,7 +158,7 @@ public class Checkbox extends LottieAnimationView {
      * @return checkbox
      */
     public Checkbox setOnCheckedListener(OnCheckedListener listener) {
-        mCheckedListener = listener;
+        checkedListener = listener;
         return this;
     }
 
@@ -168,7 +168,7 @@ public class Checkbox extends LottieAnimationView {
      * @return animation type
      */
     public AnimType getAnimType() {
-        return mAnimType;
+        return animType;
     }
 
     /**
@@ -178,7 +178,7 @@ public class Checkbox extends LottieAnimationView {
      * @return checkbox
      */
     public Checkbox setAnimType(AnimType type) {
-        mAnimType = type;
+        animType = type;
         setAnimation(type.getResource());
         setMinProgress(type.getMinProgress());
         setMaxProgress(type.getMaxProgress());
@@ -193,17 +193,17 @@ public class Checkbox extends LottieAnimationView {
      * @return checkbox
      */
     public Checkbox setAnimColor(@ColorInt int color) {
-        mAnimColor = color;
-        if (mAnimColor == 0 || mAnimType == null) return this;
-        if (mAnimType.getProperties() != null) {
-            for (String prop : mAnimType.getProperties()) {
+        animColor = color;
+        if (animColor == 0 || animType == null) return this;
+        if (animType.getProperties() != null) {
+            for (String prop : animType.getProperties()) {
                 if (!CWStringUtils.hasText(prop)) continue;
                 addValueCallback(
                         new KeyPath(prop.trim(), "**"),
-                        LottieProperty.COLOR, new LottieValueCallback<>(mAnimColor));
+                        LottieProperty.COLOR, new LottieValueCallback<>(animColor));
                 addValueCallback(
                         new KeyPath(prop.trim(), "**"),
-                        LottieProperty.STROKE_COLOR, new LottieValueCallback<>(mAnimColor));
+                        LottieProperty.STROKE_COLOR, new LottieValueCallback<>(animColor));
             }
         }
         return this;
@@ -215,7 +215,7 @@ public class Checkbox extends LottieAnimationView {
     protected void setDefaultSize() {
         ViewGroup.LayoutParams layoutParams = getLayoutParams();
         if (layoutParams.width == -2 && layoutParams.height == -2) {
-            int size = mAnimType.getDefaultSize(getContext());
+            int size = animType.getDefaultSize(getContext());
             layoutParams.width = size;
             layoutParams.height = size;
             setLayoutParams(layoutParams);

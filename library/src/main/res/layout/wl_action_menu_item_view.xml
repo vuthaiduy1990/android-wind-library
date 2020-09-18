@@ -13,7 +13,7 @@
     android:paddingBottom="@dimen/wl_spacing_level_2">
 
     <ImageView
-        android:id="@+id/_icon"
+        android:id="@+id/_iconView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginEnd="@dimen/wl_spacing_level_2"

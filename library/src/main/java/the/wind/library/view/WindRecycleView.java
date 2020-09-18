@@ -41,16 +41,16 @@ public class WindRecycleView extends RecyclerView {
 
     // threshold. (number of item before scrolling to end)
     // trigger loadmore before scrolling go nearly to end
-    private int mThreshold = LOADMORE_THRESHOLD;
+    private int threshold = LOADMORE_THRESHOLD;
 
     // loading sate
     private boolean isLoading = false;
 
     // Listener
-    private OnLoadMoreListener mLoadMoreListener;
+    private OnLoadMoreListener loadMoreListener;
 
     // bundle data
-    private CWBundle mBundle = new CWBundle();
+    private CWBundle bundle = new CWBundle();
 
     public WindRecycleView(@NonNull Context context) {
         this(context, null);
@@ -76,7 +76,7 @@ public class WindRecycleView extends RecyclerView {
                 LayoutManager layoutManager = getLayoutManager();
 
                 // do not handle loadmore event
-                if (mLoadMoreListener == null || layoutManager == null) return;
+                if (loadMoreListener == null || layoutManager == null) return;
                 if (isLoading) return;
 
                 int lastVisibleItemPos = 0;
@@ -91,13 +91,13 @@ public class WindRecycleView extends RecyclerView {
                 }
 
                 // do loading before user scroll nearly to the end
-                if (layoutManager.getItemCount() <= lastVisibleItemPos + mThreshold) {
+                if (layoutManager.getItemCount() <= lastVisibleItemPos + threshold) {
                     // add null data which represent for a loading item view
                     if (getAdapter() instanceof Adapter) {
                         ((Adapter) getAdapter()).addLoading();
                     }
                     // handle loadmore
-                    mLoadMoreListener.onLoadMore(new CWHandler<Void>() {
+                    loadMoreListener.onLoadMore(new CWHandler<Void>() {
                         @Override
                         public void onBefore(Void... params) {
                             super.onBefore(params);
@@ -155,7 +155,7 @@ public class WindRecycleView extends RecyclerView {
      * @return bundle data
      */
     public CWBundle bundle() {
-        return mBundle;
+        return bundle;
     }
 
     /**
@@ -167,7 +167,7 @@ public class WindRecycleView extends RecyclerView {
      * @return recycle view
      */
     public RecyclerView setThreshold(int threshold) {
-        mThreshold = threshold;
+        this.threshold = threshold;
         return this;
     }
 
@@ -185,7 +185,7 @@ public class WindRecycleView extends RecyclerView {
      * @return recycle view
      */
     public RecyclerView setOnLoadMoreListener(OnLoadMoreListener listener) {
-        mLoadMoreListener = listener;
+        loadMoreListener = listener;
         return this;
     }
 
@@ -264,7 +264,7 @@ public class WindRecycleView extends RecyclerView {
         protected static final int VIEW_TYPE_LOADING = -1;
 
         // dataset
-        private List<T> mDataset;
+        private List<T> dataset;
 
         // custom layout/views
         private int _customLoadingLayout;
@@ -274,20 +274,20 @@ public class WindRecycleView extends RecyclerView {
         protected ItemHolder<T> mSelectedItem;
 
         // listener
-        private OnItemClickListener<T> mItemClickListener;
-        private OnItemLongClickListener<T> mItemLongClickListener;
-        private OnItemDoubleClickListener<T> mItemDoubleClickListener;
-        private OnItemSelectionListener<T> mItemSelectionListener = new OnItemSelectionListener<T>() {
+        private OnItemClickListener<T> itemClickListener;
+        private OnItemLongClickListener<T> itemLongClickListener;
+        private OnItemDoubleClickListener<T> itemDoubleClickListener;
+        private OnItemSelectionListener<T> itemSelectionListener = new OnItemSelectionListener<T>() {
             @Override
             public boolean onSelection(@NonNull ViewHolder<T> viewHolder) {
                 return onMiddlewareItemSelection(viewHolder);
             }
         };
-        private OnItemTouchDownListener<T> mItemTouchDownListener;
-        private OnItemTouchUpListener<T> mItemTouchUpListener;
+        private OnItemTouchDownListener<T> itemTouchDownListener;
+        private OnItemTouchUpListener<T> itemTouchUpListener;
 
         // bundle data
-        private CWBundle mBundle = new CWBundle();
+        private CWBundle bundle = new CWBundle();
 
         /**
          * Constructor
@@ -295,7 +295,7 @@ public class WindRecycleView extends RecyclerView {
          * @param dataset data
          */
         public Adapter(List<T> dataset) {
-            mDataset = dataset;
+            this.dataset = dataset;
             setCustomLoadingView(R.layout.wl_recycle_view_loading);
         }
 
@@ -315,12 +315,12 @@ public class WindRecycleView extends RecyclerView {
         @Override
         public void onBindViewHolder(@NonNull ViewHolder<T> holder, int position) {
             holder.bindData(getData(position));
-            holder.bindClickListener(mItemClickListener);
-            holder.bindLongClickListener(mItemLongClickListener);
-            holder.bindDoubleClickListener(mItemDoubleClickListener);
-            holder.bindItemSelection(mItemSelectionListener);
-            holder.bindItemTouchDownListener(mItemTouchDownListener);
-            holder.bindItemTouchUpListener(mItemTouchUpListener);
+            holder.bindClickListener(itemClickListener);
+            holder.bindLongClickListener(itemLongClickListener);
+            holder.bindDoubleClickListener(itemDoubleClickListener);
+            holder.bindItemSelection(itemSelectionListener);
+            holder.bindItemTouchDownListener(itemTouchDownListener);
+            holder.bindItemTouchUpListener(itemTouchUpListener);
         }
 
         @Override
@@ -330,7 +330,7 @@ public class WindRecycleView extends RecyclerView {
 
         @Override
         public int getItemViewType(int position) {
-            if (mDataset.get(position) == null) {
+            if (dataset.get(position) == null) {
                 return VIEW_TYPE_LOADING;
             }
             return VIEW_TYPE_ITEM;
@@ -338,7 +338,7 @@ public class WindRecycleView extends RecyclerView {
 
         @Override
         public int getItemCount() {
-            return mDataset != null ? mDataset.size() : 0;
+            return dataset != null ? dataset.size() : 0;
         }
 
         /* ---------------------- STATIC ------------------------- */
@@ -363,24 +363,14 @@ public class WindRecycleView extends RecyclerView {
          * @return bundle data
          */
         public CWBundle bundle() {
-            return mBundle;
+            return bundle;
         }
 
         /**
          * @return dataset
          */
         public List<T> getData() {
-            return mDataset;
-        }
-
-        /**
-         * Get data by position
-         *
-         * @param position item position
-         * @return data
-         */
-        public T getData(int position) {
-            return mDataset.get(position);
+            return dataset;
         }
 
         /**
@@ -391,8 +381,18 @@ public class WindRecycleView extends RecyclerView {
         public void setData(List<T> dataset) {
             mPreSelectedItem = null;
             mSelectedItem = null;
-            mDataset = dataset;
+            this.dataset = dataset;
             notifyDataSetChanged();
+        }
+
+        /**
+         * Get data by position
+         *
+         * @param position item position
+         * @return data
+         */
+        public T getData(int position) {
+            return dataset.get(position);
         }
 
         /**
@@ -402,15 +402,15 @@ public class WindRecycleView extends RecyclerView {
          * @param data     item data
          */
         public void addData(int position, T data) {
-            mDataset.add(position, data);
+            dataset.add(position, data);
             notifyItemInserted(position);
 
             // update position of previous and current selected items
             if (mPreSelectedItem != null && mPreSelectedItem.getPosition() >= position) {
-                mPreSelectedItem.mPosition += 1;
+                mPreSelectedItem.position += 1;
             }
             if (mSelectedItem != null && mSelectedItem.getPosition() >= position) {
-                mSelectedItem.mPosition += 1;
+                mSelectedItem.position += 1;
             }
         }
 
@@ -420,8 +420,8 @@ public class WindRecycleView extends RecyclerView {
          * @param data item data
          */
         public void addData(T data) {
-            mDataset.add(data);
-            notifyItemInserted(mDataset.size() - 1);
+            dataset.add(data);
+            notifyItemInserted(dataset.size() - 1);
         }
 
         /**
@@ -431,7 +431,7 @@ public class WindRecycleView extends RecyclerView {
          * @param data     data item
          */
         public void updateData(int position, T data) {
-            mDataset.set(position, data);
+            dataset.set(position, data);
             notifyItemChanged(position);
         }
 
@@ -442,7 +442,7 @@ public class WindRecycleView extends RecyclerView {
          * @return removed data
          */
         public T removeData(T data) {
-            int position = mDataset.indexOf(data);
+            int position = dataset.indexOf(data);
             return removeData(position);
         }
 
@@ -452,8 +452,8 @@ public class WindRecycleView extends RecyclerView {
          * @param position item's position
          */
         public T removeData(int position) {
-            T data = mDataset.get(position);
-            mDataset.remove(position);
+            T data = dataset.get(position);
+            dataset.remove(position);
             notifyItemRemoved(position);
 
             // update position of previous and current selected items
@@ -461,14 +461,14 @@ public class WindRecycleView extends RecyclerView {
                 if (mPreSelectedItem.getPosition() == position) {
                     mPreSelectedItem = null;
                 } else if (mPreSelectedItem.getPosition() > position) {
-                    mPreSelectedItem.mPosition -= 1;
+                    mPreSelectedItem.position -= 1;
                 }
             }
             if (mSelectedItem != null) {
                 if (mSelectedItem.getPosition() == position) {
                     mSelectedItem = null;
                 } else if (mSelectedItem.getPosition() > position) {
-                    mSelectedItem.mPosition -= 1;
+                    mSelectedItem.position -= 1;
                 }
             }
             return data;
@@ -478,7 +478,7 @@ public class WindRecycleView extends RecyclerView {
          * Clear all dataset
          */
         public void clearData() {
-            mDataset.clear();
+            dataset.clear();
             notifyDataSetChanged();
         }
 
@@ -493,9 +493,9 @@ public class WindRecycleView extends RecyclerView {
          * Remove loading item
          */
         private void removeLoading() {
-            int size = mDataset.size();
-            if (size > 0 && mDataset.get(size - 1) == null) {
-                mDataset.remove(size - 1);
+            int size = dataset.size();
+            if (size > 0 && dataset.get(size - 1) == null) {
+                dataset.remove(size - 1);
                 notifyItemRemoved(size);
             }
         }
@@ -534,7 +534,7 @@ public class WindRecycleView extends RecyclerView {
          * @return adapter
          */
         public Adapter<T> setOnItemClickListener(OnItemClickListener<T> listener) {
-            mItemClickListener = listener;
+            itemClickListener = listener;
             return this;
         }
 
@@ -545,7 +545,7 @@ public class WindRecycleView extends RecyclerView {
          * @return adapter
          */
         public Adapter<T> setOnItemLongClickListener(OnItemLongClickListener<T> listener) {
-            mItemLongClickListener = listener;
+            itemLongClickListener = listener;
             return this;
         }
 
@@ -556,7 +556,7 @@ public class WindRecycleView extends RecyclerView {
          * @return adapter
          */
         public Adapter<T> setOnItemDoubleClickListener(OnItemDoubleClickListener<T> listener) {
-            mItemDoubleClickListener = listener;
+            itemDoubleClickListener = listener;
             return this;
         }
 
@@ -567,7 +567,7 @@ public class WindRecycleView extends RecyclerView {
          * @return adapter
          */
         public Adapter<T> setOnItemTouchDownListener(OnItemTouchDownListener<T> listener) {
-            mItemTouchDownListener = listener;
+            itemTouchDownListener = listener;
             return this;
         }
 
@@ -578,7 +578,7 @@ public class WindRecycleView extends RecyclerView {
          * @return adapter
          */
         public Adapter<T> setOnItemTouchUpListener(OnItemTouchUpListener<T> listener) {
-            mItemTouchUpListener = listener;
+            itemTouchUpListener = listener;
             return this;
         }
 
@@ -688,47 +688,47 @@ public class WindRecycleView extends RecyclerView {
     public static class ViewHolder<T> extends RecyclerView.ViewHolder {
 
         // touched view
-        private View mView;
+        private View touchedView;
 
         // item's data
-        private T mData;
+        private T data;
 
         // item click listener
-        private Adapter.OnItemSelectionListener<T> mItemSelectionListener;
-        private Adapter.OnItemClickListener<T> mItemClickListener;
-        private Adapter.OnItemLongClickListener<T> mItemLongClickListener;
-        private Adapter.OnItemDoubleClickListener<T> mItemDoubleClickListener;
-        private Adapter.OnItemTouchDownListener<T> mItemTouchDownListener;
-        private Adapter.OnItemTouchUpListener<T> mItemTouchUpListener;
-        private GestureDetector mGestureDetector = new GestureDetector(itemView.getContext(), new GestureDetector.SimpleOnGestureListener() {
+        private Adapter.OnItemSelectionListener<T> itemSelectionListener;
+        private Adapter.OnItemClickListener<T> itemClickListener;
+        private Adapter.OnItemLongClickListener<T> itemLongClickListener;
+        private Adapter.OnItemDoubleClickListener<T> itemDoubleClickListener;
+        private Adapter.OnItemTouchDownListener<T> itemTouchDownListener;
+        private Adapter.OnItemTouchUpListener<T> itemTouchUpListener;
+        private GestureDetector gestureDetector = new GestureDetector(itemView.getContext(), new GestureDetector.SimpleOnGestureListener() {
             @Override
             public void onLongPress(MotionEvent e) {
-                if (mItemSelectionListener.onSelection(ViewHolder.this)) {
+                if (itemSelectionListener.onSelection(ViewHolder.this)) {
                     return;
                 }
-                if (mItemLongClickListener != null) {
-                    mItemLongClickListener.onLongClick(ViewHolder.this, mView, getAdapterData());
+                if (itemLongClickListener != null) {
+                    itemLongClickListener.onLongClick(ViewHolder.this, touchedView, getAdapterData());
                 }
             }
 
             @Override
             public boolean onDoubleTap(MotionEvent e) {
-                if (mItemSelectionListener.onSelection(ViewHolder.this)) {
+                if (itemSelectionListener.onSelection(ViewHolder.this)) {
                     return true;
                 }
-                if (mItemDoubleClickListener != null) {
-                    mItemDoubleClickListener.onDoubleClick(ViewHolder.this, mView, getAdapterData());
+                if (itemDoubleClickListener != null) {
+                    itemDoubleClickListener.onDoubleClick(ViewHolder.this, touchedView, getAdapterData());
                 }
                 return true;
             }
 
             @Override
             public boolean onSingleTapConfirmed(MotionEvent e) {
-                if (mItemSelectionListener.onSelection(ViewHolder.this)) {
+                if (itemSelectionListener.onSelection(ViewHolder.this)) {
                     return true;
                 }
-                if (mItemClickListener != null) {
-                    mItemClickListener.onClick(ViewHolder.this, mView, getAdapterData());
+                if (itemClickListener != null) {
+                    itemClickListener.onClick(ViewHolder.this, touchedView, getAdapterData());
                 }
                 return true;
             }
@@ -740,21 +740,21 @@ public class WindRecycleView extends RecyclerView {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     v.performClick();
-                    mView = v;
+                    touchedView = v;
                     switch (event.getActionMasked()) {
                         case MotionEvent.ACTION_DOWN:
-                            if (mItemTouchDownListener != null) {
-                                mItemTouchDownListener.onTouchDown(ViewHolder.this, mView, getAdapterData());
+                            if (itemTouchDownListener != null) {
+                                itemTouchDownListener.onTouchDown(ViewHolder.this, touchedView, getAdapterData());
                             }
                             break;
                         case MotionEvent.ACTION_UP:
                         case MotionEvent.ACTION_CANCEL:
-                            if (mItemTouchUpListener != null) {
-                                mItemTouchUpListener.onTouchUp(ViewHolder.this, mView, getAdapterData());
+                            if (itemTouchUpListener != null) {
+                                itemTouchUpListener.onTouchUp(ViewHolder.this, touchedView, getAdapterData());
                             }
                             break;
                     }
-                    mGestureDetector.onTouchEvent(event);
+                    gestureDetector.onTouchEvent(event);
                     return true;
                 }
             });
@@ -774,7 +774,7 @@ public class WindRecycleView extends RecyclerView {
          */
         @NonNull
         public final T getAdapterData() {
-            return mData;
+            return data;
         }
 
         /**
@@ -783,7 +783,7 @@ public class WindRecycleView extends RecyclerView {
          * @param data data
          */
         protected void bindData(T data) {
-            mData = data;
+            this.data = data;
         }
 
         /**
@@ -792,7 +792,7 @@ public class WindRecycleView extends RecyclerView {
          * @param listener item click listener
          */
         private void bindClickListener(Adapter.OnItemClickListener<T> listener) {
-            mItemClickListener = listener;
+            itemClickListener = listener;
         }
 
         /**
@@ -801,7 +801,7 @@ public class WindRecycleView extends RecyclerView {
          * @param listener item  long click listener
          */
         private void bindLongClickListener(Adapter.OnItemLongClickListener<T> listener) {
-            mItemLongClickListener = listener;
+            itemLongClickListener = listener;
         }
 
         /**
@@ -810,7 +810,7 @@ public class WindRecycleView extends RecyclerView {
          * @param listener item  double click listener
          */
         private void bindDoubleClickListener(Adapter.OnItemDoubleClickListener<T> listener) {
-            mItemDoubleClickListener = listener;
+            itemDoubleClickListener = listener;
         }
 
         /**
@@ -819,7 +819,7 @@ public class WindRecycleView extends RecyclerView {
          * @param listener on item selection listener
          */
         private void bindItemSelection(Adapter.OnItemSelectionListener<T> listener) {
-            mItemSelectionListener = listener;
+            itemSelectionListener = listener;
         }
 
         /**
@@ -828,7 +828,7 @@ public class WindRecycleView extends RecyclerView {
          * @param listener on item touch down listener
          */
         private void bindItemTouchDownListener(Adapter.OnItemTouchDownListener<T> listener) {
-            mItemTouchDownListener = listener;
+            itemTouchDownListener = listener;
         }
 
         /**
@@ -837,7 +837,7 @@ public class WindRecycleView extends RecyclerView {
          * @param listener on item touch down listener
          */
         private void bindItemTouchUpListener(Adapter.OnItemTouchUpListener<T> listener) {
-            mItemTouchUpListener = listener;
+            itemTouchUpListener = listener;
         }
     }
 
@@ -858,28 +858,28 @@ public class WindRecycleView extends RecyclerView {
      */
     public static class ItemHolder<T> {
         // position of data in list
-        private int mPosition;
+        private int position;
 
         // data
-        private T mData;
+        private T data;
 
         private ItemHolder(int position, T data) {
-            mPosition = position;
-            mData = data;
+            this.position = position;
+            this.data = data;
         }
 
         /**
          * @return data's position in list
          */
         public int getPosition() {
-            return mPosition;
+            return position;
         }
 
         /**
          * @return data value
          */
         public T getData() {
-            return mData;
+            return data;
         }
     }
 }

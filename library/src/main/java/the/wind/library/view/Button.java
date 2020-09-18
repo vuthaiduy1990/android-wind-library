@@ -53,8 +53,8 @@ public class Button extends LinearLayout {
 
     // views
     private TextView _textView;
-    private ImageView _icon;
-    private LottieAnimationView _lottieIcon;
+    private ImageView _iconView;
+    private LottieAnimationView _lottieIconView;
     private View _space;
 
     // icon resource
@@ -84,8 +84,8 @@ public class Button extends LinearLayout {
 
         // bind views
         _textView = findViewById(R.id._textView);
-        _icon = findViewById(R.id._icon);
-        _lottieIcon = findViewById(R.id._lottieIcon);
+        _iconView = findViewById(R.id._iconView);
+        _lottieIconView = findViewById(R.id._lottieIconView);
         _space = findViewById(R.id._space);
 
         // bind attributes
@@ -111,8 +111,8 @@ public class Button extends LinearLayout {
                     R.styleable.Button_iconSize,
                     getResources().getDimension(R.dimen.wl_icon_small));
             RelativeLayout.LayoutParams iconLayout = new RelativeLayout.LayoutParams((int) iconSize, (int) iconSize);
-            _icon.setLayoutParams(iconLayout);
-            _lottieIcon.setLayoutParams(iconLayout);
+            _iconView.setLayoutParams(iconLayout);
+            _lottieIconView.setLayoutParams(iconLayout);
             judgeIcon();
 
             // bind text attributes
@@ -175,10 +175,10 @@ public class Button extends LinearLayout {
      * @return icon (animation or static icon)
      */
     public View icon() {
-        if (_lottieIcon.getVisibility() == VISIBLE) {
-            return _lottieIcon;
+        if (_lottieIconView.getVisibility() == VISIBLE) {
+            return _lottieIconView;
         }
-        return _icon;
+        return _iconView;
     }
 
     /**
@@ -245,30 +245,30 @@ public class Button extends LinearLayout {
         if (mCustomAnimRes != 0) {
             // use animation icon
             useAnim = true;
-            _lottieIcon.setAnimation(mCustomAnimRes);
+            _lottieIconView.setAnimation(mCustomAnimRes);
 
         } else if (mCustomIconRes != 0) {
             // use static icon
             useAnim = false;
-            _icon.setImageResource(mCustomIconRes);
+            _iconView.setImageResource(mCustomIconRes);
 
         } else if (mInlineIcon != null) {
             // use inline icon
             useAnim = mInlineIcon.useAnimation();
             if (useAnim) {
-                _lottieIcon.setAnimation(mInlineIcon.getIconResource());
+                _lottieIconView.setAnimation(mInlineIcon.getIconResource());
             } else {
-                _icon.setImageResource(mInlineIcon.getIconResource());
+                _iconView.setImageResource(mInlineIcon.getIconResource());
             }
         } else {
             // hide icon
-            _lottieIcon.setVisibility(GONE);
-            _icon.setVisibility(GONE);
+            _lottieIconView.setVisibility(GONE);
+            _iconView.setVisibility(GONE);
             _space.setVisibility(isSpacing() ? VISIBLE : GONE);
             return;
         }
-        _lottieIcon.setVisibility(useAnim ? VISIBLE : GONE);
-        _icon.setVisibility(!useAnim ? VISIBLE : GONE);
+        _lottieIconView.setVisibility(useAnim ? VISIBLE : GONE);
+        _iconView.setVisibility(!useAnim ? VISIBLE : GONE);
         _space.setVisibility(isSpacing() ? VISIBLE : GONE);
     }
 
@@ -282,8 +282,8 @@ public class Button extends LinearLayout {
         if (visible) {
             judgeIcon();
         } else {
-            _icon.setVisibility(GONE);
-            _lottieIcon.setVisibility(GONE);
+            _iconView.setVisibility(GONE);
+            _lottieIconView.setVisibility(GONE);
         }
         _space.setVisibility(isSpacing() ? VISIBLE : GONE);
         return this;
@@ -390,7 +390,7 @@ public class Button extends LinearLayout {
      */
     private boolean isSpacing() {
         return _textView.getVisibility() == View.VISIBLE
-                && (_icon.getVisibility() == VISIBLE || _lottieIcon.getVisibility() == View.VISIBLE);
+                && (_iconView.getVisibility() == VISIBLE || _lottieIconView.getVisibility() == View.VISIBLE);
     }
 
     /* ---------------------- METHOD ------------------------- */

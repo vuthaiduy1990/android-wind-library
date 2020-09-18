@@ -113,13 +113,13 @@ package the.wind.library.async;
  */
 public final class Promise<Model> {
 
-    private Promise<Model> mCurrentHolderPromise;
-    private Promise mNextHolderPromise; // placeholder promise which hold listener for real promise
+    private Promise<Model> currentHolderPromise;
+    private Promise nextHolderPromise; // placeholder promise which hold listener for real promise
 
     // Listeners
-    private OnSuccessListener mSuccessListener;
-    private OnExceptionListener mExceptionListener;
-    private OnFinishListener mFinishListener;
+    private OnSuccessListener successListener;
+    private OnExceptionListener exceptionListener;
+    private OnFinishListener finishListener;
 
     /* ---------------------- OVERRIDE ----------------------- */
 
@@ -151,9 +151,9 @@ public final class Promise<Model> {
      */
     @SuppressWarnings("unchecked")
     public <NextDataModel> Promise<NextDataModel> then(OnSuccessListener<Model, NextDataModel> listener) {
-        mSuccessListener = listener;
-        mNextHolderPromise = new Promise<NextDataModel>();
-        return mNextHolderPromise;
+        successListener = listener;
+        nextHolderPromise = new Promise<NextDataModel>();
+        return nextHolderPromise;
     }
 
     /**
@@ -163,9 +163,9 @@ public final class Promise<Model> {
      * @return next promise
      */
     public Promise<?> exception(OnExceptionListener listener) {
-        mExceptionListener = listener;
-        mNextHolderPromise = new Promise<>();
-        return mNextHolderPromise;
+        exceptionListener = listener;
+        nextHolderPromise = new Promise<>();
+        return nextHolderPromise;
     }
 
     /**
@@ -175,7 +175,7 @@ public final class Promise<Model> {
      * @param listener finish listener
      */
     public void finish(OnFinishListener listener) {
-        mFinishListener = listener;
+        finishListener = listener;
     }
 
     /**
@@ -186,31 +186,31 @@ public final class Promise<Model> {
     @SuppressWarnings("unchecked")
     public void resolve(Model data) {
         // Reach the end of promise chain  -> trigger finish listener
-        if (mFinishListener != null) {
-            mFinishListener.onFinish(null, data);
+        if (finishListener != null) {
+            finishListener.onFinish(null, data);
             return;
         }
 
-        if (mCurrentHolderPromise == null) /*no holder promise*/ {
+        if (currentHolderPromise == null) /*no holder promise*/ {
             // execute success callback and retrieve the real next promise
-            if (mSuccessListener != null) {
-                IPromise realNext = mSuccessListener.onSuccess(data);
+            if (successListener != null) {
+                IPromise realNext = successListener.onSuccess(data);
                 if (realNext != null) {
                     // bind holder promise to real promise
                     // --->> so that when real promise execute operation,
                     // --->> it will trigger the callback listener hold by holder promise
-                    Promise.wrap(realNext).bind(mNextHolderPromise);
+                    Promise.wrap(realNext).bind(nextHolderPromise);
                 } else {
                     // no next promise returned
                     // --->> this is the last one (should be Finish promise)
                     // --->> resolve Finish promise which then trigger OnFinishListener callback
-                    mNextHolderPromise.resolve(data);
+                    nextHolderPromise.resolve(data);
                 }
             }
 
         } else {
             // Resolve current holder promise which then trigger a callback listener
-            mCurrentHolderPromise.resolve(data);
+            currentHolderPromise.resolve(data);
         }
     }
 
@@ -222,23 +222,23 @@ public final class Promise<Model> {
     @SuppressWarnings("unchecked")
     public void resolve(Throwable throwable) {
         // Reach the end of promise chain  -> trigger finish listener
-        if (mFinishListener != null) {
-            mFinishListener.onFinish(throwable, null);
+        if (finishListener != null) {
+            finishListener.onFinish(throwable, null);
             return;
         }
 
         // Reach any exception listener in promise chain
         // ---> trigger exception event
-        if (mExceptionListener != null) {
-            mExceptionListener.onException(throwable);
+        if (exceptionListener != null) {
+            exceptionListener.onException(throwable);
         }
 
         // Resolve the next promise in promise chain
-        if (mCurrentHolderPromise != null) {
-            mCurrentHolderPromise.resolve(throwable);
+        if (currentHolderPromise != null) {
+            currentHolderPromise.resolve(throwable);
 
-        } else if (mNextHolderPromise != null) {
-            mNextHolderPromise.resolve(throwable);
+        } else if (nextHolderPromise != null) {
+            nextHolderPromise.resolve(throwable);
         }
     }
 
@@ -248,7 +248,7 @@ public final class Promise<Model> {
      * @param holder holder promise
      */
     private void bind(Promise<Model> holder) {
-        mCurrentHolderPromise = holder;
+        currentHolderPromise = holder;
     }
 
     /* ---------------------- INNER CLASS -------------------- */

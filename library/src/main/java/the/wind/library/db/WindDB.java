@@ -47,7 +47,7 @@ public class WindDB extends SQLiteOpenHelper {
     private SQLiteDatabase _sqLiteDatabase;
 
     // application context
-    private Context mContext;
+    private Context context;
 
     /**
      * Constructor
@@ -57,8 +57,8 @@ public class WindDB extends SQLiteOpenHelper {
      * @param version  database version
      */
     private WindDB(Context context, String database, int version) {
-        super(context, database, null, version);
-        mContext = context;
+        super(context.getApplicationContext(), database, null, version);
+        this.context = context.getApplicationContext();
     }
 
     /* ---------------------- OVERRIDE ----------------------- */
@@ -399,7 +399,7 @@ public class WindDB extends SQLiteOpenHelper {
                 entity.setCreatedDate(date);
                 entity.setUpdateDate(date);
                 if (entity.getHash() == null) {
-                    entity.setHash(CWAndroidUtils.randomHash(mContext, entity.getClass().getName()));
+                    entity.setHash(CWAndroidUtils.randomHash(context, entity.getClass().getName()));
                 }
 
                 // insert

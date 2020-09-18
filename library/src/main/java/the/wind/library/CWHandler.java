@@ -48,9 +48,9 @@ import androidx.annotation.Nullable;
  */
 public abstract class CWHandler<T> {
 
-    private CWBundle mBundle = new CWBundle();
-    private State mState = State.RUNNING;
-    private String mTaskName;
+    private CWBundle bundle = new CWBundle();
+    private State state = State.RUNNING;
+    private String taskName;
 
 
     /**
@@ -66,7 +66,7 @@ public abstract class CWHandler<T> {
      * @param taskName task name
      */
     public CWHandler(String taskName) {
-        mTaskName = taskName;
+        this.taskName = taskName;
     }
 
     /* ---------------------- OVERRIDE ----------------------- */
@@ -105,7 +105,7 @@ public abstract class CWHandler<T> {
      */
     @Nullable
     public String getTaskName() {
-        return mTaskName;
+        return taskName;
     }
 
     /**
@@ -113,7 +113,7 @@ public abstract class CWHandler<T> {
      */
     @NonNull
     public CWBundle bundle() {
-        return mBundle;
+        return bundle;
     }
 
     /**
@@ -123,7 +123,7 @@ public abstract class CWHandler<T> {
      */
     @NonNull
     public State state() {
-        return mState;
+        return state;
     }
 
     /* ---------------------- METHOD ------------------------- */
@@ -132,21 +132,21 @@ public abstract class CWHandler<T> {
      * Resume the processing
      */
     public void resume() {
-        mState = State.RUNNING;
+        state = State.RUNNING;
     }
 
     /**
      * Pause the processing
      */
     public void pause() {
-        mState = State.PAUSED;
+        state = State.PAUSED;
     }
 
     /**
      * Destroy the processing
      */
     public void destroy() {
-        mState = State.DESTROYED;
+        state = State.DESTROYED;
     }
 
     /* ---------------------- INNER CLASS -------------------- */

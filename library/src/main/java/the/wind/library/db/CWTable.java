@@ -21,32 +21,32 @@ public abstract class CWTable implements Serializable {
     // and may be changed each time we re-insert (import) data to database
     // ⚠⚠⚠ Do not modify this field
     @Column(name = "hash")
-    private String mHash;
+    private String hash;
 
     // sync state
-    private SyncState mSyncState = SyncState.NEW;
+    private SyncState syncState = SyncState.NEW;
 
     // table version.
     // Normally it should be the same as app/database version
-    private int mVersion;
+    private int version;
 
     // date
-    private Date mCreatedDate;
-    private Date mUpdatedDate;
+    private Date createdDate;
+    private Date updatedDate;
 
     // offline state.
     // true -> Table/model is retrieved from offline database
     // false -> Table/model is retrieved from server (online)
-    private transient boolean mOffline = false;
+    private transient boolean offline = false;
 
     // attaching
-    private transient CWBundle mBundle;
+    private transient CWBundle bundle;
 
     /**
      * Constructor
      */
     protected CWTable() {
-        mBundle = new CWBundle();
+        bundle = new CWBundle();
         Date now = new Date();
         setCreatedDate(now);
         setUpdateDate(now);
@@ -65,7 +65,7 @@ public abstract class CWTable implements Serializable {
      */
     @NonNull
     public CWBundle bundle() {
-        return mBundle;
+        return bundle;
     }
 
     /**
@@ -74,7 +74,7 @@ public abstract class CWTable implements Serializable {
      * @return hash string
      */
     public String getHash() {
-        return mHash;
+        return hash;
     }
 
     /**
@@ -83,7 +83,7 @@ public abstract class CWTable implements Serializable {
      * @param hash hash string
      */
     public void setHash(String hash) {
-        mHash = hash;
+        this.hash = hash;
     }
 
     /**
@@ -92,7 +92,7 @@ public abstract class CWTable implements Serializable {
      * @return state of data
      */
     public SyncState getSyncState() {
-        return mSyncState;
+        return syncState;
     }
 
     /**
@@ -101,14 +101,14 @@ public abstract class CWTable implements Serializable {
      * @param state state of data
      */
     public void setSyncState(@NonNull SyncState state) {
-        mSyncState = state;
+        syncState = state;
     }
 
     /**
      * @return created date
      */
     public Date getCreatedDate() {
-        return mCreatedDate;
+        return createdDate;
     }
 
     /**
@@ -117,14 +117,14 @@ public abstract class CWTable implements Serializable {
      * @param createdDate created date
      */
     public void setCreatedDate(Date createdDate) {
-        mCreatedDate = createdDate;
+        this.createdDate = createdDate;
     }
 
     /**
      * @return updated date
      */
     public Date getUpdatedDate() {
-        return mUpdatedDate;
+        return updatedDate;
     }
 
     /**
@@ -133,7 +133,7 @@ public abstract class CWTable implements Serializable {
      * @param updatedDate updated date
      */
     public void setUpdateDate(Date updatedDate) {
-        mUpdatedDate = updatedDate;
+        this.updatedDate = updatedDate;
     }
 
     /**
@@ -142,21 +142,21 @@ public abstract class CWTable implements Serializable {
      * @return true if offline
      */
     public boolean isOffline() {
-        return mOffline;
+        return offline;
     }
 
     /**
      * Set model offline
      */
     protected void setOffline() {
-        mOffline = true;
+        offline = true;
     }
 
     /**
      * @return version
      */
     public int getVersion() {
-        return mVersion;
+        return version;
     }
 
     /**
@@ -166,7 +166,7 @@ public abstract class CWTable implements Serializable {
      * @param version table version.
      */
     protected void setVersion(int version) {
-        mVersion = version;
+        this.version = version;
     }
 
     /* ---------------------- METHOD ------------------------- */
