@@ -8,7 +8,7 @@ import java.util.Map;
 public final class CWBundle implements Serializable {
 
     // tagged objects
-    private Map<String, Object> mTags = new HashMap<>();
+    private Map<String, Object> tags = new HashMap<>();
 
     /* ---------------------- GET-SET ------------------------ */
 
@@ -18,7 +18,7 @@ public final class CWBundle implements Serializable {
      * @return all tagged object
      */
     public Map<String, Object> values() {
-        return Collections.unmodifiableMap(mTags);
+        return Collections.unmodifiableMap(tags);
     }
 
     /**
@@ -28,7 +28,7 @@ public final class CWBundle implements Serializable {
      * @return tagged object
      */
     public Object get(String key) {
-        return mTags.get(key);
+        return tags.get(key);
     }
 
     /**
@@ -38,7 +38,7 @@ public final class CWBundle implements Serializable {
      * @return tagged object
      */
     public Object get(Class<?> clazz) {
-        return mTags.get(clazz.getName());
+        return tags.get(clazz.getName());
     }
 
     /**
@@ -48,7 +48,7 @@ public final class CWBundle implements Serializable {
      * @param taggedObj tagged object
      */
     public void set(String key, Object taggedObj) {
-        mTags.put(key, taggedObj);
+        tags.put(key, taggedObj);
     }
 
     /**
@@ -58,7 +58,7 @@ public final class CWBundle implements Serializable {
      * @param taggedObj tagged object
      */
     public void set(Class<?> clazz, Object taggedObj) {
-        mTags.put(clazz.getName(), taggedObj);
+        tags.put(clazz.getName(), taggedObj);
     }
 
     /**
@@ -67,7 +67,7 @@ public final class CWBundle implements Serializable {
      * @param key key
      */
     public void remove(String key) {
-        mTags.remove(key);
+        tags.remove(key);
     }
 
     /* ---------------------- METHOD ------------------------- */
