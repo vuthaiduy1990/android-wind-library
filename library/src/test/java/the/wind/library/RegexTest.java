@@ -11,6 +11,12 @@ import java.util.regex.Pattern;
 public class RegexTest {
 
     @Test
+    public void testEscapeRegexChars() {
+        String escape = CWRegex.SPECIAL_CHARS.replaceAll(CWRegex.REGEX_ESCAPE_SPECIAL_REGEX_CHARS, "\\\\$0");
+        Assert.assertEquals("\\<\\>\\(\\)\\[\\]\\{\\}\\\\\\^\\-\\=\\$\\!\\|\\?\\*\\+\\.", escape);
+    }
+
+    @Test
     public void testRegex_REGEX_SPACES() {
         // ---->>> REGEX_SPACES ---->>> String.split()
         {

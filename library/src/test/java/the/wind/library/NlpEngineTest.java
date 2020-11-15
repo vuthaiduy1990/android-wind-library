@@ -560,6 +560,22 @@ public final class NlpEngineTest {
 
     }
 
+    @Test
+    public void testRegexSpecialCharacter() {
+        CWNLPEngine.Options opts = new CWNLPEngine.Options();
+        opts.useSpecialChars = true;
+        CWNLPEngine<NLPString> engine = new CWNLPEngine<>(null, opts);
+        NLPString target = new NLPString("Color the wind " + CWRegex.SPECIAL_CHARS);
+        engine.load(target);
+        engine.load(new NLPString("Color the wind "));
+        engine.build();
+        for (Character c : CWRegex.SPECIAL_CHARS.toCharArray()) {
+            List<NLPMatchResult<NLPString>> result = doMatching(engine, c.toString());
+            Assert.assertEquals(1, result.size());
+            Assert.assertEquals(target, result.get(0).target);
+        }
+    }
+
     private <T extends INLPText> List<NLPMatchResult<T>> doMatching(CWNLPEngine<T> engine, CharSequence searchKey) {
         final List<NLPMatchResult<T>> list = new LinkedList<>();
         engine.doMatching(searchKey, new CWCallback<NLPMatchResult<T>>() {

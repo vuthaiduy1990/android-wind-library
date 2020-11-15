@@ -314,6 +314,9 @@ public final class CWNLPEngine<T extends INLPText> {
      */
     private Map<String, Pattern> buildSearchPattern(CharSequence searchKey) {
         String _search = preProcess(new NLPString(searchKey));
+        // escape the special regex character
+        _search = _search.replaceAll(CWRegex.REGEX_ESCAPE_SPECIAL_REGEX_CHARS, "\\\\$0");
+
         // split the search string into array of keys
         String regex = CWStringUtils.join(
                 "|",

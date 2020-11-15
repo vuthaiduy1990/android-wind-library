@@ -57,8 +57,7 @@ public class CWStringUtils {
         while (it.hasNext()) {
             builder.append(delimiter).append(it.next());
         }
-        String result = builder.toString();
-        return result.length() > 0 ? result.substring(1) : result;
+        return builder.length() > 0 ? builder.substring(1) : "";
     }
 
     /**
