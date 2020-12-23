@@ -45,6 +45,16 @@
     <color name="wl_gray_light">#e5e5e4</color>
     <color name="wl_gray_pressed">#9d9d9d</color>
 
+    <!-- ||||||||||||||||||||||| 7 Pokemon Color |||||||||||||||||||||| -->
+    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <color name="poke_color_1">#7dc8b3</color>
+    <color name="poke_color_2">#87c876</color>
+    <color name="poke_color_3">#6ac5e6</color>
+    <color name="poke_color_4">#e0e2d2</color>
+    <color name="poke_color_6">#e8835c</color>
+    <color name="poke_color_5">#d5bd6a</color>
+    <color name="poke_color_7">#ac9c9c</color>
+
     <!-- |||||||||||||||||||||||||| Button ||||||||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     <color name="wl_button_text_white">@color/wl_white</color>
