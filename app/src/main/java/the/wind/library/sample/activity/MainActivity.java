@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
         menu.findItem(R.id.action_menu_recycle_anim_fade).setVisible(rvItemVisible);
         menu.findItem(R.id.action_menu_recycle_anim_left_right).setVisible(rvItemVisible);
         menu.findItem(R.id.action_menu_recycle_anim_right_left).setVisible(rvItemVisible);
+        menu.findItem(R.id.action_menu_recycle_anim_right_left).setVisible(rvItemVisible);
+        menu.findItem(R.id.action_menu_recycle_enable_swap_position).setVisible(rvItemVisible);
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -132,6 +134,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_menu_recycle_anim_right_left:
                 if (currentPage instanceof RecycleViewPage) {
                     ((RecycleViewPage) currentPage).changeLayoutAnim(WindRecycleView.LayoutAnim.RIGHT_2_LEFT);
+                }
+                break;
+            case R.id.action_menu_recycle_enable_swap_position:
+                if (currentPage instanceof RecycleViewPage) {
+                    ((RecycleViewPage) currentPage).enableSwapPosition();
                 }
                 break;
             default:

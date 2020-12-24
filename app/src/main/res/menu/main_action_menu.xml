@@ -45,6 +45,13 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_menu_recycle_enable_swap_position"
+        android:orderInCategory="5"
+        android:title="@string/action_menu_recycle_enable_swap_position"
+        android:visible="false"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_menu_settings"
         android:orderInCategory="6"
         android:title="@string/action_menu_settings"

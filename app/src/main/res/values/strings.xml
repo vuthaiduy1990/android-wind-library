@@ -20,6 +20,7 @@
     <string name="action_menu_recycle_anim_fade">Anim: Fade</string>
     <string name="action_menu_recycle_anim_left_right">Anim: Left2Right</string>
     <string name="action_menu_recycle_anim_right_left">Anim: Right2Left</string>
+    <string name="action_menu_recycle_enable_swap_position">Enable Swap Position</string>
     <string name="action_menu_settings">Settings</string>
 
     <string name="button_primary">Primary</string>

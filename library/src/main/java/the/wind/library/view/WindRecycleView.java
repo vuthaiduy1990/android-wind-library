@@ -1,6 +1,10 @@
 package the.wind.library.view;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -10,17 +14,20 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 
+import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import the.wind.library.CWBundle;
 import the.wind.library.CWHandler;
 import the.wind.library.R;
+import the.wind.library.utils.CWImageUtils;
 
 /**
  * RecycleView Wrapper
@@ -38,6 +45,7 @@ import the.wind.library.R;
 public class WindRecycleView extends RecyclerView {
 
     public static final int LOADMORE_THRESHOLD = 10;
+    private static final float SWIPE_WIDTH_RATIO = 1f / 5f;
 
     // threshold. (number of item before scrolling to end)
     // trigger loadmore before scrolling go nearly to end
@@ -46,11 +54,111 @@ public class WindRecycleView extends RecyclerView {
     // loading sate
     private boolean isLoading = false;
 
+    // enable swipe to remove
+    private boolean enableSwipeToRemove = false;
+
+    // enable swap position
+    private boolean enableSwapPosition = false;
+
+    // left and right swipe to remove icon
+    private Bitmap leftSwipeIcon;
+    private Bitmap rightSwipeIcon;
+    private float swipeIconSize;
+
     // Listener
     private OnLoadMoreListener loadMoreListener;
 
+    // Swipe to remove listener
+    private OnSwipeToRemoveListener swipeToRemoveListener;
+
+    // Move position listener
+    private OnSwapPositionListener swapPositionListener;
+
     // bundle data
     private CWBundle bundle = new CWBundle();
+
+    // Item touch helper
+    private ItemTouchHelper.Callback touchCallback = new ItemTouchHelper.Callback() {
+
+        @Override
+        public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+            int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+            int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
+            return makeMovementFlags(dragFlags, swipeFlags);
+        }
+
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            if (enableSwapPosition) {
+                Adapter<?> adapter = (Adapter<?>) getAdapter();
+                int fromPos = viewHolder.getAdapterPosition();
+                int toPos = target.getAdapterPosition();
+                if (fromPos < toPos) {
+                    for (int i = fromPos; i < toPos; i++) {
+                        Collections.swap(adapter.getData(), i, i + 1);
+                    }
+                } else {
+                    for (int i = fromPos; i > toPos; i--) {
+                        Collections.swap(adapter.getData(), i, i - 1);
+                    }
+                }
+                adapter.notifyItemMoved(fromPos, toPos);
+                if (swapPositionListener != null) {
+                    swapPositionListener.onSwapped(recyclerView, viewHolder, target);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public boolean isLongPressDragEnabled() {
+            return enableSwapPosition;
+        }
+
+        @Override
+        public boolean isItemViewSwipeEnabled() {
+            return enableSwipeToRemove;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            if (swipeToRemoveListener != null) {
+                swipeToRemoveListener.onSwiped(viewHolder, direction);
+            }
+        }
+
+        @Override
+        public void onChildDraw(
+                @NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder,
+                float dx, float dy, int actionState, boolean isCurrentlyActive) {
+            if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                View itemView = viewHolder.itemView;
+                float height = (float) itemView.getBottom() - (float) itemView.getTop();
+                float verMargin = (height - swipeIconSize) / 2;
+                float hozMargin = (dx * SWIPE_WIDTH_RATIO - swipeIconSize) / 2;
+
+                if (dx < 0 && rightSwipeIcon != null) {
+                    Paint p = new Paint();
+                    // RectF background = new RectF((float) itemView.getRight() + dX, (float) itemView.getTop(), itemView.getRight(), itemView.getBottom());
+                    // c.drawRect(background, p);
+                    RectF iconDest = new RectF(
+                            itemView.getRight() + hozMargin, itemView.getTop() + verMargin,
+                            itemView.getRight() + hozMargin + swipeIconSize, itemView.getBottom() - verMargin);
+                    c.drawBitmap(rightSwipeIcon, null, iconDest, p);
+                } else if (dx > 0 && leftSwipeIcon != null) {
+                    Paint p = new Paint();
+                    RectF iconDest = new RectF(
+                            hozMargin, itemView.getTop() + verMargin,
+                            hozMargin + swipeIconSize, itemView.getBottom() - verMargin);
+                    c.drawBitmap(leftSwipeIcon, null, iconDest, p);
+                }
+            } else {
+                // c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+            }
+            super.onChildDraw(c, recyclerView, viewHolder, dx * SWIPE_WIDTH_RATIO, dy, actionState, isCurrentlyActive);
+        }
+    };
 
     public WindRecycleView(@NonNull Context context) {
         this(context, null);
@@ -67,6 +175,11 @@ public class WindRecycleView extends RecyclerView {
 
         // set default animation
         setLayoutAnimation(LayoutAnim.SWEET_ALERT.getAnim(context));
+
+        // Set default swipe icon
+        leftSwipeIcon = CWImageUtils.drawbleToBitmap(context, R.drawable.wl_ic_trash);
+        rightSwipeIcon = leftSwipeIcon;
+        swipeIconSize = context.getResources().getDimension(R.dimen.wl_icon);
 
         // listen the scroll event and handle loadmore
         addOnScrollListener(new OnScrollListener() {
@@ -205,7 +318,58 @@ public class WindRecycleView extends RecyclerView {
         return max;
     }
 
+    /**
+     * Set left swipe icon
+     *
+     * @param bitmap bitmap
+     */
+    public void setLeftSwipeIcon(Bitmap bitmap) {
+        this.leftSwipeIcon = bitmap;
+    }
+
+    /**
+     * Set right swipe icon
+     *
+     * @param bitmap bitmap
+     */
+    public void setRightSwipeIcon(Bitmap bitmap) {
+        this.rightSwipeIcon = bitmap;
+    }
+
+    /**
+     * Set swipe icon size
+     *
+     * @param size size
+     */
+    public void setSwipeIconSize(float size) {
+        this.swipeIconSize = size;
+    }
+
     /* ---------------------- METHOD ------------------------- */
+
+    /**
+     * Enable swipe to remove function on recycle view
+     *
+     * @param listener swipe listener
+     */
+    public void enableSwipeToRemove(OnSwipeToRemoveListener listener) {
+        enableSwipeToRemove = true;
+        swipeToRemoveListener = listener;
+        ItemTouchHelper helper = new ItemTouchHelper(touchCallback);
+        helper.attachToRecyclerView(this);
+    }
+
+    /**
+     * Enable swap item by moving item to new position
+     *
+     * @param listener swap listener
+     */
+    public void enableSwapPosition(OnSwapPositionListener listener) {
+        enableSwapPosition = true;
+        swapPositionListener = listener;
+        ItemTouchHelper helper = new ItemTouchHelper(touchCallback);
+        helper.attachToRecyclerView(this);
+    }
 
     /* ---------------------- INNER CLASS -------------------- */
 
@@ -250,6 +414,37 @@ public class WindRecycleView extends RecyclerView {
          * @param handler handler
          */
         void onLoadMore(CWHandler<Void> handler);
+    }
+
+    /**
+     * On swipe to remove listener
+     */
+    public interface OnSwipeToRemoveListener {
+
+        /**
+         * Triggwe when user swipe item to left or right
+         *
+         * @param viewHolder view holder
+         * @param direction  direction.
+         * @see androidx.recyclerview.widget.ItemTouchHelper#LEFT
+         * @see androidx.recyclerview.widget.ItemTouchHelper#RIGHT
+         */
+        void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction);
+    }
+
+    /**
+     * On swap item position
+     */
+    public interface OnSwapPositionListener {
+        /**
+         * Trigger when user drag and drip item to change it's position
+         *
+         * @param recyclerView recycle view
+         * @param viewHolder   The ViewHolder which is being dragged by the user.
+         * @param target       target view holder where item is move to
+         */
+        void onSwapped(@NonNull RecyclerView recyclerView,
+                       @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target);
     }
 
     /**

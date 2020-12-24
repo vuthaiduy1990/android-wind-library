@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import the.wind.library.CWHandler;
 import the.wind.library.sample.R;
+import the.wind.library.utils.CWImageUtils;
 import the.wind.library.utils.CWMathUtils;
 import the.wind.library.utils.CWStringUtils;
 import the.wind.library.view.Checkbox;
@@ -94,6 +95,20 @@ public class RecycleViewPage extends Fragment {
                         handler.onAfter();
                     }
                 }, 2000);
+            }
+        });
+
+        // enable swap position
+        // _recycleView.enableSwapPosition(null);
+
+        // enable swipe to remove
+        _recycleView.setLeftSwipeIcon(CWImageUtils.drawbleToBitmap(view.getContext(), R.drawable.wl_ic_setting));
+        _recycleView.setRightSwipeIcon(CWImageUtils.drawbleToBitmap(view.getContext(), R.drawable.wl_ic_trash));
+        _recycleView.setSwipeIconSize(view.getResources().getDimension(R.dimen.wl_icon));
+        _recycleView.enableSwipeToRemove(new WindRecycleView.OnSwipeToRemoveListener() {
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                mAdapter.removeData(viewHolder.getAdapterPosition());
             }
         });
 
@@ -181,6 +196,14 @@ public class RecycleViewPage extends Fragment {
      */
     public void changeLayoutAnim(WindRecycleView.LayoutAnim anim) {
         _recycleView.setLayoutAnimation(anim.getAnim(getContext()));
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Enable swap position
+     */
+    public void enableSwapPosition() {
+        _recycleView.enableSwapPosition(null);
         mAdapter.notifyDataSetChanged();
     }
 
