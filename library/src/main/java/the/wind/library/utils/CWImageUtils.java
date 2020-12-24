@@ -1,5 +1,6 @@
 package the.wind.library.utils;
 
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +11,8 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 
 import java.io.ByteArrayOutputStream;
@@ -21,11 +24,41 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 /**
  * Provide function for converting image from a format to other
  */
 public final class CWImageUtils {
+
+    /**
+     * Convert drawable to bitmap
+     *
+     * @param drawable android drawable
+     * @return bitmap
+     */
+    public static Bitmap drawableToBitmap(Drawable drawable) {
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable) drawable).getBitmap();
+        }
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return bitmap;
+    }
+
+    /**
+     * Convert android drawable to bitmap
+     *
+     * @param context     application context
+     * @param drawableRes drawable resources
+     * @return bitmap
+     */
+    public static Bitmap drawbleToBitmap(Context context, int drawableRes) {
+        Drawable drawable = ContextCompat.getDrawable(context, drawableRes);
+        return drawableToBitmap(drawable);
+    }
 
     /**
      * Convert bitmap to bytes
