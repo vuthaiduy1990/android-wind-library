@@ -117,7 +117,7 @@ public final class Promise<Model> {
     private Promise nextHolderPromise; // placeholder promise which hold listener for real promise
 
     // Listeners
-    private OnSuccessListener successListener;
+    private OnSuccessListener<Model, ?> successListener;
     private OnExceptionListener exceptionListener;
     private OnFinishListener finishListener;
 
@@ -162,9 +162,10 @@ public final class Promise<Model> {
      * @param listener exception listener
      * @return next promise
      */
-    public Promise<?> exception(OnExceptionListener listener) {
+    @SuppressWarnings("unchecked")
+    public <NextDataModel> Promise<NextDataModel> exception(OnExceptionListener listener) {
         exceptionListener = listener;
-        nextHolderPromise = new Promise<>();
+        nextHolderPromise = new Promise<NextDataModel>();
         return nextHolderPromise;
     }
 
@@ -194,7 +195,7 @@ public final class Promise<Model> {
         if (currentHolderPromise == null) /*no holder promise*/ {
             // execute success callback and retrieve the real next promise
             if (successListener != null) {
-                IPromise realNext = successListener.onSuccess(data);
+                IPromise<?> realNext = successListener.onSuccess(data);
                 if (realNext != null) {
                     // bind holder promise to real promise
                     // --->> so that when real promise execute operation,
@@ -219,7 +220,6 @@ public final class Promise<Model> {
      *
      * @param throwable error or exception
      */
-    @SuppressWarnings("unchecked")
     public void resolve(Throwable throwable) {
         // Reach the end of promise chain  -> trigger finish listener
         if (finishListener != null) {

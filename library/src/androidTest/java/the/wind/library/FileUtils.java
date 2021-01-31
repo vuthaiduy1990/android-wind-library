@@ -20,7 +20,7 @@ import the.wind.library.utils.CWFileUtils;
 @RunWith(AndroidJUnit4.class)
 public class FileUtils {
 
-    private Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+    private final Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
     @Before
     public void before() {

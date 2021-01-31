@@ -12,8 +12,8 @@ import androidx.annotation.Nullable;
 
 public final class CWClazzUtils {
 
-    private static Map<String, Class<?>> primitiveMapper = new HashMap<>();
-    private static Map<Class<?>, Class<?>> primitiveWrapper = new HashMap<>();
+    private static final Map<String, Class<?>> primitiveMapper = new HashMap<>();
+    private static final Map<Class<?>, Class<?>> primitiveWrapper = new HashMap<>();
 
     static {
         // Map primitive classname with class type

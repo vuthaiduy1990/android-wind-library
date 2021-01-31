@@ -15,7 +15,7 @@ public final class BlackHole {
     public static final BlackHole $ = new BlackHole();
 
     // garbage of all universal
-    private Map<Class<?>, Object> garbages = new HashMap<>();
+    private final Map<Class<?>, Object> garbages = new HashMap<>();
 
     /* ---------------------- OVERRIDE ----------------------- */
 

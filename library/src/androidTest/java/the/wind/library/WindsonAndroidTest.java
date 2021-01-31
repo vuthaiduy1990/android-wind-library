@@ -19,7 +19,7 @@ import the.wind.library.utils.CWFileUtils;
 @RunWith(AndroidJUnit4.class)
 public class WindsonAndroidTest {
 
-    private static Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+    private static final Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
     @BeforeClass
     public static void beforeClass() {

@@ -39,7 +39,7 @@ import the.wind.library.view.Button;
 public class WindDialog extends Dialog {
 
     // layout
-    private ViewGroup _layout;
+    private final ViewGroup _layout;
     private View _customContentView;
     private int width;
     private int height;
@@ -49,28 +49,28 @@ public class WindDialog extends Dialog {
     private int paddingBottom;
 
     // views
-    private View _dialogView;
-    private ImageView _iconView;
-    private LottieAnimationView _lottieIconView;
-    private TextView _titleView;
-    private ViewGroup _headerHolder;
-    private ViewGroup _bodyHolder;
-    private ViewGroup _footerHolder;
-    private List<Button> _btnList = new LinkedList<>();
-    private ViewGroup _waitingMask;
-    private LottieAnimationView _waitingIcon;
+    private final View _dialogView;
+    private final ImageView _iconView;
+    private final LottieAnimationView _lottieIconView;
+    private final TextView _titleView;
+    private final ViewGroup _headerHolder;
+    private final ViewGroup _bodyHolder;
+    private final ViewGroup _footerHolder;
+    private final List<Button> _btnList = new LinkedList<>();
+    private final ViewGroup _waitingMask;
+    private final LottieAnimationView _waitingIcon;
 
     // view attribute
     private boolean iconVisible = true;
     private boolean showImmediately = false;
 
     // model
-    private LayoutType layoutType;
-    private Timer timer;
+    private final LayoutType layoutType;
+    private final Timer timer;
     private int iconResId;
     private Bitmap iconBitmap;
     private int lottieIconResId;
-    private CWBundle bundle = new CWBundle();
+    private final CWBundle bundle = new CWBundle();
 
     // Animation
     @Nullable
@@ -802,9 +802,9 @@ public class WindDialog extends Dialog {
         layout.height = height;
         _waitingMask.setLayoutParams(layout);
 
-        int iconSize = (int) (((width < height) ? width : height) * 0.6f);
+        int iconSize = (int) ((Math.min(width, height)) * 0.6f);
         int maxIconSize = (int) getContext().getResources().getDimension(R.dimen.wl_dialog_waiting_icon_size);
-        iconSize = iconSize < maxIconSize ? iconSize : maxIconSize;
+        iconSize = Math.min(iconSize, maxIconSize);
         ViewGroup.LayoutParams iconLayout = _waitingIcon.getLayoutParams();
         iconLayout.width = iconSize;
         iconLayout.height = iconSize;
@@ -896,8 +896,8 @@ public class WindDialog extends Dialog {
         TATSUMAKI(R.layout.wl_dialog_tatsumaki, R.layout.wl_dialog_tatsumaki_content),
         FUBUKI(R.layout.wl_dialog_fubuki, 0);
 
-        private int layout;
-        private int content;
+        private final int layout;
+        private final int content;
 
         LayoutType(int layout, int content) {
             this.layout = layout;
@@ -932,8 +932,8 @@ public class WindDialog extends Dialog {
         SLIDE_TOP_2_BOTTOM(R.anim.wl_dialog_in_anim_slide_top_bottom, R.anim.wl_dialog_out_anim_slide_top_bottom),
         SLIDE_BOTTOM_2_TOP(R.anim.wl_dialog_in_anim_slide_bottom_top, R.anim.wl_dialog_out_anim_slide_bottom_top);
 
-        private int inAnimResId;
-        private int outAnimResId;
+        private final int inAnimResId;
+        private final int outAnimResId;
 
         InOutAnimType(int inAnim, int outAnim) {
             this.inAnimResId = inAnim;

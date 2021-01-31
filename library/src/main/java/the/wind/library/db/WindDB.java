@@ -47,7 +47,7 @@ public class WindDB extends SQLiteOpenHelper {
     private SQLiteDatabase _sqLiteDatabase;
 
     // application context
-    private Context context;
+    private final Context context;
 
     /**
      * Constructor

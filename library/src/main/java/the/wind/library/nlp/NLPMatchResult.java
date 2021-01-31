@@ -9,13 +9,13 @@ import java.util.List;
 public final class NLPMatchResult<T extends INLPText> {
 
     // NLP text
-    public T target;
+    public final T target;
 
     // search keys which match with the given input
-    public List<String> keys = new LinkedList<>();
+    public final List<String> keys = new LinkedList<>();
 
     // start and end indexes of character matched
-    public List<Integer> indexes = new LinkedList<>();
+    public final List<Integer> indexes = new LinkedList<>();
 
     // status
     public Status status = Status.NOT_MATCH;

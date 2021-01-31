@@ -48,9 +48,9 @@ import androidx.annotation.Nullable;
  */
 public abstract class CWHandler<T> {
 
-    private CWBundle bundle = new CWBundle();
+    private final CWBundle bundle = new CWBundle();
     private State state = State.RUNNING;
-    private String taskName;
+    private final String taskName;
 
 
     /**

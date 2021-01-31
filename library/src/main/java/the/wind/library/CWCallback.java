@@ -33,7 +33,7 @@ import androidx.annotation.NonNull;
 public class CWCallback<T> {
 
     // tagged object
-    private CWBundle mBundle = new CWBundle();
+    private final CWBundle mBundle = new CWBundle();
 
     /* ---------------------- OVERRIDE ----------------------- */
 

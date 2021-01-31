@@ -8,7 +8,7 @@ import java.util.Map;
 public final class CWBundle implements Serializable {
 
     // tagged objects
-    private Map<String, Object> tags = new HashMap<>();
+    private final Map<String, Object> tags = new HashMap<>();
 
     /* ---------------------- GET-SET ------------------------ */
 

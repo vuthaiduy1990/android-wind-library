@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 public class ExampleInstrumentedTest {
 
     // Context of the app under test.
-    private Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+    private final Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
     @Test
     public void useAppContext() {

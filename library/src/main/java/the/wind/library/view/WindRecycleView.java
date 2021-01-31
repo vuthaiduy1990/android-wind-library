@@ -75,10 +75,10 @@ public class WindRecycleView extends RecyclerView {
     private OnSwapPositionListener swapPositionListener;
 
     // bundle data
-    private CWBundle bundle = new CWBundle();
+    private final CWBundle bundle = new CWBundle();
 
     // Item touch helper
-    private ItemTouchHelper.Callback touchCallback = new ItemTouchHelper.Callback() {
+    private final ItemTouchHelper.Callback touchCallback = new ItemTouchHelper.Callback() {
 
         @Override
         public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
@@ -91,6 +91,7 @@ public class WindRecycleView extends RecyclerView {
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             if (enableSwapPosition) {
                 Adapter<?> adapter = (Adapter<?>) getAdapter();
+                if (adapter == null) return false;
                 int fromPos = viewHolder.getAdapterPosition();
                 int toPos = target.getAdapterPosition();
                 if (fromPos < toPos) {
@@ -384,7 +385,7 @@ public class WindRecycleView extends RecyclerView {
         LEFT_2_RIGHT(R.anim.wl_recycle_view_item_anim_left_right),
         RIGHT_2_LEFT(R.anim.wl_recycle_view_item_anim_right_left);
 
-        private int anim;
+        private final int anim;
 
         LayoutAnim(int anim) {
             this.anim = anim;
@@ -472,7 +473,7 @@ public class WindRecycleView extends RecyclerView {
         private OnItemClickListener<T> itemClickListener;
         private OnItemLongClickListener<T> itemLongClickListener;
         private OnItemDoubleClickListener<T> itemDoubleClickListener;
-        private OnItemSelectionListener<T> itemSelectionListener = new OnItemSelectionListener<T>() {
+        private final OnItemSelectionListener<T> itemSelectionListener = new OnItemSelectionListener<T>() {
             @Override
             public boolean onSelection(@NonNull ViewHolder<T> viewHolder) {
                 return onMiddlewareItemSelection(viewHolder);
@@ -482,7 +483,7 @@ public class WindRecycleView extends RecyclerView {
         private OnItemTouchUpListener<T> itemTouchUpListener;
 
         // bundle data
-        private CWBundle bundle = new CWBundle();
+        private final CWBundle bundle = new CWBundle();
 
         /**
          * Constructor
@@ -909,7 +910,7 @@ public class WindRecycleView extends RecyclerView {
         private Adapter.OnItemDoubleClickListener<T> itemDoubleClickListener;
         private Adapter.OnItemTouchDownListener<T> itemTouchDownListener;
         private Adapter.OnItemTouchUpListener<T> itemTouchUpListener;
-        private GestureDetector gestureDetector = new GestureDetector(itemView.getContext(), new GestureDetector.SimpleOnGestureListener() {
+        private final GestureDetector gestureDetector = new GestureDetector(itemView.getContext(), new GestureDetector.SimpleOnGestureListener() {
             @Override
             public void onLongPress(MotionEvent e) {
                 if (itemSelectionListener.onSelection(ViewHolder.this)) {
@@ -1070,7 +1071,7 @@ public class WindRecycleView extends RecyclerView {
         private int position;
 
         // data
-        private T data;
+        private final T data;
 
         private ItemHolder(int position, T data) {
             this.position = position;

@@ -11,7 +11,7 @@ import java.util.List;
 import the.wind.library.utils.CWClazzUtils;
 
 public class ClazzUtilsTest {
-    private List<String> linkedList = new LinkedList<>();
+    private final List<String> linkedList = new LinkedList<>();
 
     @Test
     public void toCamelCase() {

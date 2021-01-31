@@ -146,8 +146,8 @@ public final class CWTestTable extends CWTable {
 
     // Inner class
     public static class SubClass {
-        public int mInVal;
-        public String mStringVal;
+        public final int mInVal;
+        public final String mStringVal;
 
         public SubClass(int intVal, String stringVal) {
             mInVal = intVal;

@@ -52,10 +52,10 @@ import the.wind.library.R;
 public class Button extends LinearLayout {
 
     // views
-    private TextView _textView;
-    private ImageView _iconView;
-    private LottieAnimationView _lottieIconView;
-    private View _space;
+    private final TextView _textView;
+    private final ImageView _iconView;
+    private final LottieAnimationView _lottieIconView;
+    private final View _space;
 
     // icon resource
     private InlineIcon mInlineIcon;
@@ -63,7 +63,7 @@ public class Button extends LinearLayout {
     private int mCustomAnimRes;
 
     // bundle data
-    private CWBundle mBundle = new CWBundle();
+    private final CWBundle mBundle = new CWBundle();
 
     public Button(Context context) {
         this(context, null);
@@ -426,8 +426,8 @@ public class Button extends LinearLayout {
         NEUTRAL(R.color.wl_button_text_white, R.drawable.wl_button_background_neutral),
         NEUTRAL_LIGHT(R.color.wl_button_text_black, R.drawable.wl_button_background_neutral_light);
 
-        private int color;
-        private int background;
+        private final int color;
+        private final int background;
 
         Type(int color, int background) {
             this.color = color;
@@ -463,8 +463,8 @@ public class Button extends LinearLayout {
         LOCK(R.drawable.wl_ic_lock, false),
         SETTING(R.drawable.wl_ic_setting, false);
 
-        private int iconRes;
-        private boolean useAnim;
+        private final int iconRes;
+        private final boolean useAnim;
 
         InlineIcon(int iconRes, boolean useAnim) {
             this.iconRes = iconRes;

@@ -39,7 +39,7 @@ public class SearchBox extends RelativeLayout {
     private boolean closeVisible = true;
     private String oldSearchInput = "";
     private String newSearchInput = "";
-    private CWBundle bundle = new CWBundle();
+    private final CWBundle bundle = new CWBundle();
     private long lazyTime = LAZY_TIME;
     private long lastInputTime;
 
@@ -47,7 +47,7 @@ public class SearchBox extends RelativeLayout {
     private OnActionListener actionListener;
 
     // on lazy input
-    private Runnable OnLazyInput = new Runnable() {
+    private final Runnable OnLazyInput = new Runnable() {
         @Override
         public void run() {
             // 5 is secure time to make sure the last input will be executed

@@ -355,7 +355,7 @@ public final class CWFileUtils {
      *
      * @param assetMgr asset manager
      * @param fileName asset filename
-     * @return
+     * @return byte data
      */
     public static byte[] loadAssetFile(AssetManager assetMgr, String fileName) throws IOException {
         InputStream is = assetMgr.open(fileName);

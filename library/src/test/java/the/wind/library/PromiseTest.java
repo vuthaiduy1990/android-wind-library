@@ -12,7 +12,7 @@ import the.wind.library.utils.CWMathUtils;
 public class PromiseTest {
 
     private final Object syncObject = new Object();
-    private Timer mTimer = new Timer();
+    private final Timer mTimer = new Timer();
 
     @Test
     public void printSuccess() throws InterruptedException {
@@ -298,7 +298,7 @@ public class PromiseTest {
 
     private class PrintTextPromise implements Promise.IPromise<String> {
 
-        private Promise<String> mPromise = new Promise<>();
+        private final Promise<String> mPromise = new Promise<>();
 
         @Override
         public Promise<String> promise() {
@@ -325,7 +325,7 @@ public class PromiseTest {
 
     private class PrintNumberPromise implements Promise.IPromise<Integer> {
 
-        private Promise<Integer> mPromise = new Promise<>();
+        private final Promise<Integer> mPromise = new Promise<>();
 
         @Override
         public Promise<Integer> promise() {

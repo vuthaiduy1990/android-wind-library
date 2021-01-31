@@ -76,16 +76,16 @@ public final class CWNLPEngine<T extends INLPText> {
     private Options options;
 
     // the input target for processing
-    private List<T> targetList = new LinkedList<>();
-    private Queue<T> targetQueue = new LinkedList<>();
+    private final List<T> targetList = new LinkedList<>();
+    private final Queue<T> targetQueue = new LinkedList<>();
 
     // map target id with processed text
-    private Map<String, String> textMap = new HashMap<>();
+    private final Map<String, String> textMap = new HashMap<>();
 
     // Map between the search key with results
-    private Map<String, List<NLPMatchResult<T>>> mCaches = new HashMap<>();
+    private final Map<String, List<NLPMatchResult<T>>> mCaches = new HashMap<>();
     // contains search keys which has been pre-processed.
-    private Queue<String> cacheSearchKeys = new LinkedList<>();
+    private final Queue<String> cacheSearchKeys = new LinkedList<>();
 
     /**
      * Construct engine with the default setting

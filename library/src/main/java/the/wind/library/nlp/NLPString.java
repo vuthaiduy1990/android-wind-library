@@ -11,8 +11,8 @@ import androidx.annotation.Nullable;
  */
 public class NLPString implements INLPText {
 
-    private CharSequence value;
-    private String hash;
+    private final CharSequence value;
+    private final String hash;
 
     public NLPString(CharSequence value) {
         this.value = value;

@@ -41,7 +41,7 @@ public class Checkbox extends LottieAnimationView {
     private int animColor;
 
     // bundle data
-    private CWBundle bundle = new CWBundle();
+    private final CWBundle bundle = new CWBundle();
 
     // listener
     private OnCheckedListener checkedListener;
@@ -305,18 +305,18 @@ public class Checkbox extends LottieAnimationView {
         );
 
         // default size
-        private int defaultSize;
+        private final int defaultSize;
 
         // animation resource
-        private int resource;
+        private final int resource;
 
         // progress
-        private float minProgress;
-        private float maxProgress;
-        private float initialProgress;
+        private final float minProgress;
+        private final float maxProgress;
+        private final float initialProgress;
 
         // props
-        private String[] props;
+        private final String[] props;
 
         AnimType(int defaultSize,
                  int resource,

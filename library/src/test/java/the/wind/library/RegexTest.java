@@ -74,7 +74,7 @@ public class RegexTest {
 
         // Testcase: latin symbols
         {
-            String input = "~!@#$%^&*()_+{}|:\"<>?`-=[]\\;\',./";
+            String input = "~!@#$%^&*()_+{}|:\"<>?`-=[]\\;',./";
             Matcher m = Pattern.compile(CWRegex.REGEX_LATIN_SYMBOLS).matcher(input);
             List<String> words = new LinkedList<>();
             while (m.find()) {

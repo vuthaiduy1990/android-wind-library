@@ -22,8 +22,8 @@ import the.wind.library.dialog.WindDialog;
  */
 public class WindActionMenu extends WindDialog {
 
-    private ViewGroup _menuHolder;
-    private LayoutInflater inflater;
+    private final ViewGroup _menuHolder;
+    private final LayoutInflater inflater;
     private int itemBackground;
     private int itemTextColor;
     private int itemTextSize;

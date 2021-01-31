@@ -54,7 +54,7 @@ public class Windson {
     public static Windson $ = new Windson(false);
 
     // gson and parser
-    private Gson Gson;
+    private final Gson Gson;
 
     /**
      * Constructor

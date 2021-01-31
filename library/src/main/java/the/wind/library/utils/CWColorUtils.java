@@ -4,7 +4,7 @@ public final class CWColorUtils {
 
     // beautiful color
     // Thanks http://everyknightshoulddesign.blogspot.com/2013/08/beautiful-color-palettes-their-hex-codes.html
-    public static String[] POKE_COLORS = {
+    public static final String[] POKE_COLORS = {
             "#e3d4d3", "#5d9f69", "#c990a5", "#4976a0", "#b25542", "#90b0a3", "#9da9a7", "#495663", "#b09c82", "#f0e0d7",
             "#a19f5a", "#c7ab92", "#e4bb97", "#a67e5f", "#c39889", "#aec2d3", "#dddbcf", "#c7c5c3", "#ac6c94", "#d5e1de",
             "#8a8586", "#ac869c", "#85c476", "#66758c", "#b18eaa", "#bbb4a7", "#a49485", "#9cbfd6", "#97c03b", "#ccda85",

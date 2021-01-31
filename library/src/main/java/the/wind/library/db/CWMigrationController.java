@@ -11,9 +11,9 @@ import java.util.Set;
  */
 final class CWMigrationController {
 
-    private static CWMigrationController instance = new CWMigrationController();
-    private Set<Class<? extends CWBuild>> builds = new LinkedHashSet<>();
-    private Set<Class<? extends CWTable>> tables = new LinkedHashSet<>();
+    private static final CWMigrationController instance = new CWMigrationController();
+    private final Set<Class<? extends CWBuild>> builds = new LinkedHashSet<>();
+    private final Set<Class<? extends CWTable>> tables = new LinkedHashSet<>();
 
     private CWMigrationController() {
 

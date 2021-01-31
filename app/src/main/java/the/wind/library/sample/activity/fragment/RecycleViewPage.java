@@ -46,12 +46,12 @@ public class RecycleViewPage extends Fragment {
             "Not even the large gashes on her sides. All she focused on was the final goal. " +
             "To destroy the shard and return hope to her kingdom.";
     public final int MAX_WORDS = 24;
-    private List<String> BagOfWords = CWStringUtils.text2words(PARAGRAPH);
+    private final List<String> BagOfWords = CWStringUtils.text2words(PARAGRAPH);
 
     private SwipeRefreshLayout _swipeRefreshLayout;
     private WindRecycleView _recycleView;
     private CustomAdapter mAdapter;
-    private List<DummyData> mDataset = new LinkedList<>();
+    private final List<DummyData> mDataset = new LinkedList<>();
 
     public RecycleViewPage() {
         initDataset();

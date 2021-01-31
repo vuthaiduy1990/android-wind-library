@@ -40,7 +40,7 @@ public abstract class CWTable implements Serializable {
     private transient boolean offline = false;
 
     // attaching
-    private transient CWBundle bundle;
+    private final transient CWBundle bundle;
 
     /**
      * Constructor

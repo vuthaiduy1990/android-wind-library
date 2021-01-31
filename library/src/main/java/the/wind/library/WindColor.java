@@ -39,7 +39,7 @@ public final class WindColor {
 
     // int ARGB color
     // https://developer.android.com/reference/android/graphics/Color
-    private int color;
+    private final int color;
 
     // shades and tints
     private WindColor[] shades;
