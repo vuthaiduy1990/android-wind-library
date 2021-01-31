@@ -80,6 +80,7 @@ public abstract class CWHandler<T> {
      *
      * @param params arguments
      */
+    @SuppressWarnings("unchecked")
     public void onBefore(T... params) {
     }
 
@@ -88,6 +89,7 @@ public abstract class CWHandler<T> {
      *
      * @param params arguments
      */
+    @SuppressWarnings("unchecked")
     public abstract void onHandle(T... params);
 
     /**
@@ -95,6 +97,7 @@ public abstract class CWHandler<T> {
      *
      * @param params arguments
      */
+    @SuppressWarnings("unchecked")
     public void onAfter(T... params) {
     }
 
