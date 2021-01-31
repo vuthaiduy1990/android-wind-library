@@ -465,8 +465,8 @@ public class WindRecycleView extends RecyclerView {
         private int _customLoadingLayout;
 
         // reference to previous and current selected item
-        protected ItemHolder<T> mPreSelectedItem;
-        protected ItemHolder<T> mSelectedItem;
+        private ItemHolder<T> mPreSelectedItem;
+        private ItemHolder<T> mSelectedItem;
 
         // listener
         private OnItemClickListener<T> itemClickListener;
@@ -704,11 +704,25 @@ public class WindRecycleView extends RecyclerView {
         }
 
         /**
+         * Clear selected item reference
+         */
+        public void clearSelectedItemRef() {
+            mSelectedItem = null;
+        }
+
+        /**
          * @return previous selected item
          */
         @Nullable
         public ItemHolder<T> getPreSelectedItem() {
             return mPreSelectedItem;
+        }
+
+        /**
+         * Clear previous selected item reference
+         */
+        public void clearPreSelectedItemRef() {
+            mPreSelectedItem = null;
         }
 
         /**
