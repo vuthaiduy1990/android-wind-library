@@ -141,7 +141,9 @@ public final class CWFileUtils {
      */
     public static void clearDir(File dir) {
         if (dir != null && dir.isDirectory()) {
-            for (File f : dir.listFiles()) {
+            File[] files = dir.listFiles();
+            if (files == null) return;
+            for (File f : files) {
                 if (f.isDirectory()) {
                     deleteDir(f);
                 } else {

@@ -208,7 +208,7 @@ public class WindRecycleView extends RecyclerView {
                 if (layoutManager.getItemCount() <= lastVisibleItemPos + threshold) {
                     // add null data which represent for a loading item view
                     if (getAdapter() instanceof Adapter) {
-                        ((Adapter) getAdapter()).addLoading();
+                        ((Adapter<?>) getAdapter()).addLoading();
                     }
                     // handle loadmore
                     loadMoreListener.onLoadMore(new CWHandler<Void>() {
@@ -217,7 +217,7 @@ public class WindRecycleView extends RecyclerView {
                             super.onBefore(params);
                             // before adding more data to adapter, we should remove the added null value above
                             if (getAdapter() instanceof Adapter) {
-                                ((Adapter) getAdapter()).removeLoading();
+                                ((Adapter<?>) getAdapter()).removeLoading();
                             }
                         }
 
@@ -247,7 +247,7 @@ public class WindRecycleView extends RecyclerView {
             ((GridLayoutManager) layout).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
-                    RecyclerView.Adapter adapter = getAdapter();
+                    RecyclerView.Adapter<?> adapter = getAdapter();
                     // for loading view -> span over all column
                     // so that the loading view will be at center
                     if (adapter instanceof Adapter && adapter.getItemViewType(position) == Adapter.VIEW_TYPE_LOADING) {

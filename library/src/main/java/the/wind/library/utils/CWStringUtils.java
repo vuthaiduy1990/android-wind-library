@@ -1,7 +1,6 @@
 package the.wind.library.utils;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -53,9 +52,8 @@ public class CWStringUtils {
      */
     public static String join(String delimiter, Iterable<String> elements) {
         StringBuilder builder = new StringBuilder();
-        Iterator<String> it = elements.iterator();
-        while (it.hasNext()) {
-            builder.append(delimiter).append(it.next());
+        for (String element : elements) {
+            builder.append(delimiter).append(element);
         }
         return builder.length() > 0 ? builder.substring(1) : "";
     }

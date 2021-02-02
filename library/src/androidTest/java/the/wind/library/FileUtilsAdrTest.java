@@ -18,7 +18,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import the.wind.library.utils.CWFileUtils;
 
 @RunWith(AndroidJUnit4.class)
-public class FileUtils {
+public class FileUtilsAdrTest {
 
     private final Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
