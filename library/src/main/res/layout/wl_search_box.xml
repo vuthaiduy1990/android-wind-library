@@ -68,8 +68,9 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/wl_spacing_level_2"
             android:adjustViewBounds="true"
+            android:padding="@dimen/wl_spacing_level_0"
             android:scaleType="fitCenter"
-            android:src="@drawable/wl_ic_remove"
+            android:src="@drawable/wl_ic_delete_across"
             android:visibility="gone"
             tools:ignore="ContentDescription" />
 
