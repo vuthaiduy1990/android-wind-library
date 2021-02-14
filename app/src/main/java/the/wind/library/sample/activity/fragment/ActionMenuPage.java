@@ -74,6 +74,10 @@ public class ActionMenuPage extends Fragment {
 
     private void createLongActionMenu(View view) {
         _longActionMenu = new WindActionMenu(view.getContext());
+        _longActionMenu.setItemBackground(R.drawable.wl_button_background_neutral_light);
+        _longActionMenu.setItemIconSize(R.dimen.wl_icon_big);
+        _longActionMenu.setItemTextColor(R.color.wl_info_pressed);
+        _longActionMenu.setItemTextSize(R.dimen.wl_text_big);
         _longActionMenu.setHeight(800);
         initBaseMenuItem(_longActionMenu);
         for (int i = 0; i < 10; i++) {

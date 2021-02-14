@@ -11,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.ColorRes;
+import androidx.annotation.DimenRes;
+import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -142,7 +145,7 @@ public class WindActionMenu extends WindDialog {
      * @param drawableId background resource id
      * @return menu
      */
-    public WindActionMenu setItemBackground(int drawableId) {
+    public WindActionMenu setItemBackground(@DrawableRes int drawableId) {
         itemBackground = drawableId;
         return this;
     }
@@ -153,7 +156,7 @@ public class WindActionMenu extends WindDialog {
      * @param colorResId color resource id
      * @return menu
      */
-    public WindActionMenu setItemTextColor(int colorResId) {
+    public WindActionMenu setItemTextColor(@ColorRes int colorResId) {
         itemTextColor = colorResId;
         return this;
     }
@@ -161,10 +164,10 @@ public class WindActionMenu extends WindDialog {
     /**
      * Set text size
      *
-     * @param size resource dimentsion id
+     * @param size resource dimension id
      * @return menu
      */
-    public WindActionMenu setItemTextSize(int size) {
+    public WindActionMenu setItemTextSize(@DimenRes int size) {
         itemTextSize = size;
         return this;
     }
@@ -175,7 +178,7 @@ public class WindActionMenu extends WindDialog {
      * @param size resource dimension id
      * @return menu
      */
-    public WindActionMenu setItemIconSize(int size) {
+    public WindActionMenu setItemIconSize(@DimenRes int size) {
         itemIconSize = size;
         return this;
     }
