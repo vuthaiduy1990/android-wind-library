@@ -11,8 +11,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import java.util.Objects;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -360,7 +358,7 @@ public class DialogPage extends Fragment {
 
     private void fullScreenDialog(View view) {
         _fullScreenDialog = createFubukiDialog(view);
-        Size screenSize = CWAndroidUtils.getScreenSize(Objects.requireNonNull(getActivity()));
+        Size screenSize = CWAndroidUtils.getScreenSize(requireActivity());
         _fullScreenDialog.setWidth(screenSize.getWidth()).setHeight(screenSize.getHeight());
         _fullScreenDialog.setLottieIcon(R.raw.cycle_ahead);
         _fullScreenDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_TOP_2_BOTTOM);

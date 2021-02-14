@@ -1,6 +1,7 @@
 package the.wind.library.sample.activity.fragment;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import the.wind.library.dialog.WindDialog;
 import the.wind.library.menu.WindActionMenu;
 import the.wind.library.sample.R;
 
@@ -79,6 +81,9 @@ public class ActionMenuPage extends Fragment {
         _longActionMenu.setItemTextColor(R.color.wl_info_pressed);
         _longActionMenu.setItemTextSize(R.dimen.wl_text_big);
         _longActionMenu.setHeight(800);
+        _longActionMenu.setGravity(Gravity.BOTTOM);
+        _longActionMenu.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_BOTTOM_2_TOP);
+        _longActionMenu.setMarginBottom(50);
         initBaseMenuItem(_longActionMenu);
         for (int i = 0; i < 10; i++) {
             _longActionMenu.addItem(R.id.wind_menu_item_more, R.drawable.wl_ic_search, R.string.wind_menu_more_item);

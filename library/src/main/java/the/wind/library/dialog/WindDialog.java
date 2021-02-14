@@ -47,6 +47,10 @@ public class WindDialog extends Dialog {
     private int paddingTop;
     private int paddingRight;
     private int paddingBottom;
+    private int marginLeft;
+    private int marginTop;
+    private int marginRight;
+    private int marginBottom;
 
     // views
     private final View _dialogView;
@@ -113,6 +117,8 @@ public class WindDialog extends Dialog {
                 (int) context.getResources().getDimension(R.dimen.wl_dialog_padding_end),
                 (int) context.getResources().getDimension(R.dimen.wl_spacing_level_2)
         );
+        setMargin(0, 0, 0, 0);
+        ; // default margin
 
         // bind views
         _dialogView = findViewById(android.R.id.content);
@@ -168,6 +174,10 @@ public class WindDialog extends Dialog {
         ViewGroup.LayoutParams _dialogLayoutParams = _dialogView.getLayoutParams();
         _dialogLayoutParams.width = width;
         _dialogLayoutParams.height = height;
+        if (_dialogLayoutParams instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams marginLp = (ViewGroup.MarginLayoutParams) _dialogLayoutParams;
+            marginLp.setMargins(marginLeft, marginTop, marginRight, marginBottom);
+        }
         _dialogView.setLayoutParams(_dialogLayoutParams);
     }
 
@@ -298,7 +308,8 @@ public class WindDialog extends Dialog {
     }
 
     /**
-     * Set padding
+     * Set padding.
+     * The padding value should be "getResources().getDimension(R.dimen.padding)"
      *
      * @param left   padding left
      * @param top    padding top
@@ -311,6 +322,120 @@ public class WindDialog extends Dialog {
         paddingTop = top;
         paddingRight = right;
         paddingBottom = bottom;
+        return this;
+    }
+
+    /**
+     * Set padding left
+     * The padding value should be "getResources().getDimension(R.dimen.padding)"
+     *
+     * @param left padding left.
+     * @return dialog
+     */
+    public WindDialog setPaddingLeft(int left) {
+        paddingLeft = left;
+        return this;
+    }
+
+    /**
+     * Set padding top
+     * The padding value should be "getResources().getDimension(R.dimen.padding)"
+     *
+     * @param top padding top
+     * @return dialog
+     */
+    public WindDialog setPaddingTop(int top) {
+        paddingTop = top;
+        return this;
+    }
+
+    /**
+     * Set padding right
+     * The padding value should be "getResources().getDimension(R.dimen.padding)"
+     *
+     * @param right padding right.
+     * @return dialog
+     */
+    public WindDialog setPaddingRight(int right) {
+        paddingRight = right;
+        return this;
+    }
+
+    /**
+     * Set padding bottom
+     * The padding value should be "getResources().getDimension(R.dimen.padding)"
+     *
+     * @param bottom padding bottom.
+     * @return dialog
+     */
+    public WindDialog setPaddingBottom(int bottom) {
+        paddingBottom = bottom;
+        return this;
+    }
+
+    /**
+     * Set margin
+     * The margin value should be "getResources().getDimension(R.dimen.padding)"
+     *
+     * @param left   margin left
+     * @param top    margin top
+     * @param right  margin right
+     * @param bottom margin bottom
+     * @return dialog
+     */
+    public WindDialog setMargin(int left, int top, int right, int bottom) {
+        marginLeft = left;
+        marginTop = top;
+        marginRight = right;
+        marginBottom = bottom;
+        return this;
+    }
+
+    /**
+     * Set margin left
+     * The margin value should be "getResources().getDimension(R.dimen.margin)"
+     *
+     * @param left padding left.
+     * @return dialog
+     */
+    public WindDialog setMarginLeft(int left) {
+        marginLeft = left;
+        return this;
+    }
+
+    /**
+     * Set margin top
+     * The margin value should be "getResources().getDimension(R.dimen.margin)"
+     *
+     * @param top padding top.
+     * @return dialog
+     */
+    public WindDialog setMarginTop(int top) {
+        marginTop = top;
+        return this;
+    }
+
+    /**
+     * Set margin right
+     * The margin value should be "getResources().getDimension(R.dimen.margin)"
+     *
+     * @param right padding right.
+     * @return dialog
+     */
+    public WindDialog setMarginRight(int right) {
+        marginRight = right;
+        return this;
+    }
+
+    /**
+     * Set margin bottom
+     * The margin value should be "getResources().getDimension(R.dimen.margin)"
+     *
+     * @param bottom padding bottom.
+     * @return dialog
+     */
+    public WindDialog setMarginBottom(int bottom) {
+        marginBottom = bottom;
         return this;
     }
 
@@ -899,7 +1024,13 @@ public class WindDialog extends Dialog {
         private final int layout;
         private final int content;
 
-        LayoutType(int layout, int content) {
+        /**
+         * Layout type
+         *
+         * @param layout  resource layout
+         * @param content resource content layout
+         */
+        LayoutType(@LayoutRes int layout, @LayoutRes int content) {
             this.layout = layout;
             this.content = content;
         }
@@ -907,6 +1038,7 @@ public class WindDialog extends Dialog {
         /**
          * @return respective layout
          */
+        @LayoutRes
         private int getDialogLayout() {
             return layout;
         }
@@ -914,6 +1046,7 @@ public class WindDialog extends Dialog {
         /**
          * @return custom content layout id
          */
+        @LayoutRes
         private int getContentLayout() {
             return content;
         }
