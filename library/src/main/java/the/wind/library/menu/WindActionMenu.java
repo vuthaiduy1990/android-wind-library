@@ -7,15 +7,19 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.ColorRes;
 import androidx.annotation.DimenRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
 import the.wind.library.R;
 import the.wind.library.dialog.WindDialog;
@@ -33,7 +37,8 @@ public class WindActionMenu extends WindDialog {
     private int itemIconSize;
 
     // model
-    private int selectedId;
+    private final MenuType menuType;
+    private int selectedId = -1;
 
     // listener
     private OnItemSelectListener itemSelectListener;
@@ -45,24 +50,84 @@ public class WindActionMenu extends WindDialog {
      * @param context application context
      */
     public WindActionMenu(@NonNull Context context) {
+        this(context, MenuType.LIST);
+    }
+
+    /**
+     * Constructor
+     *
+     * @param context  application context
+     * @param menuType menu type
+     */
+    public WindActionMenu(@NonNull Context context, MenuType menuType) {
         super(context, LayoutType.FUBUKI);
-        setContentView(R.layout.wl_action_menu_content_view);
+        this.menuType = menuType;
+        if (MenuType.SIDEBAR.equals(menuType)) {
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            setContentView(menuType.getContentLayout(), layoutParams);
+        } else {
+            setContentView(menuType.getContentLayout());
+        }
         inflater = LayoutInflater.from(context);
-        setFooterVisible(false);
-        setTitleVisible(false);
-        setIconVisible(false);
-        setInOutAnimType(InOutAnimType.SLIDE_TOP_2_BOTTOM);
-        setGravity(Gravity.TOP);
-        setCancelable(true);
-        setCanceledOnTouchOutside(true);
 
         // bind view
         _menuHolder = contentView().findViewById(R.id._menuHolder);
+
+        // Configure menu based on type
+        setFooterVisible(false);
+        setTitleVisible(false);
+        setIconVisible(false);
         setItemBackground(R.drawable.wl_background_hover);
         setItemTextColor(R.color.wl_text);
-        setItemTextSize(R.dimen.wl_text);
-        setItemIconSize(R.dimen.wl_icon);
+        switch (menuType) {
+            case LIST:
+                setGravity(Gravity.TOP);
+                setInOutAnimType(InOutAnimType.SLIDE_TOP_2_BOTTOM);
+                setCancelable(true);
+                setCanceledOnTouchOutside(true);
+                setItemTextSize(R.dimen.wl_text);
+                setItemIconSize(R.dimen.wl_icon);
+                break;
+            case TOOLBAR:
+                int padding = (int) context.getResources().getDimension(R.dimen.wl_spacing_level_1);
+                setPadding(padding, padding, padding, padding);
+                setGravity(Gravity.BOTTOM);
+                ((ViewGroup.MarginLayoutParams) getContentHolder().getLayoutParams()).topMargin = 0;
+                getLayout().setBackgroundResource(R.drawable.wl_toolbar_menu_background);
+                setInOutAnimType(InOutAnimType.SLIDE_BOTTOM_2_TOP);
+                setCancelable(false);
+                setCanceledOnTouchOutside(false);
+                setMarginBottom((int) context.getResources().getDimension(R.dimen.wl_spacing_level_3));
+                setItemTextSize(R.dimen.wl_text_tiny);
+                setItemIconSize(R.dimen.wl_icon_big);
+                getWindow().setDimAmount(0);
+                getWindow().setFlags(
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+                break;
+            case SIDEBAR:
+                setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+                setPadding(0, 0, 0, 0);
+                setGravity(Gravity.TOP | Gravity.END);
+                getLayout().setBackground(null);
+                setInOutAnimType(InOutAnimType.SLIDE_RIGHT_2_LEFT);
+                setCancelable(false);
+                setCanceledOnTouchOutside(false);
+                setMarginRight((int) context.getResources().getDimension(R.dimen.wl_spacing_level_2));
+                setMarginTop((int) context.getResources().getDimension(R.dimen.wl_sidebar_menu_margin_top));
+                setItemTextSize(R.dimen.wl_text_tiny);
+                setItemIconSize(R.dimen.wl_icon_big);
+                getWindow().setDimAmount(0);
+                getWindow().setFlags(
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+                break;
+            default:
+        }
 
+        // bind listener
         setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
@@ -97,10 +162,9 @@ public class WindActionMenu extends WindDialog {
      * @param textResId text resource id
      * @return menu
      */
-    public WindActionMenu addItem(@IdRes final int id, int iconResId, int textResId) {
-        View itemView = inflater.inflate(R.layout.wl_action_menu_item_view, _menuHolder, false);
+    public WindActionMenu addItem(@IdRes final int id, @DrawableRes int iconResId, @StringRes int textResId) {
+        View itemView = inflater.inflate(menuType.getItemLayout(), _menuHolder, false);
         itemView.setId(id);
-        itemView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         itemView.setBackgroundResource(itemBackground);
         _menuHolder.addView(itemView);
 
@@ -130,8 +194,13 @@ public class WindActionMenu extends WindDialog {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedId = id;
-                dismiss();
+                if (MenuType.LIST.equals(menuType)) {
+                    // For list type -> auto dismiss menu dialog when user select an menu item
+                    selectedId = id;
+                    dismiss();
+                } else {
+                    if (itemSelectListener != null) itemSelectListener.onSelect(id);
+                }
             }
         });
 
@@ -232,5 +301,45 @@ public class WindActionMenu extends WindDialog {
          * @param menuHolder menu place holder
          */
         void onConfig(ViewGroup menuHolder);
+    }
+
+
+    /**
+     * Layout type
+     */
+    public enum MenuType {
+        LIST(R.layout.wl_menu_list, R.layout.wl_menu_list_item),
+        TOOLBAR(R.layout.wl_menu_toolbar, R.layout.wl_menu_toolbar_item),
+        SIDEBAR(R.layout.wl_menu_sidebar, R.layout.wl_menu_sidebar_item);
+
+        private final int contentLayout;
+        private final int itemLayout;
+
+        /**
+         * Constructor
+         *
+         * @param contentLayout dialog content layout
+         * @param itemLayout    item layout
+         */
+        MenuType(@LayoutRes int contentLayout, @LayoutRes int itemLayout) {
+            this.contentLayout = contentLayout;
+            this.itemLayout = itemLayout;
+        }
+
+        /**
+         * @return dialog content layout
+         */
+        @LayoutRes
+        public int getContentLayout() {
+            return contentLayout;
+        }
+
+        /**
+         * @return item layout
+         */
+        @LayoutRes
+        public int getItemLayout() {
+            return itemLayout;
+        }
     }
 }

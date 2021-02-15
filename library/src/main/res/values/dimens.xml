@@ -7,10 +7,12 @@
     <dimen name="wl_spacing_level_1">4dp</dimen>
     <dimen name="wl_spacing_level_2">8dp</dimen>
     <dimen name="wl_spacing_level_3">12dp</dimen>
+    <dimen name="wl_spacing_level_4">16dp</dimen>
     <dimen name="wl_spacing_neg_level_0">-4dp</dimen>
     <dimen name="wl_spacing_neg_level_1">-4dp</dimen>
     <dimen name="wl_spacing_neg_level_2">-8dp</dimen>
     <dimen name="wl_spacing_neg_level_3">-12dp</dimen>
+    <dimen name="wl_spacing_neg_level_4">-16dp</dimen>
     <!-- Text -->
     <dimen name="wl_text_tiny">12sp</dimen>
     <dimen name="wl_text_small">14sp</dimen>
@@ -60,6 +62,8 @@
     <!-- ||||||||||||||||||||| Wind Action Menu |||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     <dimen name="wl_action_menu_padding_hoz">16dp</dimen>
+    <dimen name="wl_toolbar_menu_background_radius">12dp</dimen>
+    <dimen name="wl_sidebar_menu_margin_top">72dp</dimen>
 
     <!-- ||||||||||||||||||||||| Wind Search Box ||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->

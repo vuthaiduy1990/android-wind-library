@@ -215,10 +215,7 @@ public class WindDialog extends Dialog {
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
-        if (layoutResID != 0) {
-            View view = getLayoutInflater().inflate(layoutResID, null);
-            setContentView(view);
-        }
+        setContentView(layoutResID, null);
     }
 
     @Override
@@ -249,6 +246,19 @@ public class WindDialog extends Dialog {
     /* ---------------------- GET-SET ------------------------ */
 
     /**
+     * Set content view
+     *
+     * @param layoutResID layout resource ID
+     * @param params      layout params
+     */
+    public void setContentView(@LayoutRes int layoutResID, @Nullable ViewGroup.LayoutParams params) {
+        if (layoutResID != 0) {
+            View view = getLayoutInflater().inflate(layoutResID, null);
+            setContentView(view, params);
+        }
+    }
+
+    /**
      * @return bundle data
      */
     public CWBundle bundle() {
@@ -260,6 +270,15 @@ public class WindDialog extends Dialog {
      */
     public ViewGroup getLayout() {
         return _layout;
+    }
+
+    /**
+     * Return holder view which is parent layout of content view
+     *
+     * @return content holder layout
+     */
+    public ViewGroup getContentHolder() {
+        return _bodyHolder;
     }
 
     /**

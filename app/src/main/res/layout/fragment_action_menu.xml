@@ -22,4 +22,36 @@
         app:text="Long Action Menu"
         app:type="PRIMARY" />
 
+    <the.wind.library.view.Button
+        android:id="@+id/_toolbarMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:text="Toolbar Menu"
+        app:type="DANGER" />
+
+    <the.wind.library.view.Button
+        android:id="@+id/_toolbarMenuWithManyItems"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:text="Toolbar Menu with many items"
+        app:type="HIGHLIGHT" />
+
+    <the.wind.library.view.Button
+        android:id="@+id/_toolbarMenuWithoutLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:text="Toolbar Menu without label"
+        app:type="DANGER" />
+
+    <the.wind.library.view.Button
+        android:id="@+id/_sidebarMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:text="SideBar Menu"
+        app:type="NEUTRAL" />
+
 </LinearLayout>

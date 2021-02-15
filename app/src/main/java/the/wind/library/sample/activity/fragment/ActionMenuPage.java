@@ -18,6 +18,12 @@ public class ActionMenuPage extends Fragment {
 
     private WindActionMenu _shortActionMenu;
     private WindActionMenu _longActionMenu;
+    private WindActionMenu _toolbarMenu;
+    private WindActionMenu _toolbarMenuWithManyItems;
+    private WindActionMenu _toolbarMenuWithoutLabel;
+    private WindActionMenu _sidebarMenu;
+
+    private boolean toggleSideBarMenu = true;
 
     @Nullable
     @Override
@@ -31,6 +37,17 @@ public class ActionMenuPage extends Fragment {
 
         createShortActionMenu(view);
         createLongActionMenu(view);
+        createToolbarMenu(view);
+        createToolbarMenuWithManyItem(view);
+        createToolbarMenuWithoutLabel(view);
+        createSideBarMenu(view);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        closeToolbarMenu();
+        _sidebarMenu.dismissImmediately();
     }
 
     private void createShortActionMenu(View view) {
@@ -69,6 +86,7 @@ public class ActionMenuPage extends Fragment {
         view.findViewById(R.id._shortMenuBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                closeToolbarMenu();
                 _shortActionMenu.show();
             }
         });
@@ -91,7 +109,68 @@ public class ActionMenuPage extends Fragment {
         view.findViewById(R.id._longMenuBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                closeToolbarMenu();
                 _longActionMenu.show();
+            }
+        });
+    }
+
+    private void createToolbarMenu(View view) {
+        _toolbarMenu = new WindActionMenu(view.getContext(), WindActionMenu.MenuType.TOOLBAR);
+        _toolbarMenu.addItem(R.id.wind_menu_item_set_background, R.drawable.wl_ic_edit, R.string.wind_menu_item_edit);
+        _toolbarMenu.addItem(R.id.wind_menu_item_set_money, R.drawable.wl_ic_lock, R.string.wind_menu_item_set_money);
+        _toolbarMenu.addItem(R.id.wind_menu_item_delete, R.drawable.wl_ic_trash, R.string.wind_menu_item_delete);
+        view.findViewById(R.id._toolbarMenu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeToolbarMenu();
+                _toolbarMenu.show();
+            }
+        });
+    }
+
+    private void createToolbarMenuWithManyItem(View view) {
+        _toolbarMenuWithManyItems = new WindActionMenu(view.getContext(), WindActionMenu.MenuType.TOOLBAR);
+        initBaseMenuItem(_toolbarMenuWithManyItems);
+        view.findViewById(R.id._toolbarMenuWithManyItems).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeToolbarMenu();
+                _toolbarMenuWithManyItems.show();
+            }
+        });
+    }
+
+    private void createToolbarMenuWithoutLabel(View view) {
+        _toolbarMenuWithoutLabel = new WindActionMenu(view.getContext(), WindActionMenu.MenuType.TOOLBAR);
+        _toolbarMenuWithoutLabel.addItem(R.id.wind_menu_item_set_background, R.drawable.wl_ic_edit, 0);
+        _toolbarMenuWithoutLabel.addItem(R.id.wind_menu_item_set_money, R.drawable.wl_ic_lock, 0);
+        _toolbarMenuWithoutLabel.addItem(R.id.wind_menu_item_delete, R.drawable.wl_ic_trash, 0);
+        view.findViewById(R.id._toolbarMenuWithoutLabel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeToolbarMenu();
+                _toolbarMenuWithoutLabel.show();
+            }
+        });
+    }
+
+    private void createSideBarMenu(View view) {
+        _sidebarMenu = new WindActionMenu(view.getContext(), WindActionMenu.MenuType.SIDEBAR);
+        _sidebarMenu.addItem(R.id.wind_menu_item_setting, R.drawable.wl_ic_setting, R.string.wind_menu_item_setting);
+        _sidebarMenu.addItem(R.id.wind_menu_item_set_background, R.drawable.wl_ic_edit, R.string.wind_menu_item_edit);
+        _sidebarMenu.addItem(R.id.wind_menu_item_set_money, R.drawable.wl_ic_lock, R.string.wind_menu_item_set_money);
+        _sidebarMenu.addItem(R.id.wind_menu_item_delete, R.drawable.wl_ic_trash, R.string.wind_menu_item_delete);
+        _sidebarMenu.show();
+        view.findViewById(R.id._sidebarMenu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (toggleSideBarMenu) {
+                    _sidebarMenu.dismiss();
+                } else {
+                    _sidebarMenu.show();
+                }
+                toggleSideBarMenu = !toggleSideBarMenu;
             }
         });
     }
@@ -103,5 +182,11 @@ public class ActionMenuPage extends Fragment {
         menu.addItem(R.id.wind_menu_item_track_time, R.drawable.wl_ic_ok, R.string.wind_menu_item_track_time);
         menu.addItem(R.id.wind_menu_item_setting, R.drawable.wl_ic_setting, R.string.wind_menu_item_setting);
         menu.addItem(R.id.wind_menu_item_delete, R.drawable.wl_ic_trash, R.string.wind_menu_item_delete);
+    }
+
+    private void closeToolbarMenu() {
+        _toolbarMenu.dismissImmediately();
+        _toolbarMenuWithManyItems.dismissImmediately();
+        _toolbarMenuWithoutLabel.dismissImmediately();
     }
 }

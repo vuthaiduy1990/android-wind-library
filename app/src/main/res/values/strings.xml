@@ -43,7 +43,8 @@
     <string name="button_close">Close</string>
 
     <string name="wind_menu_item_setting">Settings</string>
-    <string name="wind_menu_item_delete">Delete item</string>
+    <string name="wind_menu_item_delete">Delete</string>
+    <string name="wind_menu_item_edit">Edit</string>
     <string name="wind_menu_item_track_time">Track time</string>
     <string name="wind_menu_item_set_money">Set money</string>
     <string name="wind_menu_item_set_color">Set color</string>

@@ -8,7 +8,7 @@
     <!-- Main Content View -->
     <LinearLayout
         android:id="@+id/_layout"
-        android:layout_width="@dimen/wl_dialog_tatsumaki_width"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/wl_dialog_background"
         android:gravity="center"
