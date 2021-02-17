@@ -11,4 +11,14 @@
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:backgroundDimAmount">0.4</item>
     </style>
+
+    <!-- Dialog List Item Text Theme -->
+    <style name="WL_DialogListItemTextTheme">
+        <item name="android:paddingStart">@dimen/wl_spacing_level_3</item>
+        <item name="android:paddingEnd">@dimen/wl_spacing_level_3</item>
+        <item name="android:paddingTop">@dimen/wl_spacing_level_2</item>
+        <item name="android:paddingBottom">@dimen/wl_spacing_level_2</item>
+        <item name="android:textSize">@dimen/wl_text_small</item>
+        <item name="android:textColor">@color/wl_text</item>
+    </style>
 </resources>

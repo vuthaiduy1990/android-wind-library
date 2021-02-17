@@ -79,7 +79,7 @@ public class WindActionMenu extends WindDialog {
         setFooterVisible(false);
         setTitleVisible(false);
         setIconVisible(false);
-        setItemBackground(R.drawable.wl_background_hover);
+        setItemBackground(R.drawable.wl_background_hover_pressed);
         setItemTextColor(R.color.wl_text);
         switch (menuType) {
             case LIST:
