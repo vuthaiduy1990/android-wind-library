@@ -2,6 +2,8 @@ package the.wind.library.utils;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -273,5 +275,18 @@ public final class CWAndroidUtils {
         if (imm != null) {
             imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
         }
+    }
+
+    /**
+     * Copy text to clipboard
+     *
+     * @param context application context
+     * @param label   title
+     * @param text    copied text
+     */
+    public static void copyText(Context context, String label, String text) {
+        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText(label, text);
+        clipboard.setPrimaryClip(clip);
     }
 }
