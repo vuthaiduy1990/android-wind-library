@@ -98,10 +98,11 @@ public abstract class SelectionListDialog<T> extends WindDialog {
         _searchBox.setVisibility(View.GONE);
         _searchBox.setOnActionListener(new SearchBox.OnActionListener() {
             @Override
-            public void onSearch(EditText editText, String oldInput, String newInput) {
+            public int onSearch(EditText editText, String oldInput, String newInput) {
                 if (searchListener != null) {
-                    searchListener.onSearch(editText, oldInput, newInput);
+                    return searchListener.onSearch(editText, oldInput, newInput);
                 }
+                return 0;
             }
 
             @Override

@@ -29,8 +29,9 @@ public class SearchBoxPage extends Fragment {
         _searchBox = view.findViewById(R.id._searchBox);
         _searchBox.setOnActionListener(new SearchBox.OnActionListener() {
             @Override
-            public void onSearch(EditText view, String oldInput, String newInput) {
+            public int onSearch(EditText view, String oldInput, String newInput) {
                 Toast.makeText(getContext(), oldInput + " - " + newInput, Toast.LENGTH_SHORT).show();
+                return 0;
             }
 
             @Override

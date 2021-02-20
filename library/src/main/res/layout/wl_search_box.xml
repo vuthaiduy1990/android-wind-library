@@ -30,6 +30,17 @@
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
+        <ImageView
+            android:id="@+id/_icSearchBtn"
+            android:layout_width="@dimen/wl_icon_small"
+            android:layout_height="@dimen/wl_icon_small"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/wl_spacing_level_2"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/wl_ic_search"
+            tools:ignore="ContentDescription" />
+
         <!--Text input-->
         <EditText
             android:id="@+id/_ipSearch"
@@ -43,22 +54,24 @@
             android:inputType="text"
             android:maxLines="1"
             android:minLines="1"
-            android:paddingStart="@dimen/wl_search_box_padding_hoz"
-            android:paddingEnd="@dimen/wl_search_box_padding_hoz"
+            android:paddingStart="@dimen/wl_search_box_pad_1"
+            android:paddingTop="0dp"
+            android:paddingEnd="@dimen/wl_search_box_pad_2"
+            android:paddingBottom="0dp"
+            android:scrollbars="none"
             android:singleLine="true"
             android:textColor="@color/wl_text"
             tools:ignore="LabelFor" />
 
-        <ImageView
-            android:id="@+id/_icSearchBtn"
-            android:layout_width="@dimen/wl_icon_small"
-            android:layout_height="@dimen/wl_icon_small"
+        <TextView
+            android:id="@+id/_searchResultCountView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/wl_spacing_level_2"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/wl_ic_search"
-            tools:ignore="ContentDescription" />
+            android:layout_marginEnd="@dimen/wl_search_box_pad_1"
+            android:textColor="@color/wl_text"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/_icClearSearch"

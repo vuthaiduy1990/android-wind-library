@@ -480,8 +480,8 @@ public class DialogPage extends Fragment {
         });
         headerSearchBox.setOnActionListener(new SearchBox.OnActionListener() {
             @Override
-            public void onSearch(EditText view, String oldInput, String newInput) {
-
+            public int onSearch(EditText view, String oldInput, String newInput) {
+                return 0;
             }
 
             @Override

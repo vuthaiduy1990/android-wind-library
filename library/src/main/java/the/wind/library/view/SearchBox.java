@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +34,7 @@ public class SearchBox extends RelativeLayout {
     private final ImageView _icCloseSearch, _icCompactSearch;
     private final ViewGroup _inputBox;
     private final EditText _ipSearch;
+    private final TextView _searchResultCountView;
     private final ImageView _icSearchBtn, _icClearSearch;
     private final View _closeIconSpace;
 
@@ -106,6 +109,7 @@ public class SearchBox extends RelativeLayout {
         _icCompactSearch = findViewById(R.id._icCompactSearch);
         _inputBox = findViewById(R.id._inputBox);
         _ipSearch = _inputBox.findViewById(R.id._ipSearch);
+        _searchResultCountView = _inputBox.findViewById(R.id._searchResultCountView);
         _icSearchBtn = _inputBox.findViewById(R.id._icSearchBtn);
         _icClearSearch = _inputBox.findViewById(R.id._icClearSearch);
 
@@ -119,6 +123,7 @@ public class SearchBox extends RelativeLayout {
                     R.styleable.SearchBox_textSize,
                     getResources().getDimension(R.dimen.wl_text_big));
             _ipSearch.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+            _searchResultCountView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 
             // compact mode
             closeVisible = typeArray.getBoolean(R.styleable.SearchBox_closeVisible, true);
@@ -158,8 +163,10 @@ public class SearchBox extends RelativeLayout {
                 // show/hide the clear icon
                 if (s.length() > 0) {
                     _icClearSearch.setVisibility(View.VISIBLE);
+                    _searchResultCountView.setVisibility(VISIBLE);
                 } else {
                     _icClearSearch.setVisibility(View.GONE);
+                    _searchResultCountView.setVisibility(GONE);
                 }
 
                 // trigger search event
@@ -190,6 +197,7 @@ public class SearchBox extends RelativeLayout {
             public void onClick(View v) {
                 _ipSearch.setText(""); // this will notify a text change
                 _icClearSearch.setVisibility(View.GONE);
+                _searchResultCountView.setVisibility(GONE);
             }
         });
         _icCompactSearch.setOnClickListener(new OnClickListener() {
@@ -236,6 +244,13 @@ public class SearchBox extends RelativeLayout {
      */
     public EditText inputView() {
         return _ipSearch;
+    }
+
+    /**
+     * @return search result count view
+     */
+    public TextView searchResultCountView() {
+        return _searchResultCountView;
     }
 
     /**
@@ -376,7 +391,10 @@ public class SearchBox extends RelativeLayout {
     private void handleSearch(@NonNull String searchInput) {
         oldSearchInput = newSearchInput;
         newSearchInput = searchInput.trim();
-        if (actionListener != null) actionListener.onSearch(_ipSearch, oldSearchInput, newSearchInput);
+        if (actionListener != null) {
+            int results = actionListener.onSearch(_ipSearch, oldSearchInput, newSearchInput);
+            _searchResultCountView.setText(String.format(Locale.getDefault(), "(%d)", results));
+        }
     }
 
     /* ---------------------- INNER CLASS -------------------- */
@@ -392,8 +410,9 @@ public class SearchBox extends RelativeLayout {
          * @param view     search input view
          * @param oldInput old search input value
          * @param newInput new search input value
+         * @return number of results
          */
-        void onSearch(EditText view, String oldInput, String newInput);
+        int onSearch(EditText view, String oldInput, String newInput);
 
         /**
          * On toggle search mode

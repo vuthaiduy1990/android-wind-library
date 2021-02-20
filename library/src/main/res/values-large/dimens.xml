@@ -65,7 +65,8 @@
 
     <!-- ||||||||||||||||||||||| Wind Search Box ||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <dimen name="wl_search_box_padding_hoz">36dp</dimen>
+    <dimen name="wl_search_box_pad_1">36dp</dimen>
+    <dimen name="wl_search_box_pad_2">72dp</dimen>
     <dimen name="wl_search_box_padding_ver">8dp</dimen>
 
 </resources>
