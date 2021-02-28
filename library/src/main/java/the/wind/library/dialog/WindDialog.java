@@ -56,7 +56,9 @@ public class WindDialog extends Dialog {
     private final View _dialogView;
     private final ImageView _iconView;
     private final LottieAnimationView _lottieIconView;
+    private final ViewGroup _titleLayout;
     private final TextView _titleView;
+    private final TextView _subTitleView;
     private final ViewGroup _headerHolder;
     private final ViewGroup _bodyHolder;
     private final ViewGroup _footerHolder;
@@ -125,7 +127,9 @@ public class WindDialog extends Dialog {
         _headerHolder = _layout.findViewById(R.id._headerHolder);
         _iconView = _headerHolder.findViewById(R.id._iconView);
         _lottieIconView = _headerHolder.findViewById(R.id._lottieIconView);
-        _titleView = _layout.findViewById(R.id._titleView);
+        _titleLayout = _layout.findViewById(R.id._titleLayout);
+        _titleView = _titleLayout.findViewById(R.id._titleView);
+        _subTitleView = _titleLayout.findViewById(R.id._subTitleView);
         _bodyHolder = _layout.findViewById(R.id._bodyHolder);
         _footerHolder = _layout.findViewById(R.id._footerHolder);
 
@@ -636,8 +640,43 @@ public class WindDialog extends Dialog {
      * @return dialog
      */
     public WindDialog setTitleVisible(boolean visible) {
-        _titleView.setVisibility(visible ? View.VISIBLE : View.GONE);
+        _titleLayout.setVisibility(visible ? View.VISIBLE : View.GONE);
         return this;
+    }
+
+    /**
+     * @return sub title view
+     */
+    public TextView subTitleView() {
+        return _subTitleView;
+    }
+
+    /**
+     * Set sub title text
+     *
+     * @param subTitle sub title text
+     * @return dialog
+     */
+    public WindDialog setSubTitle(@Nullable CharSequence subTitle) {
+        _subTitleView.setText(subTitle);
+        if (subTitle != null) {
+            if (subTitle.toString().trim().isEmpty()) {
+                _subTitleView.setVisibility(View.GONE);
+            } else {
+                _subTitleView.setVisibility(View.VISIBLE);
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Set sub title
+     *
+     * @param subTitleResId sub title resource string
+     * @return dialog
+     */
+    public WindDialog setSubTitle(@StringRes int subTitleResId) {
+        return setSubTitle(getContext().getString(subTitleResId));
     }
 
     /**

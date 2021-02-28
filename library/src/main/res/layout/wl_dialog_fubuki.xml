@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:gravity="center_vertical"
+            android:gravity="start|center_vertical"
             android:orientation="horizontal">
 
             <!-- Static Icon -->
@@ -42,15 +42,31 @@
                 app:lottie_autoPlay="true"
                 app:lottie_loop="false" />
 
-            <!-- title -->
-            <TextView
-                android:id="@+id/_titleView"
+            <LinearLayout
+                android:id="@+id/_titleLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/wl_spacing_level_2"
-                android:gravity="center"
-                android:textColor="@color/wl_dialog_title"
-                android:textSize="@dimen/wl_title_big" />
+                android:gravity="start|center_vertical"
+                android:orientation="vertical">
+                <!-- title -->
+                <TextView
+                    android:id="@+id/_titleView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/wl_dialog_title"
+                    android:textSize="@dimen/wl_title_big" />
+                <!-- Sub title -->
+                <TextView
+                    android:id="@+id/_subTitleView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/wl_dialog_text"
+                    android:textSize="@dimen/wl_text_small"
+                    android:visibility="gone" />
+            </LinearLayout>
 
         </LinearLayout>
 

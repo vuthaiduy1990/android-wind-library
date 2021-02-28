@@ -329,6 +329,7 @@ public class DialogPage extends Fragment {
     private WindDialog createFubukiDialog(View view) {
         final WindDialog dialog = new WindDialog(view.getContext(), WindDialog.LayoutType.FUBUKI);
         dialog.setTitle("The adventure");
+        dialog.setSubTitle("Go to go on");
         dialog
                 .setIcon(R.drawable.treasure_map)
                 .addButton(Button.Type.NEUTRAL, "Thinking", null)

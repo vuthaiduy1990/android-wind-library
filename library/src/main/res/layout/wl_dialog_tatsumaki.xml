@@ -44,15 +44,31 @@
 
         </RelativeLayout>
 
-        <!-- title -->
-        <TextView
-            android:id="@+id/_titleView"
+        <LinearLayout
+            android:id="@+id/_titleLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/wl_spacing_level_2"
             android:gravity="center"
-            android:textColor="@color/wl_dialog_title"
-            android:textSize="@dimen/wl_title" />
+            android:orientation="vertical">
+
+            <!-- title -->
+            <TextView
+                android:id="@+id/_titleView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/wl_dialog_title"
+                android:textSize="@dimen/wl_title" />
+
+            <!-- just empty since tatsumaki layout don't need sub title -->
+            <TextView
+                android:id="@+id/_subTitleView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
 
         <!-- Custom Content Body -->
         <!-- The use can customize this content view -->
