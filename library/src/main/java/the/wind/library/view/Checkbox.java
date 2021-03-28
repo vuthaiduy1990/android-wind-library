@@ -38,6 +38,7 @@ public class Checkbox extends LottieAnimationView {
     private AnimType animType = AnimType.DEFAULT_CIRCLE;
 
     // animation shape color
+    @ColorInt
     private int animColor;
 
     // bundle data
@@ -46,19 +47,37 @@ public class Checkbox extends LottieAnimationView {
     // listener
     private OnCheckedListener checkedListener;
 
+    /**
+     * Constructor
+     *
+     * @param context application context
+     */
     public Checkbox(Context context) {
         this(context, null);
     }
 
+    /**
+     * Constructor
+     *
+     * @param context application context
+     * @param attrs   collection of attributes
+     */
     public Checkbox(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
+    /**
+     * Constructor
+     *
+     * @param context      application context
+     * @param attrs        collection of attributes
+     * @param defStyleAttr style attribute
+     */
     public Checkbox(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray typeArray = context.getTheme().obtainStyledAttributes(
                 attrs, R.styleable.Checkbox,
-                0, 0);
+                defStyleAttr, 0);
         try {
             // get anim type;
             int animIdx = typeArray.getInt(R.styleable.Checkbox_animType, 0);

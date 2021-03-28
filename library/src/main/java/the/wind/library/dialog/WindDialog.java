@@ -73,8 +73,10 @@ public class WindDialog extends Dialog {
     // model
     private final LayoutType layoutType;
     private final Timer timer;
+    @DrawableRes
     private int iconResId;
     private Bitmap iconBitmap;
+    @RawRes
     private int lottieIconResId;
     private final CWBundle bundle = new CWBundle();
 

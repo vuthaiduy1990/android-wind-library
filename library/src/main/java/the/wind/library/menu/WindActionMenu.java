@@ -29,11 +29,18 @@ import the.wind.library.dialog.WindDialog;
  */
 public class WindActionMenu extends WindDialog {
 
+    // view
     private final ViewGroup _menuHolder;
     private final LayoutInflater inflater;
+
+    // styling attributes
+    @DrawableRes
     private int itemBackground;
+    @ColorRes
     private int itemTextColor;
+    @DimenRes
     private int itemTextSize;
+    @DimenRes
     private int itemIconSize;
 
     // model

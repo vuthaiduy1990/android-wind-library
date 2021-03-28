@@ -59,7 +59,9 @@ public class Button extends LinearLayout {
 
     // icon resource
     private InlineIcon mInlineIcon;
+    @DrawableRes
     private int mCustomIconRes;
+    @RawRes
     private int mCustomAnimRes;
 
     // bundle data
@@ -117,7 +119,7 @@ public class Button extends LinearLayout {
 
             // bind text attributes
             String textValue = btTypeArray.getString(R.styleable.Button_text);
-            int textColorRes = btTypeArray.getColor(
+            int textColorInt = btTypeArray.getColor(
                     R.styleable.Button_textColor,
                     ContextCompat.getColor(context, type.getColor()));
             float textSize = btTypeArray.getDimension(
@@ -128,7 +130,7 @@ public class Button extends LinearLayout {
                     ViewGroup.LayoutParams.WRAP_CONTENT);
             _textView.setLayoutParams(textLayout);
             setText(textValue);
-            setTextColor(textColorRes);
+            setTextColor(textColorInt);
             _textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 
             // bind space attribute
