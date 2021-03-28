@@ -13,16 +13,22 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/_navCheckboxMenu"
-        android:name="the.wind.library.sample.activity.fragment.CheckboxPage"
-        android:label="@string/drawer_checkbox"
-        tools:layout="@layout/fragment_checkbox_layout" />
-
-    <fragment
         android:id="@+id/_navColorMenu"
         android:name="the.wind.library.sample.activity.fragment.ColorPage"
         android:label="@string/drawer_wind_color"
         tools:layout="@layout/fragment_color_layout" />
+
+    <fragment
+        android:id="@+id/_navDimenMenu"
+        android:name="the.wind.library.sample.activity.fragment.DimenPage"
+        android:label="@string/drawer_wind_dimen"
+        tools:layout="@layout/fragment_dimension_layout" />
+
+    <fragment
+        android:id="@+id/_navCheckboxMenu"
+        android:name="the.wind.library.sample.activity.fragment.CheckboxPage"
+        android:label="@string/drawer_checkbox"
+        tools:layout="@layout/fragment_checkbox_layout" />
 
     <fragment
         android:id="@+id/_navButtonMenu"

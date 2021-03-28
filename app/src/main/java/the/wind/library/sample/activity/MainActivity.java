@@ -25,8 +25,9 @@ public class MainActivity extends AppCompatActivity {
 
     private final int[] NAVIGATION_ITEMS = new int[]{
             R.id._navHomeMenu,
-            R.id._navCheckboxMenu,
             R.id._navColorMenu,
+            R.id._navDimenMenu,
+            R.id._navCheckboxMenu,
             R.id._navButtonMenu,
             R.id._navDialogMenu,
             R.id._navRecycleViewMenu,

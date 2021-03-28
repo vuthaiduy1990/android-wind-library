@@ -3,11 +3,13 @@
     <string name="nav_header_title">Wind Library</string>
     <string name="nav_header_subtitle">vuthaiduy1990@gmail.com</string>
     <string name="nav_header_desc">The wind library which can speedup your app development</string>
+    <string name="app_slogan">Color the wind</string>
 
     <string name="drawer_widget_components">Widget Components</string>
     <string name="drawer_home">Home</string>
     <string name="drawer_checkbox">Checkbox</string>
     <string name="drawer_wind_color">Wind Color</string>
+    <string name="drawer_wind_dimen">Wind Dimension</string>
     <string name="drawer_button">Button</string>
     <string name="drawer_dialog">Dialog Screen</string>
     <string name="drawer_recycle_view">Recycle View</string>

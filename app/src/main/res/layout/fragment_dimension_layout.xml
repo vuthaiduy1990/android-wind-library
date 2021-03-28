@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:id="@+id/_dimenLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Divider -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/wl_gray"
+            android:padding="3dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Text and Label"
+                android:textColor="#fff"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_slogan"
+            android:textColor="@color/wl_text"
+            android:textSize="@dimen/wl_text_tiny" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/wl_spacing_level_2"
+            android:text="@string/app_slogan"
+            android:textColor="@color/wl_text"
+            android:textSize="@dimen/wl_text_small" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/wl_spacing_level_2"
+            android:text="@string/app_slogan"
+            android:textColor="@color/wl_text"
+            android:textSize="@dimen/wl_text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/wl_spacing_level_2"
+            android:text="@string/app_slogan"
+            android:textColor="@color/wl_text"
+            android:textSize="@dimen/wl_text_big" />
+
+        <!-- Divider -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/wl_gray"
+            android:padding="3dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Title"
+                android:textColor="#fff"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_slogan"
+            android:textColor="@color/wl_text"
+            android:textSize="@dimen/wl_title_small" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/wl_spacing_level_2"
+            android:text="@string/app_slogan"
+            android:textColor="@color/wl_text"
+            android:textSize="@dimen/wl_title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/wl_spacing_level_2"
+            android:text="@string/app_slogan"
+            android:textColor="@color/wl_text"
+            android:textSize="@dimen/wl_title_big" />
+
+        <!-- Divider -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/wl_gray"
+            android:padding="3dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Icon"
+                android:textColor="#fff"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start|bottom"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/wl_icon_tiny"
+                android:layout_height="@dimen/wl_icon_tiny"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_rocket" />
+
+            <ImageView
+                android:layout_width="@dimen/wl_icon_small"
+                android:layout_height="@dimen/wl_icon_small"
+                android:layout_marginStart="@dimen/wl_spacing_level_2"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_rocket" />
+
+            <ImageView
+                android:layout_width="@dimen/wl_icon"
+                android:layout_height="@dimen/wl_icon"
+                android:layout_marginStart="@dimen/wl_spacing_level_2"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_rocket" />
+
+            <ImageView
+                android:layout_width="@dimen/wl_icon_big"
+                android:layout_height="@dimen/wl_icon_big"
+                android:layout_marginStart="@dimen/wl_spacing_level_2"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_rocket" />
+
+        </LinearLayout>
+
+        <!-- Divider -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/wl_gray"
+            android:padding="3dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Spacing"
+                android:textColor="#fff"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/wl_spacing_level_0"
+            android:layout_height="@dimen/wl_spacing_level_0"
+            android:layout_marginTop="@dimen/wl_spacing_level_1"
+            android:background="@drawable/wl_button_background_primary" />
+
+        <RelativeLayout
+            android:layout_width="@dimen/wl_spacing_level_1"
+            android:layout_height="@dimen/wl_spacing_level_0"
+            android:layout_marginTop="@dimen/wl_spacing_level_1"
+            android:background="@drawable/wl_button_background_primary" />
+
+        <RelativeLayout
+            android:layout_width="@dimen/wl_spacing_level_2"
+            android:layout_height="@dimen/wl_spacing_level_0"
+            android:layout_marginTop="@dimen/wl_spacing_level_1"
+            android:background="@drawable/wl_button_background_primary" />
+
+        <RelativeLayout
+            android:layout_width="@dimen/wl_spacing_level_3"
+            android:layout_height="@dimen/wl_spacing_level_0"
+            android:layout_marginTop="@dimen/wl_spacing_level_1"
+            android:background="@drawable/wl_button_background_primary" />
+
+        <RelativeLayout
+            android:layout_width="@dimen/wl_spacing_level_4"
+            android:layout_height="@dimen/wl_spacing_level_0"
+            android:layout_marginTop="@dimen/wl_spacing_level_1"
+            android:background="@drawable/wl_button_background_primary" />
+
+    </LinearLayout>
+</ScrollView>
