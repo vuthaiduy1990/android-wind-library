@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
             R.id._navRecycleViewMenu,
             R.id._navActionMenu,
             R.id._navSearchBox,
+            R.id._navTagBox,
     };
     private AppBarConfiguration mAppBarConfiguration;
 

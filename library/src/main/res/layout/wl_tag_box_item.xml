@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/wl_spacing_level_1"
+    android:layout_marginTop="@dimen/wl_spacing_level_0"
+    android:layout_marginEnd="@dimen/wl_spacing_level_1"
+    android:layout_marginBottom="@dimen/wl_spacing_level_1"
+    android:background="@drawable/wl_background_hover"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/wl_spacing_level_1"
+    android:paddingTop="@dimen/wl_spacing_level_0"
+    android:paddingEnd="@dimen/wl_spacing_level_1"
+    android:paddingBottom="@dimen/wl_spacing_level_0"
+    app:layout_maxWidth="@dimen/wl_tag_box_item_max_with">
+
+    <TextView
+        android:id="@+id/_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:lines="1"
+        android:maxLines="1" />
+
+    <ImageView
+        android:id="@+id/_removeIcon"
+        android:layout_width="@dimen/wl_icon_tiny"
+        android:layout_height="@dimen/wl_icon_tiny"
+        android:layout_weight="0"
+        android:padding="@dimen/wl_spacing_level_0"
+        tools:ignore="ContentDescription" />
+
+</LinearLayout>

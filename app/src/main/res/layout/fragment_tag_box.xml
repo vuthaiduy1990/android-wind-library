@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Search Box -->
+    <RelativeLayout
+        android:id="@+id/_inputBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Text input-->
+        <EditText
+            android:id="@+id/_tagInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/wl_form_input_background"
+            android:gravity="center_vertical"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:maxLines="1"
+            android:minLines="1"
+            android:paddingStart="@dimen/wl_spacing_level_2"
+            android:paddingTop="@dimen/wl_spacing_level_1"
+            android:paddingEnd="@dimen/wl_search_box_pad_2"
+            android:paddingBottom="@dimen/wl_spacing_level_1"
+            android:scrollbars="none"
+            android:singleLine="true"
+            android:textColor="@color/wl_text"
+            android:textSize="@dimen/wl_text"
+            tools:ignore="LabelFor" />
+
+        <ImageView
+            android:id="@+id/_icTagEnter"
+            android:layout_width="@dimen/wl_icon_big"
+            android:layout_height="@dimen/wl_icon_big"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/wl_spacing_level_2"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/wl_spacing_level_0"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_nav_tag"
+            tools:ignore="ContentDescription" />
+
+    </RelativeLayout>
+
+
+    <the.wind.library.view.TagBox
+        android:id="@+id/_tagBox1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/wl_dialog_background"
+        android:padding="@dimen/wl_spacing_level_1" />
+
+    <the.wind.library.view.TagBox
+        android:id="@+id/_tagBox2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/wl_spacing_level_4"
+        android:background="@drawable/wl_button_background_highlight"
+        android:padding="@dimen/wl_spacing_level_1"
+        app:iconSize="@dimen/wl_icon"
+        app:removeIcon="@drawable/ic_nav_tag"
+        app:textColor="@color/wl_button_text_white"
+        app:textSize="@dimen/wl_text_big" />
+
+</LinearLayout>

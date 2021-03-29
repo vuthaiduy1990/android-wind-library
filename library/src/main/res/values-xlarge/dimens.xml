@@ -69,4 +69,8 @@
     <dimen name="wl_search_box_pad_2">84dp</dimen>
     <dimen name="wl_search_box_padding_ver">10dp</dimen>
 
+    <!-- |||||||||||||||||||||||||| Tag Box |||||||||||||||||||||||||| -->
+    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <dimen name="wl_tag_box_item_max_with">512dp</dimen>
+
 </resources>

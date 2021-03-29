@@ -59,4 +59,10 @@
         android:name="the.wind.library.sample.activity.fragment.SearchBoxPage"
         android:label="@string/drawer_search_box"
         tools:layout="@layout/fragment_search_box_layout" />
+
+    <fragment
+        android:id="@+id/_navTagBox"
+        android:name="the.wind.library.sample.activity.fragment.TagBoxPage"
+        android:label="@string/drawer_tag_box"
+        tools:layout="@layout/fragment_tag_box" />
 </navigation>
