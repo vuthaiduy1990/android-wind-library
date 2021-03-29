@@ -175,35 +175,94 @@
                 android:textSize="14sp" />
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="@dimen/wl_spacing_level_0"
-            android:layout_height="@dimen/wl_spacing_level_0"
-            android:layout_marginTop="@dimen/wl_spacing_level_1"
-            android:background="@drawable/wl_button_background_primary" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <RelativeLayout
-            android:layout_width="@dimen/wl_spacing_level_1"
-            android:layout_height="@dimen/wl_spacing_level_0"
-            android:layout_marginTop="@dimen/wl_spacing_level_1"
-            android:background="@drawable/wl_button_background_primary" />
+            <RelativeLayout
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:background="@color/wl_success" />
 
-        <RelativeLayout
-            android:layout_width="@dimen/wl_spacing_level_2"
-            android:layout_height="@dimen/wl_spacing_level_0"
-            android:layout_marginTop="@dimen/wl_spacing_level_1"
-            android:background="@drawable/wl_button_background_primary" />
+            <RelativeLayout
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="@dimen/wl_spacing_level_0"
+                android:background="@color/wl_success" />
+        </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="@dimen/wl_spacing_level_3"
-            android:layout_height="@dimen/wl_spacing_level_0"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/wl_spacing_level_1"
-            android:background="@drawable/wl_button_background_primary" />
+            android:orientation="horizontal">
 
-        <RelativeLayout
-            android:layout_width="@dimen/wl_spacing_level_4"
-            android:layout_height="@dimen/wl_spacing_level_0"
+            <RelativeLayout
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:background="@color/wl_success" />
+
+            <RelativeLayout
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="@dimen/wl_spacing_level_1"
+                android:background="@color/wl_success" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/wl_spacing_level_1"
-            android:background="@drawable/wl_button_background_primary" />
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:background="@color/wl_success" />
+
+            <RelativeLayout
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="@dimen/wl_spacing_level_2"
+                android:background="@color/wl_success" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/wl_spacing_level_1"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:background="@color/wl_success" />
+
+            <RelativeLayout
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="@dimen/wl_spacing_level_3"
+                android:background="@color/wl_success" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/wl_spacing_level_1"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:background="@color/wl_success" />
+
+            <RelativeLayout
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="@dimen/wl_spacing_level_4"
+                android:background="@color/wl_success" />
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>
