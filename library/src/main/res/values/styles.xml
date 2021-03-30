@@ -21,4 +21,34 @@
         <item name="android:textSize">@dimen/wl_text_small</item>
         <item name="android:textColor">@color/wl_text</item>
     </style>
+
+    <!-- Badge Theme-->
+    <style name="WL_BadgeTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">@dimen/wl_spacing_level_1</item>
+        <item name="android:paddingEnd">@dimen/wl_spacing_level_1</item>
+        <item name="android:paddingTop">@dimen/wl_spacing_level_0</item>
+        <item name="android:paddingBottom">@dimen/wl_spacing_level_0</item>
+        <item name="android:textColor">@color/wl_white</item>
+        <item name="android:textSize">@dimen/wl_text_tiny</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:lines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <!--  Form Input Theme -->
+    <style name="WL_Form_InputTheme">
+        <item name="android:gravity">top|start</item>
+        <item name="android:imeOptions">actionDone</item>
+        <item name="android:inputType">text</item>
+        <item name="android:paddingStart">@dimen/wl_spacing_level_3</item>
+        <item name="android:paddingEnd">@dimen/wl_spacing_level_3</item>
+        <item name="android:paddingTop">@dimen/wl_spacing_level_2</item>
+        <item name="android:paddingBottom">@dimen/wl_spacing_level_2</item>
+        <item name="android:textColor">@color/wl_text</item>
+        <item name="android:textColorHint">@color/wl_text_hint</item>
+        <item name="android:textSize">@dimen/wl_text</item>
+    </style>
+
 </resources>
