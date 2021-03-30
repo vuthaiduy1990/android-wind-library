@@ -68,6 +68,7 @@
         app:iconSize="@dimen/wl_icon"
         app:removeIcon="@drawable/ic_nav_tag"
         app:textColor="@color/wl_button_text_white"
+        app:textMaxWidth="500dp"
         app:textSize="@dimen/wl_text_big" />
 
 </LinearLayout>

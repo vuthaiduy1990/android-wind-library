@@ -45,9 +45,10 @@ public class TagBox extends FlexboxLayout {
     // bundle data
     private final CWBundle bundle = new CWBundle();
     // Views
-    private LayoutInflater inflater;
+    private final LayoutInflater inflater;
     // styling
     private float textSize;
+    private float textMaxWidth;
     @ColorInt
     private int textColor;
     @DrawableRes
@@ -109,6 +110,9 @@ public class TagBox extends FlexboxLayout {
             textSize = typeArray.getDimension(
                     R.styleable.TagBox_textSize,
                     getResources().getDimension(R.dimen.wl_text_small));
+            textMaxWidth = typeArray.getDimension(
+                    R.styleable.TagBox_textMaxWidth,
+                    getResources().getDimension(R.dimen.wl_tag_box_item_max_with));
             textColor = typeArray.getColor(
                     R.styleable.TagBox_textColor,
                     ContextCompat.getColor(context, R.color.wl_text));
@@ -252,6 +256,17 @@ public class TagBox extends FlexboxLayout {
     }
 
     /**
+     * Set text max width
+     *
+     * @param resId dimension resource id
+     * @return tag box
+     */
+    public TagBox setTextMaxWidth(@DimenRes int resId) {
+        textMaxWidth = getResources().getDimension(resId);
+        return this;
+    }
+
+    /**
      * Set text color
      *
      * @param restId color resource id
@@ -319,6 +334,7 @@ public class TagBox extends FlexboxLayout {
         _textView.setText(tag);
         _textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         _textView.setTextColor(textColor);
+        _textView.setMaxWidth((int) textMaxWidth);
 
         // bind icon view
         ImageView _removeIcon = itemView.findViewById(R.id._removeIcon);
