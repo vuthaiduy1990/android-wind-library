@@ -15,6 +15,10 @@
                 android:icon="@drawable/ic_nav_workspace"
                 android:title="@string/drawer_wind_dimen" />
             <item
+                android:id="@+id/_navTextMenu"
+                android:icon="@drawable/ic_nav_text"
+                android:title="@string/drawer_text_effect" />
+            <item
                 android:id="@+id/_navColorMenu"
                 android:icon="@drawable/ic_nav_color"
                 android:title="@string/drawer_wind_color" />

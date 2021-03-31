@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
             R.id._navHomeMenu,
             R.id._navColorMenu,
             R.id._navDimenMenu,
+            R.id._navTextMenu,
             R.id._navCheckboxMenu,
             R.id._navButtonMenu,
             R.id._navDialogMenu,

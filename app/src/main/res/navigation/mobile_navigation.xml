@@ -25,6 +25,12 @@
         tools:layout="@layout/fragment_dimension_layout" />
 
     <fragment
+        android:id="@+id/_navTextMenu"
+        android:name="the.wind.library.sample.activity.fragment.TextPage"
+        android:label="@string/drawer_text_effect"
+        tools:layout="@layout/fragment_text_page" />
+
+    <fragment
         android:id="@+id/_navCheckboxMenu"
         android:name="the.wind.library.sample.activity.fragment.CheckboxPage"
         android:label="@string/drawer_checkbox"
