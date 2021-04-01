@@ -247,11 +247,11 @@ public class TagBox extends FlexboxLayout {
     /**
      * Set text size
      *
-     * @param restId text size resource id
+     * @param resId text size resource id
      * @return text box
      */
-    public TagBox setTextSize(@DimenRes int restId) {
-        this.textSize = getResources().getDimension(restId);
+    public TagBox setTextSize(@DimenRes int resId) {
+        this.textSize = getResources().getDimension(resId);
         return this;
     }
 
@@ -269,33 +269,33 @@ public class TagBox extends FlexboxLayout {
     /**
      * Set text color
      *
-     * @param restId color resource id
+     * @param resId color resource id
      * @return tag box
      */
-    public TagBox setTextColor(@ColorRes int restId) {
-        this.textColor = ContextCompat.getColor(getContext(), restId);
+    public TagBox setTextColor(@ColorRes int resId) {
+        this.textColor = ContextCompat.getColor(getContext(), resId);
         return this;
     }
 
     /**
      * Set icon size
      *
-     * @param restId icon size resource id
+     * @param resId icon size resource id
      * @return tag box
      */
-    public TagBox setIconSize(@DimenRes int restId) {
-        this.iconSize = getResources().getDimension(restId);
+    public TagBox setIconSize(@DimenRes int resId) {
+        this.iconSize = getResources().getDimension(resId);
         return this;
     }
 
     /**
      * Set remove icon
      *
-     * @param restId icon resource id
+     * @param resId icon resource id
      * @return tag box
      */
-    public TagBox setRemoveIconRes(@DrawableRes int restId) {
-        removeIconRes = restId;
+    public TagBox setRemoveIconRes(@DrawableRes int resId) {
+        removeIconRes = resId;
         return this;
     }
 

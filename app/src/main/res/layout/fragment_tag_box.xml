@@ -45,7 +45,7 @@
             android:adjustViewBounds="true"
             android:padding="@dimen/wl_spacing_level_0"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_nav_tag"
+            android:src="@drawable/wl_ic_tag"
             tools:ignore="ContentDescription" />
 
     </RelativeLayout>
@@ -66,7 +66,7 @@
         android:background="@drawable/wl_button_background_highlight"
         android:padding="@dimen/wl_spacing_level_1"
         app:iconSize="@dimen/wl_icon"
-        app:removeIcon="@drawable/ic_nav_tag"
+        app:removeIcon="@drawable/wl_ic_tag"
         app:textColor="@color/wl_button_text_white"
         app:textMaxWidth="500dp"
         app:textSize="@dimen/wl_text_big" />
