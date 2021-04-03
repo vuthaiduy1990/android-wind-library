@@ -14,11 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import the.wind.library.sample.R;
+import the.wind.library.view.SearchBox;
 import the.wind.library.view.TagBox;
 
 public class TagBoxPage extends Fragment {
 
-    private EditText _tagInput;
+    private SearchBox _tagInput;
     private TagBox _tagBox1;
     private TagBox _tagBox2;
     private String[] tags = new String[]{
@@ -70,14 +71,13 @@ public class TagBoxPage extends Fragment {
 
         // Add item
         _tagInput = view.findViewById(R.id._tagInput);
-        view.findViewById(R.id._icTagEnter).setOnClickListener(new View.OnClickListener() {
+        _tagInput.setOnEnterListener(new SearchBox.OnEnterListener() {
             @Override
-            public void onClick(View v) {
-                _tagBox1.add(_tagInput.getText().toString().trim());
-                _tagInput.setText("");
+            public void onEnter(EditText view, String oldInput, String newInput) {
+                _tagBox1.add(_tagInput.inputView().getText().toString().trim());
+                _tagInput.inputView().setText("");
             }
         });
-
     }
 
     private void customTagBox(View view) {

@@ -27,7 +27,9 @@ public abstract class SelectionListDialog<T> extends WindDialog {
 
     // search box
     protected final SearchBox _searchBox;
-    private SearchBox.OnActionListener searchListener;
+    private SearchBox.OnSearchListener searchListener;
+    private SearchBox.OnEnterListener searchEnterListener;
+    private SearchBox.OnToggleListener searchToggleListener;
 
     // style and string
     private int closeButtonTextRes;
@@ -93,23 +95,32 @@ public abstract class SelectionListDialog<T> extends WindDialog {
         _searchBox.setLayoutParams(searchBoxLp);
         _searchBox.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
         _searchBox.setCompactMode(true);
-        _searchBox.setInputBackground(searchBoxBackgroundRes);
+        _searchBox.setBackgroundResource(searchBoxBackgroundRes);
         addViewToHeader(_searchBox);
         _searchBox.setVisibility(View.GONE);
-        _searchBox.setOnActionListener(new SearchBox.OnActionListener() {
+        _searchBox.setOnSearchListener(new SearchBox.OnSearchListener() {
             @Override
-            public int onSearch(EditText editText, String oldInput, String newInput) {
+            public int onSearch(EditText view, String oldInput, String newInput) {
                 if (searchListener != null) {
-                    return searchListener.onSearch(editText, oldInput, newInput);
+                    return searchListener.onSearch(view, oldInput, newInput);
                 }
                 return 0;
             }
-
+        });
+        _searchBox.setOnToggleListener(new SearchBox.OnToggleListener() {
             @Override
             public void onToggle(boolean compactMode) {
                 setTitleVisible(compactMode);
-                if (searchListener != null) {
-                    searchListener.onToggle(compactMode);
+                if (searchToggleListener != null) {
+                    searchToggleListener.onToggle(compactMode);
+                }
+            }
+        });
+        _searchBox.setOnEnterListener(new SearchBox.OnEnterListener() {
+            @Override
+            public void onEnter(EditText view, String oldInput, String newInput) {
+                if (searchEnterListener != null) {
+                    searchEnterListener.onEnter(view, oldInput, newInput);
                 }
             }
         });
@@ -182,12 +193,30 @@ public abstract class SelectionListDialog<T> extends WindDialog {
     }
 
     /**
+     * Set searching listener
+     *
+     * @param listener listener
+     */
+    public void setOnSearchBoxListener(SearchBox.OnSearchListener listener) {
+        searchListener = listener;
+    }
+
+    /**
+     * Set search enter listener
+     *
+     * @param listener listener
+     */
+    public void setOnSearchEnterListener(SearchBox.OnEnterListener listener) {
+        searchEnterListener = listener;
+    }
+
+    /**
      * Set search action listener
      *
      * @param listener listener
      */
-    public void setOnSearchBoxListener(SearchBox.OnActionListener listener) {
-        searchListener = listener;
+    public void setOnSearchToggleListener(SearchBox.OnToggleListener listener) {
+        searchToggleListener = listener;
     }
 
     /**

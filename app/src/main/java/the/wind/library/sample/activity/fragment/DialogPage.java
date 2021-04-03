@@ -7,7 +7,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -469,7 +468,7 @@ public class DialogPage extends Fragment {
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         headerSearchBoxLp.leftMargin = view.getContext().getResources().getDimensionPixelSize(R.dimen.wl_spacing_level_2);
         headerSearchBox.setLayoutParams(headerSearchBoxLp);
-        headerSearchBox.setInputBackground(R.drawable.wl_button_background_gray);
+        headerSearchBox.setBackgroundResource(R.drawable.wl_button_background_gray);
         headerSearchBox.setCompactMode(true);
         headerSearchBox.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
         _extraHeaderDialog.addViewToHeader(headerSearchBox);
@@ -479,12 +478,7 @@ public class DialogPage extends Fragment {
                 _extraHeaderDialog.show();
             }
         });
-        headerSearchBox.setOnActionListener(new SearchBox.OnActionListener() {
-            @Override
-            public int onSearch(EditText view, String oldInput, String newInput) {
-                return 0;
-            }
-
+        headerSearchBox.setOnToggleListener(new SearchBox.OnToggleListener() {
             @Override
             public void onToggle(boolean compactMode) {
                 _extraHeaderDialog.setTitleVisible(compactMode);
@@ -497,9 +491,8 @@ public class DialogPage extends Fragment {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 1f);
-        footerSearchBoxLp.gravity = Gravity.START | Gravity.CENTER_VERTICAL;
         footerSearchBox.setLayoutParams(footerSearchBoxLp);
-        footerSearchBox.setInputBackground(R.drawable.wl_button_background_gray);
+        footerSearchBox.setBackgroundResource(R.drawable.wl_button_background_gray);
         footerSearchBox.setCompactMode(true);
         _extraFooterDialog.addViewToFooter(0, footerSearchBox);
         view.findViewById(R.id._extraFooterView).setOnClickListener(new View.OnClickListener() {

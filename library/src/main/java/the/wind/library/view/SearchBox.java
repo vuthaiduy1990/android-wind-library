@@ -14,51 +14,64 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.Locale;
 
+import androidx.annotation.DimenRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import the.wind.library.CWBundle;
 import the.wind.library.R;
 import the.wind.library.utils.CWAndroidUtils;
 
-public class SearchBox extends RelativeLayout {
+public class SearchBox extends LinearLayout {
 
     private static final long LAZY_TIME = 200;
 
     // views
+    private final LinearLayout _rootView;
     private final ImageView _icCloseSearch, _icCompactSearch;
     private final ViewGroup _inputBox;
     private final EditText _ipSearch;
     private final TextView _searchResultCountView;
     private final ImageView _icSearchBtn, _icClearSearch;
-    private final View _closeIconSpace;
+
+    // styling
+    private int gravity;
+    private Drawable background;
+    @DrawableRes
+    private int paddingLeft;
+    private int paddingRight;
+    private int paddingTop;
+    private int paddingBottom;
 
     // data model
+    private boolean resultCountVisible;
     private boolean closeVisible = true;
     private String oldSearchInput = "";
-    private String newSearchInput = "";
+    private String inputText = "";
     private final CWBundle bundle = new CWBundle();
     private long lazyTime = LAZY_TIME;
     private long lastInputTime;
 
     // listener
-    private OnActionListener actionListener;
-
+    private OnSearchListener searchListener;
     // on lazy input
     private final Runnable OnLazyInput = new Runnable() {
         @Override
         public void run() {
             // 5 is secure time to make sure the last input will be executed
             if (System.currentTimeMillis() - lastInputTime >= lazyTime - 5) {
-                handleSearch(_ipSearch.getText().toString());
+                handleSearch();
             }
         }
     };
+    private OnToggleListener toggleListener;
+    private OnEnterListener enterListener;
 
     /**
      * Constructor
@@ -104,8 +117,8 @@ public class SearchBox extends RelativeLayout {
         inflater.inflate(R.layout.wl_search_box, this);
 
         // bind vies
+        _rootView = findViewById(R.id._rootView);
         _icCloseSearch = findViewById(R.id._icCloseSearch);
-        _closeIconSpace = findViewById(R.id._closeIconSpace);
         _icCompactSearch = findViewById(R.id._icCompactSearch);
         _inputBox = findViewById(R.id._inputBox);
         _ipSearch = _inputBox.findViewById(R.id._ipSearch);
@@ -118,29 +131,39 @@ public class SearchBox extends RelativeLayout {
                 attrs, R.styleable.SearchBox, defStyleAttr, defStyleRes);
         try {
 
-            // text size
+            // text
+            String textValue = typeArray.getString(R.styleable.SearchBox_text);
+            setText(textValue);
             float textSize = typeArray.getDimension(
                     R.styleable.SearchBox_textSize,
                     getResources().getDimension(R.dimen.wl_text_big));
-            _ipSearch.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
-            _searchResultCountView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+            setTextSize(textSize);
+
+            // icon size
+            float iconSize = typeArray.getDimension(
+                    R.styleable.SearchBox_iconSize,
+                    getResources().getDimension(R.dimen.wl_icon_small));
+            setIconSize(iconSize);
+
+            // search icon
+            int searchIconRes = typeArray.getResourceId(R.styleable.SearchBox_searchIcon, R.drawable.wl_ic_search);
+            setSearchIcon(searchIconRes);
 
             // compact mode
             closeVisible = typeArray.getBoolean(R.styleable.SearchBox_closeVisible, true);
             boolean compactMode = typeArray.getBoolean(R.styleable.SearchBox_compactMode, false);
             setCompactMode(compactMode);
 
-            // background
-            setInputBackground(getBackground());
-            setBackground(null);
+            // Show search count result
+            resultCountVisible = typeArray.getBoolean(R.styleable.SearchBox_resultCountVisible, false);
+            setResultCountVisible(resultCountVisible);
+
+            // override gravity and background
+            setGravity(this.gravity);
+            setBackground(this.background);
 
             // set padding
-            int top = getPaddingTop();
-            top = top > 0 ? top : getResources().getDimensionPixelOffset(R.dimen.wl_search_box_padding_ver);
-            int bottom = getPaddingBottom();
-            bottom = bottom > 0 ? bottom : getResources().getDimensionPixelOffset(R.dimen.wl_search_box_padding_ver);
-            setInputPadding(getPaddingLeft(), top, getPaddingRight(), bottom);
-            setPadding(0, 0, 0, 0);
+            setPadding(this.paddingLeft, this.paddingTop, this.paddingRight, this.paddingBottom);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -160,10 +183,15 @@ public class SearchBox extends RelativeLayout {
 
             @Override
             public void afterTextChanged(Editable s) {
+                oldSearchInput = inputText;
+                inputText = s.toString().trim();
+
                 // show/hide the clear icon
                 if (s.length() > 0) {
                     _icClearSearch.setVisibility(View.VISIBLE);
-                    _searchResultCountView.setVisibility(VISIBLE);
+                    if (resultCountVisible) {
+                        _searchResultCountView.setVisibility(VISIBLE);
+                    }
                 } else {
                     _icClearSearch.setVisibility(View.GONE);
                     _searchResultCountView.setVisibility(GONE);
@@ -178,8 +206,9 @@ public class SearchBox extends RelativeLayout {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE) {
-                    handleSearch(v.getText().toString());
                     CWAndroidUtils.hideSoftKeyboard(_ipSearch);
+                    handleSearch();
+                    if (enterListener != null) enterListener.onEnter(_ipSearch, oldSearchInput, inputText);
                 }
                 return false;
             }
@@ -189,7 +218,8 @@ public class SearchBox extends RelativeLayout {
             public void onClick(View v) {
                 // click on search button inside the search box
                 CWAndroidUtils.hideSoftKeyboard(_ipSearch);
-                handleSearch(_ipSearch.getText().toString());
+                handleSearch();
+                if (enterListener != null) enterListener.onEnter(_ipSearch, oldSearchInput, inputText);
             }
         });
         _icClearSearch.setOnClickListener(new OnClickListener() {
@@ -223,6 +253,33 @@ public class SearchBox extends RelativeLayout {
     }
 
     /* ---------------------- OVERRIDE ----------------------- */
+
+    @Override
+    public void setGravity(int gravity) {
+        this.gravity = gravity;
+        if (_rootView != null) {
+            _rootView.setGravity(gravity);
+        }
+    }
+
+    @Override
+    public void setBackground(Drawable background) {
+        this.background = background;
+        if (_inputBox != null) {
+            _inputBox.setBackground(background);
+        }
+    }
+
+    @Override
+    public void setPadding(int left, int top, int right, int bottom) {
+        this.paddingLeft = left;
+        this.paddingTop = top > 0 ? top : (int) getResources().getDimension(R.dimen.wl_search_box_padding_ver);
+        this.paddingRight = right;
+        this.paddingBottom = bottom > 0 ? bottom : (int) getResources().getDimension(R.dimen.wl_search_box_padding_ver);
+        if (_inputBox != null) {
+            _inputBox.setPadding(this.paddingLeft, this.paddingTop, this.paddingRight, this.paddingBottom);
+        }
+    }
 
     /* ---------------------- STATIC ------------------------- */
 
@@ -272,38 +329,62 @@ public class SearchBox extends RelativeLayout {
     }
 
     /**
-     * Set input background
+     * Set text size.
      *
-     * @param background background
+     * @param resId dimension resource id
      */
-    public void setInputBackground(Drawable background) {
-        if (_inputBox != null) {
-            _inputBox.setBackground(background);
+    public void setTextSize(@DimenRes int resId) {
+        setTextSize(getResources().getDimension(resId));
+    }
+
+    /**
+     * Set text size.
+     *
+     * @param textSize text size in pixel
+     */
+    public void setTextSize(float textSize) {
+        _searchResultCountView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+        _ipSearch.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+    }
+
+    /**
+     * Set icon size
+     *
+     * @param resId dimension resource id
+     */
+    public void setIconSize(@DimenRes int resId) {
+        float size = getResources().getDimension(resId);
+        setIconSize(size);
+    }
+
+    /**
+     * Set icon size
+     *
+     * @param iconSize icon size in pixel
+     */
+    public void setIconSize(float iconSize) {
+        if (_icSearchBtn != null) {
+            LinearLayout.LayoutParams param = (LinearLayout.LayoutParams) _icSearchBtn.getLayoutParams();
+            param.width = (int) iconSize;
+            param.height = (int) iconSize;
+            _icSearchBtn.setLayoutParams(param);
+        }
+        if (_icClearSearch != null) {
+            LinearLayout.LayoutParams param = (LinearLayout.LayoutParams) _icClearSearch.getLayoutParams();
+            param.width = (int) iconSize;
+            param.height = (int) iconSize;
+            _icClearSearch.setLayoutParams(param);
         }
     }
 
     /**
-     * Set background resource id
+     * Set search icon
      *
-     * @param resId resource id
+     * @param resId drawable resource id
      */
-    public void setInputBackground(@DrawableRes int resId) {
-        if (_inputBox != null) {
-            _inputBox.setBackgroundResource(resId);
-        }
-    }
-
-    /**
-     * Set input padding
-     *
-     * @param left   padding left
-     * @param top    padding top
-     * @param right  padding right
-     * @param bottom padding top
-     */
-    public void setInputPadding(int left, int top, int right, int bottom) {
-        if (_inputBox != null) {
-            _inputBox.setPadding(left, top, right, bottom);
+    public void setSearchIcon(@DrawableRes int resId) {
+        if (_icSearchBtn != null) {
+            _icSearchBtn.setImageResource(resId);
         }
     }
 
@@ -316,17 +397,15 @@ public class SearchBox extends RelativeLayout {
         if (compactMode) {
             // show compact mode (search icon only)
             _icCloseSearch.setVisibility(GONE);
-            _closeIconSpace.setVisibility(GONE);
             _inputBox.setVisibility(GONE);
             _icCompactSearch.setVisibility(VISIBLE);
         } else {
             // show full search mode
             _icCloseSearch.setVisibility(closeVisible ? VISIBLE : GONE);
-            _closeIconSpace.setVisibility(closeVisible ? VISIBLE : GONE);
             _inputBox.setVisibility(VISIBLE);
             _icCompactSearch.setVisibility(GONE);
         }
-        if (actionListener != null) actionListener.onToggle(compactMode);
+        if (toggleListener != null) toggleListener.onToggle(compactMode);
     }
 
     /**
@@ -339,6 +418,16 @@ public class SearchBox extends RelativeLayout {
     }
 
     /**
+     * Set result count visible
+     *
+     * @param visible true if visible
+     */
+    public void setResultCountVisible(boolean visible) {
+        resultCountVisible = visible;
+        _searchResultCountView.setVisibility(visible ? VISIBLE : GONE);
+    }
+
+    /**
      * @return previous search input
      */
     public String getOldSearchInput() {
@@ -348,8 +437,26 @@ public class SearchBox extends RelativeLayout {
     /**
      * @return current search input
      */
-    public String getNewSearchInput() {
-        return newSearchInput;
+    public String getText() {
+        return inputText;
+    }
+
+    /**
+     * Set input text
+     *
+     * @param text input text
+     */
+    public void setText(@Nullable String text) {
+        _ipSearch.setText(text != null ? text : "");
+    }
+
+    /**
+     * Set input text
+     *
+     * @param resId text resource id
+     */
+    public void setText(@StringRes int resId) {
+        _ipSearch.setText(resId);
     }
 
     /**
@@ -364,12 +471,31 @@ public class SearchBox extends RelativeLayout {
     }
 
     /**
-     * Set action listener
+     * Set search listener
      *
-     * @param listener action listener
+     * @param listener listener
      */
-    public void setOnActionListener(OnActionListener listener) {
-        actionListener = listener;
+    public void setOnSearchListener(OnSearchListener listener) {
+        searchListener = listener;
+    }
+
+    /**
+     * Set toggle listener
+     *
+     * @param listener toggle listener
+     */
+    public void setOnToggleListener(OnToggleListener listener) {
+        toggleListener = listener;
+    }
+
+
+    /**
+     * Set enter listener
+     *
+     * @param listener enter listener
+     */
+    public void setOnEnterListener(OnEnterListener listener) {
+        enterListener = listener;
     }
 
     /* ---------------------- METHOD ------------------------- */
@@ -385,14 +511,10 @@ public class SearchBox extends RelativeLayout {
 
     /**
      * Handle searching
-     *
-     * @param searchInput search input
      */
-    private void handleSearch(@NonNull String searchInput) {
-        oldSearchInput = newSearchInput;
-        newSearchInput = searchInput.trim();
-        if (actionListener != null) {
-            int results = actionListener.onSearch(_ipSearch, oldSearchInput, newSearchInput);
+    private void handleSearch() {
+        if (searchListener != null) {
+            int results = searchListener.onSearch(_ipSearch, oldSearchInput, inputText);
             _searchResultCountView.setText(String.format(Locale.getDefault(), "(%d)", results));
         }
     }
@@ -400,10 +522,9 @@ public class SearchBox extends RelativeLayout {
     /* ---------------------- INNER CLASS -------------------- */
 
     /**
-     * On action listener
+     * On search listener
      */
-    public interface OnActionListener {
-
+    public interface OnSearchListener {
         /**
          * Trigger when user click on search icon or input
          *
@@ -413,12 +534,31 @@ public class SearchBox extends RelativeLayout {
          * @return number of results
          */
         int onSearch(EditText view, String oldInput, String newInput);
+    }
 
+    /**
+     * On toggle listener
+     */
+    public interface OnToggleListener {
         /**
          * On toggle search mode
          *
          * @param compactMode true -> show search icon only, false -> show full search
          */
         void onToggle(boolean compactMode);
+    }
+
+    /**
+     * On search enter listener
+     */
+    public interface OnEnterListener {
+        /**
+         * Trigger when user press enter or search button
+         *
+         * @param view     search input view
+         * @param oldInput old search input value
+         * @param newInput new search input value
+         */
+        void onEnter(EditText view, String oldInput, String newInput);
     }
 }

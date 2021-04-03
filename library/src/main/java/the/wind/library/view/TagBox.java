@@ -40,12 +40,11 @@ import the.wind.library.utils.CWColorUtils;
  */
 public class TagBox extends FlexboxLayout {
 
-    private final ViewGroup _boxLayout;
-    private final Map<String, View> viewMap = new HashMap<>();
-    // bundle data
-    private final CWBundle bundle = new CWBundle();
     // Views
     private final LayoutInflater inflater;
+    private final ViewGroup _boxLayout;
+    private final Map<String, View> viewMap = new HashMap<>();
+
     // styling
     private float textSize;
     private float textMaxWidth;
@@ -54,13 +53,17 @@ public class TagBox extends FlexboxLayout {
     @DrawableRes
     private int removeIconRes;
     private float iconSize;
-    // List of tag values
+
+    // bundle data
+    private final CWBundle bundle = new CWBundle();
+
+    // models
     @NonNull
     private Set<String> tags = new HashSet<>();
-    // List of colors
     @Nullable
     private List<String> colors;
     private Iterator<String> colorIt;
+
     // Listener
     private OnItemClickListener itemClickListener;
     private OnItemRemoveListener itemRemoveListener;

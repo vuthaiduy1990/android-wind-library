@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Common attributes -->
+    <attr name="text" format="string" />
     <attr name="textSize" format="dimension" />
     <attr name="textColor" format="color" />
     <attr name="iconSize" format="dimension" />
+    <attr name="spacing" format="dimension" />
 
     <!-- Checkbox's attributes -->
     <!-- Should have the same name with View class so that the Android hint can work in layout resource file -->
@@ -61,15 +63,19 @@
             <enum name="LOCK" value="7" />
             <enum name="SETTING" value="8" />
         </attr>
-        <attr name="text" format="string" />
+        <attr name="text" />
         <attr name="textColor" />
         <attr name="textSize" />
-        <attr name="spacing" format="dimension" />
+        <attr name="spacing" />
     </declare-styleable>
 
     <!--  SearchBox attributes-->
     <declare-styleable name="SearchBox">
+        <attr name="text" />
         <attr name="textSize" />
+        <attr name="iconSize" />
+        <attr name="searchIcon" format="reference" />
+        <attr name="resultCountVisible" format="boolean" />
         <attr name="closeVisible" format="boolean" />
         <attr name="compactMode" format="boolean" />
     </declare-styleable>

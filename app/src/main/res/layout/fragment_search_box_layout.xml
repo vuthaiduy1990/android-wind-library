@@ -17,11 +17,13 @@
         <!--  Compact Mode -->
         <the.wind.library.view.SearchBox
             android:id="@+id/_searchBox"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/wl_button_background_gray"
-            app:compactMode="true" />
+            android:gravity="end|center_vertical"
+            app:compactMode="true"
+            app:resultCountVisible="true" />
 
         <!--  Full search mode -->
         <the.wind.library.view.SearchBox
@@ -30,6 +32,8 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/wl_button_background_gray"
             app:compactMode="false"
+            app:resultCountVisible="true"
+            app:text="Color the wind"
             app:textSize="@dimen/wl_text" />
 
         <!--  Full Search Mode without close icon -->
@@ -50,7 +54,10 @@
             android:paddingTop="20dp"
             android:paddingBottom="20dp"
             app:closeVisible="false"
-            app:compactMode="false" />
+            app:compactMode="false"
+            app:iconSize="@dimen/wl_icon_big"
+            app:searchIcon="@drawable/wl_ic_tag"
+            app:textSize="@dimen/wl_title_big" />
 
 
     </LinearLayout>

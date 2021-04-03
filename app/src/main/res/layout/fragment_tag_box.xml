@@ -1,54 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <!-- Search Box -->
-    <RelativeLayout
-        android:id="@+id/_inputBox"
+    <!--  Full Search Mode without close icon -->
+    <the.wind.library.view.SearchBox
+        android:id="@+id/_tagInput"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <!--Text input-->
-        <EditText
-            android:id="@+id/_tagInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:background="@drawable/wl_form_input_background"
-            android:gravity="center_vertical"
-            android:imeOptions="actionDone"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:maxLines="1"
-            android:minLines="1"
-            android:paddingStart="@dimen/wl_spacing_level_2"
-            android:paddingTop="@dimen/wl_spacing_level_1"
-            android:paddingEnd="@dimen/wl_search_box_pad_2"
-            android:paddingBottom="@dimen/wl_spacing_level_1"
-            android:scrollbars="none"
-            android:singleLine="true"
-            android:textColor="@color/wl_text"
-            android:textSize="@dimen/wl_text"
-            tools:ignore="LabelFor" />
-
-        <ImageView
-            android:id="@+id/_icTagEnter"
-            android:layout_width="@dimen/wl_icon_big"
-            android:layout_height="@dimen/wl_icon_big"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/wl_spacing_level_2"
-            android:adjustViewBounds="true"
-            android:padding="@dimen/wl_spacing_level_0"
-            android:scaleType="fitCenter"
-            android:src="@drawable/wl_ic_tag"
-            tools:ignore="ContentDescription" />
-
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/wl_form_input_background"
+        app:closeVisible="false"
+        app:compactMode="false"
+        app:searchIcon="@drawable/wl_ic_tag" />
 
 
     <the.wind.library.view.TagBox

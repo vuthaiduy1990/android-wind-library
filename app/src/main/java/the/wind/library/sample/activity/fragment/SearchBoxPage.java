@@ -27,13 +27,20 @@ public class SearchBoxPage extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         _searchBox = view.findViewById(R.id._searchBox);
-        _searchBox.setOnActionListener(new SearchBox.OnActionListener() {
+        _searchBox.setOnSearchListener(new SearchBox.OnSearchListener() {
             @Override
             public int onSearch(EditText view, String oldInput, String newInput) {
                 Toast.makeText(getContext(), oldInput + " - " + newInput, Toast.LENGTH_SHORT).show();
-                return 0;
+                return 1000;
             }
-
+        });
+        _searchBox.setOnEnterListener(new SearchBox.OnEnterListener() {
+            @Override
+            public void onEnter(EditText view, String oldInput, String newInput) {
+                Toast.makeText(getContext(), "On Enter: " + newInput, Toast.LENGTH_SHORT).show();
+            }
+        });
+        _searchBox.setOnToggleListener(new SearchBox.OnToggleListener() {
             @Override
             public void onToggle(boolean compactMode) {
                 Toast.makeText(getContext(), "is compact mode: " + compactMode, Toast.LENGTH_SHORT).show();
