@@ -1,4 +1,4 @@
-package the.wind.library.dialog;
+package the.wind.library.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
