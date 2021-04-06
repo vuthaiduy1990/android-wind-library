@@ -2,6 +2,7 @@
 <resources>
     <!-- Common attributes -->
     <attr name="text" format="string" />
+    <attr name="hint" format="string" />
     <attr name="textSize" format="dimension" />
     <attr name="textColor" format="color" />
     <attr name="iconSize" format="dimension" />
@@ -72,6 +73,7 @@
     <!--  SearchBox attributes-->
     <declare-styleable name="SearchBox">
         <attr name="text" />
+        <attr name="hint" />
         <attr name="textSize" />
         <attr name="iconSize" />
         <attr name="searchIcon" format="reference" />

@@ -497,7 +497,6 @@ public class WindRecycleView extends RecyclerView {
 
         /* ---------------------- OVERRIDE ----------------------- */
 
-        @SuppressWarnings("ConstantConditions")
         @NonNull
         @Override
         public ViewHolder<T> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,7 +37,7 @@ public class SearchBox extends LinearLayout {
     private final LinearLayout _rootView;
     private final ImageView _icCloseSearch, _icCompactSearch;
     private final ViewGroup _inputBox;
-    private final EditText _ipSearch;
+    private final AutoCompleteTextView _ipSearch;
     private final TextView _searchResultCountView;
     private final ImageView _icSearchBtn, _icClearSearch;
 
@@ -139,6 +140,10 @@ public class SearchBox extends LinearLayout {
                     getResources().getDimension(R.dimen.wl_text_big));
             setTextSize(textSize);
 
+            // hint
+            String hint = typeArray.getString(R.styleable.SearchBox_hint);
+            setHint(hint);
+            
             // icon size
             float iconSize = typeArray.getDimension(
                     R.styleable.SearchBox_iconSize,
@@ -457,6 +462,24 @@ public class SearchBox extends LinearLayout {
      */
     public void setText(@StringRes int resId) {
         _ipSearch.setText(resId);
+    }
+
+    /**
+     * Set hint
+     *
+     * @param hint hint
+     */
+    public void setHint(@Nullable String hint) {
+        _ipSearch.setHint(hint);
+    }
+
+    /**
+     * Set hint
+     *
+     * @param resId text resource id
+     */
+    public void setHint(@StringRes int resId) {
+        _ipSearch.setHint(resId);
     }
 
     /**

@@ -38,12 +38,14 @@
 
         <!--  Full Search Mode without close icon -->
         <the.wind.library.view.SearchBox
+            android:id="@+id/_autoCompleteBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/wl_button_background_gray"
             app:closeVisible="false"
-            app:compactMode="false" />
+            app:compactMode="false"
+            app:hint="Auto complete box" />
 
         <!--  Set padding for search input -->
         <the.wind.library.view.SearchBox
@@ -57,6 +59,7 @@
             app:compactMode="false"
             app:iconSize="@dimen/wl_icon_big"
             app:searchIcon="@drawable/wl_ic_tag"
+            app:text="Custom style"
             app:textSize="@dimen/wl_title_big" />
 
 
