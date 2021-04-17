@@ -28,4 +28,9 @@ public class NLPString implements INLPText {
     public String nlpRawText(@Nullable Context context) {
         return this.value.toString();
     }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
 }

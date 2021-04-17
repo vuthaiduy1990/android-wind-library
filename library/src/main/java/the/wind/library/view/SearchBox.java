@@ -27,6 +27,10 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import the.wind.library.CWBundle;
 import the.wind.library.R;
+import the.wind.library.adapter.AutoCompleteAdapter;
+import the.wind.library.nlp.CWNLPEngine;
+import the.wind.library.nlp.INLPText;
+import the.wind.library.nlp.NLPString;
 import the.wind.library.utils.CWAndroidUtils;
 
 public class SearchBox extends LinearLayout {
@@ -143,7 +147,7 @@ public class SearchBox extends LinearLayout {
             // hint
             String hint = typeArray.getString(R.styleable.SearchBox_hint);
             setHint(hint);
-            
+
             // icon size
             float iconSize = typeArray.getDimension(
                     R.styleable.SearchBox_iconSize,
@@ -420,6 +424,38 @@ public class SearchBox extends LinearLayout {
      */
     public boolean isCompactMode() {
         return _icCompactSearch.getVisibility() == VISIBLE;
+    }
+
+    /**
+     * Set suggestions
+     *
+     * @param nlpEngine search engine
+     */
+    public <T extends INLPText> void setSuggestions(CWNLPEngine<T> nlpEngine) {
+        AutoCompleteAdapter<T> adapter = new AutoCompleteAdapter<>(getContext(), nlpEngine);
+        _ipSearch.setAdapter(adapter);
+    }
+
+    /**
+     * Set suggestion text
+     *
+     * @param suggestions suggestion
+     */
+    public void setSuggestions(CharSequence... suggestions) {
+        CWNLPEngine.Options opts = new CWNLPEngine.Options();
+        opts.strip = true;
+        opts.useSpecialChars = false;
+        opts.caseSensitive = false;
+        opts.matchOnly = true;
+        opts.cache = 1; // use 1 caching for searching on previous result
+        opts.greedy = false;
+        CWNLPEngine<NLPString> nlpEngine = new CWNLPEngine<>(getContext(), opts);
+
+        for (CharSequence val : suggestions) {
+            nlpEngine.load(new NLPString(val));
+        }
+        nlpEngine.build();
+        setSuggestions(nlpEngine);
     }
 
     /**

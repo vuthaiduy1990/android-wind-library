@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -16,6 +17,8 @@ import the.wind.library.view.SearchBox;
 public class SearchBoxPage extends Fragment {
 
     private SearchBox _searchBox;
+    String[] fruits = {"Apple", "Banana", "Cherry", "Mandarin", "Grape", "Kiwi", "Mango", "Pear"};
+    private SearchBox _autoCompleteBox;
 
     @Nullable
     @Override
@@ -46,5 +49,10 @@ public class SearchBoxPage extends Fragment {
                 Toast.makeText(getContext(), "is compact mode: " + compactMode, Toast.LENGTH_SHORT).show();
             }
         });
+
+        // Auto complete search box
+        _autoCompleteBox = view.findViewById(R.id._autoCompleteBox);
+        _autoCompleteBox.setSuggestions(fruits);
+        ((AutoCompleteTextView) _autoCompleteBox.inputView()).setDropDownVerticalOffset((int) getResources().getDimension(R.dimen.wl_spacing_level_4));
     }
 }

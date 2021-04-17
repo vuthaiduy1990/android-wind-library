@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -78,6 +79,8 @@ public class TagBoxPage extends Fragment {
                 _tagInput.inputView().setText("");
             }
         });
+        _tagInput.setSuggestions(tags);
+        ((AutoCompleteTextView) _tagInput.inputView()).setDropDownVerticalOffset((int) getResources().getDimension(R.dimen.wl_spacing_level_4));
     }
 
     private void customTagBox(View view) {
