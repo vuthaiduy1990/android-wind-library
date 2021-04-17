@@ -48,11 +48,6 @@ public class SearchBox extends LinearLayout {
     // styling
     private int gravity;
     private Drawable background;
-    @DrawableRes
-    private int paddingLeft;
-    private int paddingRight;
-    private int paddingTop;
-    private int paddingBottom;
 
     // data model
     private boolean resultCountVisible;
@@ -62,6 +57,7 @@ public class SearchBox extends LinearLayout {
     private final CWBundle bundle = new CWBundle();
     private long lazyTime = LAZY_TIME;
     private long lastInputTime;
+    private boolean closeKeyboardOnSearch;
 
     // listener
     private OnSearchListener searchListener;
@@ -157,6 +153,7 @@ public class SearchBox extends LinearLayout {
             // search icon
             int searchIconRes = typeArray.getResourceId(R.styleable.SearchBox_searchIcon, R.drawable.wl_ic_search);
             setSearchIcon(searchIconRes);
+            closeKeyboardOnSearch = typeArray.getBoolean(R.styleable.SearchBox_closeKeyboardOnSearch, true);
 
             // compact mode
             closeVisible = typeArray.getBoolean(R.styleable.SearchBox_closeVisible, true);
@@ -172,7 +169,12 @@ public class SearchBox extends LinearLayout {
             setBackground(this.background);
 
             // set padding
-            setPadding(this.paddingLeft, this.paddingTop, this.paddingRight, this.paddingBottom);
+            int paddingLeft = getPaddingLeft();
+            int paddingTop = getPaddingTop() > 0 ? getPaddingTop() : (int) getResources().getDimension(R.dimen.wl_search_box_padding_ver);
+            int paddingRight = getPaddingRight();
+            int paddingBottom = getPaddingBottom() > 0 ? getPaddingBottom() : (int) getResources().getDimension(R.dimen.wl_search_box_padding_ver);
+            _inputBox.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+            setPadding(0, 0, 0, 0);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -215,7 +217,9 @@ public class SearchBox extends LinearLayout {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE) {
-                    CWAndroidUtils.hideSoftKeyboard(_ipSearch);
+                    if (closeKeyboardOnSearch) {
+                        CWAndroidUtils.hideSoftKeyboard(_ipSearch);
+                    }
                     handleSearch();
                     if (enterListener != null) enterListener.onEnter(_ipSearch, oldSearchInput, inputText);
                 }
@@ -226,7 +230,9 @@ public class SearchBox extends LinearLayout {
             @Override
             public void onClick(View v) {
                 // click on search button inside the search box
-                CWAndroidUtils.hideSoftKeyboard(_ipSearch);
+                if (closeKeyboardOnSearch) {
+                    CWAndroidUtils.hideSoftKeyboard(_ipSearch);
+                }
                 handleSearch();
                 if (enterListener != null) enterListener.onEnter(_ipSearch, oldSearchInput, inputText);
             }
@@ -276,17 +282,6 @@ public class SearchBox extends LinearLayout {
         this.background = background;
         if (_inputBox != null) {
             _inputBox.setBackground(background);
-        }
-    }
-
-    @Override
-    public void setPadding(int left, int top, int right, int bottom) {
-        this.paddingLeft = left;
-        this.paddingTop = top > 0 ? top : (int) getResources().getDimension(R.dimen.wl_search_box_padding_ver);
-        this.paddingRight = right;
-        this.paddingBottom = bottom > 0 ? bottom : (int) getResources().getDimension(R.dimen.wl_search_box_padding_ver);
-        if (_inputBox != null) {
-            _inputBox.setPadding(this.paddingLeft, this.paddingTop, this.paddingRight, this.paddingBottom);
         }
     }
 
@@ -527,6 +522,15 @@ public class SearchBox extends LinearLayout {
      */
     public void setLazyTime(long milliseconds) {
         lazyTime = milliseconds;
+    }
+
+    /**
+     * Set close keyboard on search
+     *
+     * @param close if true, keyboard will be closed when user press search button
+     */
+    public void setCloseKeyboardOnSearch(boolean close) {
+        this.closeKeyboardOnSearch = close;
     }
 
     /**

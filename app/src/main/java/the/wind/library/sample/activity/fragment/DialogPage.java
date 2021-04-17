@@ -492,6 +492,7 @@ public class DialogPage extends Fragment {
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 1f);
         footerSearchBox.setLayoutParams(footerSearchBoxLp);
+        footerSearchBox.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
         footerSearchBox.setBackgroundResource(R.drawable.wl_button_background_gray);
         footerSearchBox.setCompactMode(true);
         _extraFooterDialog.addViewToFooter(0, footerSearchBox);

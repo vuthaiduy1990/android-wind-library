@@ -13,7 +13,6 @@
     android:paddingStart="@dimen/wl_spacing_level_1"
     android:paddingTop="@dimen/wl_spacing_level_0"
     android:paddingEnd="@dimen/wl_spacing_level_1"
-
     android:paddingBottom="@dimen/wl_spacing_level_0">
 
     <TextView
@@ -22,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:ellipsize="end"
+        android:gravity="center"
         android:lines="1"
         android:maxLines="1" />
 

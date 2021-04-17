@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@drawable/wl_form_input_background"
+        app:closeKeyboardOnSearch="false"
         app:closeVisible="false"
         app:compactMode="false"
         app:searchIcon="@drawable/wl_ic_tag" />

@@ -80,6 +80,8 @@
         <attr name="resultCountVisible" format="boolean" />
         <attr name="closeVisible" format="boolean" />
         <attr name="compactMode" format="boolean" />
+        <attr name="closeKeyboardOnSearch" format="boolean" />
+
     </declare-styleable>
 
     <!--  TagBox attributes-->
