@@ -61,8 +61,8 @@ public class TagBox extends FlexboxLayout {
     @NonNull
     private final Set<String> tags = new LinkedHashSet<>();
     @Nullable
-    private List<String> colors;
-    private Iterator<String> colorIt;
+    private List<WindColor> colors;
+    private Iterator<WindColor> colorIt;
 
     // Listener
     private OnItemClickListener itemClickListener;
@@ -208,10 +208,10 @@ public class TagBox extends FlexboxLayout {
     /**
      * Set tag colors
      *
-     * @param colors list of colors
+     * @param colors list of hex colors
      * @return tag box
      */
-    public TagBox setColors(List<String> colors) {
+    public TagBox setColors(List<WindColor> colors) {
         this.colors = colors;
         return this;
     }
@@ -222,7 +222,7 @@ public class TagBox extends FlexboxLayout {
      * @param colors list of colors
      * @return tag box
      */
-    public TagBox setColors(String... colors) {
+    public TagBox setColors(WindColor... colors) {
         this.colors = Arrays.asList(colors);
         return this;
     }
@@ -233,7 +233,7 @@ public class TagBox extends FlexboxLayout {
      * @return random/predefined color for tag
      */
     private WindColor getColor() {
-        String color;
+        WindColor color;
         if (colors != null && !colors.isEmpty()) {
             // retrieve from  pre-defined colors
             if (colorIt == null || !colorIt.hasNext()) {
@@ -242,9 +242,9 @@ public class TagBox extends FlexboxLayout {
             color = colorIt.next();
         } else {
             // retrieve from POKE colors
-            color = CWColorUtils.randomPokeColor();
+            color = WindColor.fromHex(CWColorUtils.randomPokeColor());
         }
-        return WindColor.fromHex(color);
+        return color;
     }
 
     /**

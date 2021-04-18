@@ -14,6 +14,7 @@ import java.util.HashSet;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import the.wind.library.WindColor;
 import the.wind.library.sample.R;
 import the.wind.library.view.SearchBox;
 import the.wind.library.view.TagBox;
@@ -28,8 +29,12 @@ public class TagBoxPage extends Fragment {
             "The memories", "washed over her like waves. Something sad to me",
             "as she felt", "them come back"
     };
-    private String[] colors = new String[]{
-            "#e3d4d3", "#5d9f69", "#c990a5", "#4976a0", "#b25542"
+    private WindColor[] colors = new WindColor[]{
+            WindColor.fromHex("#e3d4d3"),
+            WindColor.fromHex("#5d9f69"),
+            WindColor.fromHex("#c990a5"),
+            WindColor.fromHex("#4976a0"),
+            WindColor.fromHex("#b25542")
     };
 
     @Nullable
