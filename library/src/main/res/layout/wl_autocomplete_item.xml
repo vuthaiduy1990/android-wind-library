@@ -1,27 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/_textView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/wl_autocomplete_dropdown_background"
+    android:ellipsize="end"
     android:gravity="center_vertical"
-    android:orientation="horizontal"
+    android:lines="1"
+    android:maxLines="1"
+    android:minLines="1"
     android:paddingStart="@dimen/wl_spacing_level_3"
     android:paddingTop="@dimen/wl_spacing_level_2"
     android:paddingEnd="@dimen/wl_spacing_level_1"
-    android:paddingBottom="@dimen/wl_spacing_level_2">
-
-    <TextView
-        android:id="@+id/_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/wl_transparent"
-        android:ellipsize="end"
-        android:gravity="center_vertical"
-        android:lines="1"
-        android:maxLines="1"
-        android:minLines="1"
-        android:paddingTop="0dp"
-        android:paddingBottom="0dp"
-        android:textColor="@color/wl_text"
-        android:textSize="@dimen/wl_text" />
-
-</LinearLayout>
+    android:paddingBottom="@dimen/wl_spacing_level_2"
+    android:textColor="@color/wl_text"
+    android:textSize="@dimen/wl_text" />

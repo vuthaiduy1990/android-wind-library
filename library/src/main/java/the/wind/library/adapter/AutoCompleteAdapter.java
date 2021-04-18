@@ -31,7 +31,7 @@ public class AutoCompleteAdapter<T extends INLPText> extends ArrayAdapter<T> imp
     // Application context
     private Context context;
     // Filter resultW
-    private List<T> filterResult = new ArrayList<>();
+    private final List<T> filterResult = new ArrayList<>();
 
     /**
      * Constructor

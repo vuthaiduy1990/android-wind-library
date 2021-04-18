@@ -123,6 +123,7 @@ public class SearchBox extends LinearLayout {
         _icCompactSearch = findViewById(R.id._icCompactSearch);
         _inputBox = findViewById(R.id._inputBox);
         _ipSearch = _inputBox.findViewById(R.id._ipSearch);
+        _ipSearch.setDropDownBackgroundResource(R.color.wl_white);
         _searchResultCountView = _inputBox.findViewById(R.id._searchResultCountView);
         _icSearchBtn = _inputBox.findViewById(R.id._icSearchBtn);
         _icClearSearch = _inputBox.findViewById(R.id._icClearSearch);
@@ -223,7 +224,7 @@ public class SearchBox extends LinearLayout {
                     handleSearch();
                     if (enterListener != null) enterListener.onEnter(_ipSearch, oldSearchInput, inputText);
                 }
-                return false;
+                return true; // prevent keyboard from auto closing
             }
         });
         _icSearchBtn.setOnClickListener(new OnClickListener() {

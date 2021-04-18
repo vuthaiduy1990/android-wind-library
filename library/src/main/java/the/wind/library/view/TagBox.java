@@ -17,8 +17,8 @@ import com.google.android.flexbox.FlexboxLayout;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -59,7 +59,7 @@ public class TagBox extends FlexboxLayout {
 
     // models
     @NonNull
-    private Set<String> tags = new HashSet<>();
+    private final Set<String> tags = new LinkedHashSet<>();
     @Nullable
     private List<String> colors;
     private Iterator<String> colorIt;
@@ -159,30 +159,30 @@ public class TagBox extends FlexboxLayout {
      * Set tags
      *
      * @param tags tags
-     * @return tag box
      */
-    public TagBox setTags(Set<String> tags) {
+    public void setTags(Set<String> tags) {
         clear();
         if (tags != null) {
             // make a clone
-            this.tags = new HashSet<>(tags);
             for (String tag : tags) {
+                this.tags.add(tag);
                 addTagItemView(tag);
             }
         }
-        return this;
     }
 
     /**
      * Add new tag
      *
      * @param tag new tag
+     * @return tag item view
      */
-    public void add(String tag) {
+    public View add(String tag) {
         if (tag != null && !tag.trim().isEmpty() && !tags.contains(tag)) {
             this.tags.add(tag);
-            addTagItemView(tag);
+            return addTagItemView(tag);
         }
+        return null;
     }
 
     /**
