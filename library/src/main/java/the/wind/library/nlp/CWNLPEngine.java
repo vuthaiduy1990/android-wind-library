@@ -115,6 +115,17 @@ public final class CWNLPEngine<T extends INLPText> {
     /* ---------------------- GET-SET ------------------------ */
 
     /**
+     * Get application context
+     *
+     * @return application context
+     */
+    @Nullable
+    public Context getContext() {
+        return context;
+    }
+
+
+    /**
      * Note: you can't modify this list
      *
      * @return list of targets which implement {@link INLPText} and are loaded into engine
@@ -131,7 +142,7 @@ public final class CWNLPEngine<T extends INLPText> {
     public void remove(T target) {
         targetList.remove(target);
         targetQueue.remove(target);
-        textMap.remove(target.nlpTextId(context));
+        textMap.remove(target.nlpTextId(getContext()));
         clearCache();
     }
 
@@ -193,7 +204,7 @@ public final class CWNLPEngine<T extends INLPText> {
      */
     @Nullable
     public String getCookedText(T target) {
-        return textMap.get(target.nlpTextId(context));
+        return textMap.get(target.nlpTextId(getContext()));
     }
 
     /**
@@ -231,7 +242,7 @@ public final class CWNLPEngine<T extends INLPText> {
      * @param target which implement {@link INLPText}
      */
     private <X extends INLPText> String preProcess(X target) {
-        String text = target.nlpRawText(context);
+        String text = target.nlpRawText(getContext());
 
         if (!options.useSpecialChars) {
             String regex = "[" + options.specialChars + "]+";
@@ -262,7 +273,7 @@ public final class CWNLPEngine<T extends INLPText> {
         }
         T target;
         while ((target = targetQueue.poll()) != null) {
-            textMap.put(target.nlpTextId(context), preProcess(target));
+            textMap.put(target.nlpTextId(getContext()), preProcess(target));
             targetList.add(target);
         }
         return this;
@@ -280,7 +291,7 @@ public final class CWNLPEngine<T extends INLPText> {
 
         // rebuild pre-loaded texts
         for (T tx : targetList) {
-            textMap.put(tx.nlpTextId(context), preProcess(tx));
+            textMap.put(tx.nlpTextId(getContext()), preProcess(tx));
         }
 
         // build texts is waiting in queue
@@ -298,7 +309,7 @@ public final class CWNLPEngine<T extends INLPText> {
         clearCache();
 
         // pre-process only this given target
-        String targetId = target.nlpTextId(context);
+        String targetId = target.nlpTextId(getContext());
         if (!textMap.containsKey(targetId)) /* new target */ {
             targetList.add(target);
         }
@@ -358,7 +369,7 @@ public final class CWNLPEngine<T extends INLPText> {
         NLPMatchResult<T> result = new NLPMatchResult<>(target);
         Set<String> matchingKeys = new HashSet<>();
         for (Map.Entry<String, Pattern> entry : searchPat.entrySet()) {
-            Matcher m = entry.getValue().matcher(Objects.requireNonNull(textMap.get(target.nlpTextId(context))));
+            Matcher m = entry.getValue().matcher(Objects.requireNonNull(textMap.get(target.nlpTextId(getContext()))));
             while (m.find()) {
                 result.indexes.add(m.start());
                 result.indexes.add(m.end());
@@ -385,11 +396,12 @@ public final class CWNLPEngine<T extends INLPText> {
     /**
      * Check if the input string (targets) matches with search key or not.
      *
-     * @param searchKey the search input. Should be pre-processed
-     * @param targets   list of NLP texts
-     * @param callback  callback function
+     * @param searchKey        the search input. Should be pre-processed
+     * @param targets          list of NLP texts
+     * @param limitedTargetIds limit searching on given targets
+     * @param callback         callback function
      */
-    private void doMatching(CharSequence searchKey, List<T> targets, CWCallback<NLPMatchResult<T>> callback) {
+    private void doMatching(CharSequence searchKey, List<T> targets, @Nullable Set<String> limitedTargetIds, CWCallback<NLPMatchResult<T>> callback) {
         String _search = searchKey.toString();
         Map<String, Pattern> _searchPat = buildSearchPattern(_search);
         if (_searchPat.isEmpty()) /* the search input is not valid for searching */ {
@@ -398,7 +410,12 @@ public final class CWNLPEngine<T extends INLPText> {
         }
 
         // Check matching
+        boolean isTargetLimited = limitedTargetIds != null && !limitedTargetIds.isEmpty();
         for (T tx : targets) {
+            if (isTargetLimited && !limitedTargetIds.contains(tx.nlpTextId(getContext()))) {
+                // the result is not in scope of limited targets -> exclude from result
+                continue;
+            }
             NLPMatchResult<T> result = doMatching(_searchPat, tx);
             // we can decide to accept this result or not by control the returned value of onSuccess function.
             // Return null to inform that the result is not accepted.
@@ -416,9 +433,10 @@ public final class CWNLPEngine<T extends INLPText> {
      *
      * @param searchKey          the search input. Should be pre-processed
      * @param preMatchingResults list of NLP results
+     * @param limitedTargetIds   limit searching on given targets
      * @param callback           callback function
      */
-    private void doMatchingOnPreResult(CharSequence searchKey, List<NLPMatchResult<T>> preMatchingResults, CWCallback<NLPMatchResult<T>> callback) {
+    private void doMatchingOnPreResult(CharSequence searchKey, List<NLPMatchResult<T>> preMatchingResults, @Nullable Set<String> limitedTargetIds, CWCallback<NLPMatchResult<T>> callback) {
         String _search = searchKey.toString();
         Map<String, Pattern> _searchPat = buildSearchPattern(_search);
         if (_searchPat.isEmpty()) /* the search input is not valid for searching */ {
@@ -427,7 +445,12 @@ public final class CWNLPEngine<T extends INLPText> {
         }
 
         // Check matching
+        boolean isTargetLimited = limitedTargetIds != null && !limitedTargetIds.isEmpty();
         for (NLPMatchResult<T> rsx : preMatchingResults) {
+            if (isTargetLimited && !limitedTargetIds.contains(rsx.target.nlpTextId(getContext()))) {
+                // the result is not in scope of limited targets -> exclude from result
+                continue;
+            }
             NLPMatchResult<T> result = doMatching(_searchPat, rsx.target);
             // we can decide to accept this result or not by control the returned value of onSuccess function.
             // Return null to inform that the result is not accepted.
@@ -464,11 +487,12 @@ public final class CWNLPEngine<T extends INLPText> {
      *     For example: we can use this way to accept the result which is full-match only
      * </pre>
      *
-     * @param searchKey the search input
-     * @param callback  callback function
-     * @see CWNLPEngine#doMatching(CharSequence, List, CWCallback)
+     * @param searchKey        the search input
+     * @param callback         callback function
+     * @param limitedTargetIds limit searching on given targets
+     * @see CWNLPEngine#doMatching(Map, INLPText)
      */
-    public void doMatching(@NonNull CharSequence searchKey, CWCallback<NLPMatchResult<T>> callback) {
+    public void doMatching(@NonNull CharSequence searchKey, @Nullable Set<String> limitedTargetIds, CWCallback<NLPMatchResult<T>> callback) {
         callback.onBegin();
         String _search = preProcess(new NLPString(searchKey));
         if (useCache()) {
@@ -476,7 +500,12 @@ public final class CWNLPEngine<T extends INLPText> {
             List<NLPMatchResult<T>> cacheResults;
             if ((cacheResults = mCaches.get(_search)) != null) {
                 // Get the search result from cache if available
+                boolean isTargetLimited = limitedTargetIds != null && !limitedTargetIds.isEmpty();
                 for (NLPMatchResult<T> result : cacheResults) {
+                    if (isTargetLimited && !limitedTargetIds.contains(result.target.nlpTextId(getContext()))) {
+                        // the result is no in scope of limited targets -> exclude from result
+                        continue;
+                    }
                     callback.onSuccess(result);
                 }
                 callback.onEnd();
@@ -507,13 +536,45 @@ public final class CWNLPEngine<T extends INLPText> {
 
             // do searching on previous result
             if (preResults != null) {
-                doMatchingOnPreResult(_search, preResults, callback);
+                doMatchingOnPreResult(_search, preResults, limitedTargetIds, callback);
                 callback.onEnd();
                 return;
             }
         }
-        doMatching(_search, targetList, callback);
+        doMatching(_search, targetList, limitedTargetIds, callback);
         callback.onEnd();
+    }
+
+    /**
+     * Check if the input string matches with search key or not.
+     * <p>
+     * Usage:
+     * <pre>
+     *     String input = "Color the wind";
+     *
+     *     // full match - match all the keys without considering the order
+     *     doMatching("the color") -> status = FULL_MATCH
+     *
+     *     // partial match - match any keys from the search string
+     *     doMatching("color storm") -> status = PARTIAL_MATCH
+     *
+     *     // not match
+     *     doMatching("nothing") -> status = NOT_MATCH
+     * </pre>
+     * <p>
+     * Tip1: Handle onSuccess(result) callback function
+     * <pre>
+     *     We can decide to accept this result or not by control the returned value of onSuccess function.
+     *     Return null to inform that the result is not accepted.
+     *     For example: we can use this way to accept the result which is full-match only
+     * </pre>
+     *
+     * @param searchKey the search input
+     * @param callback  callback function
+     * @see CWNLPEngine#doMatching(Map, INLPText)
+     */
+    public void doMatching(@NonNull CharSequence searchKey, CWCallback<NLPMatchResult<T>> callback) {
+        doMatching(searchKey, null, callback);
     }
 
     /* ---------------------- INNER CLASS -------------------- */

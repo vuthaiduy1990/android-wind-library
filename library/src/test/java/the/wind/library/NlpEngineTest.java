@@ -5,9 +5,11 @@ import org.junit.Test;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import the.wind.library.nlp.CWNLPEngine;
 import the.wind.library.nlp.INLPText;
@@ -392,8 +394,8 @@ public final class NlpEngineTest {
             engine = new CWNLPEngine<>(null, opts);
             engine.load(new NLPString("color the wind with light color"));
             engine.build();
-            List<NLPMatchResult<NLPString>> result = doMatching(engine, "color");
-            NLPMatchResult<NLPString> r1 = result.get(0);
+            List<NLPMatchResult<NLPString>> results = doMatching(engine, "color");
+            NLPMatchResult<NLPString> r1 = results.get(0);
             Assert.assertTrue(r1.isFullMatched());
             Assert.assertEquals(1, r1.keys.size());
             Assert.assertEquals(2, r1.indexes.size());
@@ -410,8 +412,8 @@ public final class NlpEngineTest {
             engine = new CWNLPEngine<>(null, opts);
             engine.load(new NLPString("color the wind with light color"));
             engine.build();
-            List<NLPMatchResult<NLPString>> result = doMatching(engine, "color");
-            NLPMatchResult<NLPString> r1 = result.get(0);
+            List<NLPMatchResult<NLPString>> results = doMatching(engine, "color");
+            NLPMatchResult<NLPString> r1 = results.get(0);
             Assert.assertTrue(r1.isFullMatched());
             Assert.assertEquals(2, r1.keys.size());
             Assert.assertEquals(4, r1.indexes.size());
@@ -424,6 +426,39 @@ public final class NlpEngineTest {
         }
     }
 
+    @Test
+    public void searchWithLimitedTargets() {
+        CWNLPEngine<NLPString> engine = new CWNLPEngine<>(null);
+        NLPString text1 = new NLPString("color the wind");
+        NLPString text2 = new NLPString("gone with the wind");
+        NLPString text3 = new NLPString("color me run");
+        engine.load(text1, text2, text3);
+        engine.build();
+
+        // search with limited target = null;
+        {
+            List<NLPMatchResult<NLPString>> results = doMatching(engine, "color", null);
+            Assert.assertEquals(2, results.size());
+        }
+
+        // search with limited target is empty;
+        {
+            List<NLPMatchResult<NLPString>> results = doMatching(engine, "color", new HashSet<String>());
+            Assert.assertEquals(2, results.size());
+        }
+
+        // search with limited targets
+        {
+            Set<String> limitedTargetIds = new HashSet<>();
+            limitedTargetIds.add(text1.nlpTextId(null));
+            limitedTargetIds.add(text2.nlpTextId(null));
+            List<NLPMatchResult<NLPString>> results = doMatching(engine, "color", limitedTargetIds);
+
+            Assert.assertEquals(1, results.size());
+            Assert.assertEquals(text1, results.get(0).target);
+            Assert.assertTrue(results.get(0).isFullMatched());
+        }
+    }
 
     @Test
     public void cache() {
@@ -488,31 +523,32 @@ public final class NlpEngineTest {
 
     @Test
     public void testCachePerformance() {
+        System.out.println("[NLPEngine] Test cache performance with 100000 records");
         CWNLPEngine.Options opts = new CWNLPEngine.Options();
         opts.cache = 3;
         opts.matchOnly = true;
         CWNLPEngine<NLPString> engine;
 
         // Testcase:
-        // Process 20000 text with using cache
+        // Process 100000 text with using cache
         {
             engine = new CWNLPEngine<>(null, opts);
             String[] textBags1 = new String[]{"you", "never", "know", "what", "happens", "next"};
             String[] textBags2 = new String[]{"color", "of", "the", "wind"};
-            for (int i = 0; i < 10000; i++) {
+            for (int i = 0; i < 50000; i++) {
                 engine.load(new NLPString(CWStringUtils.join(" ", CWMathUtils.shuffle(String.class, textBags1))));
                 engine.load(new NLPString(CWStringUtils.join(" ", CWMathUtils.shuffle(String.class, textBags2))));
             }
             engine.build();
             long startTime = System.currentTimeMillis();
             List<NLPMatchResult<NLPString>> results = doMatching(engine, "never know");
-            Assert.assertEquals(10000, results.size());
+            Assert.assertEquals(50000, results.size());
             long costWithoutCache = System.currentTimeMillis() - startTime;
 
             // do matching again with the same search key
             startTime = System.currentTimeMillis();
             results = doMatching(engine, "never know");
-            Assert.assertEquals(10000, results.size());
+            Assert.assertEquals(50000, results.size());
             long costWithCache = System.currentTimeMillis() - startTime;
 
             // compare
@@ -528,10 +564,10 @@ public final class NlpEngineTest {
             String[] textBags1 = new String[]{"you", "never", "know", "what", "happens", "next"};
             String[] textBags2 = new String[]{"color", "the", "the", "col"};
             String[] textBags3 = new String[]{"col", "of", "duty"};
-            for (int i = 0; i < 10000; i++) {
+            for (int i = 0; i < 50000; i++) {
                 engine.load(new NLPString(CWStringUtils.join(" ", CWMathUtils.shuffle(String.class, textBags1))));
             }
-            for (int i = 0; i < 5000; i++) {
+            for (int i = 0; i < 25000; i++) {
                 engine.load(new NLPString(CWStringUtils.join(" ", CWMathUtils.shuffle(String.class, textBags2))));
                 engine.load(new NLPString(CWStringUtils.join(" ", CWMathUtils.shuffle(String.class, textBags3))));
             }
@@ -542,15 +578,15 @@ public final class NlpEngineTest {
             List<NLPMatchResult<NLPString>> results = doMatching(engine, "color");
             long costWithoutCache = System.currentTimeMillis() - startTime;
             engine.clearCache();
-            Assert.assertEquals(5000, results.size());
+            Assert.assertEquals(25000, results.size());
 
             // do matching again with the new search key which wrap the previous one with using cache
             results = doMatching(engine, "col");
-            Assert.assertEquals(10000, results.size());
+            Assert.assertEquals(50000, results.size());
             startTime = System.currentTimeMillis();
             results = doMatching(engine, "color");
             long costWithCache = System.currentTimeMillis() - startTime;
-            Assert.assertEquals(5000, results.size());
+            Assert.assertEquals(25000, results.size());
 
             // compare
             System.out.println("[NLPEngine] do matching without pre-result: " + costWithoutCache);
@@ -579,6 +615,20 @@ public final class NlpEngineTest {
     private <T extends INLPText> List<NLPMatchResult<T>> doMatching(CWNLPEngine<T> engine, CharSequence searchKey) {
         final List<NLPMatchResult<T>> list = new LinkedList<>();
         engine.doMatching(searchKey, new CWCallback<NLPMatchResult<T>>() {
+            @Override
+            public NLPMatchResult<T> onSuccess(NLPMatchResult<T> result) {
+                if (result != null) {
+                    list.add(result);
+                }
+                return super.onSuccess(result);
+            }
+        });
+        return list;
+    }
+
+    private <T extends INLPText> List<NLPMatchResult<T>> doMatching(CWNLPEngine<T> engine, CharSequence searchKey, Set<String> limitedTargetIds) {
+        final List<NLPMatchResult<T>> list = new LinkedList<>();
+        engine.doMatching(searchKey, limitedTargetIds, new CWCallback<NLPMatchResult<T>>() {
             @Override
             public NLPMatchResult<T> onSuccess(NLPMatchResult<T> result) {
                 if (result != null) {
