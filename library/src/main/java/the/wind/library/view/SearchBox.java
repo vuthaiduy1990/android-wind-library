@@ -35,7 +35,7 @@ import the.wind.library.utils.CWAndroidUtils;
 
 public class SearchBox extends LinearLayout {
 
-    private static final long LAZY_TIME = 200;
+    private static final int DEFAULT_LAZY_TIME = 200;
 
     // views
     private final LinearLayout _rootView;
@@ -55,7 +55,7 @@ public class SearchBox extends LinearLayout {
     private String oldSearchInput = "";
     private String inputText = "";
     private final CWBundle bundle = new CWBundle();
-    private long lazyTime = LAZY_TIME;
+    private int lazyTime = DEFAULT_LAZY_TIME;
     private long lastInputTime;
     private boolean closeKeyboardOnSearch;
 
@@ -132,7 +132,6 @@ public class SearchBox extends LinearLayout {
         TypedArray typeArray = context.getTheme().obtainStyledAttributes(
                 attrs, R.styleable.SearchBox, defStyleAttr, defStyleRes);
         try {
-
             // text
             String textValue = typeArray.getString(R.styleable.SearchBox_text);
             setText(textValue);
@@ -140,8 +139,6 @@ public class SearchBox extends LinearLayout {
                     R.styleable.SearchBox_textSize,
                     getResources().getDimension(R.dimen.wl_text_big));
             setTextSize(textSize);
-
-            // hint
             String hint = typeArray.getString(R.styleable.SearchBox_hint);
             setHint(hint);
 
@@ -176,6 +173,9 @@ public class SearchBox extends LinearLayout {
             int paddingBottom = getPaddingBottom() > 0 ? getPaddingBottom() : (int) getResources().getDimension(R.dimen.wl_search_box_padding_ver);
             _inputBox.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
             setPadding(0, 0, 0, 0);
+
+            // lazy time
+            setLazyTime(typeArray.getInteger(R.styleable.SearchBox_lazyTime, DEFAULT_LAZY_TIME));
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -521,7 +521,7 @@ public class SearchBox extends LinearLayout {
      *
      * @param milliseconds unit is milliseconds
      */
-    public void setLazyTime(long milliseconds) {
+    public void setLazyTime(int milliseconds) {
         lazyTime = milliseconds;
     }
 

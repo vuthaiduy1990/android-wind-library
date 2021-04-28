@@ -81,6 +81,7 @@
         <attr name="closeVisible" format="boolean" />
         <attr name="compactMode" format="boolean" />
         <attr name="closeKeyboardOnSearch" format="boolean" />
+        <attr name="lazyTime" format="integer" />
 
     </declare-styleable>
 
