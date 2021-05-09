@@ -6,6 +6,11 @@
     android:paddingStart="@dimen/wl_spacing_level_2"
     android:paddingEnd="@dimen/wl_spacing_level_2">
 
+    <RelativeLayout
+        android:id="@+id/_customViewLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <the.wind.library.view.WindRecycleView
         android:id="@+id/_rvHolder"
         android:layout_width="match_parent"

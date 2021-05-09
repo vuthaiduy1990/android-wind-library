@@ -23,8 +23,9 @@ import the.wind.library.view.WindRecycleView;
 public abstract class SelectionListDialog<T> extends WindDialog {
 
     // views
-    protected final WindRecycleView _rvHolder;
-    protected final SelectionListAdapter<T> listAdapter;
+    private final WindRecycleView _rvHolder;
+    private final SelectionListAdapter<T> listAdapter;
+    private final ViewGroup _customViewLayout;
 
     // search box
     protected final SearchBox _searchBox;
@@ -53,6 +54,9 @@ public abstract class SelectionListDialog<T> extends WindDialog {
         setItemBackgroundHoverRes(R.drawable.wl_background_hover);
         setSearchBoxBackgroundRes(R.drawable.wl_form_input_background);
 
+        // bind custom view layout
+        _customViewLayout = contentView().findViewById(R.id._customViewLayout);
+
         // bind list view
         _rvHolder = contentView().findViewById(R.id._rvHolder);
         _rvHolder.setHasFixedSize(true); // to improve the performance
@@ -73,8 +77,9 @@ public abstract class SelectionListDialog<T> extends WindDialog {
             @Override
             public void onClick(WindRecycleView.ViewHolder<T> viewHolder, View view, T data) {
                 listAdapter.setSelected(data);
-                onSelection(SelectionListDialog.this, viewHolder.itemView, data);
-                dismiss();
+                if (!onSelection(SelectionListDialog.this, viewHolder.itemView, data)) {
+                    dismiss();
+                }
             }
         }).setOnItemTouchDownListener(new WindRecycleView.Adapter.OnItemTouchDownListener<T>() {
             @Override
@@ -170,8 +175,9 @@ public abstract class SelectionListDialog<T> extends WindDialog {
      *
      * @param itemView item view
      * @param data     item data
+     * @return true if consume the event, else return false
      */
-    protected abstract void onSelection(@NonNull SelectionListDialog<T> dialog, @NonNull View itemView, @NonNull T data);
+    protected abstract boolean onSelection(@NonNull SelectionListDialog<T> dialog, @NonNull View itemView, @NonNull T data);
 
     /**
      * On dismiss
@@ -183,6 +189,36 @@ public abstract class SelectionListDialog<T> extends WindDialog {
     }
 
     /* ---------------------- GET-SET ------------------------ */
+
+    /**
+     * @return selection list adapter
+     */
+    public SelectionListAdapter<T> getAdapter() {
+        return listAdapter;
+    }
+
+    /**
+     * @return custom view layout
+     */
+    public ViewGroup getCustomViewLayout() {
+        return _customViewLayout;
+    }
+
+    /**
+     * Add custom view to layout
+     *
+     * @param customView custom view
+     */
+    public void addCustomView(View customView) {
+        _customViewLayout.addView(customView);
+    }
+
+    /**
+     * @return list view holder
+     */
+    public WindRecycleView getListView() {
+        return _rvHolder;
+    }
 
     /**
      * Set search box visible
