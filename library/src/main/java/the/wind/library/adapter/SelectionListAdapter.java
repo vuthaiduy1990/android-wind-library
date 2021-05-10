@@ -42,7 +42,7 @@ public class SelectionListAdapter<T> extends WindRecycleView.Adapter<T> {
             ViewHolder<T> _holder = (ViewHolder<T>) holder;
             T data = getData(position);
             _holder._textView.setText(dataTransformer.dataToText(data));
-            _holder._checkbox.setChecked(selectedData != null && dataTransformer.compare(selectedData, data));
+            _holder.bindChecked(selectedData != null && dataTransformer.compare(selectedData, data));
         }
     }
 
@@ -127,6 +127,15 @@ public class SelectionListAdapter<T> extends WindRecycleView.Adapter<T> {
             _textView = itemView.findViewById(R.id._textView);
             itemView.setClickable(true);
             _checkbox.setEnabled(false);
+        }
+
+        /**
+         * Bind selected value
+         *
+         * @param checked true -> checked, else unchecked
+         */
+        private void bindChecked(boolean checked) {
+            _checkbox.setChecked(checked);
         }
     }
 }

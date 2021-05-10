@@ -77,6 +77,7 @@ public abstract class SelectionListDialog<T> extends WindDialog {
             @Override
             public void onClick(WindRecycleView.ViewHolder<T> viewHolder, View view, T data) {
                 listAdapter.setSelected(data);
+                listAdapter.notifyDataSetChanged();
                 if (!onSelection(SelectionListDialog.this, viewHolder.itemView, data)) {
                     dismiss();
                 }

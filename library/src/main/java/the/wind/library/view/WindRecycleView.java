@@ -34,7 +34,7 @@ import the.wind.library.utils.CWImageUtils;
  * <p>
  * Note1:
  * https://medium.com/@haydar_ai/better-way-to-get-the-item-position-in-androids-recyclerview-820667d435d4
- * According to this article, we should use holder.getAdapterPosition() to retrieve the item's position in action event
+ * According to this article, we should use holder.getBindingAdapterPosition() to retrieve the item's position in action event
  * For example: click event
  * <p>
  * Note2:
@@ -92,8 +92,8 @@ public class WindRecycleView extends RecyclerView {
             if (enableSwapPosition) {
                 Adapter<?> adapter = (Adapter<?>) getAdapter();
                 if (adapter == null) return false;
-                int fromPos = viewHolder.getAdapterPosition();
-                int toPos = target.getAdapterPosition();
+                int fromPos = viewHolder.getBindingAdapterPosition();
+                int toPos = target.getBindingAdapterPosition();
                 if (fromPos < toPos) {
                     for (int i = fromPos; i < toPos; i++) {
                         Collections.swap(adapter.getData(), i, i + 1);
@@ -493,6 +493,7 @@ public class WindRecycleView extends RecyclerView {
         public Adapter(List<T> dataset) {
             this.dataset = dataset;
             setCustomLoadingView(R.layout.wl_recycle_view_loading);
+
         }
 
         /* ---------------------- OVERRIDE ----------------------- */
@@ -548,7 +549,7 @@ public class WindRecycleView extends RecyclerView {
          */
         protected boolean onMiddlewareItemSelection(@NonNull ViewHolder<T> viewHolder) {
             mPreSelectedItem = mSelectedItem;
-            mSelectedItem = new ItemHolder<>(viewHolder.getAdapterPosition(), viewHolder.getAdapterData());
+            mSelectedItem = new ItemHolder<>(viewHolder.getBindingAdapterPosition(), viewHolder.getAdapterData());
             return false;
         }
 

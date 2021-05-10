@@ -108,7 +108,7 @@ public class RecycleViewPage extends Fragment {
         _recycleView.enableSwipeToRemove(new WindRecycleView.OnSwipeToRemoveListener() {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                mAdapter.removeData(viewHolder.getAdapterPosition());
+                mAdapter.removeData(viewHolder.getBindingAdapterPosition());
             }
         });
 
