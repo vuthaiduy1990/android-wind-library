@@ -170,11 +170,11 @@ public class WindDB extends SQLiteOpenHelper {
         Class<?> parentClazz = clazz;
         while (parentClazz != null) {
             for (Field field : parentClazz.getDeclaredFields()) {
-                // exclude field which is transient/final or marked as CWColumnIgnore
+                // exclude field which is transient/static or marked as CWColumnIgnore
                 Column colDef = field.getAnnotation(Column.class);
                 if ((colDef != null && colDef.ignore())
                         || Modifier.isTransient(field.getModifiers())
-                        || Modifier.isFinal(field.getModifiers())) {
+                        || Modifier.isStatic(field.getModifiers())) {
                     continue;
                 }
                 results.add(field);
