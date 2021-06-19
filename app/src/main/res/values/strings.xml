@@ -17,6 +17,7 @@
     <string name="drawer_search_box">SearchBox</string>
     <string name="drawer_tag_box">TagBox</string>
     <string name="drawer_text_effect">Text Effect</string>
+    <string name="drawer_calendar">Calendar</string>
 
     <string name="action_menu_recycle_list_view">List View</string>
     <string name="action_menu_recycle_grid_view">Grid View</string>

@@ -85,12 +85,17 @@
 
     </declare-styleable>
 
-    <!--  TagBox attributes-->
+    <!--  TagBox attributes -->
     <declare-styleable name="TagBox">
         <attr name="textSize" />
         <attr name="textColor" />
         <attr name="textMaxWidth" format="dimension" />
         <attr name="iconSize" />
         <attr name="removeIcon" format="reference" />
+    </declare-styleable>
+
+    <!--  Calendar attributes -->
+    <declare-styleable name="Calendar">
+
     </declare-styleable>
 </resources>

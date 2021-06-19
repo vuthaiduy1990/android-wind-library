@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/wl_spacing_level_0"
+    android:background="@color/wl_highlight"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/_dateNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/wl_spacing_level_2"
+        android:textSize="@dimen/wl_text_small" />
+
+</LinearLayout>

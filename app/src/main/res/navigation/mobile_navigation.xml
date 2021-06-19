@@ -71,4 +71,10 @@
         android:name="the.wind.library.sample.activity.fragment.TagBoxPage"
         android:label="@string/drawer_tag_box"
         tools:layout="@layout/fragment_tag_box" />
+
+    <fragment
+        android:id="@+id/_navCalendar"
+        android:name="the.wind.library.sample.activity.fragment.CalendarPage"
+        android:label="@string/drawer_calendar"
+        tools:layout="@layout/fragment_calendar_layout" />
 </navigation>
