@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import the.wind.library.CWBundle;
 import the.wind.library.R;
+import the.wind.library.anim.PageTransformerType;
 
 public class WindCalendar extends LinearLayout {
 
@@ -113,6 +114,22 @@ public class WindCalendar extends LinearLayout {
      */
     public CWBundle bundle() {
         return bundle;
+    }
+
+    /**
+     * @return calendar view pager
+     */
+    public CalendarViewPager getCalendarViewPager() {
+        return _calendarViewPager;
+    }
+
+    /**
+     * Set page transformer
+     *
+     * @param type page transformer
+     */
+    public void setPageTransformer(PageTransformerType type) {
+        _calendarViewPager.setPageTransformer(true, type.getTransformer());
     }
 
     /* ---------------------- METHOD ------------------------- */

@@ -2,6 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!--  For Recycle View Page -->
+    <!-- -->
+
     <item
         android:id="@+id/action_menu_recycle_list_view"
         android:orderInCategory="1"
@@ -46,8 +49,82 @@
 
     <item
         android:id="@+id/action_menu_recycle_enable_swap_position"
-        android:orderInCategory="5"
+        android:orderInCategory="6"
         android:title="@string/action_menu_recycle_enable_swap_position"
+        android:visible="false"
+        app:showAsAction="never" />
+
+    <!--  For Calendar Dialog -->
+    <!-- -->
+    <item
+        android:id="@+id/action_menu_calendar_btf_transform"
+        android:title="@string/action_menu_calendar_btf_transform"
+        android:visible="false"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_menu_calendar_ftb_transform"
+        android:title="@string/action_menu_calendar_ftb_transform"
+        android:visible="false"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_menu_calendar_cube_in_transform"
+        android:title="@string/action_menu_calendar_cube_in_transform"
+        android:visible="false"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_menu_calendar_cube_out_transform"
+        android:title="@string/action_menu_calendar_cube_out_transform"
+        android:visible="false"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_menu_calendar_depth_transform"
+        android:title="@string/action_menu_calendar_depth_transform"
+        android:visible="false"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_menu_calendar_flip_horizontal_transform"
+        android:title="@string/action_menu_calendar_flip_horizontal_transform"
+        android:visible="false"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_menu_calendar_flip_vertical_transform"
+        android:title="@string/action_menu_calendar_flip_vertical_transform"
+        android:visible="false"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_menu_calendar_rotate_down_transform"
+        android:title="@string/action_menu_calendar_rotate_down_transform"
+        android:visible="false"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_menu_calendar_rotate_up_transform"
+        android:title="@string/action_menu_calendar_rotate_up_transform"
+        android:visible="false"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_menu_calendar_tablet_transform"
+        android:title="@string/action_menu_calendar_tablet_transform"
+        android:visible="false"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_menu_calendar_zoom_in_transform"
+        android:title="@string/action_menu_calendar_zoom_in_transform"
+        android:visible="false"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_menu_calendar_zoom_out_transform"
+        android:title="@string/action_menu_calendar_zoom_out_transform"
         android:visible="false"
         app:showAsAction="never" />
 

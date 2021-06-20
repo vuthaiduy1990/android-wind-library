@@ -61,19 +61,19 @@
         tools:layout="@layout/fragment_action_menu" />
 
     <fragment
-        android:id="@+id/_navSearchBox"
+        android:id="@+id/_navSearchBoxMenu"
         android:name="the.wind.library.sample.activity.fragment.SearchBoxPage"
         android:label="@string/drawer_search_box"
         tools:layout="@layout/fragment_search_box_layout" />
 
     <fragment
-        android:id="@+id/_navTagBox"
+        android:id="@+id/_navTagBoxMenu"
         android:name="the.wind.library.sample.activity.fragment.TagBoxPage"
         android:label="@string/drawer_tag_box"
         tools:layout="@layout/fragment_tag_box" />
 
     <fragment
-        android:id="@+id/_navCalendar"
+        android:id="@+id/_navCalendarMenu"
         android:name="the.wind.library.sample.activity.fragment.CalendarPage"
         android:label="@string/drawer_calendar"
         tools:layout="@layout/fragment_calendar_layout" />

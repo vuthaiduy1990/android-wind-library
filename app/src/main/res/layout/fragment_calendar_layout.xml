@@ -5,6 +5,7 @@
     android:padding="@dimen/wl_spacing_level_1">
 
     <the.wind.library.calendar.WindCalendar
+        android:id="@+id/_calendarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

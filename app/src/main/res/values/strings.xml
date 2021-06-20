@@ -26,6 +26,20 @@
     <string name="action_menu_recycle_anim_left_right">Anim: Left2Right</string>
     <string name="action_menu_recycle_anim_right_left">Anim: Right2Left</string>
     <string name="action_menu_recycle_enable_swap_position">Enable Swap Position</string>
+
+    <string name="action_menu_calendar_btf_transform">Background to Foreground Transformer</string>
+    <string name="action_menu_calendar_ftb_transform">ForeGround to Background Transformer</string>
+    <string name="action_menu_calendar_cube_in_transform">Cube In Transformer</string>
+    <string name="action_menu_calendar_cube_out_transform">Cube Out Transformer</string>
+    <string name="action_menu_calendar_depth_transform">Depth Transformer</string>
+    <string name="action_menu_calendar_flip_horizontal_transform">Flip Horizontal Transformer</string>
+    <string name="action_menu_calendar_flip_vertical_transform">Flip Vertical Transformer</string>
+    <string name="action_menu_calendar_rotate_down_transform">Rotate Down Transformer</string>
+    <string name="action_menu_calendar_rotate_up_transform">Rotate Up Transformer</string>
+    <string name="action_menu_calendar_tablet_transform">Tablet Transformer</string>
+    <string name="action_menu_calendar_zoom_in_transform">Zoom In Transformer</string>
+    <string name="action_menu_calendar_zoom_out_transform">Zoom Out Transformer</string>
+
     <string name="action_menu_settings">Settings</string>
 
     <string name="button_primary">Primary</string>
