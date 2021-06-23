@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/wl_spacing_level_0"
-    android:background="@color/wl_highlight"
+    android:gravity="center"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/_dateNumber"
+        android:id="@+id/_dateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/wl_spacing_level_2"
-        android:textSize="@dimen/wl_text_small" />
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/_lunarDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/_eventSymbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wl_calendar_event_symbol"
+        android:textColor="@color/wl_danger"
+        android:textStyle="bold" />
 
 </LinearLayout>

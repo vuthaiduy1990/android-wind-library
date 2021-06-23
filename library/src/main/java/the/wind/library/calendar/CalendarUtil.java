@@ -8,6 +8,28 @@ import java.util.List;
 public final class CalendarUtil {
 
     /**
+     * Get unique id of date
+     *
+     * @param year       year
+     * @param month      month
+     * @param dayOfMonth day of month
+     * @return unique date id
+     */
+    public static String toId(int year, int month, int dayOfMonth) {
+        return String.format("%s%s%s", year, month, dayOfMonth);
+    }
+
+    /**
+     * Get unique id of date
+     *
+     * @param cal calendar date
+     * @return unique date id
+     */
+    public static String toId(Calendar cal) {
+        return String.format("%s%s%s", cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+    }
+
+    /**
      * Get all days of month by given date
      *
      * @param unmodifiedCal calendar abstract class, ex {@link java.util.GregorianCalendar}, {@link android.icu.util.ChineseCalendar}

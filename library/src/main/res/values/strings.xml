@@ -3,4 +3,5 @@
     <string name="wl_dialog_button_close">Close</string>
     <string name="wl_dialog_button_cancel">Cancel</string>
     <string name="wl_dialog_button_confirm">Confirm</string>
+    <string name="wl_calendar_event_symbol">🔴</string>
 </resources>

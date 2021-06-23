@@ -1,12 +1,9 @@
 package the.wind.library.calendar;
 
-import android.view.ViewGroup;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -21,14 +18,21 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
 
     // Maximum number of slide
     private static final int MAX_SLIDE = 2000;
+
     // Calendar type
     // calendar abstract class, ex {@link java.util.GregorianCalendar}, {@link android.icu.util.ChineseCalendar}
     private final Calendar calendar;
+
     // the number of month will be preloaded in the left side and right side of current month
     private int preLoaded;
+
     // selected month
     private MonthInfo selectedMonth;
     private int currentPosition;
+
+    // styling
+    private CalendarStyle calendarStyle;
+    private CalendarInfo calendarInfo;
 
     /**
      * Constructor
@@ -52,6 +56,16 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
     /**
      * Constructor
      *
+     * @param fm       month view fragment
+     * @param calendar abstract calendar with any given date
+     */
+    public CalendarAdapter(FragmentManager fm, Calendar calendar) {
+        this(fm, calendar, DEFAULT_PRE_LOAD);
+    }
+
+    /**
+     * Constructor
+     *
      * @param fm        month view fragment
      * @param calendar  abstract calendar with any given date
      * @param preLoaded the number of month will be preloaded in the left side and right side of current month
@@ -70,7 +84,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         int diff = position - currentPosition;
-        if (diff == 0) return new MonthViewFragment(selectedMonth);
+        if (diff == 0) return newMonthFragment(selectedMonth);
 
         int sign = diff / Math.abs(diff);
         MonthInfo target = selectedMonth;
@@ -84,13 +98,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
                 idx--;
             }
         }
-        return new MonthViewFragment(target);
-    }
-
-    @NonNull
-    @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        return super.instantiateItem(container, position);
+        return newMonthFragment(target);
     }
 
     @Override
@@ -103,6 +111,16 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
     /* ---------------------- ABSTRACT ----------------------- */
 
     /* ---------------------- GET-SET ------------------------ */
+
+    /**
+     * Create new month view fragment
+     *
+     * @param monthInfo month info
+     * @return fragment
+     */
+    private MonthViewFragment newMonthFragment(MonthInfo monthInfo) {
+        return new MonthViewFragment(monthInfo, calendarInfo, calendarStyle);
+    }
 
     /**
      * Set select month
@@ -127,6 +145,24 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
      */
     public int getCenterSlidePosition() {
         return MAX_SLIDE / 2;
+    }
+
+    /**
+     * Set date cell style
+     *
+     * @param style date cell style
+     */
+    void setCalendarStyle(CalendarStyle style) {
+        this.calendarStyle = style;
+    }
+
+    /**
+     * Calendar info
+     *
+     * @param info calendar info
+     */
+    void setCalendarInfo(CalendarInfo info) {
+        this.calendarInfo = info;
     }
 
     /* ---------------------- METHOD ------------------------- */

@@ -1,5 +1,6 @@
 package the.wind.library.calendar;
 
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +12,23 @@ import androidx.annotation.NonNull;
 import the.wind.library.R;
 import the.wind.library.view.WindRecycleView;
 
-class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
+public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
+
+    // styling
+    private CalendarStyle calStyle;
+    private CalendarInfo calInfo;
 
     /**
      * Constructor
      *
      * @param monthInfo monthInfo
+     * @param calInfo   calendar info
+     * @param calStyle  date cell style
      */
-    public MonthAdapter(MonthInfo monthInfo) {
+    public MonthAdapter(MonthInfo monthInfo, CalendarInfo calInfo, CalendarStyle calStyle) {
         super(monthInfo.getDateInfoList());
+        this.calInfo = calInfo;
+        this.calStyle = calStyle;
     }
 
     /* ---------------------- OVERRIDE ----------------------- */
@@ -28,7 +37,9 @@ class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
     @Override
     public WindRecycleView.ViewHolder<DateInfo> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.wl_calendard_date_view, parent, false);
-        return new ViewHolder(view);
+        ViewHolder holder = new ViewHolder(view);
+        holder.setCalStyle(calStyle);
+        return holder;
     }
 
     @Override
@@ -37,7 +48,7 @@ class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
         if (holder instanceof ViewHolder) {
             ViewHolder _holder = (ViewHolder) holder;
             DateInfo data = getData(position);
-            _holder.bindData(data);
+            _holder.bindData(data, calInfo);
         }
     }
 
@@ -59,9 +70,15 @@ class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
     /**
      * View holder
      */
-    static class ViewHolder extends WindRecycleView.ViewHolder<DateInfo> {
+    public static class ViewHolder extends WindRecycleView.ViewHolder<DateInfo> {
 
-        private final TextView _dateNumber;
+        // Views
+        private final TextView _dateTextView;
+        private final TextView _lunarDateTextView;
+        private final TextView _eventSymbol;
+
+        // styling
+        private CalendarStyle calStyle;
 
         /**
          * Constructor
@@ -72,16 +89,69 @@ class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
             super(itemView);
 
             // bind views
-            _dateNumber = itemView.findViewById(R.id._dateNumber);
+            _dateTextView = itemView.findViewById(R.id._dateTextView);
+            _lunarDateTextView = itemView.findViewById(R.id._lunarDateTextView);
+            _eventSymbol = itemView.findViewById(R.id._eventSymbol);
         }
 
-        @Override
-        protected void bindData(DateInfo data) {
+        /**
+         * Bind date
+         *
+         * @param data    date info data
+         * @param calInfo calendar info data
+         */
+        protected void bindData(DateInfo data, CalendarInfo calInfo) {
             super.bindData(data);
             if (data == null) {
+                itemView.setVisibility(View.GONE);
                 return;
             }
-            _dateNumber.setText(String.format(Locale.getDefault(), "%d", data.getDayOfMonth()));
+            String dateId = data.getId();
+            boolean hasEvent = calInfo.hasEvent(dateId);
+            boolean isToday = calInfo.isToday(dateId);
+            boolean isWeekend = data.isWeekend();
+
+            // Set text value
+            _dateTextView.setText(String.format(Locale.getDefault(), "%d", data.getDayOfMonth()));
+            _lunarDateTextView.setText("25/12"); // TODO: set lunar date later
+            _eventSymbol.setVisibility(hasEvent ? View.VISIBLE : View.GONE);
+
+            // Set text color
+            if (isToday) {
+                _dateTextView.setTextColor(calStyle.todayTextColor());
+                itemView.setBackgroundResource(calStyle.todayBackground());
+            } else if (isWeekend) {
+                _dateTextView.setTextColor(calStyle.weekendTextColor());
+                itemView.setBackgroundResource(calStyle.weekendBackground());
+
+            } else if (hasEvent) {
+                _dateTextView.setTextColor(calStyle.eventTextColor());
+                itemView.setBackgroundResource(calStyle.weekendBackground());
+
+            } else {
+                _dateTextView.setTextColor(calStyle.dateTextColor());
+                itemView.setBackgroundResource(calStyle.cellBackground());
+            }
+        }
+
+        /**
+         * Set cell style
+         *
+         * @param calStyle cell style
+         */
+        private void setCalStyle(CalendarStyle calStyle) {
+            this.calStyle = calStyle;
+
+            // Configure cell size
+            ViewGroup.LayoutParams lp = itemView.getLayoutParams();
+            lp.width = calStyle.dateCellSize();
+            lp.height = calStyle.dateCellSize();
+            itemView.setLayoutParams(lp);
+
+            // Configure date text
+            _dateTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, calStyle.dateTextSize());
+            _lunarDateTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, calStyle.lunarDateTextSize());
+            _eventSymbol.setTextSize(TypedValue.COMPLEX_UNIT_PX, calStyle.eventSymbolSize());
         }
     }
 }
