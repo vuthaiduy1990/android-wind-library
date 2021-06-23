@@ -67,5 +67,12 @@ public class MonthViewFragment extends Fragment {
 
     /* ---------------------- METHOD ------------------------- */
 
+    /**
+     * Notify dataset changes
+     */
+    public void notifyDataSetChanged() {
+        monthAdapter.notifyDataSetChanged();
+    }
+
     /* ---------------------- INNER CLASS -------------------- */
 }

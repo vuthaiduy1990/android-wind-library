@@ -6,23 +6,17 @@ import java.util.Set;
 
 import androidx.annotation.NonNull;
 
-class CalendarInfo {
+final class CalendarInfo {
 
     private final String todayId;
-    private final Set<String> eventDates = new HashSet<>();
+    public final Set<String> eventDates = new HashSet<>();
+    public final Set<String> highlightDates = new HashSet<>();
 
     /**
      * Constructor
      */
     public CalendarInfo(Calendar today) {
         this.todayId = CalendarUtil.toId(today);
-    }
-
-    /**
-     * @return today date ID
-     */
-    public String dateId() {
-        return todayId;
     }
 
     /**
@@ -40,36 +34,22 @@ class CalendarInfo {
      *
      * @param dateId date ID
      * @return true if given date has event, else return false
+     *
+     * @see CalendarUtil#toId(int, int, int)
      */
     public boolean hasEvent(@NonNull String dateId) {
         return eventDates.contains(dateId);
     }
 
     /**
-     * Add event date
+     * Check if date is highlight or not
      *
-     * @param dateId date ID
+     * @param dateId date id
+     * @return true if highlight
+     *
      * @see CalendarUtil#toId(int, int, int)
      */
-    public void addEventDate(@NonNull String dateId) {
-        eventDates.add(dateId);
+    public boolean isHighlight(@NonNull String dateId) {
+        return highlightDates.contains(dateId);
     }
-
-    /**
-     * Remove event date
-     *
-     * @param dateId date ID
-     * @see CalendarUtil#toId(int, int, int)
-     */
-    public void removeEventDate(String dateId) {
-        eventDates.remove(dateId);
-    }
-
-    /**
-     * Clear event dates
-     */
-    public void clearEvents() {
-        eventDates.clear();
-    }
-
 }

@@ -1,9 +1,14 @@
 package the.wind.library.calendar;
 
+import android.view.ViewGroup;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -25,6 +30,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
 
     // the number of month will be preloaded in the left side and right side of current month
     private int preLoaded;
+    private Map<Integer, MonthViewFragment> fragmentCache = new HashMap<>();
 
     // selected month
     private MonthInfo selectedMonth;
@@ -106,6 +112,28 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
         return MAX_SLIDE;
     }
 
+    @NonNull
+    @Override
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+        MonthViewFragment frag = (MonthViewFragment) super.instantiateItem(container, position);
+        fragmentCache.put(position, frag);
+        return frag;
+    }
+
+    @Override
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        super.destroyItem(container, position, object);
+        fragmentCache.remove(position);
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        for (Map.Entry<Integer, MonthViewFragment> entry : fragmentCache.entrySet()) {
+            MonthViewFragment frag = entry.getValue();
+            frag.notifyDataSetChanged();
+        }
+    }
+
     /* ---------------------- STATIC ------------------------- */
 
     /* ---------------------- ABSTRACT ----------------------- */
@@ -120,6 +148,15 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
      */
     private MonthViewFragment newMonthFragment(MonthInfo monthInfo) {
         return new MonthViewFragment(monthInfo, calendarInfo, calendarStyle);
+    }
+
+    /**
+     * Get offscreen fragment
+     *
+     * @return map between position and fragment
+     */
+    public Map<Integer, MonthViewFragment> getFragmentCache() {
+        return fragmentCache;
     }
 
     /**
@@ -221,6 +258,16 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
             preMonth = new MonthInfo(calendar);
             preMonth.next(monthIt);
             monthIt.previous(preMonth);
+        }
+    }
+
+    /**
+     * Notify dataset changes
+     */
+    public void refreshCurrentPage() {
+        MonthViewFragment frag = fragmentCache.get(currentPosition);
+        if (frag != null) {
+            frag.notifyDataSetChanged();
         }
     }
 

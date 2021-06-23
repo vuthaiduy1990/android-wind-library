@@ -77,14 +77,19 @@ public class CalendarViewPager extends ViewPager {
     /* ---------------------- GET-SET ------------------------ */
 
     /**
-     * Set selected date
+     * Set selected date.
+     * Must set after setting adapter
      *
      * @param date selected date
      */
     public void setSelectedDate(Date date) {
         setCurrentItem(-1); // reset current item to the middle of calendar slideshow
         CalendarAdapter adapter = (CalendarAdapter) getAdapter();
-        adapter.setSelectedDate(date);
+        if (adapter != null) {
+            adapter.setSelectedDate(date);
+        } else {
+            throw new IllegalArgumentException("adapter does not exist");
+        }
     }
 
     /* ---------------------- METHOD ------------------------- */

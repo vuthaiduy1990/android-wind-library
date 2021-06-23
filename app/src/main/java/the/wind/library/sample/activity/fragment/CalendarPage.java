@@ -5,7 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +21,9 @@ import the.wind.library.sample.R;
 public class CalendarPage extends Fragment {
 
     private WindCalendar _calendarView;
+    private boolean highlighted;
+    private Calendar cal = Calendar.getInstance();
+    private List<String> neighborDates = new ArrayList<>();
 
     @Nullable
     @Override
@@ -31,12 +37,26 @@ public class CalendarPage extends Fragment {
         _calendarView = view.findViewById(R.id._calendarView);
 
         // Set event dates
-        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
         cal.add(Calendar.DAY_OF_MONTH, -2);
         for (int i = 0; i <= 4; i++) {
-            _calendarView.addEventDate(CalendarUtil.toId(cal));
+            neighborDates.add(CalendarUtil.toId(cal));
             cal.add(Calendar.DAY_OF_MONTH, 1);
         }
+        _calendarView.addEventDate(neighborDates);
+
+        // set highlight event
+        view.findViewById(R.id._highlightBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (highlighted) {
+                    _calendarView.highlightDates();
+                } else {
+                    _calendarView.highlightDates(neighborDates);
+                }
+                highlighted = !highlighted;
+            }
+        });
     }
 
     public void setPageTransformer(PageTransformerType type) {

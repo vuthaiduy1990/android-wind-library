@@ -9,9 +9,9 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Set;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +25,6 @@ import the.wind.library.anim.PageTransformerType;
 public class WindCalendar extends LinearLayout {
 
     // Views
-    private final FragmentManager fragManager;
     private final ViewGroup _rootView;
     private final CalendarViewPager _calendarViewPager;
 
@@ -79,6 +78,8 @@ public class WindCalendar extends LinearLayout {
 
         LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.wl_calendar, this);
+
+        FragmentManager fragManager = null;
         if (context instanceof FragmentActivity) {
             fragManager = ((FragmentActivity) context).getSupportFragmentManager();
         } else {
@@ -96,14 +97,17 @@ public class WindCalendar extends LinearLayout {
         float dateTextSize = 0f;
         float lunarDateTextSize = 0f;
         float eventSymbolSize = 0f;
+        int dateTextColor = 0;
+        int lunarDateTextColor = 0;
+        int eventTextColor = 0;
+        int weekendTextColor = 0;
+        int todayTextColor = 0;
+        int highlightTextColor = 0;
         int cellBackground = 0;
         int eventBackground = 0;
         int weekendBackground = 0;
         int todayBackground = 0;
-        int dateTextColor = 0;
-        int eventTextColor = 0;
-        int weekendTextColor = 0;
-        int todayTextColor = 0;
+        int highlightBackground = 0;
 
         Resources res = getResources();
         try {
@@ -113,17 +117,20 @@ public class WindCalendar extends LinearLayout {
             lunarDateTextSize = typeArray.getDimension(R.styleable.WindCalendar_lunarDateTextSize, res.getDimension(R.dimen.wl_calendar_lunar_date_text_size));
             eventSymbolSize = typeArray.getDimension(R.styleable.WindCalendar_eventSymbolSize, res.getDimension(R.dimen.wl_calendar_event_symbol_size));
 
+            // Date text color
+            dateTextColor = typeArray.getColor(R.styleable.WindCalendar_dateTextColor, ContextCompat.getColor(context, R.color.wl_black));
+            lunarDateTextColor = typeArray.getColor(R.styleable.WindCalendar_lunarDateTextColor, ContextCompat.getColor(context, R.color.wl_calendar_lunar_date_text));
+            eventTextColor = typeArray.getColor(R.styleable.WindCalendar_eventTextColor, ContextCompat.getColor(context, R.color.wl_black));
+            weekendTextColor = typeArray.getColor(R.styleable.WindCalendar_weekendTextColor, ContextCompat.getColor(context, R.color.wl_danger));
+            todayTextColor = typeArray.getColor(R.styleable.WindCalendar_todayTextColor, ContextCompat.getColor(context, R.color.wl_white));
+            highlightTextColor = typeArray.getColor(R.styleable.WindCalendar_highlightTextColor, ContextCompat.getColor(context, R.color.wl_white));
+
             // Date cell background
             cellBackground = typeArray.getResourceId(R.styleable.WindCalendar_cellBackground, R.color.wl_transparent);
             eventBackground = typeArray.getResourceId(R.styleable.WindCalendar_eventBackground, R.color.wl_transparent);
             weekendBackground = typeArray.getResourceId(R.styleable.WindCalendar_weekendBackground, R.color.wl_transparent);
             todayBackground = typeArray.getResourceId(R.styleable.WindCalendar_todayBackground, R.drawable.wl_calendar_today_background);
-
-            // Date text color
-            dateTextColor = typeArray.getColor(R.styleable.WindCalendar_dateTextColor, ContextCompat.getColor(context, R.color.wl_black));
-            eventTextColor = typeArray.getColor(R.styleable.WindCalendar_eventTextColor, ContextCompat.getColor(context, R.color.wl_black));
-            weekendTextColor = typeArray.getColor(R.styleable.WindCalendar_weekendTextColor, ContextCompat.getColor(context, R.color.wl_danger));
-            todayTextColor = typeArray.getColor(R.styleable.WindCalendar_todayTextColor, ContextCompat.getColor(context, R.color.wl_danger));
+            highlightBackground = typeArray.getResourceId(R.styleable.WindCalendar_highlightBackground, R.drawable.wl_calendar_highlight_background);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -138,14 +145,17 @@ public class WindCalendar extends LinearLayout {
                         .dateTextSize(dateTextSize)
                         .lunarDateTextSize(lunarDateTextSize)
                         .eventSymbolSize(eventSymbolSize)
+                        .dateTextColor(dateTextColor)
+                        .lunarDateTextColor(lunarDateTextColor)
+                        .eventTextColor(eventTextColor)
+                        .weekendTextColor(weekendTextColor)
+                        .todayTextColor(todayTextColor)
+                        .highlightTextColor(highlightTextColor)
                         .cellBackground(cellBackground)
                         .eventBackground(eventBackground)
                         .weekendBackground(weekendBackground)
                         .todayBackground(todayBackground)
-                        .dateTextColor(dateTextColor)
-                        .eventTextColor(eventTextColor)
-                        .weekendTextColor(weekendTextColor)
-                        .todayTextColor(todayTextColor));
+                        .highlightBackground(highlightBackground));
         adapter.setCalendarInfo(info);
         _calendarViewPager.setAdapter(adapter);
         _calendarViewPager.setSelectedDate(new Date());
@@ -183,27 +193,25 @@ public class WindCalendar extends LinearLayout {
     }
 
     /**
-     * Set event dates
+     * Add event date
      *
-     * @param dateIds date which has event
+     * @param dateIds list of date id
+     * @see CalendarUtil#toId(int, int, int)
      */
-    public void setEventDates(Set<String> dateIds) {
-        info.clearEvents();
-        if (dateIds != null) {
-            for (String id : dateIds) {
-                info.addEventDate(id);
-            }
-        }
+    public void addEventDate(String... dateIds) {
+        addEventDate(Arrays.asList(dateIds));
     }
 
     /**
      * Add event date
      *
-     * @param dateId date ID
+     * @param dateIds list of date id
      * @see CalendarUtil#toId(int, int, int)
      */
-    public void addEventDate(@NonNull String dateId) {
-        info.addEventDate(dateId);
+    public void addEventDate(Iterable<String> dateIds) {
+        for (String id : dateIds) {
+            info.eventDates.add(id);
+        }
     }
 
     /**
@@ -213,7 +221,43 @@ public class WindCalendar extends LinearLayout {
      * @see CalendarUtil#toId(int, int, int)
      */
     public void removeEventDate(String dateId) {
-        info.removeEventDate(dateId);
+        info.eventDates.remove(dateId);
+    }
+
+    /**
+     * Clear event dates
+     */
+    public void clearEvents() {
+        info.eventDates.clear();
+    }
+
+
+    /**
+     * Set highlight dates
+     *
+     * @param dateIds list of date ids
+     * @see CalendarUtil#toId(int, int, int)
+     */
+    public void highlightDates(Iterable<String> dateIds) {
+        for (String id : dateIds) {
+            info.highlightDates.add(id);
+        }
+        adapter.refreshCurrentPage();
+    }
+
+    /**
+     * Set highlight dates
+     *
+     * @param dateIds list of date ids
+     * @see CalendarUtil#toId(int, int, int)
+     */
+    public void highlightDates(String... dateIds) {
+        if (dateIds.length == 0) {
+            info.highlightDates.clear();
+            adapter.refreshCurrentPage();
+        } else {
+            highlightDates(Arrays.asList(dateIds));
+        }
     }
 
     /* ---------------------- METHOD ------------------------- */

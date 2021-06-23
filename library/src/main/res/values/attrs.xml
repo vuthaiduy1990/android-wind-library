@@ -100,14 +100,19 @@
         <attr name="dateTextSize" format="dimension" />
         <attr name="lunarDateTextSize" format="dimension" />
         <attr name="eventSymbolSize" format="dimension" />
+
+        <attr name="dateTextColor" format="color" />
+        <attr name="lunarDateTextColor" format="color" />
+        <attr name="eventTextColor" format="color" />
+        <attr name="weekendTextColor" format="color" />
+        <attr name="todayTextColor" format="color" />
+        <attr name="highlightTextColor" format="color" />
+
         <attr name="cellBackground" format="reference" />
         <attr name="eventBackground" format="reference" />
         <attr name="weekendBackground" format="reference" />
         <attr name="todayBackground" format="reference" />
-        <attr name="dateTextColor" format="color" />
-        <attr name="eventTextColor" format="color" />
-        <attr name="weekendTextColor" format="color" />
-        <attr name="todayTextColor" format="color" />
+        <attr name="highlightBackground" format="reference" />
 
     </declare-styleable>
 </resources>

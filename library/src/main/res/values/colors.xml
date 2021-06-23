@@ -66,4 +66,8 @@
     <color name="wl_dialog_background">@color/wl_white</color>
     <color name="wl_dialog_title">@color/wl_black_light</color>
     <color name="wl_dialog_text">#575757</color>
+
+    <!-- ||||||||||||||||||||||||| Calendar |||||||||||||||||||||||||| -->
+    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <color name="wl_calendar_lunar_date_text">#565656</color>
 </resources>

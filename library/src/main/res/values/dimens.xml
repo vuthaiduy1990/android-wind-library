@@ -75,6 +75,7 @@
 
     <!-- |||||||||||||||||||||||||| Calendar ||||||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <dimen name="wl_calendar_height">330dp</dimen>
     <dimen name="wl_calendar_date_cell_size">44dp</dimen>
     <dimen name="wl_calendar_lunar_date_text_size">10dp</dimen>
     <dimen name="wl_calendar_event_symbol_size">4dp</dimen>

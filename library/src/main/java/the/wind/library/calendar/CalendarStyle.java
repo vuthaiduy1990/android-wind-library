@@ -1,19 +1,24 @@
 package the.wind.library.calendar;
 
-class CalendarStyle {
+final class CalendarStyle {
 
     private int dateCellSize;
     private float dateTextSize;
     private float lunarDateTextSize;
     private float eventSymbolSize;
+
+    private int dateTextColor;
+    private int lunarDateTextColor;
+    private int eventTextColor;
+    private int weekendTextColor;
+    private int todayTextColor;
+    private int highlightTextColor;
+
     private int cellBackground;
     private int eventBackground;
     private int weekendBackground;
     private int todayBackground;
-    private int dateTextColor;
-    private int eventTextColor;
-    private int weekendTextColor;
-    private int todayTextColor;
+    private int highlightBackground;
 
     /**
      * Create new style configuration
@@ -98,6 +103,114 @@ class CalendarStyle {
     }
 
     /**
+     * @return date text color
+     */
+    public int dateTextColor() {
+        return dateTextColor;
+    }
+
+    /**
+     * Set date text color
+     *
+     * @param dateTextColor color
+     * @return style
+     */
+    public CalendarStyle dateTextColor(int dateTextColor) {
+        this.dateTextColor = dateTextColor;
+        return this;
+    }
+
+    /**
+     * @return lunar date text color
+     */
+    public int lunarDateTextColor() {
+        return lunarDateTextColor;
+    }
+
+    /**
+     * Set lunar date text color
+     *
+     * @param lunarDateTextColor color
+     * @return style
+     */
+    public CalendarStyle lunarDateTextColor(int lunarDateTextColor) {
+        this.lunarDateTextColor = lunarDateTextColor;
+        return this;
+    }
+
+    /**
+     * @return date event text color
+     */
+    public int eventTextColor() {
+        return eventTextColor;
+    }
+
+    /**
+     * Set date event text color
+     *
+     * @param eventTextColor color
+     * @return style
+     */
+    public CalendarStyle eventTextColor(int eventTextColor) {
+        this.eventTextColor = eventTextColor;
+        return this;
+    }
+
+    /**
+     * @return date weekend text color
+     */
+    public int weekendTextColor() {
+        return weekendTextColor;
+    }
+
+    /**
+     * Set date weekend text color
+     *
+     * @param weekendTextColor color
+     * @return style
+     */
+    public CalendarStyle weekendTextColor(int weekendTextColor) {
+        this.weekendTextColor = weekendTextColor;
+        return this;
+    }
+
+    /**
+     * @return today text color
+     */
+    public int todayTextColor() {
+        return todayTextColor;
+    }
+
+    /**
+     * Set today text color
+     *
+     * @param todayTextColor color
+     * @return style
+     */
+    public CalendarStyle todayTextColor(int todayTextColor) {
+        this.todayTextColor = todayTextColor;
+        return this;
+    }
+
+    /**
+     * @return highlight text color
+     */
+    public int highlightTextColor() {
+        return highlightTextColor;
+    }
+
+    /**
+     * Set highlightT text color
+     *
+     * @param highlightTextColor color
+     * @return style
+     */
+    public CalendarStyle highlightTextColor(int highlightTextColor) {
+        this.highlightTextColor = highlightTextColor;
+        return this;
+    }
+
+    /**
      * @return normal date cell background
      */
     public int cellBackground() {
@@ -170,74 +283,20 @@ class CalendarStyle {
     }
 
     /**
-     * @return date text color
+     * @return date cell background when date is highlight
      */
-    public int dateTextColor() {
-        return dateTextColor;
+    public int highlightBackground() {
+        return highlightBackground;
     }
 
     /**
-     * Set date text color
+     * Set cell background when date is highlight
      *
-     * @param dateTextColor color
+     * @param highlightBackground background
      * @return style
      */
-    public CalendarStyle dateTextColor(int dateTextColor) {
-        this.dateTextColor = dateTextColor;
-        return this;
-    }
-
-    /**
-     * @return date event text color
-     */
-    public int eventTextColor() {
-        return eventTextColor;
-    }
-
-    /**
-     * Set date event text color
-     *
-     * @param eventTextColor color
-     * @return style
-     */
-    public CalendarStyle eventTextColor(int eventTextColor) {
-        this.eventTextColor = eventTextColor;
-        return this;
-    }
-
-    /**
-     * @return date weekend text color
-     */
-    public int weekendTextColor() {
-        return weekendTextColor;
-    }
-
-    /**
-     * Set date weekend text color
-     *
-     * @param weekendTextColor color
-     * @return style
-     */
-    public CalendarStyle weekendTextColor(int weekendTextColor) {
-        this.weekendTextColor = weekendTextColor;
-        return this;
-    }
-
-    /**
-     * @return today text color
-     */
-    public int todayTextColor() {
-        return todayTextColor;
-    }
-
-    /**
-     * Set today text color
-     *
-     * @param todayTextColor color
-     * @return style
-     */
-    public CalendarStyle todayTextColor(int todayTextColor) {
-        this.todayTextColor = todayTextColor;
+    public CalendarStyle highlightBackground(int highlightBackground) {
+        this.highlightBackground = highlightBackground;
         return this;
     }
 }

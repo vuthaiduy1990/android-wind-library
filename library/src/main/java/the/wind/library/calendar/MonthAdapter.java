@@ -110,23 +110,29 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
             boolean hasEvent = calInfo.hasEvent(dateId);
             boolean isToday = calInfo.isToday(dateId);
             boolean isWeekend = data.isWeekend();
+            boolean isHighlight = calInfo.isHighlight(dateId);
 
             // Set text value
             _dateTextView.setText(String.format(Locale.getDefault(), "%d", data.getDayOfMonth()));
             _lunarDateTextView.setText("25/12"); // TODO: set lunar date later
-            _eventSymbol.setVisibility(hasEvent ? View.VISIBLE : View.GONE);
+            _eventSymbol.setVisibility(hasEvent && !isToday ? View.VISIBLE : View.GONE);
 
             // Set text color
             if (isToday) {
                 _dateTextView.setTextColor(calStyle.todayTextColor());
                 itemView.setBackgroundResource(calStyle.todayBackground());
+
+            } else if (isHighlight) {
+                _dateTextView.setTextColor(calStyle.highlightTextColor());
+                itemView.setBackgroundResource(calStyle.highlightBackground());
+
             } else if (isWeekend) {
                 _dateTextView.setTextColor(calStyle.weekendTextColor());
                 itemView.setBackgroundResource(calStyle.weekendBackground());
 
             } else if (hasEvent) {
                 _dateTextView.setTextColor(calStyle.eventTextColor());
-                itemView.setBackgroundResource(calStyle.weekendBackground());
+                itemView.setBackgroundResource(calStyle.eventBackground());
 
             } else {
                 _dateTextView.setTextColor(calStyle.dateTextColor());
@@ -151,6 +157,7 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
             // Configure date text
             _dateTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, calStyle.dateTextSize());
             _lunarDateTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, calStyle.lunarDateTextSize());
+            _lunarDateTextView.setTextColor(calStyle.lunarDateTextColor());
             _eventSymbol.setTextSize(TypedValue.COMPLEX_UNIT_PX, calStyle.eventSymbolSize());
         }
     }
