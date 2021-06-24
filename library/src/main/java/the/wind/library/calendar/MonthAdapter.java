@@ -17,18 +17,77 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
     // styling
     private CalendarStyle calStyle;
     private CalendarInfo calInfo;
+    private CalendarEvent calendarEvent;
 
     /**
      * Constructor
      *
      * @param monthInfo monthInfo
      * @param calInfo   calendar info
-     * @param calStyle  date cell style
+     * @param calStyle  calendar style
+     * @param calEvent  calendar event
      */
-    public MonthAdapter(MonthInfo monthInfo, CalendarInfo calInfo, CalendarStyle calStyle) {
+    public MonthAdapter(MonthInfo monthInfo, final CalendarInfo calInfo, CalendarStyle calStyle, final CalendarEvent calEvent) {
         super(monthInfo.getDateInfoList());
         this.calInfo = calInfo;
         this.calStyle = calStyle;
+        this.calendarEvent = calEvent;
+
+        setOnItemTouchDownListener(new OnItemTouchDownListener<DateInfo>() {
+            @Override
+            public void onTouchDown(WindRecycleView.ViewHolder<DateInfo> viewHolder, View view, DateInfo data) {
+                ViewHolder vh = (ViewHolder) viewHolder;
+                if (calEvent.dateItemTouchDownListener != null) {
+                    if (calEvent.dateItemTouchDownListener.onTouchDown(vh, view, data)) {
+                        return;
+                    }
+                }
+                vh.touchDown();
+            }
+        });
+
+        setOnItemTouchUpListener(new OnItemTouchUpListener<DateInfo>() {
+            @Override
+            public void onTouchUp(WindRecycleView.ViewHolder<DateInfo> viewHolder, View view, DateInfo data) {
+                ViewHolder vh = (ViewHolder) viewHolder;
+                if (calEvent.dateItemTouchUpListener != null) {
+                    if (calEvent.dateItemTouchUpListener.onTouchUp((ViewHolder) viewHolder, view, data)) {
+                        return;
+                    }
+                }
+                vh.bindData(data, calInfo);
+            }
+        });
+
+        setOnItemClickListener(new OnItemClickListener<DateInfo>() {
+            @Override
+            public void onClick(WindRecycleView.ViewHolder<DateInfo> viewHolder, View view, DateInfo data) {
+                ViewHolder vh = (ViewHolder) viewHolder;
+                if (calEvent.dateItemClickListener != null) {
+                    calEvent.dateItemClickListener.onClick(vh, view, data);
+                }
+            }
+        });
+
+        setOnItemLongClickListener(new OnItemLongClickListener<DateInfo>() {
+            @Override
+            public void onLongClick(WindRecycleView.ViewHolder<DateInfo> viewHolder, View view, DateInfo data) {
+                ViewHolder vh = (ViewHolder) viewHolder;
+                if (calEvent.dateItemLongClickListener != null) {
+                    calEvent.dateItemLongClickListener.onLongClick(vh, view, data);
+                }
+            }
+        });
+
+        setOnItemDoubleClickListener(new OnItemDoubleClickListener<DateInfo>() {
+            @Override
+            public void onDoubleClick(WindRecycleView.ViewHolder<DateInfo> viewHolder, View view, DateInfo data) {
+                ViewHolder vh = (ViewHolder) viewHolder;
+                if (calEvent.dateItemDoubleClickListener != null) {
+                    calEvent.dateItemDoubleClickListener.onDoubleClick(vh, view, data);
+                }
+            }
+        });
     }
 
     /* ---------------------- OVERRIDE ----------------------- */
@@ -159,6 +218,15 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
             _lunarDateTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, calStyle.lunarDateTextSize());
             _lunarDateTextView.setTextColor(calStyle.lunarDateTextColor());
             _eventSymbol.setTextSize(TypedValue.COMPLEX_UNIT_PX, calStyle.eventSymbolSize());
+        }
+
+        /**
+         * Touch down on item
+         */
+        private void touchDown() {
+            if (itemView.getBackground() == null) {
+                itemView.setBackgroundResource(calStyle.touchBackground());
+            }
         }
     }
 }

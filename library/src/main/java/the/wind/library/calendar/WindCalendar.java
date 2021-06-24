@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
@@ -31,6 +32,7 @@ public class WindCalendar extends LinearLayout {
     // Adapter & data
     private final CalendarAdapter adapter;
     private final CalendarInfo info = new CalendarInfo(new GregorianCalendar());
+    private final CalendarEvent eventListener = new CalendarEvent();
 
     // bundle data
     private final CWBundle bundle = new CWBundle();
@@ -108,6 +110,7 @@ public class WindCalendar extends LinearLayout {
         int weekendBackground = 0;
         int todayBackground = 0;
         int highlightBackground = 0;
+        int touchBackground = 0;
 
         Resources res = getResources();
         try {
@@ -126,11 +129,12 @@ public class WindCalendar extends LinearLayout {
             highlightTextColor = typeArray.getColor(R.styleable.WindCalendar_highlightTextColor, ContextCompat.getColor(context, R.color.wl_white));
 
             // Date cell background
-            cellBackground = typeArray.getResourceId(R.styleable.WindCalendar_cellBackground, R.color.wl_transparent);
-            eventBackground = typeArray.getResourceId(R.styleable.WindCalendar_eventBackground, R.color.wl_transparent);
-            weekendBackground = typeArray.getResourceId(R.styleable.WindCalendar_weekendBackground, R.color.wl_transparent);
+            cellBackground = typeArray.getResourceId(R.styleable.WindCalendar_cellBackground, 0);
+            eventBackground = typeArray.getResourceId(R.styleable.WindCalendar_eventBackground, 0);
+            weekendBackground = typeArray.getResourceId(R.styleable.WindCalendar_weekendBackground, 0);
             todayBackground = typeArray.getResourceId(R.styleable.WindCalendar_todayBackground, R.drawable.wl_calendar_today_background);
             highlightBackground = typeArray.getResourceId(R.styleable.WindCalendar_highlightBackground, R.drawable.wl_calendar_highlight_background);
+            touchBackground = typeArray.getResourceId(R.styleable.WindCalendar_touchBackground, R.drawable.wl_calendar_date_touch_background);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -155,10 +159,12 @@ public class WindCalendar extends LinearLayout {
                         .eventBackground(eventBackground)
                         .weekendBackground(weekendBackground)
                         .todayBackground(todayBackground)
-                        .highlightBackground(highlightBackground));
+                        .highlightBackground(highlightBackground)
+                        .touchBackground(touchBackground));
         adapter.setCalendarInfo(info);
+        adapter.setCalendarEvent(eventListener);
         _calendarViewPager.setAdapter(adapter);
-        _calendarViewPager.setSelectedDate(new Date());
+        _calendarViewPager.setSelectedDate(new Date()); // must be set after setting adapter
     }
 
     /* ---------------------- OVERRIDE ----------------------- */
@@ -260,8 +266,128 @@ public class WindCalendar extends LinearLayout {
         }
     }
 
+    /**
+     * Set date item click listener
+     *
+     * @param dateItemClickListener date item click listener
+     */
+    public void setOnDateItemClickListener(OnDateItemClickListener dateItemClickListener) {
+        eventListener.dateItemClickListener = dateItemClickListener;
+    }
+
+    /**
+     * Set date item long click listener
+     *
+     * @param dateItemLongClickListener date item long click listener
+     */
+    public void setOnDateItemLongClickListener(OnDateItemLongClickListener dateItemLongClickListener) {
+        eventListener.dateItemLongClickListener = dateItemLongClickListener;
+    }
+
+    /**
+     * Set date item double click listener
+     *
+     * @param dateItemDoubleClickListener date item double click listener
+     */
+    public void setOnDateItemDoubleClickListener(OnDateItemDoubleClickListener dateItemDoubleClickListener) {
+        eventListener.dateItemDoubleClickListener = dateItemDoubleClickListener;
+    }
+
+    /**
+     * Set date item touch up listener
+     *
+     * @param dateItemTouchUpListener date item touch up listener
+     */
+    public void setOnDateItemTouchUpListener(OnDateItemTouchUpListener dateItemTouchUpListener) {
+        eventListener.dateItemTouchUpListener = dateItemTouchUpListener;
+    }
+
+    /**
+     * Set date item touch down listener
+     *
+     * @param dateItemTouchDownListener date item touch down listener
+     */
+    public void setOnDateItemTouchDownListener(OnDateItemTouchDownListener dateItemTouchDownListener) {
+        eventListener.dateItemTouchDownListener = dateItemTouchDownListener;
+    }
+
     /* ---------------------- METHOD ------------------------- */
 
     /* ---------------------- INNER CLASS -------------------- */
+
+    /**
+     * On date item click listener
+     */
+    public interface OnDateItemClickListener {
+        /**
+         * Trigger when user click on date cell item
+         *
+         * @param viewHolder view holder
+         * @param view       date cell view
+         * @param data       date info
+         * @return true if consume the event.
+         */
+        boolean onClick(MonthAdapter.ViewHolder viewHolder, View view, DateInfo data);
+    }
+
+    /**
+     * On date item long click listener
+     */
+    public interface OnDateItemLongClickListener {
+        /**
+         * Trigger when user long click on date cell item
+         *
+         * @param viewHolder view holder
+         * @param view       date cell view
+         * @param data       date info
+         * @return true if consume the event.
+         */
+        boolean onLongClick(MonthAdapter.ViewHolder viewHolder, View view, DateInfo data);
+    }
+
+    /**
+     * On date item double click listener
+     */
+    public interface OnDateItemDoubleClickListener {
+        /**
+         * Trigger when user double click on date cell item
+         *
+         * @param viewHolder view holder
+         * @param view       date cell view
+         * @param data       date info
+         * @return true if consume the event.
+         */
+        boolean onDoubleClick(MonthAdapter.ViewHolder viewHolder, View view, DateInfo data);
+    }
+
+    /**
+     * On date item touch up listener
+     */
+    public interface OnDateItemTouchUpListener {
+        /**
+         * Trigger when user touch up on date cell item
+         *
+         * @param viewHolder view holder
+         * @param view       date cell view
+         * @param data       date info
+         * @return true if consume the event.
+         */
+        boolean onTouchUp(MonthAdapter.ViewHolder viewHolder, View view, DateInfo data);
+    }
+
+    /**
+     * On date item touch down listener
+     */
+    public interface OnDateItemTouchDownListener {
+        /**
+         * Trigger when user touch up on date cell item
+         *
+         * @param viewHolder view holder
+         * @param view       date cell view
+         * @param data       date info
+         * @return true if consume the event.
+         */
+        boolean onTouchDown(MonthAdapter.ViewHolder viewHolder, View view, DateInfo data);
+    }
 
 }

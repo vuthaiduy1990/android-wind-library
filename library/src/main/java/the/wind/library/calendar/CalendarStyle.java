@@ -19,6 +19,7 @@ final class CalendarStyle {
     private int weekendBackground;
     private int todayBackground;
     private int highlightBackground;
+    private int touchBackground;
 
     /**
      * Create new style configuration
@@ -297,6 +298,24 @@ final class CalendarStyle {
      */
     public CalendarStyle highlightBackground(int highlightBackground) {
         this.highlightBackground = highlightBackground;
+        return this;
+    }
+
+    /**
+     * @return date cell background when user touch on date item
+     */
+    public int touchBackground() {
+        return touchBackground;
+    }
+
+    /**
+     * Set cell background when user touch on date item
+     *
+     * @param touchBackground background
+     * @return style
+     */
+    public CalendarStyle touchBackground(int touchBackground) {
+        this.touchBackground = touchBackground;
         return this;
     }
 }

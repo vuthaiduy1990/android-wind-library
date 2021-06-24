@@ -39,6 +39,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
     // styling
     private CalendarStyle calendarStyle;
     private CalendarInfo calendarInfo;
+    private CalendarEvent calendarEvent;
 
     /**
      * Constructor
@@ -147,7 +148,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
      * @return fragment
      */
     private MonthViewFragment newMonthFragment(MonthInfo monthInfo) {
-        return new MonthViewFragment(monthInfo, calendarInfo, calendarStyle);
+        return new MonthViewFragment(monthInfo, calendarInfo, calendarStyle, calendarEvent);
     }
 
     /**
@@ -200,6 +201,15 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
      */
     void setCalendarInfo(CalendarInfo info) {
         this.calendarInfo = info;
+    }
+
+    /**
+     * Set calendar event listener
+     *
+     * @param calendarEvent calendar event listener
+     */
+    void setCalendarEvent(CalendarEvent calendarEvent) {
+        this.calendarEvent = calendarEvent;
     }
 
     /* ---------------------- METHOD ------------------------- */

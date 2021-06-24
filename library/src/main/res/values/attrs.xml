@@ -113,6 +113,7 @@
         <attr name="weekendBackground" format="reference" />
         <attr name="todayBackground" format="reference" />
         <attr name="highlightBackground" format="reference" />
+        <attr name="touchBackground" format="reference" />
 
     </declare-styleable>
 </resources>

@@ -24,6 +24,7 @@ public class MonthViewFragment extends Fragment {
     // styling
     private CalendarStyle calendarStyle;
     private CalendarInfo calendarInfo;
+    private CalendarEvent calendarEvent;
 
     /**
      * Constructor
@@ -31,11 +32,13 @@ public class MonthViewFragment extends Fragment {
      * @param monthInfo     month info
      * @param calendarInfo  calendar info
      * @param calendarStyle date cell style
+     * @param calendarEvent calendar event listener
      */
-    public MonthViewFragment(MonthInfo monthInfo, CalendarInfo calendarInfo, CalendarStyle calendarStyle) {
+    public MonthViewFragment(MonthInfo monthInfo, CalendarInfo calendarInfo, CalendarStyle calendarStyle, CalendarEvent calendarEvent) {
         this.monthInfo = monthInfo;
         this.calendarInfo = calendarInfo;
         this.calendarStyle = calendarStyle;
+        this.calendarEvent = calendarEvent;
     }
 
     @Nullable
@@ -50,7 +53,7 @@ public class MonthViewFragment extends Fragment {
         _rvDateGridView = view.findViewById(R.id._rvDateGridView);
         _rvDateGridView.setLayoutAnimation(null);
         _rvDateGridView.setLayoutManager(new GridLayoutManager(getContext(), 7));
-        monthAdapter = new MonthAdapter(monthInfo, calendarInfo, calendarStyle);
+        monthAdapter = new MonthAdapter(monthInfo, calendarInfo, calendarStyle, calendarEvent);
         _rvDateGridView.setAdapter(monthAdapter);
 
         // TextView _monthTextView = view.findViewById(R.id._monthTextView);

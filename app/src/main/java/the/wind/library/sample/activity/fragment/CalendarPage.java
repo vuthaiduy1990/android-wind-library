@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,6 +16,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import the.wind.library.anim.PageTransformerType;
 import the.wind.library.calendar.CalendarUtil;
+import the.wind.library.calendar.DateInfo;
+import the.wind.library.calendar.MonthAdapter;
 import the.wind.library.calendar.WindCalendar;
 import the.wind.library.sample.R;
 
@@ -45,6 +48,16 @@ public class CalendarPage extends Fragment {
         }
         _calendarView.addEventDate(neighborDates);
 
+
+        // set date click event
+        _calendarView.setOnDateItemClickListener(new WindCalendar.OnDateItemClickListener() {
+            @Override
+            public boolean onClick(MonthAdapter.ViewHolder viewHolder, View view, DateInfo data) {
+                Toast.makeText(getContext(), String.format("%s-%s-%s", data.getYear(), data.getMonth(), data.getDayOfMonth()), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
         // set highlight event
         view.findViewById(R.id._highlightBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +70,7 @@ public class CalendarPage extends Fragment {
                 highlighted = !highlighted;
             }
         });
+
     }
 
     public void setPageTransformer(PageTransformerType type) {
