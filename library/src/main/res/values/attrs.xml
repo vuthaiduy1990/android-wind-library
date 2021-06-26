@@ -96,24 +96,30 @@
 
     <!--  Calendar attributes -->
     <declare-styleable name="WindCalendar">
+        <attr name="weekDays" format="string" />
+        <attr name="weekDayTextSize" format="dimension" />
+        <attr name="weekDayTextColor" format="color" />
+        <attr name="weekDayPanelBackground" format="reference" />
+        <attr name="weekDayHoverBackground" format="reference" />
+
         <attr name="dateCellSize" format="dimension" />
         <attr name="dateTextSize" format="dimension" />
-        <attr name="lunarDateTextSize" format="dimension" />
-        <attr name="eventSymbolSize" format="dimension" />
+        <attr name="dateLunarTextSize" format="dimension" />
+        <attr name="dateEventSymbolSize" format="dimension" />
 
         <attr name="dateTextColor" format="color" />
-        <attr name="lunarDateTextColor" format="color" />
-        <attr name="eventTextColor" format="color" />
-        <attr name="weekendTextColor" format="color" />
-        <attr name="todayTextColor" format="color" />
-        <attr name="highlightTextColor" format="color" />
+        <attr name="dateLunarTextColor" format="color" />
+        <attr name="dateEventTextColor" format="color" />
+        <attr name="dateWeekendTextColor" format="color" />
+        <attr name="dateTodayTextColor" format="color" />
+        <attr name="dateHighlightTextColor" format="color" />
 
-        <attr name="cellBackground" format="reference" />
-        <attr name="eventBackground" format="reference" />
-        <attr name="weekendBackground" format="reference" />
-        <attr name="todayBackground" format="reference" />
-        <attr name="highlightBackground" format="reference" />
-        <attr name="touchBackground" format="reference" />
+        <attr name="dateCellBackground" format="reference" />
+        <attr name="dateEventBackground" format="reference" />
+        <attr name="dateWeekendBackground" format="reference" />
+        <attr name="dateTodayBackground" format="reference" />
+        <attr name="dateHighlightBackground" format="reference" />
+        <attr name="dateHoverBackground" format="reference" />
 
     </declare-styleable>
 </resources>

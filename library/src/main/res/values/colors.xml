@@ -70,4 +70,5 @@
     <!-- ||||||||||||||||||||||||| Calendar |||||||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     <color name="wl_calendar_lunar_date_text">#565656</color>
+    <color name="wl_calendar_week_day">#6c6c6c</color>
 </resources>

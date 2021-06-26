@@ -30,7 +30,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
 
     // the number of month will be preloaded in the left side and right side of current month
     private int preLoaded;
-    private Map<Integer, MonthViewFragment> fragmentCache = new HashMap<>();
+    private final Map<Integer, MonthViewFragment> fragmentCache = new HashMap<>();
 
     // selected month
     private MonthInfo selectedMonth;

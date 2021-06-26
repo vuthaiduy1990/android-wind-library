@@ -15,9 +15,9 @@ import the.wind.library.view.WindRecycleView;
 public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
 
     // styling
-    private CalendarStyle calStyle;
-    private CalendarInfo calInfo;
-    private CalendarEvent calendarEvent;
+    private final CalendarStyle calStyle;
+    private final CalendarInfo calInfo;
+    private final CalendarEvent calendarEvent;
 
     /**
      * Constructor
@@ -27,7 +27,7 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
      * @param calStyle  calendar style
      * @param calEvent  calendar event
      */
-    public MonthAdapter(MonthInfo monthInfo, final CalendarInfo calInfo, CalendarStyle calStyle, final CalendarEvent calEvent) {
+    public MonthAdapter(MonthInfo monthInfo, final CalendarInfo calInfo, CalendarStyle calStyle, CalendarEvent calEvent) {
         super(monthInfo.getDateInfoList());
         this.calInfo = calInfo;
         this.calStyle = calStyle;
@@ -37,8 +37,8 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
             @Override
             public void onTouchDown(WindRecycleView.ViewHolder<DateInfo> viewHolder, View view, DateInfo data) {
                 ViewHolder vh = (ViewHolder) viewHolder;
-                if (calEvent.dateItemTouchDownListener != null) {
-                    if (calEvent.dateItemTouchDownListener.onTouchDown(vh, view, data)) {
+                if (calendarEvent.dateItemTouchDownListener != null) {
+                    if (calendarEvent.dateItemTouchDownListener.onTouchDown(vh, view, data)) {
                         return;
                     }
                 }
@@ -50,8 +50,8 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
             @Override
             public void onTouchUp(WindRecycleView.ViewHolder<DateInfo> viewHolder, View view, DateInfo data) {
                 ViewHolder vh = (ViewHolder) viewHolder;
-                if (calEvent.dateItemTouchUpListener != null) {
-                    if (calEvent.dateItemTouchUpListener.onTouchUp((ViewHolder) viewHolder, view, data)) {
+                if (calendarEvent.dateItemTouchUpListener != null) {
+                    if (calendarEvent.dateItemTouchUpListener.onTouchUp((ViewHolder) viewHolder, view, data)) {
                         return;
                     }
                 }
@@ -63,8 +63,8 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
             @Override
             public void onClick(WindRecycleView.ViewHolder<DateInfo> viewHolder, View view, DateInfo data) {
                 ViewHolder vh = (ViewHolder) viewHolder;
-                if (calEvent.dateItemClickListener != null) {
-                    calEvent.dateItemClickListener.onClick(vh, view, data);
+                if (calendarEvent.dateItemClickListener != null) {
+                    calendarEvent.dateItemClickListener.onClick(vh, view, data);
                 }
             }
         });
@@ -73,8 +73,8 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
             @Override
             public void onLongClick(WindRecycleView.ViewHolder<DateInfo> viewHolder, View view, DateInfo data) {
                 ViewHolder vh = (ViewHolder) viewHolder;
-                if (calEvent.dateItemLongClickListener != null) {
-                    calEvent.dateItemLongClickListener.onLongClick(vh, view, data);
+                if (calendarEvent.dateItemLongClickListener != null) {
+                    calendarEvent.dateItemLongClickListener.onLongClick(vh, view, data);
                 }
             }
         });
@@ -83,8 +83,8 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
             @Override
             public void onDoubleClick(WindRecycleView.ViewHolder<DateInfo> viewHolder, View view, DateInfo data) {
                 ViewHolder vh = (ViewHolder) viewHolder;
-                if (calEvent.dateItemDoubleClickListener != null) {
-                    calEvent.dateItemDoubleClickListener.onDoubleClick(vh, view, data);
+                if (calendarEvent.dateItemDoubleClickListener != null) {
+                    calendarEvent.dateItemDoubleClickListener.onDoubleClick(vh, view, data);
                 }
             }
         });
@@ -178,24 +178,24 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
 
             // Set text color
             if (isToday) {
-                _dateTextView.setTextColor(calStyle.todayTextColor());
-                itemView.setBackgroundResource(calStyle.todayBackground());
+                _dateTextView.setTextColor(calStyle.dateTodayTextColor());
+                itemView.setBackgroundResource(calStyle.dateTodayBackground());
 
             } else if (isHighlight) {
-                _dateTextView.setTextColor(calStyle.highlightTextColor());
-                itemView.setBackgroundResource(calStyle.highlightBackground());
+                _dateTextView.setTextColor(calStyle.dateHighlightTextColor());
+                itemView.setBackgroundResource(calStyle.dateHighlightBackground());
 
             } else if (isWeekend) {
-                _dateTextView.setTextColor(calStyle.weekendTextColor());
-                itemView.setBackgroundResource(calStyle.weekendBackground());
+                _dateTextView.setTextColor(calStyle.dateWeekendTextColor());
+                itemView.setBackgroundResource(calStyle.dateWeekendBackground());
 
             } else if (hasEvent) {
-                _dateTextView.setTextColor(calStyle.eventTextColor());
-                itemView.setBackgroundResource(calStyle.eventBackground());
+                _dateTextView.setTextColor(calStyle.dateEventTextColor());
+                itemView.setBackgroundResource(calStyle.dateEventBackground());
 
             } else {
                 _dateTextView.setTextColor(calStyle.dateTextColor());
-                itemView.setBackgroundResource(calStyle.cellBackground());
+                itemView.setBackgroundResource(calStyle.dateCellBackground());
             }
         }
 
@@ -215,9 +215,9 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
 
             // Configure date text
             _dateTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, calStyle.dateTextSize());
-            _lunarDateTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, calStyle.lunarDateTextSize());
-            _lunarDateTextView.setTextColor(calStyle.lunarDateTextColor());
-            _eventSymbol.setTextSize(TypedValue.COMPLEX_UNIT_PX, calStyle.eventSymbolSize());
+            _lunarDateTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, calStyle.dateLunarTextSize());
+            _lunarDateTextView.setTextColor(calStyle.dateLunarTextColor());
+            _eventSymbol.setTextSize(TypedValue.COMPLEX_UNIT_PX, calStyle.dateEventSymbolSize());
         }
 
         /**
@@ -225,7 +225,7 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
          */
         private void touchDown() {
             if (itemView.getBackground() == null) {
-                itemView.setBackgroundResource(calStyle.touchBackground());
+                itemView.setBackgroundResource(calStyle.dateHoverBackground());
             }
         }
     }

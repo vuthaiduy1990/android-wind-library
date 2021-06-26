@@ -2,24 +2,30 @@ package the.wind.library.calendar;
 
 final class CalendarStyle {
 
+    private String[] weekDays;
+    private float weekDayTextSize;
+    private int weekDayTextColor;
+    private int weekDayPanelBackground;
+    private int weekDayHoverBackground;
+
     private int dateCellSize;
     private float dateTextSize;
-    private float lunarDateTextSize;
-    private float eventSymbolSize;
+    private float dateLunarTextSize;
+    private float dateEventSymbolSize;
 
     private int dateTextColor;
-    private int lunarDateTextColor;
-    private int eventTextColor;
-    private int weekendTextColor;
-    private int todayTextColor;
-    private int highlightTextColor;
+    private int dateLunarTextColor;
+    private int dateEventTextColor;
+    private int dateWeekendTextColor;
+    private int dateTodayTextColor;
+    private int dateHighlightTextColor;
 
-    private int cellBackground;
-    private int eventBackground;
-    private int weekendBackground;
-    private int todayBackground;
-    private int highlightBackground;
-    private int touchBackground;
+    private int dateCellBackground;
+    private int dateEventBackground;
+    private int dateWeekendBackground;
+    private int dateTodayBackground;
+    private int dateHighlightBackground;
+    private int dateHoverBackground;
 
     /**
      * Create new style configuration
@@ -29,6 +35,97 @@ final class CalendarStyle {
     public static CalendarStyle config() {
         return new CalendarStyle();
     }
+
+    /**
+     * @return day of weeks (monday, tuesday ... sunday)
+     */
+    public String[] weekDays() {
+        return weekDays;
+    }
+
+    /**
+     * Set week days
+     *
+     * @param weekDays days of week
+     * @return style
+     */
+    public CalendarStyle weekDays(String[] weekDays) {
+        this.weekDays = weekDays;
+        return this;
+    }
+
+    /**
+     * @return week day text size
+     */
+    public float weekDayTextSize() {
+        return weekDayTextSize;
+    }
+
+    /**
+     * Set week day text size
+     *
+     * @param weekDayTextSize size
+     * @return style
+     */
+    public CalendarStyle weekDayTextSize(float weekDayTextSize) {
+        this.weekDayTextSize = weekDayTextSize;
+        return this;
+    }
+
+    /**
+     * @return week day text color
+     */
+    public int weekDayTextColor() {
+        return weekDayTextColor;
+    }
+
+    /**
+     * Set week day text color
+     *
+     * @param weekDayTextColor color
+     * @return style
+     */
+    public CalendarStyle weekDayTextColor(int weekDayTextColor) {
+        this.weekDayTextColor = weekDayTextColor;
+        return this;
+    }
+
+    /**
+     * @return week day panel background
+     */
+    public int weekDayPanelBackground() {
+        return weekDayPanelBackground;
+    }
+
+    /**
+     * Set week day panel background
+     *
+     * @param weekDayPanelBackground background
+     * @return style
+     */
+    public CalendarStyle weekDayPanelBackground(int weekDayPanelBackground) {
+        this.weekDayPanelBackground = weekDayPanelBackground;
+        return this;
+    }
+
+    /**
+     * @return week day hover background
+     */
+    public int weekDayHoverBackground() {
+        return weekDayHoverBackground;
+    }
+
+    /**
+     * Set week day hover background
+     *
+     * @param weekDayHoverBackground background
+     * @return style
+     */
+    public CalendarStyle weekDayHoverBackground(int weekDayHoverBackground) {
+        this.weekDayHoverBackground = weekDayHoverBackground;
+        return this;
+    }
+
 
     /**
      * @return date cell size
@@ -70,36 +167,36 @@ final class CalendarStyle {
     /**
      * @return lunar date text size
      */
-    public float lunarDateTextSize() {
-        return lunarDateTextSize;
+    public float dateLunarTextSize() {
+        return dateLunarTextSize;
     }
 
     /**
      * Set lunar date text size
      *
-     * @param lunarDateTextSize size
+     * @param dateLunarTextSize size
      * @return style
      */
-    public CalendarStyle lunarDateTextSize(float lunarDateTextSize) {
-        this.lunarDateTextSize = lunarDateTextSize;
+    public CalendarStyle dateLunarTextSize(float dateLunarTextSize) {
+        this.dateLunarTextSize = dateLunarTextSize;
         return this;
     }
 
     /**
      * @return event symbol size
      */
-    public float eventSymbolSize() {
-        return eventSymbolSize;
+    public float dateEventSymbolSize() {
+        return dateEventSymbolSize;
     }
 
     /**
      * Set event symbol size
      *
-     * @param eventSymbolSize size
+     * @param dateEventSymbolSize size
      * @return style
      */
-    public CalendarStyle eventSymbolSize(float eventSymbolSize) {
-        this.eventSymbolSize = eventSymbolSize;
+    public CalendarStyle dateEventSymbolSize(float dateEventSymbolSize) {
+        this.dateEventSymbolSize = dateEventSymbolSize;
         return this;
     }
 
@@ -124,198 +221,198 @@ final class CalendarStyle {
     /**
      * @return lunar date text color
      */
-    public int lunarDateTextColor() {
-        return lunarDateTextColor;
+    public int dateLunarTextColor() {
+        return dateLunarTextColor;
     }
 
     /**
      * Set lunar date text color
      *
-     * @param lunarDateTextColor color
+     * @param dateLunarTextColor color
      * @return style
      */
-    public CalendarStyle lunarDateTextColor(int lunarDateTextColor) {
-        this.lunarDateTextColor = lunarDateTextColor;
+    public CalendarStyle dateLunarTextColor(int dateLunarTextColor) {
+        this.dateLunarTextColor = dateLunarTextColor;
         return this;
     }
 
     /**
      * @return date event text color
      */
-    public int eventTextColor() {
-        return eventTextColor;
+    public int dateEventTextColor() {
+        return dateEventTextColor;
     }
 
     /**
      * Set date event text color
      *
-     * @param eventTextColor color
+     * @param dateEventTextColor color
      * @return style
      */
-    public CalendarStyle eventTextColor(int eventTextColor) {
-        this.eventTextColor = eventTextColor;
+    public CalendarStyle dateEventTextColor(int dateEventTextColor) {
+        this.dateEventTextColor = dateEventTextColor;
         return this;
     }
 
     /**
      * @return date weekend text color
      */
-    public int weekendTextColor() {
-        return weekendTextColor;
+    public int dateWeekendTextColor() {
+        return dateWeekendTextColor;
     }
 
     /**
      * Set date weekend text color
      *
-     * @param weekendTextColor color
+     * @param dateWeekendTextColor color
      * @return style
      */
-    public CalendarStyle weekendTextColor(int weekendTextColor) {
-        this.weekendTextColor = weekendTextColor;
+    public CalendarStyle dateWeekendTextColor(int dateWeekendTextColor) {
+        this.dateWeekendTextColor = dateWeekendTextColor;
         return this;
     }
 
     /**
      * @return today text color
      */
-    public int todayTextColor() {
-        return todayTextColor;
+    public int dateTodayTextColor() {
+        return dateTodayTextColor;
     }
 
     /**
      * Set today text color
      *
-     * @param todayTextColor color
+     * @param dateTodayTextColor color
      * @return style
      */
-    public CalendarStyle todayTextColor(int todayTextColor) {
-        this.todayTextColor = todayTextColor;
+    public CalendarStyle dateTodayTextColor(int dateTodayTextColor) {
+        this.dateTodayTextColor = dateTodayTextColor;
         return this;
     }
 
     /**
      * @return highlight text color
      */
-    public int highlightTextColor() {
-        return highlightTextColor;
+    public int dateHighlightTextColor() {
+        return dateHighlightTextColor;
     }
 
     /**
      * Set highlightT text color
      *
-     * @param highlightTextColor color
+     * @param dateHighlightTextColor color
      * @return style
      */
-    public CalendarStyle highlightTextColor(int highlightTextColor) {
-        this.highlightTextColor = highlightTextColor;
+    public CalendarStyle dateHighlightTextColor(int dateHighlightTextColor) {
+        this.dateHighlightTextColor = dateHighlightTextColor;
         return this;
     }
 
     /**
      * @return normal date cell background
      */
-    public int cellBackground() {
-        return cellBackground;
+    public int dateCellBackground() {
+        return dateCellBackground;
     }
 
     /**
      * Set cell background
      *
-     * @param cellBackground background
+     * @param dateCellBackground background
      * @return style
      */
-    public CalendarStyle cellBackground(int cellBackground) {
-        this.cellBackground = cellBackground;
+    public CalendarStyle dateCellBackground(int dateCellBackground) {
+        this.dateCellBackground = dateCellBackground;
         return this;
     }
 
     /**
      * @return date cell background when having event
      */
-    public int eventBackground() {
-        return eventBackground;
+    public int dateEventBackground() {
+        return dateEventBackground;
     }
 
     /**
      * Set background when cell has event
      *
-     * @param eventBackground background
+     * @param dateEventBackground background
      * @return style
      */
-    public CalendarStyle eventBackground(int eventBackground) {
-        this.eventBackground = eventBackground;
+    public CalendarStyle dateEventBackground(int dateEventBackground) {
+        this.dateEventBackground = dateEventBackground;
         return this;
     }
 
     /**
      * @return date cell background when date is weekend
      */
-    public int weekendBackground() {
-        return weekendBackground;
+    public int dateWeekendBackground() {
+        return dateWeekendBackground;
     }
 
     /**
      * Set cell background when date is weekend
      *
-     * @param weekendBackground background
+     * @param dateWeekendBackground background
      * @return style
      */
-    public CalendarStyle weekendBackground(int weekendBackground) {
-        this.weekendBackground = weekendBackground;
+    public CalendarStyle dateWeekendBackground(int dateWeekendBackground) {
+        this.dateWeekendBackground = dateWeekendBackground;
         return this;
     }
 
     /**
      * @return date cell background when date is today
      */
-    public int todayBackground() {
-        return todayBackground;
+    public int dateTodayBackground() {
+        return dateTodayBackground;
     }
 
     /**
      * Set cell background when date is today
      *
-     * @param todayBackground background
+     * @param dateTodayBackground background
      * @return style
      */
-    public CalendarStyle todayBackground(int todayBackground) {
-        this.todayBackground = todayBackground;
+    public CalendarStyle dateTodayBackground(int dateTodayBackground) {
+        this.dateTodayBackground = dateTodayBackground;
         return this;
     }
 
     /**
      * @return date cell background when date is highlight
      */
-    public int highlightBackground() {
-        return highlightBackground;
+    public int dateHighlightBackground() {
+        return dateHighlightBackground;
     }
 
     /**
      * Set cell background when date is highlight
      *
-     * @param highlightBackground background
+     * @param dateHighlightBackground background
      * @return style
      */
-    public CalendarStyle highlightBackground(int highlightBackground) {
-        this.highlightBackground = highlightBackground;
+    public CalendarStyle dateHighlightBackground(int dateHighlightBackground) {
+        this.dateHighlightBackground = dateHighlightBackground;
         return this;
     }
 
     /**
      * @return date cell background when user touch on date item
      */
-    public int touchBackground() {
-        return touchBackground;
+    public int dateHoverBackground() {
+        return dateHoverBackground;
     }
 
     /**
      * Set cell background when user touch on date item
      *
-     * @param touchBackground background
+     * @param dateHoverBackground background
      * @return style
      */
-    public CalendarStyle touchBackground(int touchBackground) {
-        this.touchBackground = touchBackground;
+    public CalendarStyle dateHoverBackground(int dateHoverBackground) {
+        this.dateHoverBackground = dateHoverBackground;
         return this;
     }
 }

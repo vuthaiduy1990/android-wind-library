@@ -95,46 +95,61 @@ public class WindCalendar extends LinearLayout {
         // Styling
         TypedArray typeArray = context.getTheme().obtainStyledAttributes(
                 attrs, R.styleable.WindCalendar, defStyleAttr, defStyleRes);
+        String[] weekDays = new String[]{"Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"};
+        float weekDayTextSize = 0f;
+        int weekDayTextColor = 0;
+        int weekDayPanelBackground = 0;
+        int weekDayHoverBackground = 0;
         int dateCellSize = 0;
         float dateTextSize = 0f;
-        float lunarDateTextSize = 0f;
-        float eventSymbolSize = 0f;
+        float dateLunarTextSize = 0f;
+        float dateEventSymbolSize = 0f;
         int dateTextColor = 0;
-        int lunarDateTextColor = 0;
-        int eventTextColor = 0;
-        int weekendTextColor = 0;
-        int todayTextColor = 0;
-        int highlightTextColor = 0;
-        int cellBackground = 0;
-        int eventBackground = 0;
-        int weekendBackground = 0;
-        int todayBackground = 0;
-        int highlightBackground = 0;
-        int touchBackground = 0;
+        int dateLunarTextColor = 0;
+        int dateEventTextColor = 0;
+        int dateWeekendTextColor = 0;
+        int dateTodayTextColor = 0;
+        int dateHighlightTextColor = 0;
+        int dateCellBackground = 0;
+        int dateEventBackground = 0;
+        int dateWeekendBackground = 0;
+        int dateTodayBackground = 0;
+        int dateHighlightBackground = 0;
+        int dateHoverBackground = 0;
 
         Resources res = getResources();
         try {
+            // Week day style
+            String weekDaysStr = typeArray.getString(R.styleable.WindCalendar_weekDays);
+            if (weekDaysStr != null) {
+                weekDays = weekDaysStr.split(",");
+            }
+            weekDayTextSize = typeArray.getDimension(R.styleable.WindCalendar_weekDayTextSize, res.getDimension(R.dimen.wl_text_small));
+            weekDayTextColor = typeArray.getColor(R.styleable.WindCalendar_weekDayTextColor, ContextCompat.getColor(context, R.color.wl_calendar_week_day));
+            weekDayPanelBackground = typeArray.getResourceId(R.styleable.WindCalendar_weekDayPanelBackground, 0);
+            weekDayHoverBackground = typeArray.getResourceId(R.styleable.WindCalendar_weekDayHoverBackground, R.drawable.wl_calendar_hover_background);
+
             // Date cell and text size
             dateCellSize = (int) typeArray.getDimension(R.styleable.WindCalendar_dateCellSize, res.getDimension(R.dimen.wl_calendar_date_cell_size));
             dateTextSize = typeArray.getDimension(R.styleable.WindCalendar_dateTextSize, res.getDimension(R.dimen.wl_text_small));
-            lunarDateTextSize = typeArray.getDimension(R.styleable.WindCalendar_lunarDateTextSize, res.getDimension(R.dimen.wl_calendar_lunar_date_text_size));
-            eventSymbolSize = typeArray.getDimension(R.styleable.WindCalendar_eventSymbolSize, res.getDimension(R.dimen.wl_calendar_event_symbol_size));
+            dateLunarTextSize = typeArray.getDimension(R.styleable.WindCalendar_dateLunarTextSize, res.getDimension(R.dimen.wl_calendar_lunar_date_text_size));
+            dateEventSymbolSize = typeArray.getDimension(R.styleable.WindCalendar_dateEventSymbolSize, res.getDimension(R.dimen.wl_calendar_event_symbol_size));
 
             // Date text color
             dateTextColor = typeArray.getColor(R.styleable.WindCalendar_dateTextColor, ContextCompat.getColor(context, R.color.wl_black));
-            lunarDateTextColor = typeArray.getColor(R.styleable.WindCalendar_lunarDateTextColor, ContextCompat.getColor(context, R.color.wl_calendar_lunar_date_text));
-            eventTextColor = typeArray.getColor(R.styleable.WindCalendar_eventTextColor, ContextCompat.getColor(context, R.color.wl_black));
-            weekendTextColor = typeArray.getColor(R.styleable.WindCalendar_weekendTextColor, ContextCompat.getColor(context, R.color.wl_danger));
-            todayTextColor = typeArray.getColor(R.styleable.WindCalendar_todayTextColor, ContextCompat.getColor(context, R.color.wl_white));
-            highlightTextColor = typeArray.getColor(R.styleable.WindCalendar_highlightTextColor, ContextCompat.getColor(context, R.color.wl_white));
+            dateLunarTextColor = typeArray.getColor(R.styleable.WindCalendar_dateLunarTextColor, ContextCompat.getColor(context, R.color.wl_calendar_lunar_date_text));
+            dateEventTextColor = typeArray.getColor(R.styleable.WindCalendar_dateEventTextColor, ContextCompat.getColor(context, R.color.wl_black));
+            dateWeekendTextColor = typeArray.getColor(R.styleable.WindCalendar_dateWeekendTextColor, ContextCompat.getColor(context, R.color.wl_danger));
+            dateTodayTextColor = typeArray.getColor(R.styleable.WindCalendar_dateTodayTextColor, ContextCompat.getColor(context, R.color.wl_white));
+            dateHighlightTextColor = typeArray.getColor(R.styleable.WindCalendar_dateHighlightTextColor, ContextCompat.getColor(context, R.color.wl_white));
 
             // Date cell background
-            cellBackground = typeArray.getResourceId(R.styleable.WindCalendar_cellBackground, 0);
-            eventBackground = typeArray.getResourceId(R.styleable.WindCalendar_eventBackground, 0);
-            weekendBackground = typeArray.getResourceId(R.styleable.WindCalendar_weekendBackground, 0);
-            todayBackground = typeArray.getResourceId(R.styleable.WindCalendar_todayBackground, R.drawable.wl_calendar_today_background);
-            highlightBackground = typeArray.getResourceId(R.styleable.WindCalendar_highlightBackground, R.drawable.wl_calendar_highlight_background);
-            touchBackground = typeArray.getResourceId(R.styleable.WindCalendar_touchBackground, R.drawable.wl_calendar_date_touch_background);
+            dateCellBackground = typeArray.getResourceId(R.styleable.WindCalendar_dateCellBackground, 0);
+            dateEventBackground = typeArray.getResourceId(R.styleable.WindCalendar_dateEventBackground, 0);
+            dateWeekendBackground = typeArray.getResourceId(R.styleable.WindCalendar_dateWeekendBackground, 0);
+            dateTodayBackground = typeArray.getResourceId(R.styleable.WindCalendar_dateTodayBackground, R.drawable.wl_calendar_today_background);
+            dateHighlightBackground = typeArray.getResourceId(R.styleable.WindCalendar_dateHighlightBackground, R.drawable.wl_calendar_highlight_background);
+            dateHoverBackground = typeArray.getResourceId(R.styleable.WindCalendar_dateHoverBackground, R.drawable.wl_calendar_hover_background);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -145,22 +160,27 @@ public class WindCalendar extends LinearLayout {
         adapter = new CalendarAdapter(fragManager, new GregorianCalendar());
         adapter.setCalendarStyle(
                 CalendarStyle.config()
+                        .weekDays(weekDays)
+                        .weekDayTextSize(weekDayTextSize)
+                        .weekDayTextColor(weekDayTextColor)
+                        .weekDayPanelBackground(weekDayPanelBackground)
+                        .weekDayHoverBackground(weekDayHoverBackground)
                         .dateCellSize(dateCellSize)
                         .dateTextSize(dateTextSize)
-                        .lunarDateTextSize(lunarDateTextSize)
-                        .eventSymbolSize(eventSymbolSize)
+                        .dateLunarTextSize(dateLunarTextSize)
+                        .dateEventSymbolSize(dateEventSymbolSize)
                         .dateTextColor(dateTextColor)
-                        .lunarDateTextColor(lunarDateTextColor)
-                        .eventTextColor(eventTextColor)
-                        .weekendTextColor(weekendTextColor)
-                        .todayTextColor(todayTextColor)
-                        .highlightTextColor(highlightTextColor)
-                        .cellBackground(cellBackground)
-                        .eventBackground(eventBackground)
-                        .weekendBackground(weekendBackground)
-                        .todayBackground(todayBackground)
-                        .highlightBackground(highlightBackground)
-                        .touchBackground(touchBackground));
+                        .dateLunarTextColor(dateLunarTextColor)
+                        .dateEventTextColor(dateEventTextColor)
+                        .dateWeekendTextColor(dateWeekendTextColor)
+                        .dateTodayTextColor(dateTodayTextColor)
+                        .dateHighlightTextColor(dateHighlightTextColor)
+                        .dateCellBackground(dateCellBackground)
+                        .dateEventBackground(dateEventBackground)
+                        .dateWeekendBackground(dateWeekendBackground)
+                        .dateTodayBackground(dateTodayBackground)
+                        .dateHighlightBackground(dateHighlightBackground)
+                        .dateHoverBackground(dateHoverBackground));
         adapter.setCalendarInfo(info);
         adapter.setCalendarEvent(eventListener);
         _calendarViewPager.setAdapter(adapter);
