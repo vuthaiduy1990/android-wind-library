@@ -1,10 +1,9 @@
 package the.wind.library.calendar;
 
+import android.icu.util.Calendar;
 import android.view.ViewGroup;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,7 +24,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
     private static final int MAX_SLIDE = 2000;
 
     // Calendar type
-    // calendar abstract class, ex {@link java.util.GregorianCalendar}, {@link android.icu.util.ChineseCalendar}
+    // calendar abstract class, ex {@link android.icu.util.GregorianCalendar}, {@link android.icu.util.ChineseCalendar}
     private final Calendar calendar;
 
     // the number of month will be preloaded in the left side and right side of current month
@@ -40,25 +39,6 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
     private CalendarStyle calendarStyle;
     private CalendarInfo calendarInfo;
     private CalendarEvent calendarEvent;
-
-    /**
-     * Constructor
-     *
-     * @param fm month view fragment
-     */
-    public CalendarAdapter(FragmentManager fm) {
-        this(fm, DEFAULT_PRE_LOAD);
-    }
-
-    /**
-     * Constructor
-     *
-     * @param fm        month view fragment
-     * @param preLoaded the number of month will be preloaded in the left side and right side of current month
-     */
-    public CalendarAdapter(FragmentManager fm, int preLoaded) {
-        this(fm, new GregorianCalendar(), preLoaded);
-    }
 
     /**
      * Constructor
@@ -166,7 +146,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
      * @param date any date of month
      */
     protected void setSelectedDate(Date date) {
-        selectedMonth = CalendarUtil.createMonthLink(calendar, date, preLoaded);
+        selectedMonth = CalendarUtil.createMonthLink(calendar, calendarInfo.getLunarCalendar(), date, preLoaded);
     }
 
     /**
@@ -242,7 +222,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
             // add one more month to the last
             calendar.set(monthIt.getYear(), monthIt.getMonth(), 1);
             calendar.add(Calendar.MONTH, 1);
-            nextMonth = new MonthInfo(calendar);
+            nextMonth = new MonthInfo(calendar, calendarInfo.getLunarCalendar());
             nextMonth.previous(monthIt);
             monthIt.next(nextMonth);
         } else {
@@ -265,7 +245,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
             // add one more month to the beginning
             calendar.set(monthIt.getYear(), monthIt.getMonth(), 1);
             calendar.add(Calendar.MONTH, -1);
-            preMonth = new MonthInfo(calendar);
+            preMonth = new MonthInfo(calendar, calendarInfo.getLunarCalendar());
             preMonth.next(monthIt);
             monthIt.previous(preMonth);
         }

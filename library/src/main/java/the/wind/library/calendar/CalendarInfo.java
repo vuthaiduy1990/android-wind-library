@@ -1,16 +1,20 @@
 package the.wind.library.calendar;
 
-import java.util.Calendar;
+import android.icu.util.Calendar;
+
 import java.util.HashSet;
 import java.util.Set;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 final class CalendarInfo {
 
     private final String todayId;
     public final Set<String> eventDates = new HashSet<>();
     public final Set<String> highlightDates = new HashSet<>();
+    @Nullable
+    public CalendarType lunarType = null;
 
     /**
      * Constructor
@@ -51,5 +55,24 @@ final class CalendarInfo {
      */
     public boolean isHighlight(@NonNull String dateId) {
         return highlightDates.contains(dateId);
+    }
+
+    /**
+     * Set lunar calendar type
+     *
+     * @param lunarType lunar calendar type
+     */
+    public void setLunarType(@Nullable CalendarType lunarType) {
+        this.lunarType = lunarType;
+    }
+
+    /**
+     * Get lunar calendar typeS
+     *
+     * @return lunar calendar type
+     */
+    @Nullable
+    public Calendar getLunarCalendar() {
+        return lunarType != null ? lunarType.getValue() : null;
     }
 }

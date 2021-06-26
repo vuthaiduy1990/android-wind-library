@@ -1,8 +1,11 @@
 package the.wind.library.calendar;
 
+import android.icu.util.Calendar;
+
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.List;
+
+import androidx.annotation.Nullable;
 
 /**
  * Wrapper of a month
@@ -27,12 +30,13 @@ public class MonthInfo implements Serializable {
     /**
      * Constructor
      *
-     * @param unmodifiedCal calendar abstract class, ex {@link java.util.GregorianCalendar}, {@link android.icu.util.ChineseCalendar}
+     * @param stdCal   standard calendar class, ex {@link android.icu.util.GregorianCalendar}
+     * @param lunarCal lunar calendar, ex {@link android.icu.util.ChineseCalendar}
      */
-    public MonthInfo(Calendar unmodifiedCal) {
-        this.year = unmodifiedCal.get(Calendar.YEAR);
-        this.month = unmodifiedCal.get(Calendar.MONTH);
-        this.dateInfoList = CalendarUtil.getMonthDays(unmodifiedCal, unmodifiedCal.getTime());
+    public MonthInfo(Calendar stdCal, @Nullable Calendar lunarCal) {
+        this.year = stdCal.get(Calendar.YEAR);
+        this.month = stdCal.get(Calendar.MONTH);
+        this.dateInfoList = CalendarUtil.getMonthDays(stdCal, lunarCal, stdCal.getTime());
     }
 
     /* ---------------------- OVERRIDE ----------------------- */

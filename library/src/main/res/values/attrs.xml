@@ -121,5 +121,16 @@
         <attr name="dateHighlightBackground" format="reference" />
         <attr name="dateHoverBackground" format="reference" />
 
+        <attr name="lunar" format="enum">
+            <enum name="Buddhist" value="0" />
+            <enum name="Chinese" value="1" />
+            <enum name="Coptic" value="2" />
+            <enum name="Hebrew" value="3" />
+            <enum name="Indian" value="4" />
+            <enum name="Islamic" value="5" />
+            <enum name="Japanese" value="6" />
+            <enum name="Taiwan" value="7" />
+        </attr>
+
     </declare-styleable>
 </resources>

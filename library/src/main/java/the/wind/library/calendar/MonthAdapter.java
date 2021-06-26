@@ -173,7 +173,12 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
 
             // Set text value
             _dateTextView.setText(String.format(Locale.getDefault(), "%d", data.getDayOfMonth()));
-            _lunarDateTextView.setText("25/12"); // TODO: set lunar date later
+            if (data.getLunarDate() != null) {
+                _lunarDateTextView.setVisibility(View.VISIBLE);
+                _lunarDateTextView.setText(String.format(Locale.getDefault(), "%d/%d", data.getLunarDayOfMonth(), data.getLunarMonth() + 1));
+            } else {
+                _lunarDateTextView.setVisibility(View.GONE);
+            }
             _eventSymbol.setVisibility(hasEvent && !isToday ? View.VISIBLE : View.GONE);
 
             // Set text color

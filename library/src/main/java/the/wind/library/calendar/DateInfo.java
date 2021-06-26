@@ -1,9 +1,11 @@
 package the.wind.library.calendar;
 
+import android.icu.util.Calendar;
+
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 
+import androidx.annotation.Nullable;
 import the.wind.library.CWBundle;
 
 /**
@@ -39,16 +41,27 @@ public class DateInfo implements Serializable {
     /**
      * Constructor
      *
-     * @param unmodifiedCal calendar abstract class, ex {@link java.util.GregorianCalendar}, {@link android.icu.util.ChineseCalendar}
+     * @param stdCal   standard calendar class, ex {@link android.icu.util.GregorianCalendar}
+     * @param lunarCal lunar calendar, ex {@link android.icu.util.ChineseCalendar}
      */
-    public DateInfo(Calendar unmodifiedCal) {
+    public DateInfo(Calendar stdCal, @Nullable Calendar lunarCal) {
         this();
-        this.date = unmodifiedCal.getTime();
-        this.year = unmodifiedCal.get(Calendar.YEAR);
-        this.month = unmodifiedCal.get(Calendar.MONTH);
-        this.dayOfMonth = unmodifiedCal.get(Calendar.DAY_OF_MONTH);
-        this.dayOfWeek = unmodifiedCal.get(Calendar.DAY_OF_WEEK);
+
+        // standard calendar
+        this.date = stdCal.getTime();
+        this.year = stdCal.get(Calendar.YEAR);
+        this.month = stdCal.get(Calendar.MONTH);
+        this.dayOfMonth = stdCal.get(Calendar.DAY_OF_MONTH);
+        this.dayOfWeek = stdCal.get(Calendar.DAY_OF_WEEK);
         this.id = CalendarUtil.toId(year, month, dayOfMonth);
+
+        // lunar calendar
+        if (lunarCal != null) {
+            lunarDate = lunarCal.getTime();
+            this.lunarYear = lunarCal.get(Calendar.YEAR);
+            this.lunarMonth = lunarCal.get(Calendar.MONTH);
+            this.lunarDayOfMonth = lunarCal.get(Calendar.DAY_OF_MONTH);
+        }
     }
 
     /* ---------------------- OVERRIDE ----------------------- */
@@ -123,7 +136,7 @@ public class DateInfo implements Serializable {
     }
 
     /**
-     * @return lundar date
+     * @return lunar date
      */
     public Date getLunarDate() {
         return lunarDate;

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 import java.util.Date;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,7 +41,7 @@ public class CalendarViewPager extends ViewPager {
 
             @Override
             public void onPageSelected(int position) {
-                ((CalendarAdapter) getAdapter()).slide(position);
+                ((CalendarAdapter) Objects.requireNonNull(getAdapter())).slide(position);
             }
 
             @Override

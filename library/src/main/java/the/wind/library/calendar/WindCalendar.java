@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.icu.util.GregorianCalendar;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,6 @@ import android.widget.LinearLayout;
 
 import java.util.Arrays;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -150,6 +150,12 @@ public class WindCalendar extends LinearLayout {
             dateTodayBackground = typeArray.getResourceId(R.styleable.WindCalendar_dateTodayBackground, R.drawable.wl_calendar_today_background);
             dateHighlightBackground = typeArray.getResourceId(R.styleable.WindCalendar_dateHighlightBackground, R.drawable.wl_calendar_highlight_background);
             dateHoverBackground = typeArray.getResourceId(R.styleable.WindCalendar_dateHoverBackground, R.drawable.wl_calendar_hover_background);
+
+            // calendar type
+            int calendarTypeIdx = typeArray.getInt(R.styleable.WindCalendar_lunar, -1);
+            if (calendarTypeIdx >= 0) {
+                info.setLunarType(CalendarType.typeOf(calendarTypeIdx));
+            }
 
         } catch (Exception ex) {
             ex.printStackTrace();

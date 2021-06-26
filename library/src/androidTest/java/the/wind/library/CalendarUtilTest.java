@@ -1,29 +1,37 @@
 package the.wind.library;
 
+import android.content.Context;
+import android.icu.util.Calendar;
+import android.icu.util.GregorianCalendar;
+
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 import the.wind.library.calendar.CalendarUtil;
 import the.wind.library.calendar.DateInfo;
 import the.wind.library.calendar.MonthInfo;
 
+@RunWith(AndroidJUnit4.class)
 public class CalendarUtilTest {
+
+    private static final Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
     @Test
     public void getMonthDays() {
-        Calendar cal = Calendar.getInstance();
+        Calendar cal = new GregorianCalendar();
         cal.set(2021, Calendar.JANUARY, 1);
-
 
         int[] monthDays = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         Iterator<DateInfo> dateIt;
         for (int i = 0; i < monthDays.length; i++) {
             cal.set(Calendar.MONTH, i);
-            Collection<DateInfo> dates = CalendarUtil.getMonthDays(cal, cal.getTime());
+            Collection<DateInfo> dates = CalendarUtil.getMonthDays(cal, null, cal.getTime());
             Assert.assertEquals(42, dates.size());
             dateIt = dates.iterator();
             while (dateIt.hasNext()) {
@@ -37,11 +45,11 @@ public class CalendarUtilTest {
 
     @Test
     public void createMonthLink() {
-        Calendar cal = Calendar.getInstance();
+        Calendar cal = new GregorianCalendar();
         cal.set(2021, Calendar.JANUARY, 1);
         int year = cal.get(Calendar.YEAR);
         while (cal.get(Calendar.YEAR) == year) {
-            MonthInfo selected = CalendarUtil.createMonthLink(cal, cal.getTime(), 2);
+            MonthInfo selected = CalendarUtil.createMonthLink(cal, null, cal.getTime(), 2);
             Assert.assertEquals(year, selected.getYear());
             Assert.assertEquals(cal.get(Calendar.MONTH), selected.getMonth());
 

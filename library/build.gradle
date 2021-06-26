@@ -3,7 +3,7 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion 30
     defaultConfig {
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -23,7 +23,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // Android library
-    api 'androidx.recyclerview:recyclerview:1.2.0'
+    api 'androidx.recyclerview:recyclerview:1.2.1'
 
     // Required for test
     testImplementation 'junit:junit:4.13.2'

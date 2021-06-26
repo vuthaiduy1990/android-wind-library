@@ -1,5 +1,6 @@
 package the.wind.library.sample.activity.fragment;
 
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -25,8 +25,8 @@ public class CalendarPage extends Fragment {
 
     private WindCalendar _calendarView;
     private boolean highlighted;
-    private Calendar cal = Calendar.getInstance();
-    private List<String> neighborDates = new ArrayList<>();
+    private final Calendar cal = Calendar.getInstance();
+    private final List<String> neighborDates = new ArrayList<>();
 
     @Nullable
     @Override
@@ -53,7 +53,7 @@ public class CalendarPage extends Fragment {
         _calendarView.setOnDateItemClickListener(new WindCalendar.OnDateItemClickListener() {
             @Override
             public boolean onClick(MonthAdapter.ViewHolder viewHolder, View view, DateInfo data) {
-                Toast.makeText(getContext(), String.format("%s-%s-%s", data.getYear(), data.getMonth(), data.getDayOfMonth()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), String.format("%s-%s-%s", data.getYear(), data.getMonth() + 1, data.getDayOfMonth()), Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
