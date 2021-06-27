@@ -6,11 +6,17 @@
     android:orientation="vertical">
 
     <!-- Week Day Panel -->
+    <LinearLayout
+        android:id="@+id/_weekDayPanelView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" />
 
     <!-- Date Panel  -->
     <the.wind.library.calendar.CalendarViewPager
         android:id="@+id/_calendarViewPager"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/wl_calendar_height" />
 
 </LinearLayout>

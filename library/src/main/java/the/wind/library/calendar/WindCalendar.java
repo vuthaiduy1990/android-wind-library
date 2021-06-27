@@ -4,12 +4,17 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
 import android.util.AttributeSet;
+import android.util.TypedValue;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -25,17 +30,50 @@ import the.wind.library.anim.PageTransformerType;
 
 public class WindCalendar extends LinearLayout {
 
+    // List if week days
+    private static final int[] WEEK_DAY_VALUES = new int[]{
+            Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY
+    };
+
     // Views
+    private final LayoutInflater inflater;
+    private final FragmentManager fragManager;
     private final ViewGroup _rootView;
     private final CalendarViewPager _calendarViewPager;
-
-    // Adapter & data
-    private final CalendarAdapter adapter;
+    private final ViewGroup _weekDayPanelView;
+    private final CalendarStyle style = CalendarStyle.config();
+    private View _weekDayTouchedView;
     private final CalendarInfo info = new CalendarInfo(new GregorianCalendar());
     private final CalendarEvent eventListener = new CalendarEvent();
+    private final GestureDetector weekDateItemGestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
+        @Override
+        public void onLongPress(MotionEvent e) {
+            if (eventListener.weekDayItemLongClickListener != null) {
+                eventListener.weekDayItemLongClickListener.onLongClick(_weekDayTouchedView, (Integer) _weekDayTouchedView.getTag());
+            }
+        }
+
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            if (eventListener.weekDayItemDoubleClickListener != null) {
+                eventListener.weekDayItemDoubleClickListener.onDoubleClick(_weekDayTouchedView, (Integer) _weekDayTouchedView.getTag());
+            }
+            return true;
+        }
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            if (eventListener.weekDayItemClickListener != null) {
+                eventListener.weekDayItemClickListener.onClick(_weekDayTouchedView, (Integer) _weekDayTouchedView.getTag());
+            }
+            return true;
+        }
+    });
 
     // bundle data
     private final CWBundle bundle = new CWBundle();
+    // Adapter & data
+    private CalendarAdapter adapter;
 
     /**
      * Constructor
@@ -78,10 +116,9 @@ public class WindCalendar extends LinearLayout {
     public WindCalendar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
 
-        LayoutInflater inflater = LayoutInflater.from(context);
+        inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.wl_calendar, this);
 
-        FragmentManager fragManager = null;
         if (context instanceof FragmentActivity) {
             fragManager = ((FragmentActivity) context).getSupportFragmentManager();
         } else {
@@ -91,10 +128,12 @@ public class WindCalendar extends LinearLayout {
         // Bind views
         _rootView = findViewById(R.id._rootView);
         _calendarViewPager = _rootView.findViewById(R.id._calendarViewPager);
+        _weekDayPanelView = _rootView.findViewById(R.id._weekDayPanelView);
 
         // Styling
         TypedArray typeArray = context.getTheme().obtainStyledAttributes(
                 attrs, R.styleable.WindCalendar, defStyleAttr, defStyleRes);
+
         String[] weekDays = new String[]{"Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"};
         float weekDayTextSize = 0f;
         int weekDayTextColor = 0;
@@ -110,6 +149,7 @@ public class WindCalendar extends LinearLayout {
         int dateWeekendTextColor = 0;
         int dateTodayTextColor = 0;
         int dateHighlightTextColor = 0;
+        int monthPanelViewBackground = 0;
         int dateCellBackground = 0;
         int dateEventBackground = 0;
         int dateWeekendBackground = 0;
@@ -141,9 +181,10 @@ public class WindCalendar extends LinearLayout {
             dateEventTextColor = typeArray.getColor(R.styleable.WindCalendar_dateEventTextColor, ContextCompat.getColor(context, R.color.wl_black));
             dateWeekendTextColor = typeArray.getColor(R.styleable.WindCalendar_dateWeekendTextColor, ContextCompat.getColor(context, R.color.wl_danger));
             dateTodayTextColor = typeArray.getColor(R.styleable.WindCalendar_dateTodayTextColor, ContextCompat.getColor(context, R.color.wl_white));
-            dateHighlightTextColor = typeArray.getColor(R.styleable.WindCalendar_dateHighlightTextColor, ContextCompat.getColor(context, R.color.wl_white));
+            dateHighlightTextColor = typeArray.getColor(R.styleable.WindCalendar_dateHighlightTextColor, ContextCompat.getColor(context, R.color.wl_black));
 
             // Date cell background
+            monthPanelViewBackground = typeArray.getResourceId(R.styleable.WindCalendar_monthPanelViewBackground, 0);
             dateCellBackground = typeArray.getResourceId(R.styleable.WindCalendar_dateCellBackground, 0);
             dateEventBackground = typeArray.getResourceId(R.styleable.WindCalendar_dateEventBackground, 0);
             dateWeekendBackground = typeArray.getResourceId(R.styleable.WindCalendar_dateWeekendBackground, 0);
@@ -163,34 +204,34 @@ public class WindCalendar extends LinearLayout {
             typeArray.recycle();
         }
 
-        adapter = new CalendarAdapter(fragManager, new GregorianCalendar());
-        adapter.setCalendarStyle(
-                CalendarStyle.config()
-                        .weekDays(weekDays)
-                        .weekDayTextSize(weekDayTextSize)
-                        .weekDayTextColor(weekDayTextColor)
-                        .weekDayPanelBackground(weekDayPanelBackground)
-                        .weekDayHoverBackground(weekDayHoverBackground)
-                        .dateCellSize(dateCellSize)
-                        .dateTextSize(dateTextSize)
-                        .dateLunarTextSize(dateLunarTextSize)
-                        .dateEventSymbolSize(dateEventSymbolSize)
-                        .dateTextColor(dateTextColor)
-                        .dateLunarTextColor(dateLunarTextColor)
-                        .dateEventTextColor(dateEventTextColor)
-                        .dateWeekendTextColor(dateWeekendTextColor)
-                        .dateTodayTextColor(dateTodayTextColor)
-                        .dateHighlightTextColor(dateHighlightTextColor)
-                        .dateCellBackground(dateCellBackground)
-                        .dateEventBackground(dateEventBackground)
-                        .dateWeekendBackground(dateWeekendBackground)
-                        .dateTodayBackground(dateTodayBackground)
-                        .dateHighlightBackground(dateHighlightBackground)
-                        .dateHoverBackground(dateHoverBackground));
-        adapter.setCalendarInfo(info);
-        adapter.setCalendarEvent(eventListener);
-        _calendarViewPager.setAdapter(adapter);
-        _calendarViewPager.setSelectedDate(new Date()); // must be set after setting adapter
+        style.weekDays(weekDays)
+                .weekDayTextSize(weekDayTextSize)
+                .weekDayTextColor(weekDayTextColor)
+                .weekDayPanelBackground(weekDayPanelBackground)
+                .weekDayHoverBackground(weekDayHoverBackground)
+                .dateCellSize(dateCellSize)
+                .dateTextSize(dateTextSize)
+                .dateLunarTextSize(dateLunarTextSize)
+                .dateEventSymbolSize(dateEventSymbolSize)
+                .dateTextColor(dateTextColor)
+                .dateLunarTextColor(dateLunarTextColor)
+                .dateEventTextColor(dateEventTextColor)
+                .dateWeekendTextColor(dateWeekendTextColor)
+                .dateTodayTextColor(dateTodayTextColor)
+                .dateHighlightTextColor(dateHighlightTextColor)
+                .monthPanelViewBackground(monthPanelViewBackground)
+                .dateCellBackground(dateCellBackground)
+                .dateEventBackground(dateEventBackground)
+                .dateWeekendBackground(dateWeekendBackground)
+                .dateTodayBackground(dateTodayBackground)
+                .dateHighlightBackground(dateHighlightBackground)
+                .dateHoverBackground(dateHoverBackground);
+
+        // Create month grid view
+        createMonthViewPanel();
+
+        // create week day panel view
+        createWeekDayPanel();
     }
 
     /* ---------------------- OVERRIDE ----------------------- */
@@ -216,12 +257,46 @@ public class WindCalendar extends LinearLayout {
     }
 
     /**
+     * @return week day panel
+     */
+    public ViewGroup getWeekDayPanelView() {
+        return _weekDayPanelView;
+    }
+
+    /**
+     * Get calendar adapter
+     *
+     * @return adapter
+     */
+    public CalendarAdapter getAdapter() {
+        return adapter;
+    }
+
+    /**
      * Set page transformer
      *
      * @param type page transformer
      */
     public void setPageTransformer(PageTransformerType type) {
         _calendarViewPager.setPageTransformer(true, type.getTransformer());
+    }
+
+    /**
+     * Get current selected view page
+     *
+     * @return current view page
+     */
+    public MonthViewFragment getSelectedPage() {
+        return adapter.getCurrentPage();
+    }
+
+    /**
+     * Get current month
+     *
+     * @return current month
+     */
+    public MonthInfo getSelectedMonth() {
+        return adapter.getSelectedMonth();
     }
 
     /**
@@ -263,6 +338,197 @@ public class WindCalendar extends LinearLayout {
         info.eventDates.clear();
     }
 
+    /* -------------------- Event Listener ------------------- */
+
+    /**
+     * Set date item click listener
+     *
+     * @param listener date item click listener
+     * @return wind calendar
+     */
+    public WindCalendar setOnDateItemClickListener(OnDateItemClickListener listener) {
+        eventListener.dateItemClickListener = listener;
+        return this;
+    }
+
+    /**
+     * Set date item long click listener
+     *
+     * @param listener date item long click listener
+     * @return wind calendar
+     */
+    public WindCalendar setOnDateItemLongClickListener(OnDateItemLongClickListener listener) {
+        eventListener.dateItemLongClickListener = listener;
+        return this;
+    }
+
+    /**
+     * Set date item double click listener
+     *
+     * @param listener date item double click listener
+     * @return wind calendar
+     */
+    public WindCalendar setOnDateItemDoubleClickListener(OnDateItemDoubleClickListener listener) {
+        eventListener.dateItemDoubleClickListener = listener;
+        return this;
+    }
+
+    /**
+     * Set date item touch up listener
+     *
+     * @param listener date item touch up listener
+     * @return wind calendar
+     */
+    public WindCalendar setOnDateItemTouchUpListener(OnDateItemTouchUpListener listener) {
+        eventListener.dateItemTouchUpListener = listener;
+        return this;
+    }
+
+    /**
+     * Set date item touch down listener
+     *
+     * @param listener date item touch down listener
+     * @return wind calendar
+     */
+    public WindCalendar setOnDateItemTouchDownListener(OnDateItemTouchDownListener listener) {
+        eventListener.dateItemTouchDownListener = listener;
+        return this;
+    }
+
+    /**
+     * Set week day item click listener
+     *
+     * @param listener listener
+     * @return calendar
+     */
+    public WindCalendar setOnWeekDayItemClickListener(OnWeekDayItemClickListener listener) {
+        eventListener.weekDayItemClickListener = listener;
+        return this;
+    }
+
+    /**
+     * Set week day item long click listener
+     *
+     * @param listener listener
+     * @return calendar
+     */
+    public WindCalendar setOnWeekDayItemLongClickListener(OnWeekDayItemLongClickListener listener) {
+        eventListener.weekDayItemLongClickListener = listener;
+        return this;
+    }
+
+    /**
+     * Set week day item double click listener
+     *
+     * @param listener listener
+     * @return calendar
+     */
+    public WindCalendar setOnWeekDayItemDoubleClickListener(OnWeekDayItemDoubleClickListener listener) {
+        eventListener.weekDayItemDoubleClickListener = listener;
+        return this;
+    }
+
+    /**
+     * Set week day item touch down listener
+     *
+     * @param listener listener
+     * @return calendar
+     */
+    public WindCalendar setOnWeekDayItemTouchDownListener(OnWeekDayItemTouchDownListener listener) {
+        eventListener.weekDayItemTouchDownListener = listener;
+        return this;
+    }
+
+    /**
+     * Set week day item touch up listener
+     *
+     * @param listener listener
+     * @return calendar
+     */
+    public WindCalendar setOnWeekDayItemTouchUpListener(OnWeekDayItemTouchUpListener listener) {
+        eventListener.weekDayItemTouchUpListener = listener;
+        return this;
+    }
+
+    /**
+     * Set week day item touch up listener
+     *
+     * @param listener listener
+     * @return calendar
+     */
+    public WindCalendar setOnMonthPageChangeListener(OnMonthPageChangeListener listener) {
+        eventListener.monthPageChangeListener = listener;
+        return this;
+    }
+
+    /* ---------------------- METHOD ------------------------- */
+
+    /**
+     * Create month view panel
+     */
+    private void createMonthViewPanel() {
+        adapter = new CalendarAdapter(fragManager, new GregorianCalendar());
+        adapter.setCalendarStyle(style);
+        adapter.setCalendarInfo(info);
+        adapter.setCalendarEvent(eventListener);
+        _calendarViewPager.setCalendarEvent(eventListener);
+        _calendarViewPager.setAdapter(adapter);
+        _calendarViewPager.setSelectedDate(new Date()); // must be set after setting adapter
+        _calendarViewPager.setBackgroundResource(style.monthPanelViewBackground());
+    }
+
+
+    /**
+     * Create week date panel view
+     */
+    private void createWeekDayPanel() {
+        _weekDayPanelView.setBackgroundResource(style.weekDayPanelBackground());
+
+        String[] weekDayTexts = style.weekDays();
+        for (int i = 0; i < WEEK_DAY_VALUES.length; i++) {
+            final View itemView = inflater.inflate(R.layout.wl_calendar_week_day_view, _weekDayPanelView, false);
+            itemView.setTag(WEEK_DAY_VALUES[i]);
+            itemView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    v.performClick();
+                    _weekDayTouchedView = v;
+                    int dayValue = (Integer) v.getTag();
+
+                    switch (event.getActionMasked()) {
+                        case MotionEvent.ACTION_DOWN:
+                            if (eventListener.weekDayItemTouchDownListener != null) {
+                                if (eventListener.weekDayItemTouchDownListener.onTouchDown(v, dayValue)) {
+                                    break;
+                                }
+                            }
+                            v.setBackgroundResource(style.weekDayHoverBackground());
+                            break;
+                        case MotionEvent.ACTION_UP:
+                        case MotionEvent.ACTION_CANCEL:
+                            if (eventListener.weekDayItemTouchUpListener != null) {
+                                if (eventListener.weekDayItemTouchUpListener.onTouchUp(v, dayValue)) {
+                                    break;
+                                }
+                            }
+                            v.setBackground(null);
+                            break;
+                    }
+                    weekDateItemGestureDetector.onTouchEvent(event);
+                    return true;
+                }
+            });
+            TextView _dayTextView = itemView.findViewById(R.id._dayTextView);
+            _dayTextView.setText(weekDayTexts[i]);
+            _dayTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, style.weekDayTextSize());
+            _dayTextView.setTextColor(style.weekDayTextColor());
+
+            // add to layout
+            ViewGroup.LayoutParams lp = itemView.getLayoutParams();
+            lp.width = style.dateCellSize();
+            _weekDayPanelView.addView(itemView, lp);
+        }
+    }
 
     /**
      * Set highlight dates
@@ -291,53 +557,6 @@ public class WindCalendar extends LinearLayout {
             highlightDates(Arrays.asList(dateIds));
         }
     }
-
-    /**
-     * Set date item click listener
-     *
-     * @param dateItemClickListener date item click listener
-     */
-    public void setOnDateItemClickListener(OnDateItemClickListener dateItemClickListener) {
-        eventListener.dateItemClickListener = dateItemClickListener;
-    }
-
-    /**
-     * Set date item long click listener
-     *
-     * @param dateItemLongClickListener date item long click listener
-     */
-    public void setOnDateItemLongClickListener(OnDateItemLongClickListener dateItemLongClickListener) {
-        eventListener.dateItemLongClickListener = dateItemLongClickListener;
-    }
-
-    /**
-     * Set date item double click listener
-     *
-     * @param dateItemDoubleClickListener date item double click listener
-     */
-    public void setOnDateItemDoubleClickListener(OnDateItemDoubleClickListener dateItemDoubleClickListener) {
-        eventListener.dateItemDoubleClickListener = dateItemDoubleClickListener;
-    }
-
-    /**
-     * Set date item touch up listener
-     *
-     * @param dateItemTouchUpListener date item touch up listener
-     */
-    public void setOnDateItemTouchUpListener(OnDateItemTouchUpListener dateItemTouchUpListener) {
-        eventListener.dateItemTouchUpListener = dateItemTouchUpListener;
-    }
-
-    /**
-     * Set date item touch down listener
-     *
-     * @param dateItemTouchDownListener date item touch down listener
-     */
-    public void setOnDateItemTouchDownListener(OnDateItemTouchDownListener dateItemTouchDownListener) {
-        eventListener.dateItemTouchDownListener = dateItemTouchDownListener;
-    }
-
-    /* ---------------------- METHOD ------------------------- */
 
     /* ---------------------- INNER CLASS -------------------- */
 
@@ -414,6 +633,89 @@ public class WindCalendar extends LinearLayout {
          * @return true if consume the event.
          */
         boolean onTouchDown(MonthAdapter.ViewHolder viewHolder, View view, DateInfo data);
+    }
+
+    /**
+     * On week day item click listener
+     */
+    public interface OnWeekDayItemClickListener {
+        /**
+         * Trigger when user click on week day item
+         *
+         * @param view      day view
+         * @param dayOfWeek day of week
+         * @return true if consume the event
+         */
+        boolean onClick(View view, int dayOfWeek);
+    }
+
+    /**
+     * On week day item long click listener
+     */
+    public interface OnWeekDayItemLongClickListener {
+        /**
+         * Trigger when user long click on week day item
+         *
+         * @param view      day view
+         * @param dayOfWeek day of week
+         * @return true if consume the event
+         */
+        boolean onLongClick(View view, int dayOfWeek);
+    }
+
+    /**
+     * On week day item double click listener
+     */
+    public interface OnWeekDayItemDoubleClickListener {
+        /**
+         * Trigger when user double click on week day item
+         *
+         * @param view      day view
+         * @param dayOfWeek day of week
+         * @return true if consume the event
+         */
+        boolean onDoubleClick(View view, int dayOfWeek);
+    }
+
+    /**
+     * On week day item touch down listener
+     */
+    public interface OnWeekDayItemTouchDownListener {
+        /**
+         * Trigger when user touch down on week day item
+         *
+         * @param view      day view
+         * @param dayOfWeek day of week
+         * @return true if consume the event
+         */
+        boolean onTouchDown(View view, int dayOfWeek);
+    }
+
+    /**
+     * On week day item touch up listener
+     */
+    public interface OnWeekDayItemTouchUpListener {
+        /**
+         * Trigger when user touch up on week day item
+         *
+         * @param view      day view
+         * @param dayOfWeek day of week
+         * @return true if consume the event
+         */
+        boolean onTouchUp(View view, int dayOfWeek);
+    }
+
+    /**
+     * On month page change listener
+     */
+    public interface OnMonthPageChangeListener {
+        /**
+         * Trigger when user swipe to go to previous or next month page
+         *
+         * @param oldPage previous page
+         * @param newPage current selected page
+         */
+        void onChange(MonthViewFragment oldPage, MonthViewFragment newPage);
     }
 
 }

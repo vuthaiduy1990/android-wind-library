@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 import java.util.Date;
-import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +14,8 @@ import androidx.viewpager.widget.ViewPager;
  * Custom view pager for calendar view
  */
 public class CalendarViewPager extends ViewPager {
+
+    private CalendarEvent calendarEvent;
 
     /**
      * Constructor
@@ -41,7 +42,14 @@ public class CalendarViewPager extends ViewPager {
 
             @Override
             public void onPageSelected(int position) {
-                ((CalendarAdapter) Objects.requireNonNull(getAdapter())).slide(position);
+                if (getAdapter() != null) {
+                    CalendarAdapter adapter = (CalendarAdapter) getAdapter();
+                    MonthViewFragment prePage = adapter.getCurrentPage();
+                    adapter.slide(position);
+                    if (calendarEvent.monthPageChangeListener != null) {
+                        calendarEvent.monthPageChangeListener.onChange(prePage, adapter.getCurrentPage());
+                    }
+                }
             }
 
             @Override
@@ -91,6 +99,15 @@ public class CalendarViewPager extends ViewPager {
         } else {
             throw new IllegalArgumentException("adapter does not exist");
         }
+    }
+
+    /**
+     * Set calendar event listener
+     *
+     * @param calendarEvent calendar event listener
+     */
+    void setCalendarEvent(CalendarEvent calendarEvent) {
+        this.calendarEvent = calendarEvent;
     }
 
     /* ---------------------- METHOD ------------------------- */

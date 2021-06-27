@@ -24,7 +24,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
     private static final int MAX_SLIDE = 2000;
 
     // Calendar type
-    // calendar abstract class, ex {@link android.icu.util.GregorianCalendar}, {@link android.icu.util.ChineseCalendar}
+    // standard calendar class, ex {@link android.icu.util.GregorianCalendar}
     private final Calendar calendar;
 
     // the number of month will be preloaded in the left side and right side of current month
@@ -166,6 +166,33 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
     }
 
     /**
+     * Get current view page
+     *
+     * @return current view page
+     */
+    public MonthViewFragment getCurrentPage() {
+        return fragmentCache.get(currentPosition);
+    }
+
+    /**
+     * Get current page position
+     *
+     * @return position
+     */
+    public int getCurrentPagePosition() {
+        return currentPosition;
+    }
+
+    /**
+     * Get current month
+     *
+     * @return current month
+     */
+    public MonthInfo getSelectedMonth() {
+        return selectedMonth;
+    }
+
+    /**
      * Set date cell style
      *
      * @param style date cell style
@@ -198,9 +225,10 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
      * Slide calendar month view up/down to given position
      *
      * @param position given position
+     * @return position after slide to
      */
-    protected void slide(int position) {
-        if (selectedMonth == null) return;
+    protected int slide(int position) {
+        if (selectedMonth == null) return currentPosition;
         boolean up = position > currentPosition;
         if (up) {
             currentPosition++;
@@ -249,12 +277,13 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
             preMonth.next(monthIt);
             monthIt.previous(preMonth);
         }
+        return currentPosition;
     }
 
     /**
      * Notify dataset changes
      */
-    public void refreshCurrentPage() {
+    void refreshCurrentPage() {
         MonthViewFragment frag = fragmentCache.get(currentPosition);
         if (frag != null) {
             frag.notifyDataSetChanged();

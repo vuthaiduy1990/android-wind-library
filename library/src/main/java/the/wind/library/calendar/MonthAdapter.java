@@ -14,6 +14,9 @@ import the.wind.library.view.WindRecycleView;
 
 public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
 
+    // model
+    private final MonthInfo monthInfo;
+
     // styling
     private final CalendarStyle calStyle;
     private final CalendarInfo calInfo;
@@ -29,6 +32,7 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
      */
     public MonthAdapter(MonthInfo monthInfo, final CalendarInfo calInfo, CalendarStyle calStyle, CalendarEvent calEvent) {
         super(monthInfo.getDateInfoList());
+        this.monthInfo = monthInfo;
         this.calInfo = calInfo;
         this.calStyle = calStyle;
         this.calendarEvent = calEvent;
@@ -122,6 +126,13 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
 
     /* ---------------------- GET-SET ------------------------ */
 
+    /**
+     * @return month information
+     */
+    public MonthInfo getMonthInfo() {
+        return monthInfo;
+    }
+
     /* ---------------------- METHOD ------------------------- */
 
     /* ---------------------- INNER CLASS -------------------- */
@@ -202,6 +213,11 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
                 _dateTextView.setTextColor(calStyle.dateTextColor());
                 itemView.setBackgroundResource(calStyle.dateCellBackground());
             }
+            if (isToday) {
+                _lunarDateTextView.setTextColor(calStyle.dateTodayTextColor());
+            } else {
+                _lunarDateTextView.setTextColor(calStyle.dateLunarTextColor());
+            }
         }
 
         /**
@@ -221,7 +237,6 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
             // Configure date text
             _dateTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, calStyle.dateTextSize());
             _lunarDateTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, calStyle.dateLunarTextSize());
-            _lunarDateTextView.setTextColor(calStyle.dateLunarTextColor());
             _eventSymbol.setTextSize(TypedValue.COMPLEX_UNIT_PX, calStyle.dateEventSymbolSize());
         }
 

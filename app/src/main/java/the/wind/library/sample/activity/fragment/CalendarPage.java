@@ -18,6 +18,7 @@ import the.wind.library.anim.PageTransformerType;
 import the.wind.library.calendar.CalendarUtil;
 import the.wind.library.calendar.DateInfo;
 import the.wind.library.calendar.MonthAdapter;
+import the.wind.library.calendar.MonthViewFragment;
 import the.wind.library.calendar.WindCalendar;
 import the.wind.library.sample.R;
 
@@ -55,6 +56,11 @@ public class CalendarPage extends Fragment {
             public boolean onClick(MonthAdapter.ViewHolder viewHolder, View view, DateInfo data) {
                 Toast.makeText(getContext(), String.format("%s-%s-%s", data.getYear(), data.getMonth() + 1, data.getDayOfMonth()), Toast.LENGTH_SHORT).show();
                 return false;
+            }
+        }).setOnMonthPageChangeListener(new WindCalendar.OnMonthPageChangeListener() {
+            @Override
+            public void onChange(MonthViewFragment oldPage, MonthViewFragment newPage) {
+                Toast.makeText(getContext(), oldPage.getMonthInfo().getMonth() + " - " + newPage.getMonthInfo().getMonth(), Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -5,13 +5,6 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/_weekDayPanelView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal" />
-
     <the.wind.library.view.WindRecycleView
         android:id="@+id/_rvDateGridView"
         android:layout_width="wrap_content"

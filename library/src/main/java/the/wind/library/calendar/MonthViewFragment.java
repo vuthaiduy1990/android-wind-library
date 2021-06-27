@@ -1,12 +1,9 @@
 package the.wind.library.calendar;
 
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,17 +14,16 @@ import the.wind.library.view.WindRecycleView;
 
 public class MonthViewFragment extends Fragment {
 
-    // date list
+    // model
     private final MonthInfo monthInfo;
+    // views
     private WindRecycleView _rvDateGridView;
+    private MonthAdapter monthAdapter;
+
     // styling
     private final CalendarStyle calendarStyle;
-    private MonthAdapter monthAdapter;
     private final CalendarInfo calendarInfo;
     private final CalendarEvent calendarEvent;
-    // views
-    private LayoutInflater inflater;
-    private ViewGroup _weekDayPanelView;
 
     /**
      * Constructor
@@ -47,16 +43,13 @@ public class MonthViewFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        this.inflater = inflater;
         return inflater.inflate(R.layout.wl_calendar_month_view_fragment, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        createWeekDatePanel(view);
         createMonthDateGridView(view);
-
     }
 
     /* ---------------------- OVERRIDE ----------------------- */
@@ -67,47 +60,31 @@ public class MonthViewFragment extends Fragment {
 
     /* ---------------------- GET-SET ------------------------ */
 
-    /* ---------------------- METHOD ------------------------- */
+    /**
+     * @return month adapter
+     */
+    public MonthAdapter getMonthAdapter() {
+        return monthAdapter;
+    }
 
     /**
-     * Create week date panel view
+     * Get month info
      *
-     * @param rootView root view
+     * @return month info
      */
-    private void createWeekDatePanel(View rootView) {
-        _weekDayPanelView = rootView.findViewById(R.id._weekDayPanelView);
-        _weekDayPanelView.setBackgroundResource(calendarStyle.weekDayPanelBackground());
-
-        String[] weekDays = calendarStyle.weekDays();
-        for (String weekDay : weekDays) {
-            final View itemView = inflater.inflate(R.layout.wl_calendar_week_day_view, _weekDayPanelView, false);
-            itemView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    v.performClick();
-                    switch (event.getActionMasked()) {
-                        case MotionEvent.ACTION_DOWN:
-                            v.setBackgroundResource(calendarStyle.weekDayHoverBackground());
-                            break;
-                        case MotionEvent.ACTION_UP:
-                        case MotionEvent.ACTION_CANCEL:
-                            v.setBackground(null);
-                            break;
-                    }
-                    return true;
-                }
-            });
-            TextView _dayTextView = itemView.findViewById(R.id._dayTextView);
-            _dayTextView.setText(weekDay);
-            _dayTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, calendarStyle.weekDayTextSize());
-            _dayTextView.setTextColor(calendarStyle.weekDayTextColor());
-
-            // add to layout
-            ViewGroup.LayoutParams lp = itemView.getLayoutParams();
-            lp.width = calendarStyle.dateCellSize();
-            _weekDayPanelView.addView(itemView, lp);
-        }
+    public MonthInfo getMonthInfo() {
+        return monthInfo;
     }
+
+
+    /**
+     * @return month grid view
+     */
+    public WindRecycleView getDateGridView() {
+        return _rvDateGridView;
+    }
+
+    /* ---------------------- METHOD ------------------------- */
 
     /**
      * Create month date view

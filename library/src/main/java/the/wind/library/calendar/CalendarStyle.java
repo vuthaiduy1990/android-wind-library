@@ -20,6 +20,7 @@ final class CalendarStyle {
     private int dateTodayTextColor;
     private int dateHighlightTextColor;
 
+    private int monthPanelViewBackground;
     private int dateCellBackground;
     private int dateEventBackground;
     private int dateWeekendBackground;
@@ -309,6 +310,24 @@ final class CalendarStyle {
     }
 
     /**
+     * @return month panel view background
+     */
+    public int monthPanelViewBackground() {
+        return monthPanelViewBackground;
+    }
+
+    /**
+     * Set month panel view background
+     *
+     * @param monthPanelViewBackground background
+     * @return style
+     */
+    public CalendarStyle monthPanelViewBackground(int monthPanelViewBackground) {
+        this.monthPanelViewBackground = monthPanelViewBackground;
+        return this;
+    }
+
+    /**
      * @return normal date cell background
      */
     public int dateCellBackground() {
@@ -316,7 +335,7 @@ final class CalendarStyle {
     }
 
     /**
-     * Set cell background
+     * Set date cell background
      *
      * @param dateCellBackground background
      * @return style
