@@ -164,14 +164,14 @@ public class WindCalendar extends LinearLayout {
             if (weekDaysStr != null) {
                 weekDays = weekDaysStr.split(",");
             }
-            weekDayTextSize = typeArray.getDimension(R.styleable.WindCalendar_weekDayTextSize, res.getDimension(R.dimen.wl_text_small));
+            weekDayTextSize = typeArray.getDimension(R.styleable.WindCalendar_weekDayTextSize, res.getDimension(R.dimen.wl_calendar_date_text_size));
             weekDayTextColor = typeArray.getColor(R.styleable.WindCalendar_weekDayTextColor, ContextCompat.getColor(context, R.color.wl_calendar_week_day));
             weekDayPanelBackground = typeArray.getResourceId(R.styleable.WindCalendar_weekDayPanelBackground, 0);
             weekDayHoverBackground = typeArray.getResourceId(R.styleable.WindCalendar_weekDayHoverBackground, R.drawable.wl_calendar_hover_background);
 
             // Date cell and text size
             dateCellSize = (int) typeArray.getDimension(R.styleable.WindCalendar_dateCellSize, res.getDimension(R.dimen.wl_calendar_date_cell_size));
-            dateTextSize = typeArray.getDimension(R.styleable.WindCalendar_dateTextSize, res.getDimension(R.dimen.wl_text_small));
+            dateTextSize = typeArray.getDimension(R.styleable.WindCalendar_dateTextSize, res.getDimension(R.dimen.wl_calendar_date_text_size));
             dateLunarTextSize = typeArray.getDimension(R.styleable.WindCalendar_dateLunarTextSize, res.getDimension(R.dimen.wl_calendar_lunar_date_text_size));
             dateEventSymbolSize = typeArray.getDimension(R.styleable.WindCalendar_dateEventSymbolSize, res.getDimension(R.dimen.wl_calendar_event_symbol_size));
 

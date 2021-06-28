@@ -8,7 +8,7 @@
 
     <the.wind.library.calendar.WindCalendar
         android:id="@+id/_calendarView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:lunar="Chinese" />
 

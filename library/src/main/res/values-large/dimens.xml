@@ -7,10 +7,12 @@
     <dimen name="wl_spacing_level_1">6dp</dimen>
     <dimen name="wl_spacing_level_2">10dp</dimen>
     <dimen name="wl_spacing_level_3">14dp</dimen>
+    <dimen name="wl_spacing_level_4">18dp</dimen>
     <dimen name="wl_spacing_neg_level_0">-4dp</dimen>
     <dimen name="wl_spacing_neg_level_1">-6dp</dimen>
     <dimen name="wl_spacing_neg_level_2">-10dp</dimen>
     <dimen name="wl_spacing_neg_level_3">-14dp</dimen>
+    <dimen name="wl_spacing_neg_level_4">-18dp</dimen>
     <!-- Text -->
     <dimen name="wl_text_tiny">14sp</dimen>
     <dimen name="wl_text_small">16sp</dimen>
@@ -65,12 +67,18 @@
 
     <!-- ||||||||||||||||||||||| Wind Search Box ||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <dimen name="wl_search_box_pad_1">36dp</dimen>
-    <dimen name="wl_search_box_pad_2">72dp</dimen>
     <dimen name="wl_search_box_padding_ver">8dp</dimen>
 
     <!-- |||||||||||||||||||||||||| Tag Box |||||||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
     <dimen name="wl_tag_box_item_max_with">256dp</dimen>
+
+    <!-- |||||||||||||||||||||||||| Calendar ||||||||||||||||||||||||| -->
+    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <dimen name="wl_calendar_height">440dp</dimen>
+    <dimen name="wl_calendar_date_cell_size">64dp</dimen>
+    <dimen name="wl_calendar_date_text_size">18sp</dimen>
+    <dimen name="wl_calendar_lunar_date_text_size">14sp</dimen>
+    <dimen name="wl_calendar_event_symbol_size">6dp</dimen>
 
 </resources>
