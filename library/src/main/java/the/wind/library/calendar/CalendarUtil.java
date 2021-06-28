@@ -35,12 +35,13 @@ public final class CalendarUtil {
     /**
      * Get all days of month by given date
      *
-     * @param stdCal   standard calendar class, ex {@link android.icu.util.GregorianCalendar}
-     * @param lunarCal lunar calendar, ex {@link android.icu.util.ChineseCalendar}
-     * @param date     given date
+     * @param stdCal       standard calendar class, ex {@link android.icu.util.GregorianCalendar}
+     * @param lunarCal     lunar calendar, ex {@link android.icu.util.ChineseCalendar}
+     * @param date         given date
+     * @param weekStartDay start day of week
      * @return list of date info
      */
-    public static List<DateInfo> getMonthDays(Calendar stdCal, @Nullable Calendar lunarCal, Date date) {
+    public static List<DateInfo> getMonthDays(Calendar stdCal, @Nullable Calendar lunarCal, Date date, WeekStartsOn weekStartDay) {
         Calendar _stdCal = (Calendar) stdCal.clone();
         List<DateInfo> days = new LinkedList<>();
         _stdCal.setTime(date);
@@ -53,11 +54,24 @@ public final class CalendarUtil {
         }
 
         // add missing week-days (null) until the first day of month
-        int firstDay = _stdCal.get(Calendar.DAY_OF_WEEK);
-        if (firstDay == Calendar.SUNDAY) {
-            firstDay = Calendar.SATURDAY + 1;
+        int firstDayOfMonth = _stdCal.get(Calendar.DAY_OF_WEEK);
+        int startDayOfWeek = weekStartDay.getDay();
+        switch (weekStartDay) {
+            case SATURDAY:
+                startDayOfWeek = 0;
+                if (firstDayOfMonth == Calendar.SATURDAY) {
+                    firstDayOfMonth = 0;
+                }
+                break;
+            case MONDAY:
+                if (firstDayOfMonth == Calendar.SUNDAY) {
+                    firstDayOfMonth = Calendar.SATURDAY + 1;
+                }
+                break;
+            default:
+                break;
         }
-        for (int i = Calendar.MONDAY; i < firstDay; i++) {
+        for (int i = startDayOfWeek; i < firstDayOfMonth; i++) {
             days.add(null);
         }
 
@@ -83,13 +97,14 @@ public final class CalendarUtil {
     /**
      * Create link between month
      *
-     * @param stdCal    standard calendar class, ex {@link android.icu.util.GregorianCalendar}
-     * @param lunarCal  lunar calendar, ex {@link android.icu.util.ChineseCalendar}
-     * @param date      select month
-     * @param preLoaded the number of month will be preloaded in the left side and right side of current month
+     * @param stdCal       standard calendar class, ex {@link android.icu.util.GregorianCalendar}
+     * @param lunarCal     lunar calendar, ex {@link android.icu.util.ChineseCalendar}
+     * @param date         select month
+     * @param preLoaded    the number of month will be preloaded in the left side and right side of current month
+     * @param weekStartDay start day of week
      * @return selected month
      */
-    public static MonthInfo createMonthLink(Calendar stdCal, @Nullable Calendar lunarCal, Date date, int preLoaded) {
+    public static MonthInfo createMonthLink(Calendar stdCal, @Nullable Calendar lunarCal, Date date, WeekStartsOn weekStartDay, int preLoaded) {
         // set selected month
         Calendar _stdCal = (Calendar) stdCal.clone();
         _stdCal.setTime(date);
@@ -99,13 +114,13 @@ public final class CalendarUtil {
         _stdCal.set(Calendar.DATE, 1);
 
         // Create link between months
-        MonthInfo cur = new MonthInfo(_stdCal, lunarCal);
+        MonthInfo cur = new MonthInfo(_stdCal, lunarCal, weekStartDay);
         MonthInfo pre = null;
         MonthInfo selectedMonth = null;
         int idx = -preLoaded;
         while (idx <= preLoaded) {
             _stdCal.add(Calendar.MONTH, 1);
-            MonthInfo next = idx < preLoaded ? new MonthInfo(_stdCal, lunarCal) : null;
+            MonthInfo next = idx < preLoaded ? new MonthInfo(_stdCal, lunarCal, weekStartDay) : null;
             if (idx == 0) {
                 selectedMonth = cur;
             }

@@ -10,7 +10,8 @@
         android:id="@+id/_calendarView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:lunar="Chinese" />
+        app:lunar="Chinese"
+        app:weekStartsOn="MONDAY" />
 
     <the.wind.library.view.Button
         android:id="@+id/_highlightBtn"

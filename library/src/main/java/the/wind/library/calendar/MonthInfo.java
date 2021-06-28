@@ -5,6 +5,7 @@ import android.icu.util.Calendar;
 import java.io.Serializable;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**
@@ -30,13 +31,14 @@ public class MonthInfo implements Serializable {
     /**
      * Constructor
      *
-     * @param stdCal   standard calendar class, ex {@link android.icu.util.GregorianCalendar}
-     * @param lunarCal lunar calendar, ex {@link android.icu.util.ChineseCalendar}
+     * @param stdCal       standard calendar class, ex {@link android.icu.util.GregorianCalendar}
+     * @param lunarCal     lunar calendar, ex {@link android.icu.util.ChineseCalendar}
+     * @param weekStartDay start day of week
      */
-    public MonthInfo(Calendar stdCal, @Nullable Calendar lunarCal) {
+    public MonthInfo(Calendar stdCal, @Nullable Calendar lunarCal, @NonNull WeekStartsOn weekStartDay) {
         this.year = stdCal.get(Calendar.YEAR);
         this.month = stdCal.get(Calendar.MONTH);
-        this.dateInfoList = CalendarUtil.getMonthDays(stdCal, lunarCal, stdCal.getTime());
+        this.dateInfoList = CalendarUtil.getMonthDays(stdCal, lunarCal, stdCal.getTime(), weekStartDay);
     }
 
     /* ---------------------- OVERRIDE ----------------------- */

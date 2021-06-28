@@ -13,8 +13,10 @@ final class CalendarInfo {
     private final String todayId;
     public final Set<String> eventDates = new HashSet<>();
     public final Set<String> highlightDates = new HashSet<>();
+
     @Nullable
-    public CalendarType lunarType = null;
+    private CalendarType lunarType = null;
+    private WeekStartsOn weekStartsOn = WeekStartsOn.SUNDAY;
 
     /**
      * Constructor
@@ -74,5 +76,22 @@ final class CalendarInfo {
     @Nullable
     public Calendar getLunarCalendar() {
         return lunarType != null ? lunarType.getValue() : null;
+    }
+
+    /**
+     * @return day that week starts on
+     */
+    @NonNull
+    public WeekStartsOn getWeekStartsOn() {
+        return weekStartsOn;
+    }
+
+    /**
+     * Set day when week starts on
+     *
+     * @param day day of week
+     */
+    public void setWeekStartsOn(@NonNull WeekStartsOn day) {
+        weekStartsOn = day;
     }
 }

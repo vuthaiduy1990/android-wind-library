@@ -146,7 +146,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
      * @param date any date of month
      */
     protected void setSelectedDate(Date date) {
-        selectedMonth = CalendarUtil.createMonthLink(calendar, calendarInfo.getLunarCalendar(), date, preLoaded);
+        selectedMonth = CalendarUtil.createMonthLink(calendar, calendarInfo.getLunarCalendar(), date, calendarInfo.getWeekStartsOn(), preLoaded);
     }
 
     /**
@@ -250,7 +250,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
             // add one more month to the last
             calendar.set(monthIt.getYear(), monthIt.getMonth(), 1);
             calendar.add(Calendar.MONTH, 1);
-            nextMonth = new MonthInfo(calendar, calendarInfo.getLunarCalendar());
+            nextMonth = new MonthInfo(calendar, calendarInfo.getLunarCalendar(), calendarInfo.getWeekStartsOn());
             nextMonth.previous(monthIt);
             monthIt.next(nextMonth);
         } else {
@@ -273,7 +273,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
             // add one more month to the beginning
             calendar.set(monthIt.getYear(), monthIt.getMonth(), 1);
             calendar.add(Calendar.MONTH, -1);
-            preMonth = new MonthInfo(calendar, calendarInfo.getLunarCalendar());
+            preMonth = new MonthInfo(calendar, calendarInfo.getLunarCalendar(), calendarInfo.getWeekStartsOn());
             preMonth.next(monthIt);
             monthIt.previous(preMonth);
         }
