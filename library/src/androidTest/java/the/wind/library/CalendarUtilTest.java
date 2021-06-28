@@ -16,6 +16,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import the.wind.library.calendar.CalendarUtil;
 import the.wind.library.calendar.DateInfo;
 import the.wind.library.calendar.MonthInfo;
+import the.wind.library.calendar.WeekStartsOn;
 
 @RunWith(AndroidJUnit4.class)
 public class CalendarUtilTest {
@@ -31,7 +32,7 @@ public class CalendarUtilTest {
         Iterator<DateInfo> dateIt;
         for (int i = 0; i < monthDays.length; i++) {
             cal.set(Calendar.MONTH, i);
-            Collection<DateInfo> dates = CalendarUtil.getMonthDays(cal, null, cal.getTime());
+            Collection<DateInfo> dates = CalendarUtil.getMonthDays(cal, null, cal.getTime(), WeekStartsOn.MONDAY);
             Assert.assertEquals(42, dates.size());
             dateIt = dates.iterator();
             while (dateIt.hasNext()) {
@@ -49,7 +50,7 @@ public class CalendarUtilTest {
         cal.set(2021, Calendar.JANUARY, 1);
         int year = cal.get(Calendar.YEAR);
         while (cal.get(Calendar.YEAR) == year) {
-            MonthInfo selected = CalendarUtil.createMonthLink(cal, null, cal.getTime(), 2);
+            MonthInfo selected = CalendarUtil.createMonthLink(cal, null, cal.getTime(), WeekStartsOn.MONDAY, 2);
             Assert.assertEquals(year, selected.getYear());
             Assert.assertEquals(cal.get(Calendar.MONTH), selected.getMonth());
 

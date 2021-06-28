@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import the.wind.library.sample.R;
 public class CalendarPage extends Fragment {
 
     private WindCalendar _calendarView;
+    private TextView _monthInfoText;
     private boolean highlighted;
     private final Calendar cal = Calendar.getInstance();
     private final List<String> neighborDates = new ArrayList<>();
@@ -39,6 +41,7 @@ public class CalendarPage extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         _calendarView = view.findViewById(R.id._calendarView);
+        _monthInfoText = view.findViewById(R.id._monthInfoText);
 
         // Set event dates
         cal.setTime(new Date());
@@ -60,7 +63,8 @@ public class CalendarPage extends Fragment {
         }).setOnMonthPageChangeListener(new WindCalendar.OnMonthPageChangeListener() {
             @Override
             public void onChange(MonthViewFragment oldPage, MonthViewFragment newPage) {
-                Toast.makeText(getContext(), oldPage.getMonthInfo().getMonth() + " - " + newPage.getMonthInfo().getMonth(), Toast.LENGTH_SHORT).show();
+                String month = newPage.getMonthInfo().getYear() + "/" + (newPage.getMonthInfo().getMonth() + 1);
+                _monthInfoText.setText(month);
             }
         });
 
