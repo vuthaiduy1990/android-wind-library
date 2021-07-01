@@ -19,7 +19,7 @@ import the.wind.library.anim.PageTransformerType;
 import the.wind.library.calendar.CalendarUtil;
 import the.wind.library.calendar.DateInfo;
 import the.wind.library.calendar.MonthAdapter;
-import the.wind.library.calendar.MonthViewFragment;
+import the.wind.library.calendar.MonthInfo;
 import the.wind.library.calendar.WindCalendar;
 import the.wind.library.sample.R;
 
@@ -62,8 +62,8 @@ public class CalendarPage extends Fragment {
             }
         }).setOnMonthPageChangeListener(new WindCalendar.OnMonthPageChangeListener() {
             @Override
-            public void onChange(MonthViewFragment oldPage, MonthViewFragment newPage) {
-                String month = newPage.getMonthInfo().getYear() + "/" + (newPage.getMonthInfo().getMonth() + 1);
+            public void onChange(@Nullable MonthInfo previousMonth, MonthInfo currentMonth) {
+                String month = currentMonth.getYear() + "/" + (currentMonth.getMonth() + 1);
                 _monthInfoText.setText(month);
             }
         });
@@ -78,6 +78,14 @@ public class CalendarPage extends Fragment {
                     _calendarView.highlightDates(neighborDates);
                 }
                 highlighted = !highlighted;
+            }
+        });
+
+        // Set today
+        view.findViewById(R.id._todayBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _calendarView.setSelectedDate(new Date());
             }
         });
 

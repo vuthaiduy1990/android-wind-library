@@ -590,6 +590,15 @@ public class WindCalendar extends LinearLayout {
         }
     }
 
+    /**
+     * Set selected date
+     *
+     * @param date selected date
+     */
+    public void setSelectedDate(Date date) {
+        _calendarViewPager.setSelectedDate(date);
+    }
+
     /* ---------------------- INNER CLASS -------------------- */
 
     /**
@@ -742,12 +751,12 @@ public class WindCalendar extends LinearLayout {
      */
     public interface OnMonthPageChangeListener {
         /**
-         * Trigger when user swipe to go to previous or next month page
+         * Trigger when user swipe to go to previous or next month
          *
-         * @param oldPage previous page
-         * @param newPage current selected page
+         * @param previousMonth previous month
+         * @param currentMonth  current selected month
          */
-        void onChange(MonthViewFragment oldPage, MonthViewFragment newPage);
+        void onChange(MonthInfo previousMonth, MonthInfo currentMonth);
     }
 
 }

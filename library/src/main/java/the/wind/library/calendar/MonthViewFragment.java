@@ -96,6 +96,7 @@ public class MonthViewFragment extends Fragment {
         _rvDateGridView = rootView.findViewById(R.id._rvDateGridView);
         _rvDateGridView.setLayoutAnimation(null);
         _rvDateGridView.setLayoutManager(new GridLayoutManager(getContext(), 7));
+        _rvDateGridView.setThreshold(42);
         monthAdapter = new MonthAdapter(monthInfo, calendarInfo, calendarStyle, calendarEvent);
         _rvDateGridView.setAdapter(monthAdapter);
     }

@@ -21,12 +21,32 @@
         android:textColor="@color/wl_text"
         android:textSize="@dimen/wl_text_big" />
 
-    <the.wind.library.view.Button
-        android:id="@+id/_highlightBtn"
-        android:layout_width="wrap_content"
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/wl_spacing_level_3"
-        app:text="Highlight"
-        app:type="HIGHLIGHT" />
+        android:orientation="horizontal"
+        app:alignContent="stretch"
+        app:alignItems="stretch"
+        app:flexWrap="wrap"
+        app:justifyContent="space_between">
+
+        <the.wind.library.view.Button
+            android:id="@+id/_todayBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/wl_spacing_level_3"
+            app:customIcon="@drawable/wl_ic_reload"
+            app:text="Today"
+            app:type="PRIMARY" />
+
+        <the.wind.library.view.Button
+            android:id="@+id/_highlightBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/wl_spacing_level_3"
+            app:text="Highlight"
+            app:type="HIGHLIGHT" />
+
+    </com.google.android.flexbox.FlexboxLayout>
 
 </LinearLayout>

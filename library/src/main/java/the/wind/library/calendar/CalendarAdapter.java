@@ -146,6 +146,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
      * @param date any date of month
      */
     protected void setSelectedDate(Date date) {
+        currentPosition = getCenterSlidePosition();
         selectedMonth = CalendarUtil.createMonthLink(calendar, calendarInfo.getLunarCalendar(), date, calendarInfo.getWeekStartsOn(), preLoaded);
     }
 
@@ -161,7 +162,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
     /**
      * @return position of the center slide
      */
-    public int getCenterSlidePosition() {
+    private int getCenterSlidePosition() {
         return MAX_SLIDE / 2;
     }
 
@@ -228,7 +229,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
      * @return position after slide to
      */
     protected int slide(int position) {
-        if (selectedMonth == null) return currentPosition;
+        if (selectedMonth == null || currentPosition == position) return currentPosition;
         boolean up = position > currentPosition;
         if (up) {
             currentPosition++;

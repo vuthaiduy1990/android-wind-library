@@ -44,10 +44,10 @@ public class CalendarViewPager extends ViewPager {
             public void onPageSelected(int position) {
                 if (getAdapter() != null) {
                     CalendarAdapter adapter = (CalendarAdapter) getAdapter();
-                    MonthViewFragment prePage = adapter.getCurrentPage();
+                    MonthInfo prePage = adapter.getSelectedMonth();
                     adapter.slide(position);
                     if (calendarEvent.monthPageChangeListener != null) {
-                        calendarEvent.monthPageChangeListener.onChange(prePage, adapter.getCurrentPage());
+                        calendarEvent.monthPageChangeListener.onChange(prePage, adapter.getSelectedMonth());
                     }
                 }
             }
@@ -73,7 +73,7 @@ public class CalendarViewPager extends ViewPager {
     @Override
     public void setCurrentItem(int item) {
         if (item < 0 && getAdapter() != null) {
-            super.setCurrentItem(((CalendarAdapter) getAdapter()).getCenterSlidePosition());
+            super.setCurrentItem(((CalendarAdapter) getAdapter()).getCurrentPagePosition());
             return;
         }
         super.setCurrentItem(item);
@@ -91,14 +91,14 @@ public class CalendarViewPager extends ViewPager {
      *
      * @param date selected date
      */
-    public void setSelectedDate(Date date) {
-        setCurrentItem(-1); // reset current item to the middle of calendar slideshow
+    void setSelectedDate(Date date) {
         CalendarAdapter adapter = (CalendarAdapter) getAdapter();
         if (adapter != null) {
             adapter.setSelectedDate(date);
         } else {
             throw new IllegalArgumentException("adapter does not exist");
         }
+        setCurrentItem(-1); // reset current item to the middle of calendar slideshow
     }
 
     /**

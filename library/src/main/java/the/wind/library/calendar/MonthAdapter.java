@@ -176,6 +176,7 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
                 itemView.setVisibility(View.GONE);
                 return;
             }
+            itemView.setVisibility(View.VISIBLE);
             String dateId = data.getId();
             boolean hasEvent = calInfo.hasEvent(dateId);
             boolean isToday = calInfo.isToday(dateId);
