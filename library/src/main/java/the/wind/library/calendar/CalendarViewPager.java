@@ -112,5 +112,16 @@ public class CalendarViewPager extends ViewPager {
 
     /* ---------------------- METHOD ------------------------- */
 
+    /**
+     * Refresh adapter
+     *
+     * @param adapter calendar adapter
+     */
+    void refreshAdapter(CalendarAdapter adapter) {
+        adapter.resetPositionToZero();
+        setAdapter(adapter);
+        setSelectedDate(new Date());
+    }
+
     /* ---------------------- INNER CLASS -------------------- */
 }

@@ -24,8 +24,10 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import the.wind.library.CWBundle;
 import the.wind.library.R;
 import the.wind.library.anim.PageTransformerType;
@@ -51,14 +53,45 @@ public class WindCalendar extends LinearLayout {
     private final ViewGroup _rootView;
     private final CalendarViewPager _calendarViewPager;
     private final ViewGroup _weekDayPanelView;
-
-    // model
-    private final CalendarStyle style = CalendarStyle.config();
     // bundle data
     private final CWBundle bundle = new CWBundle();
     private View _weekDayTouchedView;
+
+    // model
+    private final CalendarStyle style = CalendarStyle.config();
     private final CalendarInfo info = new CalendarInfo(new GregorianCalendar());
     private final CalendarEvent eventListener = new CalendarEvent();
+    private final OnTouchListener weekDayItemTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            v.performClick();
+            _weekDayTouchedView = v;
+            int dayValue = (Integer) v.getTag();
+
+            switch (event.getActionMasked()) {
+                case MotionEvent.ACTION_DOWN:
+                    if (eventListener.weekDayItemTouchDownListener != null) {
+                        if (eventListener.weekDayItemTouchDownListener.onTouchDown(v, dayValue)) {
+                            break;
+                        }
+                    }
+                    v.setBackgroundResource(style.weekDayHoverBackground());
+                    break;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    if (eventListener.weekDayItemTouchUpListener != null) {
+                        if (eventListener.weekDayItemTouchUpListener.onTouchUp(v, dayValue)) {
+                            break;
+                        }
+                    }
+                    v.setBackground(null);
+                    break;
+            }
+            weekDateItemGestureDetector.onTouchEvent(event);
+            return true;
+        }
+    };
+
     // Gesture detector
     private final GestureDetector weekDateItemGestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
         @Override
@@ -244,11 +277,8 @@ public class WindCalendar extends LinearLayout {
                 .dateHighlightBackground(dateHighlightBackground)
                 .dateHoverBackground(dateHoverBackground);
 
-        // Create month grid view
-        createMonthViewPanel();
-
-        // create week day panel view
-        createWeekDayPanel();
+        // Init view
+        initView();
     }
 
     /* ---------------------- OVERRIDE ----------------------- */
@@ -353,6 +383,34 @@ public class WindCalendar extends LinearLayout {
      */
     public void clearEvents() {
         info.eventDates.clear();
+    }
+
+    /**
+     * Set week days string. The day should start from Monday.
+     * For example, new String[] {"Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"}
+     *
+     * @param weekDays week days
+     */
+    public void setWeekDayString(String[] weekDays) {
+        style.weekDays(weekDays);
+    }
+
+    /**
+     * Set lunar calendar type
+     *
+     * @param lunarType lunar calendar type
+     */
+    public void setLunarType(CalendarType lunarType) {
+        info.setLunarType(lunarType);
+    }
+
+    /**
+     * Set week start on option
+     *
+     * @param day start day of week
+     */
+    public void setWeekStartsOn(WeekStartsOn day) {
+        info.setWeekStartsOn(day);
     }
 
     /* -------------------- Event Listener ------------------- */
@@ -481,13 +539,41 @@ public class WindCalendar extends LinearLayout {
     /* ---------------------- METHOD ------------------------- */
 
     /**
+     * rebuild the calendar
+     */
+    public void rebuild() {
+        // re-create week day panel
+        createWeekDayPanel();
+
+        // Rebuild month view panel
+        FragmentTransaction fragTrans = fragManager.beginTransaction();
+        for (Fragment frag : adapter.getFragmentCache().values()) {
+            fragTrans.remove(frag);
+        }
+        fragTrans.commitNow();
+        adapter.getFragmentCache().clear();
+        _calendarViewPager.refreshAdapter(adapter);
+    }
+
+    /**
+     * Init view
+     */
+    private void initView() {
+        createMonthViewPanel();
+        createWeekDayPanel();
+    }
+
+    /**
      * Create month view panel
      */
     private void createMonthViewPanel() {
+        // Create new adapter
         adapter = new CalendarAdapter(fragManager, new GregorianCalendar());
         adapter.setCalendarStyle(style);
         adapter.setCalendarInfo(info);
         adapter.setCalendarEvent(eventListener);
+
+        // Configure view pager with adapter
         _calendarViewPager.setCalendarEvent(eventListener);
         _calendarViewPager.setAdapter(adapter);
         _calendarViewPager.setSelectedDate(new Date()); // must be set after setting adapter
@@ -499,6 +585,7 @@ public class WindCalendar extends LinearLayout {
      * Create week date panel view
      */
     private void createWeekDayPanel() {
+        _weekDayPanelView.removeAllViews();
         _weekDayPanelView.setBackgroundResource(style.weekDayPanelBackground());
         Integer[] weekDays;
         switch (info.getWeekStartsOn()) {
@@ -519,36 +606,7 @@ public class WindCalendar extends LinearLayout {
         for (Integer day : weekDays) {
             View itemView = inflater.inflate(R.layout.wl_calendar_week_day_view, _weekDayPanelView, false);
             itemView.setTag(day);
-            itemView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    v.performClick();
-                    _weekDayTouchedView = v;
-                    int dayValue = (Integer) v.getTag();
-
-                    switch (event.getActionMasked()) {
-                        case MotionEvent.ACTION_DOWN:
-                            if (eventListener.weekDayItemTouchDownListener != null) {
-                                if (eventListener.weekDayItemTouchDownListener.onTouchDown(v, dayValue)) {
-                                    break;
-                                }
-                            }
-                            v.setBackgroundResource(style.weekDayHoverBackground());
-                            break;
-                        case MotionEvent.ACTION_UP:
-                        case MotionEvent.ACTION_CANCEL:
-                            if (eventListener.weekDayItemTouchUpListener != null) {
-                                if (eventListener.weekDayItemTouchUpListener.onTouchUp(v, dayValue)) {
-                                    break;
-                                }
-                            }
-                            v.setBackground(null);
-                            break;
-                    }
-                    weekDateItemGestureDetector.onTouchEvent(event);
-                    return true;
-                }
-            });
+            itemView.setOnTouchListener(weekDayItemTouchListener);
             TextView _dayTextView = itemView.findViewById(R.id._dayTextView);
             Integer dayIdx = WEEK_DAY_MAP.get(day);
             _dayTextView.setText(weekDayTexts[dayIdx != null ? dayIdx : 0]);

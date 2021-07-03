@@ -47,6 +47,39 @@
             app:text="Highlight"
             app:type="HIGHLIGHT" />
 
+        <the.wind.library.view.Button
+            android:id="@+id/_IslamicLunarCalendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/wl_spacing_level_3"
+            app:text="Islamic Lunar"
+            app:type="INFO" />
+
+        <the.wind.library.view.Button
+            android:id="@+id/_ChineseLunarCalendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/wl_spacing_level_3"
+            app:text="Chinese Lunar"
+            app:type="INFO" />
+
+        <the.wind.library.view.Button
+            android:id="@+id/_startOnMonday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/wl_spacing_level_3"
+            app:text="Week starts on Monday"
+            app:type="SUCCESS" />
+
+        <the.wind.library.view.Button
+            android:id="@+id/_startOnSunday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/wl_spacing_level_3"
+            app:text="Week starts on Sunday"
+            app:type="SUCCESS" />
+
+
     </com.google.android.flexbox.FlexboxLayout>
 
 </LinearLayout>

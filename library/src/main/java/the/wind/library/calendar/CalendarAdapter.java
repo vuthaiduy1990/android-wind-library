@@ -185,6 +185,13 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
     }
 
     /**
+     * Reset page position to zero
+     */
+    void resetPositionToZero() {
+        currentPosition = 0;
+    }
+
+    /**
      * Get current month
      *
      * @return current month

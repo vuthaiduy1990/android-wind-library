@@ -59,7 +59,7 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
                         return;
                     }
                 }
-                vh.bindData(data, calInfo);
+                vh.bindData(data);
             }
         });
 
@@ -102,6 +102,7 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.wl_calendard_date_view, parent, false);
         ViewHolder holder = new ViewHolder(view);
         holder.setCalStyle(calStyle);
+        holder.setCalInfo(calInfo);
         return holder;
     }
 
@@ -111,7 +112,7 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
         if (holder instanceof ViewHolder) {
             ViewHolder _holder = (ViewHolder) holder;
             DateInfo data = getData(position);
-            _holder.bindData(data, calInfo);
+            _holder.bindData(data);
         }
     }
 
@@ -147,8 +148,9 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
         private final TextView _lunarDateTextView;
         private final TextView _eventSymbol;
 
-        // styling
+        // styling and calendar extra info
         private CalendarStyle calStyle;
+        private CalendarInfo calInfo;
 
         /**
          * Constructor
@@ -167,10 +169,9 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
         /**
          * Bind date
          *
-         * @param data    date info data
-         * @param calInfo calendar info data
+         * @param data date info data
          */
-        protected void bindData(DateInfo data, CalendarInfo calInfo) {
+        protected void bindData(DateInfo data) {
             super.bindData(data);
             if (data == null) {
                 itemView.setVisibility(View.GONE);
@@ -242,12 +243,30 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
         }
 
         /**
+         * Set calendar extra info
+         *
+         * @param calInfo calendar extra info
+         */
+        private void setCalInfo(CalendarInfo calInfo) {
+            this.calInfo = calInfo;
+        }
+
+        /**
          * Touch down on item
          */
         private void touchDown() {
             if (itemView.getBackground() == null) {
                 itemView.setBackgroundResource(calStyle.dateHoverBackground());
             }
+        }
+
+        /**
+         * Check if date is today or not
+         *
+         * @return true if selected date is today
+         */
+        private boolean isToday() {
+            return calInfo.isToday(getAdapterData().getId());
         }
     }
 }

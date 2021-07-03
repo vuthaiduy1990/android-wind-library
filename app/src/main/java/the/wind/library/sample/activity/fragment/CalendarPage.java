@@ -16,10 +16,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import the.wind.library.anim.PageTransformerType;
+import the.wind.library.calendar.CalendarType;
 import the.wind.library.calendar.CalendarUtil;
 import the.wind.library.calendar.DateInfo;
 import the.wind.library.calendar.MonthAdapter;
 import the.wind.library.calendar.MonthInfo;
+import the.wind.library.calendar.WeekStartsOn;
 import the.wind.library.calendar.WindCalendar;
 import the.wind.library.sample.R;
 
@@ -52,7 +54,6 @@ public class CalendarPage extends Fragment {
         }
         _calendarView.addEventDate(neighborDates);
 
-
         // set date click event
         _calendarView.setOnDateItemClickListener(new WindCalendar.OnDateItemClickListener() {
             @Override
@@ -65,6 +66,12 @@ public class CalendarPage extends Fragment {
             public void onChange(@Nullable MonthInfo previousMonth, MonthInfo currentMonth) {
                 String month = currentMonth.getYear() + "/" + (currentMonth.getMonth() + 1);
                 _monthInfoText.setText(month);
+            }
+        }).setOnWeekDayItemClickListener(new WindCalendar.OnWeekDayItemClickListener() {
+            @Override
+            public boolean onClick(View view, int dayOfWeek) {
+                Toast.makeText(getContext(), String.format("%s", dayOfWeek), Toast.LENGTH_SHORT).show();
+                return false;
             }
         });
 
@@ -86,6 +93,38 @@ public class CalendarPage extends Fragment {
             @Override
             public void onClick(View v) {
                 _calendarView.setSelectedDate(new Date());
+            }
+        });
+
+        // Change Lunar type
+        view.findViewById(R.id._IslamicLunarCalendar).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _calendarView.setLunarType(CalendarType.Islamic);
+                _calendarView.rebuild();
+            }
+        });
+        view.findViewById(R.id._ChineseLunarCalendar).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _calendarView.setLunarType(CalendarType.Chinese);
+                _calendarView.rebuild();
+            }
+        });
+
+        // Set weeks start on
+        view.findViewById(R.id._startOnMonday).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _calendarView.setWeekStartsOn(WeekStartsOn.MONDAY);
+                _calendarView.rebuild();
+            }
+        });
+        view.findViewById(R.id._startOnSunday).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _calendarView.setWeekStartsOn(WeekStartsOn.SUNDAY);
+                _calendarView.rebuild();
             }
         });
 
