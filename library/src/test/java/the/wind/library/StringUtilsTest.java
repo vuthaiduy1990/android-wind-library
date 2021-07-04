@@ -225,7 +225,7 @@ public class StringUtilsTest {
             };
             for (int len : lengths) {
                 String random = CWStringUtils.random(len);
-                System.out.println(random);
+                // System.out.println(random);
                 Assert.assertTrue(CWStreamUtils.stringToBytes(random).length >= len);
             }
         }

@@ -30,10 +30,6 @@ dependencies {
     // Android library
     api 'androidx.recyclerview:recyclerview:1.2.1'
 
-    // Apache Commons Codec
-    // https://commons.apache.org/proper/commons-codec/
-    api 'commons-codec:commons-codec:20041127.091804'
-
     // G-SON library
     // https://github.com/google/gson
     api 'com.google.code.gson:gson:2.8.6'

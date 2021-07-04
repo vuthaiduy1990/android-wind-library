@@ -1,12 +1,18 @@
 package the.wind.library;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
+import java.io.File;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,20 +20,47 @@ import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 
 import the.wind.library.utils.CWCryptoUtils;
+import the.wind.library.utils.CWFileUtils;
 import the.wind.library.utils.CWStreamUtils;
 
+
 public class CryptoUtilsTest {
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+
+    private File testFile;
+    private File publicKeyFile;
+    private File privateKeyFile;
+    private File sessionKeyFile;
+    private File appKeyFile;
+
+    @Before
+    public void beforeEachTest() {
+        testFile = new File(folder.getRoot(), "crypto.test");
+        publicKeyFile = new File(folder.getRoot(), "publicKeyFile");
+        privateKeyFile = new File(folder.getRoot(), "privateKeyFile");
+        sessionKeyFile = new File(folder.getRoot(), "sessionKeyFile");
+        appKeyFile = new File(folder.getRoot(), "appKeyFile");
+    }
+
+    @After
+    public void afterEachTest() {
+        CWFileUtils.deleteFile(testFile);
+        CWFileUtils.deleteFile(publicKeyFile);
+        CWFileUtils.deleteFile(privateKeyFile);
+        CWFileUtils.deleteFile(sessionKeyFile);
+        CWFileUtils.deleteFile(appKeyFile);
+    }
 
     @Test
     public void encryptDecryptString() throws Exception {
-        String secretKey = "v56JBdk75^&*GU156OJ^*(x"; // any length
+        String seed = "v56JBdk75^&*GU156OJ^*(x"; // any length
+        byte[] secretKey = CWCryptoUtils.generateSymmetricKey(seed, 16).getEncoded();
 
         // Testcase 1: encrypt/decrypt short string
         {
             String origin = "Color the wind";
             byte[] encrypted = CWCryptoUtils.encrypt(secretKey, CWStreamUtils.stringToBytes(origin));
-            System.out.println("encryptDecryptString - case 1 - base64: " + CWCryptoUtils.encode64(encrypted));
-            System.out.println("encryptDecryptString - case 1: " + CWStreamUtils.bytesToString(encrypted));
             byte[] decrypted = CWCryptoUtils.decrypt(secretKey, encrypted);
             Assert.assertEquals(origin, CWStreamUtils.bytesToString(decrypted));
         }
@@ -44,7 +77,6 @@ public class CryptoUtilsTest {
                     "had applied numerous fixes and patches which were not applied to the Commons HttpClient Base64." +
                     "Different subprojects had differing implementations at various levels of compliance with the";
             byte[] encrypted = CWCryptoUtils.encrypt(secretKey, CWStreamUtils.stringToBytes(origin));
-            System.out.println("encryptDecryptString - case 2: " + CWCryptoUtils.encode64(encrypted));
             byte[] decrypted = CWCryptoUtils.decrypt(secretKey, encrypted);
             Assert.assertEquals(origin, CWStreamUtils.bytesToString(decrypted));
         }
@@ -54,9 +86,8 @@ public class CryptoUtilsTest {
             String origin = "Color the wind";
             // wrong secret key
             try {
-                byte[] encrypted = CWCryptoUtils.encrypt("XXX-XXX-XXX-XXX.", CWStreamUtils.stringToBytes(origin));
-                System.out.println("encryptDecryptString - case 3: " + CWCryptoUtils.encode64(encrypted));
-                CWCryptoUtils.decrypt("ZZZ-ZZZ-ZZZ", encrypted);
+                byte[] encrypted = CWCryptoUtils.encrypt(CWStreamUtils.stringToBytes("XXX-XXX-XXX-XXX."), CWStreamUtils.stringToBytes(origin));
+                CWCryptoUtils.decrypt(CWStreamUtils.stringToBytes("ZZZ-ZZZ-ZZZ"), encrypted);
             } catch (Exception ex) {
                 Assert.assertTrue("Wrong secret key - " + ex.getMessage(), true);
             }
@@ -66,7 +97,6 @@ public class CryptoUtilsTest {
         {
             String origin = "Tô màu cho gió";
             byte[] encrypted = CWCryptoUtils.encrypt(secretKey, CWStreamUtils.stringToBytes(origin));
-            System.out.println("encryptDecryptString - case 4: " + CWCryptoUtils.encode64(encrypted));
             byte[] decrypted = CWCryptoUtils.decrypt(secretKey, encrypted);
             Assert.assertEquals(origin, CWStreamUtils.bytesToString(decrypted));
         }
@@ -75,7 +105,6 @@ public class CryptoUtilsTest {
         {
             String origin = "風を彩る。";
             byte[] encrypted = CWCryptoUtils.encrypt(secretKey, CWStreamUtils.stringToBytes(origin));
-            System.out.println("encryptDecryptString - case 5: " + CWCryptoUtils.encode64(encrypted));
             byte[] decrypted = CWCryptoUtils.decrypt(secretKey, encrypted);
             Assert.assertEquals(origin, CWStreamUtils.bytesToString(decrypted));
         }
@@ -89,14 +118,6 @@ public class CryptoUtilsTest {
                 Assert.assertEquals(origin, CWStreamUtils.bytesToString(decrypted));
             }
         }
-    }
-
-    @Test
-    public void encodeDecode64() {
-        String secret = "You never know???";
-        String encode = CWCryptoUtils.encode64(CWStreamUtils.stringToBytes(secret));
-        System.out.println("encode string: " + encode);
-        Assert.assertEquals(secret, CWStreamUtils.bytesToString(CWCryptoUtils.decode64(encode)));
     }
 
     @Test
@@ -131,27 +152,24 @@ public class CryptoUtilsTest {
     @Test
     public void genSymmetricKey() {
         // Testcase 1: generate symmetric keys with the same given seed and bits
-        // Expect the keys have the same value
+        // Expect the keys have different value
         {
             String seed = "$^IP)O_}+BbhGI:^&*DTR";
             SecretKey key = CWCryptoUtils.generateSymmetricKey(seed, 16); // 128 bits
-            String keyBase64 = CWCryptoUtils.encode64(key.getEncoded());
-            System.out.println("generateSymmetricKey - case 1 - non base64: " + CWStreamUtils.bytesToString(key.getEncoded()));
-            System.out.println("generateSymmetricKey - case 1 - base64: " + keyBase64);
+            byte[] encode = key.getEncoded();
 
             // check value
-            Assert.assertEquals("GVOSVhedFBgAPC/NgDjlwA==", keyBase64);
-            Assert.assertNotEquals(keyBase64, CWCryptoUtils.encode64(CWStreamUtils.stringToBytes(seed)));
+            Assert.assertFalse(Arrays.equals(encode, CWStreamUtils.stringToBytes(seed)));
+
             // check size
             Assert.assertEquals(16, key.getEncoded().length);
-            Assert.assertEquals(16, CWCryptoUtils.decode64(keyBase64).length);
 
             // test generate key 100 times
             for (int i = 0; i < 1000; i++) {
                 SecretKey sameKey = CWCryptoUtils.generateSymmetricKey(seed, 16);
 
                 Assert.assertEquals(16, sameKey.getEncoded().length);
-                Assert.assertEquals(keyBase64, CWCryptoUtils.encode64(sameKey.getEncoded()));
+                Assert.assertFalse(Arrays.equals(encode, sameKey.getEncoded()));
             }
         }
 
@@ -166,9 +184,7 @@ public class CryptoUtilsTest {
 
                 Assert.assertEquals(16, key1.getEncoded().length);
                 Assert.assertEquals(16, key2.getEncoded().length);
-                Assert.assertNotEquals(
-                        CWCryptoUtils.encode64(key1.getEncoded()),
-                        CWCryptoUtils.encode64(key2.getEncoded()));
+                Assert.assertNotEquals(key1.getEncoded(), key2.getEncoded());
             }
         }
 
@@ -182,35 +198,31 @@ public class CryptoUtilsTest {
 
                 Assert.assertEquals(16, key1.getEncoded().length);
                 Assert.assertEquals(32, key2.getEncoded().length);
-                Assert.assertNotEquals(
-                        CWCryptoUtils.encode64(key1.getEncoded()),
-                        CWCryptoUtils.encode64(key2.getEncoded()));
+                Assert.assertNotEquals(key1.getEncoded(), key2.getEncoded());
             }
         }
 
         // Testcase 4: generate random asymmetric key without the seed
         // Expect the keys have different value
         {
-            List<String> keyList = new LinkedList<>();
+            List<byte[]> keyList = new LinkedList<>();
             for (int i = 0; i < 1000; i++) {
                 SecretKey key = CWCryptoUtils.generateSymmetricKey(null, 16);
-                String base64 = CWCryptoUtils.encode64(key.getEncoded());
 
-                Assert.assertFalse(keyList.contains(base64));
-                keyList.add(base64);
+                Assert.assertFalse(keyList.contains(key.getEncoded()));
+                keyList.add(key.getEncoded());
             }
         }
 
         // Testcase 5: generate asymmetric key with given key size (bits)
         {
-            List<String> keyList = new LinkedList<>();
+            List<byte[]> keyList = new LinkedList<>();
             for (int i = 1; i <= 32; i++) {
                 SecretKey key = CWCryptoUtils.generateSymmetricKey(null, i);
-                String base64 = CWCryptoUtils.encode64(key.getEncoded());
 
                 Assert.assertEquals(i, key.getEncoded().length);
-                Assert.assertFalse(keyList.contains(base64));
-                keyList.add(base64);
+                Assert.assertFalse(keyList.contains(key.getEncoded()));
+                keyList.add(key.getEncoded());
             }
         }
     }
@@ -218,31 +230,23 @@ public class CryptoUtilsTest {
     @Test
     public void generateAsymmetricKey() throws NoSuchAlgorithmException {
         KeyPair keyPair = CWCryptoUtils.generateAsymmetricKey();
-
-        String publicKey = CWCryptoUtils.encode64(keyPair.getPublic().getEncoded());
-        String privateKey = CWCryptoUtils.encode64(keyPair.getPrivate().getEncoded());
-        System.out.println("public key format: " + keyPair.getPublic().getFormat());
-        System.out.println("public key: " + publicKey);
-        System.out.println("private key format: " + keyPair.getPrivate().getFormat());
-        System.out.println("private key: " + privateKey);
-
-        // Testcase: private/public key remain the same after encoding/decoding
-        Assert.assertArrayEquals(keyPair.getPublic().getEncoded(), CWCryptoUtils.decode64(publicKey));
-        Assert.assertArrayEquals(keyPair.getPrivate().getEncoded(), CWCryptoUtils.decode64(privateKey));
+        byte[] publicKey = keyPair.getPublic().getEncoded();
+        byte[] privateKey = keyPair.getPrivate().getEncoded();
 
         // private/public key generated each time is unique
         for (int i = 0; i < 100; i++) {
             KeyPair newKeyPair = CWCryptoUtils.generateAsymmetricKey();
-            Assert.assertNotEquals(publicKey, CWCryptoUtils.encode64(newKeyPair.getPublic().getEncoded()));
-            Assert.assertNotEquals(privateKey, CWCryptoUtils.encode64(newKeyPair.getPrivate().getEncoded()));
+            Assert.assertFalse(Arrays.equals(publicKey, newKeyPair.getPublic().getEncoded()));
+            Assert.assertFalse(Arrays.equals(privateKey, newKeyPair.getPrivate().getEncoded()));
         }
     }
 
     @Test
     public void decodePubicKey() throws Exception {
         KeyPair keyPair = CWCryptoUtils.generateAsymmetricKey();
-        String publicKey = CWCryptoUtils.encode64(keyPair.getPublic().getEncoded());
-        PublicKey pk = CWCryptoUtils.decodePubicKey(CWCryptoUtils.decode64(publicKey));
+
+        CWFileUtils.write(keyPair.getPublic().getEncoded(), testFile);
+        PublicKey pk = CWCryptoUtils.decodePubicKey(CWFileUtils.read(testFile));
         Assert.assertNotNull(pk);
         Assert.assertArrayEquals(keyPair.getPublic().getEncoded(), pk.getEncoded());
     }
@@ -250,8 +254,8 @@ public class CryptoUtilsTest {
     @Test
     public void decodePrivateKey() throws Exception {
         KeyPair keyPair = CWCryptoUtils.generateAsymmetricKey();
-        String privateKey = CWCryptoUtils.encode64(keyPair.getPrivate().getEncoded());
-        PrivateKey pk = CWCryptoUtils.decodePrivateKey(CWCryptoUtils.decode64(privateKey));
+        CWFileUtils.write(keyPair.getPrivate().getEncoded(), testFile);
+        PrivateKey pk = CWCryptoUtils.decodePrivateKey(CWFileUtils.read(testFile));
         Assert.assertNotNull(pk);
         Assert.assertArrayEquals(keyPair.getPrivate().getEncoded(), pk.getEncoded());
     }
@@ -261,15 +265,12 @@ public class CryptoUtilsTest {
         // generate 24 bytes random data string
         byte[] originData = CWCryptoUtils.generateSymmetricKey(null, 24).getEncoded();
         KeyPair asymmetricKey = CWCryptoUtils.generateAsymmetricKey();
-        byte[] encryptedData = CWCryptoUtils.encrypt(asymmetricKey.getPublic(), originData);
+        byte[] encryptedData = CWCryptoUtils.encrypt(asymmetricKey.getPublic(), originData); // encrypt with public data
 
         // Testcase: decrypt data using private key
         {
             byte[] decryptedData = CWCryptoUtils.decrypt(asymmetricKey.getPrivate(), encryptedData);
             Assert.assertArrayEquals(originData, decryptedData);
-            Assert.assertEquals(
-                    CWStreamUtils.bytesToString(originData),
-                    CWStreamUtils.bytesToString(decryptedData));
         }
 
         // Testcase: cannot decrypt data using public key
@@ -298,6 +299,13 @@ public class CryptoUtilsTest {
         }
     }
 
+    /**
+     * The basic idea is
+     * 1. use app secret key to encrypt private key.
+     * 2. Use public key to encrypt session key.
+     * 3. Use session key to encrypt data
+     * 4. To decrypt data, we need to app secret key -> private key -> session key -> data
+     */
     @Test
     public void encryptDecryptUsingSessionKey() throws Exception {
         String originText = "Codec was formed as an attempt to focus development effort on one " +
@@ -312,36 +320,42 @@ public class CryptoUtilsTest {
 
         // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         // 1. The app secret key which remains unchanged forever
-        String appKey = "BVST^&Y()I#)_MKLBNDB164T&^*Y)i0-r";
+        {
+            SecretKey appKey = CWCryptoUtils.generateSymmetricKey("BVST^&Y()I#)_MKLBNDB164T&^*Y)i0-r", 16);
+            CWFileUtils.write(appKey.getEncoded(), appKeyFile);
+        }
 
         // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         // 2. Generate asymmetric key (public/private key)
-        // These two key should be remain unchanged forever
-        KeyPair asymmetricKey = CWCryptoUtils.generateAsymmetricKey();
-        // Use base64 to encode public key only
-        String publicKeyString = CWCryptoUtils.encode64(asymmetricKey.getPublic().getEncoded());
-        // While for private key, use app secret key to encrypt
-        String encryptedPrivateKeyString = CWCryptoUtils.encode64(
-                CWCryptoUtils.encrypt(appKey, asymmetricKey.getPrivate().getEncoded()));
+        {
+            // These two key should be remain unchanged forever
+            KeyPair asymmetricKey = CWCryptoUtils.generateAsymmetricKey();
+            // Store public key to file
+            CWFileUtils.write(asymmetricKey.getPublic().getEncoded(), publicKeyFile);
+            // While for private key, use app secret key to encrypt then store to file
+            CWFileUtils.write(CWCryptoUtils.encrypt(
+                    CWFileUtils.read(appKeyFile),
+                    asymmetricKey.getPrivate().getEncoded()), privateKeyFile);
+        }
 
         // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         // 3. Create a random session key
         // We use this key to encrypt data before sending to other users.
-        String sessionKey = "%&*&)I_BV_VB_JHI)_Y";
-        // Encrypt session key using public key
-        // This encrypted session key will be sent to other user
-        PublicKey publicKey = CWCryptoUtils.decodePubicKey(CWCryptoUtils.decode64(publicKeyString));
-        String encryptedSessionKey = CWCryptoUtils.encode64(
-                CWCryptoUtils.encrypt(publicKey, CWStreamUtils.stringToBytes(sessionKey))
-        );
+        SecretKey sessionKey = CWCryptoUtils.generateSymmetricKey("%&*&)I_BV_VB_JHI)_Y", 16);
+        {
+            // Encrypt session key using public key
+            // This encrypted session key will be sent to other user
+            PublicKey publicKey = CWCryptoUtils.decodePubicKey(CWFileUtils.read(publicKeyFile));
+            CWFileUtils.write(CWCryptoUtils.encrypt(publicKey, sessionKey.getEncoded()), sessionKeyFile);
+        }
 
         // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        // 3. encrypt the text using session key
-        byte[] encryptedText = CWCryptoUtils.encrypt(sessionKey, CWStreamUtils.stringToBytes(originText));
-        // We only can use private key to decrypt the encrypted data
+        // 4. encrypt the text using session key
+        // After that, We only can use private key generated at step 1 to decrypt the encrypted data
+        byte[] encryptedText = CWCryptoUtils.encrypt(sessionKey.getEncoded(), CWStreamUtils.stringToBytes(originText));
 
         // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        // 4. For decryption: we need the following keys:
+        // 5. For decryption: we need the following keys:
         // +++ app secret key
         // +++ encrypted private key
         // +++ encrypted session key
@@ -349,17 +363,14 @@ public class CryptoUtilsTest {
         PrivateKey privateKey = CWCryptoUtils.decodePrivateKey(
                 /* decrypt encrypted private key using app secret key */
                 CWCryptoUtils.decrypt(
-                        appKey,
+                        CWFileUtils.read(appKeyFile),
                         /* decode base64 string */
-                        CWCryptoUtils.decode64(encryptedPrivateKeyString))
+                        CWFileUtils.read(privateKeyFile))
         );
         // Secondly, we decrypt session key using private key
-        String decryptedSessionKey = CWStreamUtils.bytesToString(
-                CWCryptoUtils.decrypt(privateKey, CWCryptoUtils.decode64(encryptedSessionKey))
-        );
-        Assert.assertEquals(sessionKey, decryptedSessionKey);
+        byte[] decryptedSessionKey = CWCryptoUtils.decrypt(privateKey, CWFileUtils.read(sessionKeyFile));
         // Thirdly, we decrypt data using session key
-        String decryptedText = CWStreamUtils.bytesToString(CWCryptoUtils.decrypt(sessionKey, encryptedText));
+        String decryptedText = CWStreamUtils.bytesToString(CWCryptoUtils.decrypt(decryptedSessionKey, encryptedText));
         Assert.assertEquals(originText, decryptedText);
     }
 }

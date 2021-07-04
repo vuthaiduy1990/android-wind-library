@@ -1,7 +1,5 @@
 package the.wind.library.utils;
 
-import org.apache.commons.codec.binary.Base64;
-
 import java.nio.ByteBuffer;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -128,10 +126,8 @@ public final class CWCryptoUtils {
      *
      * @throws Exception exception
      */
-    public static byte[] encrypt(String secretKey, byte[] data) throws Exception {
-        // generate 16 bytes = 128 bits secret key
-        SecretKey key = generateSymmetricKey(secretKey, 16);
-        return encrypt(key, data);
+    public static byte[] encrypt(byte[] secretKey, byte[] data) throws Exception {
+        return encrypt(new SecretKeySpec(secretKey, "AES"), data);
     }
 
     /**
@@ -194,10 +190,8 @@ public final class CWCryptoUtils {
      *
      * @throws Exception exception
      */
-    public static byte[] decrypt(String secretKey, byte[] encryptedData) throws Exception {
-        // generate 16 bytes = 128 bits secret key
-        SecretKey key = generateSymmetricKey(secretKey, 16);
-        return decrypt(key, encryptedData);
+    public static byte[] decrypt(byte[] secretKey, byte[] encryptedData) throws Exception {
+        return decrypt(new SecretKeySpec(secretKey, "AES"), encryptedData);
     }
 
     /**
@@ -213,26 +207,6 @@ public final class CWCryptoUtils {
         Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
         cipher.init(Cipher.DECRYPT_MODE, privateKey);
         return cipher.doFinal(encryptedData);
-    }
-
-    /**
-     * Encode byte data to string
-     *
-     * @param data byte data
-     * @return encoded base64 string
-     */
-    public static String encode64(byte[] data) {
-        return CWStreamUtils.bytesToString(Base64.encodeBase64(data));
-    }
-
-    /**
-     * Decode string to byte data
-     *
-     * @param encode encoded string
-     * @return decoded byte data
-     */
-    public static byte[] decode64(String encode) {
-        return Base64.decodeBase64(CWStreamUtils.stringToBytes(encode));
     }
 
     /**
@@ -310,8 +284,6 @@ public final class CWCryptoUtils {
 
     /**
      * Generate a symmetric key using AES algorithm
-     * If seed is not given, this function will generate a random key each time
-     * Otherwise, It will generate the same key with the same given seed
      * https://docs.oracle.com/javase/9/docs/specs/security/standard-names.html#keygenerator-algorithms
      *
      * @param seed    a user generated seed.
