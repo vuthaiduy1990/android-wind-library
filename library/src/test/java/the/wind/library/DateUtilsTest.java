@@ -1,10 +1,10 @@
 package the.wind.library;
 
-import android.icu.util.Calendar;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import the.wind.library.utils.CWDateUtils;
@@ -17,11 +17,13 @@ public class DateUtilsTest {
 
         // date with time
         Date date = CWDateUtils.stringToUTCDate("2019-08-15T15:54:22.928Z", CWDateUtils.DATE_TIME_FORMATTER);
+        assert date != null;
         cal.setTime(date);
         Assert.assertEquals(1565884462928L, cal.getTimeInMillis());
 
         // date only
         date = CWDateUtils.stringToUTCDate("2019-08-15", CWDateUtils.DATE_FORMATTER);
+        assert date != null;
         cal.setTime(date);
         Assert.assertEquals(1565827200000L, cal.getTimeInMillis());
     }
