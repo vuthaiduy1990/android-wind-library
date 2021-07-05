@@ -53,14 +53,20 @@ public class WindCalendar extends LinearLayout {
     private final ViewGroup _rootView;
     private final CalendarViewPager _calendarViewPager;
     private final ViewGroup _weekDayPanelView;
+    private View _weekDayTouchedView;
+
+    //Adapter
+    private CalendarAdapter adapter;
+
     // bundle data
     private final CWBundle bundle = new CWBundle();
-    private View _weekDayTouchedView;
 
     // model
     private final CalendarStyle style = CalendarStyle.config();
     private final CalendarInfo info = new CalendarInfo(new GregorianCalendar());
     private final CalendarEvent eventListener = new CalendarEvent();
+
+    // Listener
     private final OnTouchListener weekDayItemTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -117,8 +123,6 @@ public class WindCalendar extends LinearLayout {
             return true;
         }
     });
-    //Adapter
-    private CalendarAdapter adapter;
 
     /**
      * Constructor
