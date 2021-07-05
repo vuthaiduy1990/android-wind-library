@@ -29,6 +29,7 @@ dependencies {
 
     // Android library
     api 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'androidx.exifinterface:exifinterface:1.3.2'
 
     // G-SON library
     // https://github.com/google/gson

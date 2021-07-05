@@ -105,7 +105,7 @@ public final class CWAndroidUtils {
      */
     public static boolean isCameraAvailable(Context context) {
         PackageManager manager = context.getPackageManager();
-        return manager.hasSystemFeature(PackageManager.FEATURE_CAMERA);
+        return manager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
     }
 
     /**
