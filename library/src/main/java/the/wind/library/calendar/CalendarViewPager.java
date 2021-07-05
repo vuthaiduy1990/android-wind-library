@@ -62,6 +62,10 @@ public class CalendarViewPager extends ViewPager {
 
     @Override
     public void setAdapter(@Nullable PagerAdapter adapter) {
+        if (adapter == null) {
+            super.setAdapter(null);
+            return;
+        }
         if (!(adapter instanceof CalendarAdapter)) {
             throw new IllegalArgumentException("adapter is not calendar");
         }

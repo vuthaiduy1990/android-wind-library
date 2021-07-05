@@ -14,16 +14,23 @@ import the.wind.library.view.WindRecycleView;
 
 public class MonthViewFragment extends Fragment {
 
-    // model
-    private final MonthInfo monthInfo;
     // views
     private WindRecycleView _rvDateGridView;
     private MonthAdapter monthAdapter;
 
+    // model
+    public MonthInfo monthInfo;
+
     // styling
-    private final CalendarStyle calendarStyle;
-    private final CalendarInfo calendarInfo;
-    private final CalendarEvent calendarEvent;
+    public CalendarStyle calendarStyle;
+    public CalendarInfo calendarInfo;
+    public CalendarEvent calendarEvent;
+
+    /**
+     * Default constructor. Not used
+     */
+    public MonthViewFragment() {
+    }
 
     /**
      * Constructor
@@ -49,6 +56,7 @@ public class MonthViewFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (monthInfo == null) return;
         createMonthDateGridView(view);
     }
 

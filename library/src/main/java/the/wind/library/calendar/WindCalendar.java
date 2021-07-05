@@ -170,6 +170,14 @@ public class WindCalendar extends LinearLayout {
 
         if (context instanceof FragmentActivity) {
             fragManager = ((FragmentActivity) context).getSupportFragmentManager();
+            FragmentTransaction fragTrans = fragManager.beginTransaction();
+            for (Fragment frag : fragManager.getFragments()) {
+                if (frag instanceof MonthViewFragment) {
+                    fragTrans.remove(frag);
+                }
+            }
+            fragTrans.commitNow();
+
         } else {
             throw new ActivityNotFoundException("Context is not an fragment activity");
         }
@@ -579,6 +587,7 @@ public class WindCalendar extends LinearLayout {
 
         // Configure view pager with adapter
         _calendarViewPager.setCalendarEvent(eventListener);
+        _calendarViewPager.setSaveEnabled(false); // do not keep fragment state when view is restart
         _calendarViewPager.setAdapter(adapter);
         _calendarViewPager.setSelectedDate(new Date()); // must be set after setting adapter
         _calendarViewPager.setBackgroundResource(style.monthPanelViewBackground());
