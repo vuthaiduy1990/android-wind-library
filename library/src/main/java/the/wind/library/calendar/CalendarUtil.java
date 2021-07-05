@@ -19,7 +19,18 @@ public final class CalendarUtil {
      * @return unique date id
      */
     public static String toId(int year, int month, int dayOfMonth) {
-        return String.format("%s%s%s", year, month, dayOfMonth);
+        return String.format("%s-%s-%s", year, month, dayOfMonth);
+    }
+
+    /**
+     * Get unique id of month
+     *
+     * @param year  year
+     * @param month month
+     * @return unique month id
+     */
+    public static String toId(int year, int month) {
+        return String.format("%s-%s", year, month);
     }
 
     /**
@@ -29,7 +40,7 @@ public final class CalendarUtil {
      * @return unique date id
      */
     public static String toId(Calendar cal) {
-        return String.format("%s%s%s", cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+        return toId(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
     }
 
     /**

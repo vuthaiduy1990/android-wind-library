@@ -3,6 +3,7 @@ package the.wind.library.calendar;
 import android.icu.util.Calendar;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,12 @@ import androidx.annotation.Nullable;
  * Wrapper of a month
  */
 public class MonthInfo implements Serializable {
+
+    // Month date. It should be start day of month
+    private Date date;
+
+    // Unique ID
+    private String id;
 
     // month info
     private int year;
@@ -36,8 +43,10 @@ public class MonthInfo implements Serializable {
      * @param weekStartDay start day of week
      */
     public MonthInfo(Calendar stdCal, @Nullable Calendar lunarCal, @NonNull WeekStartsOn weekStartDay) {
+        this.date = stdCal.getTime();
         this.year = stdCal.get(Calendar.YEAR);
         this.month = stdCal.get(Calendar.MONTH);
+        this.id = CalendarUtil.toId(year, month);
         this.dateInfoList = CalendarUtil.getMonthDays(stdCal, lunarCal, stdCal.getTime(), weekStartDay);
     }
 
@@ -48,6 +57,20 @@ public class MonthInfo implements Serializable {
     /* ---------------------- ABSTRACT ----------------------- */
 
     /* ---------------------- GET-SET ------------------------ */
+
+    /**
+     * @return unique ID
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * @return target date
+     */
+    public Date getDate() {
+        return this.date;
+    }
 
     /**
      * @return year
