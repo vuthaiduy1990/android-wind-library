@@ -142,6 +142,18 @@ public class Windson {
     }
 
     /**
+     * Parse string to json element
+     *
+     * @param jsonString json string
+     * @param type       for example, generic type. new TypeToken<List<String>>() {}.getType()
+     * @param <T>        class type
+     * @return mapped object
+     */
+    public <T> T parse(@NonNull String jsonString, Type type) {
+        return deserialize(parse(jsonString), type);
+    }
+
+    /**
      * Parse file to json element
      *
      * @param jsonFile json file
@@ -166,6 +178,20 @@ public class Windson {
     }
 
     /**
+     * Parse file to json element
+     *
+     * @param jsonFile json file
+     * @param type     for example, generic type. new TypeToken<List<String>>() {}.getType()
+     * @param <T>      class type
+     * @return mapped object
+     *
+     * @throws FileNotFoundException exception
+     */
+    public <T> T parse(@NonNull File jsonFile, Type type) throws FileNotFoundException {
+        return deserialize(parse(jsonFile), type);
+    }
+
+    /**
      * Parse json bytes to json element
      *
      * @param jsonBytes json bytes
@@ -185,6 +211,18 @@ public class Windson {
      */
     public <T> T parse(@NonNull byte[] jsonBytes, Class<T> clazz) {
         return parse(CWStreamUtils.bytesToString(jsonBytes), clazz);
+    }
+
+    /**
+     * Parse bytes to json element
+     *
+     * @param jsonBytes json bytes
+     * @param type      for example, generic type. new TypeToken<List<String>>() {}.getType()
+     * @param <T>       class type
+     * @return mapped object
+     */
+    public <T> T parse(@NonNull byte[] jsonBytes, Type type) {
+        return parse(CWStreamUtils.bytesToString(jsonBytes), type);
     }
 
     /**
