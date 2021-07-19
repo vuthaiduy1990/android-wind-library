@@ -551,23 +551,6 @@ public class WindCalendar extends LinearLayout {
     /* ---------------------- METHOD ------------------------- */
 
     /**
-     * rebuild the calendar
-     */
-    public void rebuild() {
-        // re-create week day panel
-        createWeekDayPanel();
-
-        // Rebuild month view panel
-        FragmentTransaction fragTrans = fragManager.beginTransaction();
-        for (Fragment frag : adapter.getFragmentCache().values()) {
-            fragTrans.remove(frag);
-        }
-        fragTrans.commitNow();
-        adapter.getFragmentCache().clear();
-        _calendarViewPager.refreshAdapter(adapter);
-    }
-
-    /**
      * Init view
      */
     private void initView() {
@@ -630,6 +613,32 @@ public class WindCalendar extends LinearLayout {
             ViewGroup.LayoutParams lp = itemView.getLayoutParams();
             lp.width = style.dateCellSize();
             _weekDayPanelView.addView(itemView, lp);
+        }
+    }
+
+    /**
+     * rebuild the calendar
+     */
+    public void rebuild() {
+        // re-create week day panel
+        createWeekDayPanel();
+
+        // Rebuild month view panel
+        FragmentTransaction fragTrans = fragManager.beginTransaction();
+        for (Fragment frag : adapter.getFragmentCache().values()) {
+            fragTrans.remove(frag);
+        }
+        fragTrans.commitNow();
+        adapter.getFragmentCache().clear();
+        _calendarViewPager.refreshAdapter(adapter);
+    }
+
+    /**
+     * Refresh data
+     */
+    public void notifyDataSetChanged() {
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
         }
     }
 
