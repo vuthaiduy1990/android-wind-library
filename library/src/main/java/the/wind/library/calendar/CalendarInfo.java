@@ -15,7 +15,7 @@ final class CalendarInfo {
     public final Set<String> highlightDates = new HashSet<>();
 
     @Nullable
-    private CalendarType lunarType = null;
+    public CalendarType lunarType = null;
     private WeekStartsOn weekStartsOn = WeekStartsOn.SUNDAY;
 
     /**
@@ -66,6 +66,14 @@ final class CalendarInfo {
      */
     public void setLunarType(@Nullable CalendarType lunarType) {
         this.lunarType = lunarType;
+    }
+
+    /**
+     * @return lunar calendar type
+     */
+    @Nullable
+    public CalendarType getLunarType() {
+        return lunarType;
     }
 
     /**

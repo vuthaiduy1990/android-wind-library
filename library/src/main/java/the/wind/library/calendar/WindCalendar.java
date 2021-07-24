@@ -323,6 +323,24 @@ public class WindCalendar extends LinearLayout {
     }
 
     /**
+     * Get lunar calendar typeS
+     *
+     * @return lunar calendar type
+     */
+    @Nullable
+    public CalendarType getLunarType() {
+        return info.getLunarType();
+    }
+
+    /**
+     * @return day that week starts on
+     */
+    @NonNull
+    public WeekStartsOn getWeekStartsOn() {
+        return info.getWeekStartsOn();
+    }
+
+    /**
      * Get calendar adapter
      *
      * @return adapter
