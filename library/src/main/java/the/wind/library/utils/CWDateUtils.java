@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import androidx.annotation.Nullable;
 
@@ -18,16 +17,15 @@ public final class CWDateUtils {
     public static final String DATE_FORMATTER = "yyyy'-'MM'-'dd";
 
     /**
-     * Convert string to UTC date
+     * Convert string to date
      *
      * @param str    date string
      * @param format date format, ex yyyy'-'MM'-'dd hh':'mm':'ss
      * @return Date object
      */
     @Nullable
-    public static Date stringToUTCDate(String str, String format) {
+    public static Date stringToDate(String str, String format) {
         SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
-        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
         try {
             return formatter.parse(str);
         } catch (ParseException e) {
@@ -37,15 +35,14 @@ public final class CWDateUtils {
     }
 
     /**
-     * Convert string to UTC date
+     * Convert string to date
      *
      * @param str date string
      * @return Date object
      */
     @Nullable
-    public static Date stringToUTCDate(String str) {
+    public static Date stringToDate(String str) {
         SimpleDateFormat formatter = new SimpleDateFormat(DATE_TIME_FORMATTER, Locale.getDefault());
-        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
         try {
             return formatter.parse(str);
         } catch (ParseException e) {
@@ -55,28 +52,26 @@ public final class CWDateUtils {
     }
 
     /**
-     * Convert date to utc date string
+     * Convert date to date string
      *
      * @param date   date
      * @param format ex, yyyy'-'MM'-'dd'T'HH':'mm':'ss.SSS'Z'
      * @return date string. For ex, "2012-12-21T08:27:21.050Z"
      */
-    public static String dateToUTCString(Date date, String format) {
+    public static String dateToString(Date date, String format) {
         SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
-        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
         return formatter.format(date);
     }
 
     /**
-     * Convert date to utc date string
+     * Convert date to date string
      * For ex, "2012-12-21T08:27:21.050Z"
      *
      * @param date date
      * @return date string with {{DATE_TIME_FORMATTER}}
      */
-    public static String dateToUTCString(Date date) {
+    public static String dateToString(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat(DATE_TIME_FORMATTER, Locale.getDefault());
-        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
         return formatter.format(date);
     }
 }
