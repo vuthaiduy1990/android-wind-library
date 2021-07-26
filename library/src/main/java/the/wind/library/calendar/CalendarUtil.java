@@ -46,26 +46,26 @@ public final class CalendarUtil {
     /**
      * Get all days of month by given date
      *
-     * @param stdCal       standard calendar class, ex {@link android.icu.util.GregorianCalendar}
+     * @param solarCal     solar calendar class, ex {@link android.icu.util.GregorianCalendar}
      * @param lunarCal     lunar calendar, ex {@link android.icu.util.ChineseCalendar}
      * @param date         given date
      * @param weekStartDay start day of week
      * @return list of date info
      */
-    public static List<DateInfo> getMonthDays(Calendar stdCal, @Nullable Calendar lunarCal, Date date, WeekStartsOn weekStartDay) {
-        Calendar _stdCal = (Calendar) stdCal.clone();
+    public static List<DateInfo> getMonthDays(Calendar solarCal, @Nullable Calendar lunarCal, Date date, WeekStartsOn weekStartDay) {
+        Calendar cal = (Calendar) solarCal.clone();
         List<DateInfo> days = new LinkedList<>();
-        _stdCal.setTime(date);
-        _stdCal.set(Calendar.DATE, 1); // Go to first day of month
+        cal.setTime(date);
+        cal.set(Calendar.DATE, 1); // Go to first day of month
 
         Calendar _lunarCal = null;
         if (lunarCal != null) {
             _lunarCal = (Calendar) lunarCal.clone();
-            _lunarCal.setTime(_stdCal.getTime());
+            _lunarCal.setTime(cal.getTime());
         }
 
         // add missing week-days (null) until the first day of month
-        int firstDayOfMonth = _stdCal.get(Calendar.DAY_OF_WEEK);
+        int firstDayOfMonth = cal.get(Calendar.DAY_OF_WEEK);
         int startDayOfWeek = weekStartDay.getDay();
         switch (weekStartDay) {
             case SATURDAY:
@@ -87,10 +87,10 @@ public final class CalendarUtil {
         }
 
         // add day of target months
-        int month = _stdCal.get(Calendar.MONTH);
-        while (_stdCal.get(Calendar.MONTH) == month) {
-            days.add(new DateInfo(_stdCal, _lunarCal));
-            _stdCal.add(Calendar.DATE, 1);
+        int month = cal.get(Calendar.MONTH);
+        while (cal.get(Calendar.MONTH) == month) {
+            days.add(new DateInfo(cal, _lunarCal));
+            cal.add(Calendar.DATE, 1);
             if (_lunarCal != null) {
                 _lunarCal.add(Calendar.DATE, 1);
             }
@@ -108,30 +108,30 @@ public final class CalendarUtil {
     /**
      * Create link between month
      *
-     * @param stdCal       standard calendar class, ex {@link android.icu.util.GregorianCalendar}
+     * @param solarCal     solar calendar class, ex {@link android.icu.util.GregorianCalendar}
      * @param lunarCal     lunar calendar, ex {@link android.icu.util.ChineseCalendar}
      * @param date         select month
      * @param preLoaded    the number of month will be preloaded in the left side and right side of current month
      * @param weekStartDay start day of week
      * @return selected month
      */
-    public static MonthInfo createMonthLink(Calendar stdCal, @Nullable Calendar lunarCal, Date date, WeekStartsOn weekStartDay, int preLoaded) {
+    public static MonthInfo createMonthLink(Calendar solarCal, @Nullable Calendar lunarCal, Date date, WeekStartsOn weekStartDay, int preLoaded) {
         // set selected month
-        Calendar _stdCal = (Calendar) stdCal.clone();
-        _stdCal.setTime(date);
+        Calendar cal = (Calendar) solarCal.clone();
+        cal.setTime(date);
 
         // Start from first day of oldest month
-        _stdCal.add(Calendar.MONTH, -preLoaded);
-        _stdCal.set(Calendar.DATE, 1);
+        cal.add(Calendar.MONTH, -preLoaded);
+        cal.set(Calendar.DATE, 1);
 
         // Create link between months
-        MonthInfo cur = new MonthInfo(_stdCal, lunarCal, weekStartDay);
+        MonthInfo cur = new MonthInfo(cal, lunarCal, weekStartDay);
         MonthInfo pre = null;
         MonthInfo selectedMonth = null;
         int idx = -preLoaded;
         while (idx <= preLoaded) {
-            _stdCal.add(Calendar.MONTH, 1);
-            MonthInfo next = idx < preLoaded ? new MonthInfo(_stdCal, lunarCal, weekStartDay) : null;
+            cal.add(Calendar.MONTH, 1);
+            MonthInfo next = idx < preLoaded ? new MonthInfo(cal, lunarCal, weekStartDay) : null;
             if (idx == 0) {
                 selectedMonth = cur;
             }

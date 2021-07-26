@@ -41,18 +41,18 @@ public class DateInfo implements Serializable {
     /**
      * Constructor
      *
-     * @param stdCal   standard calendar class, ex {@link android.icu.util.GregorianCalendar}
+     * @param solarCal solar calendar class, ex {@link android.icu.util.GregorianCalendar}
      * @param lunarCal lunar calendar, ex {@link android.icu.util.ChineseCalendar}
      */
-    public DateInfo(Calendar stdCal, @Nullable Calendar lunarCal) {
+    public DateInfo(Calendar solarCal, @Nullable Calendar lunarCal) {
         this();
 
-        // standard calendar
-        this.date = stdCal.getTime();
-        this.year = stdCal.get(Calendar.YEAR);
-        this.month = stdCal.get(Calendar.MONTH);
-        this.dayOfMonth = stdCal.get(Calendar.DAY_OF_MONTH);
-        this.dayOfWeek = stdCal.get(Calendar.DAY_OF_WEEK);
+        // solar calendar
+        this.date = solarCal.getTime();
+        this.year = solarCal.get(Calendar.YEAR);
+        this.month = solarCal.get(Calendar.MONTH);
+        this.dayOfMonth = solarCal.get(Calendar.DAY_OF_MONTH);
+        this.dayOfWeek = solarCal.get(Calendar.DAY_OF_WEEK);
         this.id = CalendarUtil.toId(year, month, dayOfMonth);
 
         // lunar calendar

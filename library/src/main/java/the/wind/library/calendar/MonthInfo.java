@@ -38,16 +38,16 @@ public class MonthInfo implements Serializable {
     /**
      * Constructor
      *
-     * @param stdCal       standard calendar class, ex {@link android.icu.util.GregorianCalendar}
+     * @param solarCal     solar calendar class, ex {@link android.icu.util.GregorianCalendar}
      * @param lunarCal     lunar calendar, ex {@link android.icu.util.ChineseCalendar}
      * @param weekStartDay start day of week
      */
-    public MonthInfo(Calendar stdCal, @Nullable Calendar lunarCal, @NonNull WeekStartsOn weekStartDay) {
-        this.date = stdCal.getTime();
-        this.year = stdCal.get(Calendar.YEAR);
-        this.month = stdCal.get(Calendar.MONTH);
+    public MonthInfo(Calendar solarCal, @Nullable Calendar lunarCal, @NonNull WeekStartsOn weekStartDay) {
+        this.date = solarCal.getTime();
+        this.year = solarCal.get(Calendar.YEAR);
+        this.month = solarCal.get(Calendar.MONTH);
         this.id = CalendarUtil.toId(year, month);
-        this.dateInfoList = CalendarUtil.getMonthDays(stdCal, lunarCal, stdCal.getTime(), weekStartDay);
+        this.dateInfoList = CalendarUtil.getMonthDays(solarCal, lunarCal, solarCal.getTime(), weekStartDay);
     }
 
     /* ---------------------- OVERRIDE ----------------------- */

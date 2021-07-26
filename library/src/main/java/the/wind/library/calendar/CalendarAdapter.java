@@ -24,7 +24,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
     private static final int MAX_SLIDE = 2000;
 
     // Calendar type
-    // standard calendar class, ex {@link android.icu.util.GregorianCalendar}
+    // solar calendar class, ex {@link android.icu.util.GregorianCalendar}
     private final Calendar calendar;
 
     // the number of month will be preloaded in the left side and right side of current month
