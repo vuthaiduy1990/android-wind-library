@@ -214,6 +214,8 @@ public class WindCalendar extends LinearLayout {
         int dateHighlightBackground = 0;
         int dateHoverBackground = 0;
 
+        boolean autoBuild = true;
+
         Resources res = getResources();
         try {
             // Week day style
@@ -260,6 +262,9 @@ public class WindCalendar extends LinearLayout {
                 info.setWeekStartsOn(WeekStartsOn.typeOf(weekStartsOnDay));
             }
 
+            // get auto build option
+            autoBuild = typeArray.getBoolean(R.styleable.WindCalendar_autoBuild, true);
+
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -290,7 +295,14 @@ public class WindCalendar extends LinearLayout {
                 .dateHoverBackground(dateHoverBackground);
 
         // Init view
-        initView();
+        if (autoBuild) {
+            createWeekDayPanel();
+            createMonthViewPanel();
+            _calendarViewPager.setSelectedDate(new Date()); // set current date as default
+
+        } else {
+            createMonthViewPanel();
+        }
     }
 
     /* ---------------------- OVERRIDE ----------------------- */
@@ -569,14 +581,6 @@ public class WindCalendar extends LinearLayout {
     /* ---------------------- METHOD ------------------------- */
 
     /**
-     * Init view
-     */
-    private void initView() {
-        createMonthViewPanel();
-        createWeekDayPanel();
-    }
-
-    /**
      * Create month view panel
      */
     private void createMonthViewPanel() {
@@ -590,10 +594,8 @@ public class WindCalendar extends LinearLayout {
         _calendarViewPager.setCalendarEvent(eventListener);
         _calendarViewPager.setSaveEnabled(false); // do not keep fragment state when view is restart
         _calendarViewPager.setAdapter(adapter);
-        _calendarViewPager.setSelectedDate(new Date()); // must be set after setting adapter
         _calendarViewPager.setBackgroundResource(style.monthPanelViewBackground());
     }
-
 
     /**
      * Create week date panel view

@@ -139,5 +139,7 @@
             <enum name="SUNDAY" value="1" />
         </attr>
 
+        <attr name="autoBuild" format="boolean" />
+
     </declare-styleable>
 </resources>
