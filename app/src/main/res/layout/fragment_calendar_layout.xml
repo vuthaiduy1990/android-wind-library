@@ -10,7 +10,7 @@
         android:id="@+id/_calendarView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:lunar="Chinese"
+        app:lunar="Vietnamese"
         app:weekStartsOn="MONDAY" />
 
     <TextView
@@ -56,11 +56,11 @@
             app:type="INFO" />
 
         <the.wind.library.view.Button
-            android:id="@+id/_ChineseLunarCalendar"
+            android:id="@+id/_VietnameseLunarCalendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/wl_spacing_level_3"
-            app:text="Chinese Lunar"
+            app:text="Vietnamese Lunar"
             app:type="INFO" />
 
         <the.wind.library.view.Button

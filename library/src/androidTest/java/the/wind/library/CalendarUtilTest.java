@@ -3,6 +3,7 @@ package the.wind.library;
 import android.content.Context;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
+import android.util.Log;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -16,6 +17,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import the.wind.library.calendar.CalendarUtil;
 import the.wind.library.calendar.DateInfo;
 import the.wind.library.calendar.MonthInfo;
+import the.wind.library.calendar.VietnameseCalendar;
 import the.wind.library.calendar.WeekStartsOn;
 
 @RunWith(AndroidJUnit4.class)
@@ -26,6 +28,7 @@ public class CalendarUtilTest {
     @Test
     public void getMonthDays() {
         Calendar cal = new GregorianCalendar();
+        Log.e("xxxx", cal.getTimeZone().getRawOffset() + "");
         cal.set(2021, Calendar.JANUARY, 1);
 
         int[] monthDays = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -89,5 +92,57 @@ public class CalendarUtilTest {
             Assert.assertEquals(2, count);
             cal.add(Calendar.MONTH, 1);
         }
+    }
+
+    @Test
+    public void testVietnameseCalendar() {
+        VietnameseCalendar cal = new VietnameseCalendar();
+
+        // Testcase: convert from solar to lunar date
+        {
+            int[] lunarDate = cal.convertSolar2Lunar(1, 1, 2021, 7);
+            Assert.assertEquals(19, lunarDate[0]);
+            Assert.assertEquals(11, lunarDate[1]);
+            Assert.assertEquals(2020, lunarDate[2]);
+            Assert.assertEquals(0, lunarDate[3]);
+        }
+
+        // Testcase: convert from solar to lunar date in leap month
+        {
+            int[] lunarDate = cal.convertSolar2Lunar(23, 4, 2020, 7);
+            Assert.assertEquals(1, lunarDate[0]);
+            Assert.assertEquals(4, lunarDate[1]);
+            Assert.assertEquals(2020, lunarDate[2]);
+            Assert.assertEquals(0, lunarDate[3]);
+
+            // leap month
+            lunarDate = cal.convertSolar2Lunar(23, 5, 2020, 7);
+            Assert.assertEquals(1, lunarDate[0]);
+            Assert.assertEquals(4, lunarDate[1]);
+            Assert.assertEquals(2020, lunarDate[2]);
+            Assert.assertEquals(1, lunarDate[3]);
+        }
+
+        // Testcase: convert from lunar to solar date
+        {
+            int[] lunarDate = cal.convertLunar2Solar(19, 11, 2020, true, 7);
+            Assert.assertEquals(1, lunarDate[0]);
+            Assert.assertEquals(1, lunarDate[1]);
+            Assert.assertEquals(2021, lunarDate[2]);
+        }
+
+        // Testcase: convert from lunar to solar date with leap year
+        {
+            int[] lunarDate = cal.convertLunar2Solar(1, 4, 2020, false, 7);
+            Assert.assertEquals(23, lunarDate[0]);
+            Assert.assertEquals(4, lunarDate[1]);
+            Assert.assertEquals(2020, lunarDate[2]);
+
+            lunarDate = cal.convertLunar2Solar(1, 4, 2020, true, 7);
+            Assert.assertEquals(23, lunarDate[0]);
+            Assert.assertEquals(5, lunarDate[1]);
+            Assert.assertEquals(2020, lunarDate[2]);
+        }
+
     }
 }

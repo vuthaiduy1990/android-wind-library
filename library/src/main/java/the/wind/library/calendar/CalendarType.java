@@ -22,7 +22,8 @@ public enum CalendarType {
     Indian(4, new IndianCalendar()),
     Islamic(5, new IslamicCalendar()),
     Japanese(6, new JapaneseCalendar()),
-    Taiwan(7, new TaiwanCalendar());
+    Taiwan(7, new TaiwanCalendar()),
+    Vietnamese(8, new VietnameseCalendar());
 
     private final int idx;
     private final Calendar value;

@@ -131,6 +131,7 @@
             <enum name="Islamic" value="5" />
             <enum name="Japanese" value="6" />
             <enum name="Taiwan" value="7" />
+            <enum name="Vietnamese" value="8" />
         </attr>
 
         <attr name="weekStartsOn" format="enum">

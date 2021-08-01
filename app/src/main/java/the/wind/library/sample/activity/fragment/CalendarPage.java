@@ -105,10 +105,10 @@ public class CalendarPage extends Fragment {
                 _calendarView.rebuild();
             }
         });
-        view.findViewById(R.id._ChineseLunarCalendar).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id._VietnameseLunarCalendar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                _calendarView.setLunarType(CalendarType.Chinese);
+                _calendarView.setLunarType(CalendarType.Vietnamese);
                 _calendarView.rebuild();
             }
         });
