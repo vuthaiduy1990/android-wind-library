@@ -27,7 +27,7 @@ public class DateInfo implements Serializable {
     private int dayOfWeek;
 
     // Lunar date info
-    private Date lunarDate;
+    private boolean hasLunarDate = false;
     private int lunarYear;
     private int lunarMonth;
     private int lunarDayOfMonth;
@@ -57,7 +57,8 @@ public class DateInfo implements Serializable {
 
         // lunar calendar
         if (lunarCal != null) {
-            lunarDate = lunarCal.getTime();
+            lunarCal.setTime(date);
+            this.hasLunarDate = true;
             this.lunarYear = lunarCal.get(Calendar.YEAR);
             this.lunarMonth = lunarCal.get(Calendar.MONTH);
             this.lunarDayOfMonth = lunarCal.get(Calendar.DAY_OF_MONTH);
@@ -136,10 +137,10 @@ public class DateInfo implements Serializable {
     }
 
     /**
-     * @return lunar date
+     * @return true if having lunar date
      */
-    public Date getLunarDate() {
-        return lunarDate;
+    public boolean hasLunarDate() {
+        return hasLunarDate;
     }
 
     /**

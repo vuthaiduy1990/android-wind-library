@@ -53,19 +53,12 @@ public final class CalendarUtil {
      * @return list of date info
      */
     public static List<DateInfo> getMonthDays(Calendar solarCal, @Nullable Calendar lunarCal, Date date, WeekStartsOn weekStartDay) {
-        Calendar cal = (Calendar) solarCal.clone();
         List<DateInfo> days = new LinkedList<>();
-        cal.setTime(date);
-        cal.set(Calendar.DATE, 1); // Go to first day of month
-
-        Calendar _lunarCal = null;
-        if (lunarCal != null) {
-            _lunarCal = (Calendar) lunarCal.clone();
-            _lunarCal.setTime(cal.getTime());
-        }
+        solarCal.setTime(date);
+        solarCal.set(Calendar.DATE, 1); // Go to first day of month
 
         // add missing week-days (null) until the first day of month
-        int firstDayOfMonth = cal.get(Calendar.DAY_OF_WEEK);
+        int firstDayOfMonth = solarCal.get(Calendar.DAY_OF_WEEK);
         int startDayOfWeek = weekStartDay.getDay();
         switch (weekStartDay) {
             case SATURDAY:
@@ -87,13 +80,10 @@ public final class CalendarUtil {
         }
 
         // add day of target months
-        int month = cal.get(Calendar.MONTH);
-        while (cal.get(Calendar.MONTH) == month) {
-            days.add(new DateInfo(cal, _lunarCal));
-            cal.add(Calendar.DATE, 1);
-            if (_lunarCal != null) {
-                _lunarCal.add(Calendar.DATE, 1);
-            }
+        int month = solarCal.get(Calendar.MONTH);
+        while (solarCal.get(Calendar.MONTH) == month) {
+            days.add(new DateInfo(solarCal, lunarCal));
+            solarCal.add(Calendar.DATE, 1);
         }
 
         // add missing week-days (null) after the last day of month
@@ -125,13 +115,13 @@ public final class CalendarUtil {
         cal.set(Calendar.DATE, 1);
 
         // Create link between months
-        MonthInfo cur = new MonthInfo(cal, lunarCal, weekStartDay);
+        MonthInfo cur = new MonthInfo((Calendar) cal.clone(), lunarCal, weekStartDay);
         MonthInfo pre = null;
         MonthInfo selectedMonth = null;
         int idx = -preLoaded;
         while (idx <= preLoaded) {
             cal.add(Calendar.MONTH, 1);
-            MonthInfo next = idx < preLoaded ? new MonthInfo(cal, lunarCal, weekStartDay) : null;
+            MonthInfo next = idx < preLoaded ? new MonthInfo((Calendar) cal.clone(), lunarCal, weekStartDay) : null;
             if (idx == 0) {
                 selectedMonth = cur;
             }

@@ -1,6 +1,7 @@
 package the.wind.library.sample.activity.fragment;
 
 import android.icu.util.Calendar;
+import android.icu.util.GregorianCalendar;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +31,7 @@ public class CalendarPage extends Fragment {
     private WindCalendar _calendarView;
     private TextView _monthInfoText;
     private boolean highlighted;
-    private final Calendar cal = Calendar.getInstance();
+    private final Calendar cal = new GregorianCalendar();
     private final List<String> neighborDates = new ArrayList<>();
 
     @Nullable
