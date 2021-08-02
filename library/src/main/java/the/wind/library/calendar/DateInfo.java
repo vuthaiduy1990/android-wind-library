@@ -58,20 +58,10 @@ public class DateInfo implements Serializable {
         // lunar calendar
         if (lunarCal != null) {
             this.hasLunarDate = true;
-            lunarCal.setTime(date);
-            if (VietnameseCalendar.class.equals(lunarCal.getClass())) {
-                int[] lunarDate = ((VietnameseCalendar) lunarCal).convertSolar2Lunar(
-                        this.dayOfMonth, this.month + 1, this.year,
-                        7);
-                this.lunarDayOfMonth = lunarDate[0];
-                this.lunarMonth = lunarDate[1] - 1;
-                this.lunarYear = lunarDate[2];
-
-            } else {
-                this.lunarYear = lunarCal.get(Calendar.YEAR);
-                this.lunarMonth = lunarCal.get(Calendar.MONTH);
-                this.lunarDayOfMonth = lunarCal.get(Calendar.DAY_OF_MONTH);
-            }
+            int[] lunarInfo = CalendarUtil.getLunarDateInfo(lunarCal, date, year, month, dayOfMonth);
+            this.lunarDayOfMonth = lunarInfo[0];
+            this.lunarMonth = lunarInfo[1];
+            this.lunarYear = lunarInfo[2];
         }
     }
 

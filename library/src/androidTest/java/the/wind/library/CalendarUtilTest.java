@@ -3,7 +3,6 @@ package the.wind.library;
 import android.content.Context;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
-import android.util.Log;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,7 +27,6 @@ public class CalendarUtilTest {
     @Test
     public void getMonthDays() {
         Calendar cal = new GregorianCalendar();
-        Log.e("xxxx", cal.getTimeZone().getRawOffset() + "");
         cal.set(2021, Calendar.JANUARY, 1);
 
         int[] monthDays = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
