@@ -141,7 +141,7 @@ public final class CalendarUtil {
      * @return timezone number in range [-12,  +14]
      */
     public static float getTimeZone(Calendar cal, Date date) {
-        return cal.getTimeZone().getOffset(new Date().getTime()) / 1000f / 60f / 60f;
+        return cal.getTimeZone().getOffset(date.getTime()) / 1000f / 60f / 60f;
     }
 
     /**
@@ -156,7 +156,6 @@ public final class CalendarUtil {
      */
     public static int[] getLunarDateInfo(Calendar lunarCal, Date date, int year, int month, int day) {
         int[] result = new int[4];
-        lunarCal.setTime(date);
         if (VietnameseCalendar.class.equals(lunarCal.getClass())) {
             float timezone = getTimeZone(lunarCal, date);
             int[] lunarDate = ((VietnameseCalendar) lunarCal).convertSolar2Lunar(day, month + 1, year, timezone);
@@ -165,6 +164,7 @@ public final class CalendarUtil {
             result[2] = lunarDate[2]; // year
             result[3] = lunarDate[3]; // leap
         } else {
+            lunarCal.setTime(date);
             result[0] = lunarCal.get(Calendar.DAY_OF_MONTH);
             result[1] = lunarCal.get(Calendar.MONTH);
             result[2] = lunarCal.get(Calendar.YEAR);
