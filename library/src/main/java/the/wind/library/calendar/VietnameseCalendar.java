@@ -52,7 +52,7 @@ public class VietnameseCalendar extends ChineseCalendar {
      * Convert a Julian day number to day/month/year. Parameter jd is an integer
      *
      * @param jd julian day
-     * @return date [day, month, year]
+     * @return date [year, month, day]
      */
     private int[] jdToDate(int jd) {
         int a, b, c, d, e, m, day, month, year;
@@ -70,7 +70,7 @@ public class VietnameseCalendar extends ChineseCalendar {
         day = e - INT((153 * m + 2) / 5d) + 1;
         month = m + 3 - 12 * INT(m / 10d);
         year = b * 100 + d - 4800 + INT(m / 10d);
-        return new int[]{day, month, year};
+        return new int[]{year, month, day};
     }
 
     /**
@@ -199,13 +199,13 @@ public class VietnameseCalendar extends ChineseCalendar {
     /**
      * Convert solar date dd/mm/yyyy to the corresponding lunar date
      *
-     * @param dd       date
-     * @param mm       month
      * @param yy       year
+     * @param mm       month
+     * @param dd       date
      * @param timeZone timezone
-     * @return lunar date [dd, mm, yyyy, leap]
+     * @return lunar date [yyyy, mm, dd, leap]
      */
-    public int[] convertSolar2Lunar(int dd, int mm, int yy, float timeZone) {
+    public int[] convertSolar2Lunar(int yy, int mm, int dd, float timeZone) {
         int k, dayNumber, monthStart, a11, b11, lunarDay, lunarMonth, lunarYear, lunarLeap;
         dayNumber = jdFromDate(dd, mm, yy);
         k = INT((dayNumber - 2415021.076998695) / 29.530588853);
@@ -242,20 +242,20 @@ public class VietnameseCalendar extends ChineseCalendar {
         if (lunarMonth >= 11 && diff < 4) {
             lunarYear -= 1;
         }
-        return new int[]{lunarDay, lunarMonth, lunarYear, lunarLeap};
+        return new int[]{lunarYear, lunarMonth, lunarDay, lunarLeap};
     }
 
     /**
      * Convert a lunar date to the corresponding solar date
      *
-     * @param lunarDay   lunar day
-     * @param lunarMonth lunar month
      * @param lunarYear  lunar year
+     * @param lunarMonth lunar month
+     * @param lunarDay   lunar day
      * @param lunarLeap  leap month or not
      * @param timeZone   timezone
-     * @return solar date [dd, mm, yyyy]
+     * @return solar date [yyyy, mm, dd]
      */
-    public int[] convertLunar2Solar(int lunarDay, int lunarMonth, int lunarYear, boolean lunarLeap, float timeZone) {
+    public int[] convertLunar2Solar(int lunarYear, int lunarMonth, int lunarDay, boolean lunarLeap, float timeZone) {
         int k, a11, b11, off, leapOff, leapMonth, monthStart;
         if (lunarMonth < 11) {
             a11 = getLunarMonth11(lunarYear - 1, timeZone);

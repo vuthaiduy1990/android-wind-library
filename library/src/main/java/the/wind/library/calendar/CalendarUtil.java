@@ -152,22 +152,22 @@ public final class CalendarUtil {
      * @param year     solar year
      * @param month    solar month
      * @param day      solar day
-     * @return [day, month, year, leap]
+     * @return [year, month, day, leap]
      */
     public static int[] getLunarDateInfo(Calendar lunarCal, Date date, int year, int month, int day) {
         int[] result = new int[4];
         if (VietnameseCalendar.class.equals(lunarCal.getClass())) {
             float timezone = getTimeZone(lunarCal, date);
-            int[] lunarDate = ((VietnameseCalendar) lunarCal).convertSolar2Lunar(day, month + 1, year, timezone);
-            result[0] = lunarDate[0]; // day
+            int[] lunarDate = ((VietnameseCalendar) lunarCal).convertSolar2Lunar(year, month + 1, day, timezone);
+            result[0] = lunarDate[0]; // year
             result[1] = lunarDate[1] - 1; // month
-            result[2] = lunarDate[2]; // year
+            result[2] = lunarDate[2]; // day
             result[3] = lunarDate[3]; // leap
         } else {
             lunarCal.setTime(date);
-            result[0] = lunarCal.get(Calendar.DAY_OF_MONTH);
+            result[0] = lunarCal.get(Calendar.YEAR);
             result[1] = lunarCal.get(Calendar.MONTH);
-            result[2] = lunarCal.get(Calendar.YEAR);
+            result[2] = lunarCal.get(Calendar.DAY_OF_MONTH);
             result[3] = lunarCal.get(Calendar.IS_LEAP_MONTH);
         }
         return result;
