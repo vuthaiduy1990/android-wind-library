@@ -148,27 +148,27 @@ public final class CalendarUtil {
      * Get lunar date info
      *
      * @param lunarCal lunar calendar
-     * @param date     date
-     * @param year     solar year
-     * @param month    solar month
-     * @param day      solar day
-     * @return [year, month, day, leap]
+     * @param solarCal solar calendar
+     * @return [year, month, month day, week day, leap]
      */
-    public static int[] getLunarDateInfo(Calendar lunarCal, Date date, int year, int month, int day) {
-        int[] result = new int[4];
+    public static int[] getLunarDateInfo(Calendar lunarCal, Calendar solarCal) {
+        int[] result = new int[5];
         if (VietnameseCalendar.class.equals(lunarCal.getClass())) {
-            float timezone = getTimeZone(lunarCal, date);
-            int[] lunarDate = ((VietnameseCalendar) lunarCal).convertSolar2Lunar(year, month + 1, day, timezone);
+            float timezone = getTimeZone(lunarCal, solarCal.getTime());
+            int[] lunarDate = ((VietnameseCalendar) lunarCal).convertSolar2Lunar(
+                    solarCal.get(Calendar.YEAR), solarCal.get(Calendar.MONTH) + 1, solarCal.get(Calendar.DAY_OF_MONTH),
+                    timezone);
             result[0] = lunarDate[0]; // year
             result[1] = lunarDate[1] - 1; // month
             result[2] = lunarDate[2]; // day
             result[3] = lunarDate[3]; // leap
         } else {
-            lunarCal.setTime(date);
+            lunarCal.setTime(solarCal.getTime());
             result[0] = lunarCal.get(Calendar.YEAR);
             result[1] = lunarCal.get(Calendar.MONTH);
             result[2] = lunarCal.get(Calendar.DAY_OF_MONTH);
-            result[3] = lunarCal.get(Calendar.IS_LEAP_MONTH);
+            result[3] = lunarCal.get(Calendar.DAY_OF_WEEK);
+            result[4] = lunarCal.get(Calendar.IS_LEAP_MONTH);
         }
         return result;
     }

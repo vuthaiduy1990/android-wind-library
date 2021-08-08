@@ -58,7 +58,7 @@ public class DateInfo implements Serializable {
         // lunar calendar
         if (lunarCal != null) {
             this.hasLunarDate = true;
-            int[] lunarInfo = CalendarUtil.getLunarDateInfo(lunarCal, date, year, month, dayOfMonth);
+            int[] lunarInfo = CalendarUtil.getLunarDateInfo(lunarCal, solarCal);
             this.lunarYear = lunarInfo[0];
             this.lunarMonth = lunarInfo[1];
             this.lunarDayOfMonth = lunarInfo[2];
