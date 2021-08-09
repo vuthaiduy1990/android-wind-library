@@ -15,13 +15,13 @@ public class DateUtilsTest {
         // date with time
         {
             String dateStr = "2019-08-15T15:54:22.928Z";
-            Date date = CWDateUtils.stringToDate(dateStr, CWDateUtils.DATE_TIME_FORMATTER);
+            Date date = CWDateUtils.stringToUtcDate(dateStr, CWDateUtils.DATE_TIME_FORMATTER);
             assert date != null;
             Assert.assertEquals(dateStr, CWDateUtils.dateToString(date, CWDateUtils.DATE_TIME_FORMATTER));
         }
         {
             String dateStr = "2019-08-15";
-            Date date = CWDateUtils.stringToDate(dateStr, CWDateUtils.DATE_FORMATTER);
+            Date date = CWDateUtils.stringToUtcDate(dateStr, CWDateUtils.DATE_FORMATTER);
             assert date != null;
             Assert.assertEquals(dateStr, CWDateUtils.dateToString(date, CWDateUtils.DATE_FORMATTER));
         }

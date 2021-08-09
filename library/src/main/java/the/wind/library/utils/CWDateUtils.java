@@ -1,9 +1,11 @@
 package the.wind.library.utils;
 
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import androidx.annotation.Nullable;
 
@@ -17,33 +19,17 @@ public final class CWDateUtils {
     public static final String DATE_FORMATTER = "yyyy'-'MM'-'dd";
 
     /**
-     * Convert string to date
+     * Convert string to UTC date
      *
      * @param str    date string
      * @param format date format, ex yyyy'-'MM'-'dd hh':'mm':'ss
      * @return Date object
      */
     @Nullable
-    public static Date stringToDate(String str, String format) {
+    public static Date stringToUtcDate(String str, String format) {
         SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
         try {
-            return formatter.parse(str);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * Convert string to date
-     *
-     * @param str date string
-     * @return Date object
-     */
-    @Nullable
-    public static Date stringToDate(String str) {
-        SimpleDateFormat formatter = new SimpleDateFormat(DATE_TIME_FORMATTER, Locale.getDefault());
-        try {
+            formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
             return formatter.parse(str);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -60,6 +46,7 @@ public final class CWDateUtils {
      */
     public static String dateToString(Date date, String format) {
         SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
+        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
         return formatter.format(date);
     }
 
@@ -72,6 +59,7 @@ public final class CWDateUtils {
      */
     public static String dateToString(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat(DATE_TIME_FORMATTER, Locale.getDefault());
+        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
         return formatter.format(date);
     }
 }
