@@ -669,6 +669,7 @@ public class WindCalendar extends LinearLayout {
      * @see CalendarUtil#toId(int, int, int)
      */
     public void highlightDates(Iterable<String> dateIds) {
+        info.highlightDates.clear();
         for (String id : dateIds) {
             info.highlightDates.add(id);
         }
