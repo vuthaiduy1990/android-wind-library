@@ -1,5 +1,6 @@
 package the.wind.library.calendar;
 
+import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,7 +60,7 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
                         return;
                     }
                 }
-                vh.bindData(data);
+                vh.touchUp();
             }
         });
 
@@ -255,9 +256,16 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
          * Touch down on item
          */
         private void touchDown() {
-            if (itemView.getBackground() == null) {
-                itemView.setBackgroundResource(calStyle.dateHoverBackground());
-            }
+            itemView.setTag(R.id.calendar_date_item_background_key, itemView.getBackground());
+            itemView.setBackgroundResource(calStyle.dateHoverBackground());
+        }
+
+        /**
+         * Touch down on item
+         */
+        private void touchUp() {
+            Drawable background = (Drawable) itemView.getTag(R.id.calendar_date_item_background_key);
+            itemView.setBackground(background);
         }
 
         /**
