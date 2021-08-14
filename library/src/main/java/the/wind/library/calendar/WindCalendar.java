@@ -854,10 +854,10 @@ public class WindCalendar extends LinearLayout {
         /**
          * Trigger when user swipe to go to previous or next month
          *
-         * @param previousMonth previous month
-         * @param currentMonth  current selected month
+         * @param preMonth previous month. Null for the first loading
+         * @param curMonth current selected month
          */
-        void onChange(MonthInfo previousMonth, MonthInfo currentMonth);
+        void onChange(@Nullable MonthInfo preMonth, @NonNull MonthInfo curMonth);
     }
 
 }

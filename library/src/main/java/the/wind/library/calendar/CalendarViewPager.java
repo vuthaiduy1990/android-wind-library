@@ -16,6 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 public class CalendarViewPager extends ViewPager {
 
     private CalendarEvent calendarEvent;
+    private MonthInfo preMonth;
 
     /**
      * Constructor
@@ -44,11 +45,11 @@ public class CalendarViewPager extends ViewPager {
             public void onPageSelected(int position) {
                 if (getAdapter() != null) {
                     CalendarAdapter adapter = (CalendarAdapter) getAdapter();
-                    MonthInfo prePage = adapter.getSelectedMonth();
                     adapter.slide(position);
                     if (calendarEvent.monthPageChangeListener != null) {
-                        calendarEvent.monthPageChangeListener.onChange(prePage, adapter.getSelectedMonth());
+                        calendarEvent.monthPageChangeListener.onChange(preMonth, adapter.getSelectedMonth());
                     }
+                    preMonth = adapter.getSelectedMonth();
                 }
             }
 
