@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -428,6 +429,52 @@ public class WindCalendar extends LinearLayout {
     }
 
     /**
+     * @return highlighted date IDs
+     */
+    public Set<String> getHighlightDates() {
+        return info.highlightDates;
+    }
+
+
+    /**
+     * Set highlight dates
+     *
+     * @param dateIds list of date ids
+     * @see CalendarUtil#toId(int, int, int)
+     */
+    public void highlightDates(Iterable<String> dateIds) {
+        info.highlightDates.clear();
+        for (String id : dateIds) {
+            info.highlightDates.add(id);
+        }
+        adapter.refreshCurrentPage();
+    }
+
+    /**
+     * Set highlight dates
+     *
+     * @param dateIds list of date ids
+     * @see CalendarUtil#toId(int, int, int)
+     */
+    public void highlightDates(String... dateIds) {
+        if (dateIds.length == 0) {
+            info.highlightDates.clear();
+            adapter.refreshCurrentPage();
+        } else {
+            highlightDates(Arrays.asList(dateIds));
+        }
+    }
+
+    /**
+     * Set selected date
+     *
+     * @param date selected date
+     */
+    public void setSelectedDate(Date date) {
+        _calendarViewPager.setSelectedDate(date);
+    }
+
+    /**
      * Set week days string. The day should start from Monday.
      * For example, new String[] {"Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"}
      *
@@ -660,44 +707,6 @@ public class WindCalendar extends LinearLayout {
         if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
-    }
-
-    /**
-     * Set highlight dates
-     *
-     * @param dateIds list of date ids
-     * @see CalendarUtil#toId(int, int, int)
-     */
-    public void highlightDates(Iterable<String> dateIds) {
-        info.highlightDates.clear();
-        for (String id : dateIds) {
-            info.highlightDates.add(id);
-        }
-        adapter.refreshCurrentPage();
-    }
-
-    /**
-     * Set highlight dates
-     *
-     * @param dateIds list of date ids
-     * @see CalendarUtil#toId(int, int, int)
-     */
-    public void highlightDates(String... dateIds) {
-        if (dateIds.length == 0) {
-            info.highlightDates.clear();
-            adapter.refreshCurrentPage();
-        } else {
-            highlightDates(Arrays.asList(dateIds));
-        }
-    }
-
-    /**
-     * Set selected date
-     *
-     * @param date selected date
-     */
-    public void setSelectedDate(Date date) {
-        _calendarViewPager.setSelectedDate(date);
     }
 
     /* ---------------------- INNER CLASS -------------------- */
