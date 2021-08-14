@@ -64,9 +64,10 @@ public class CalendarPage extends Fragment {
             }
         }).setOnMonthPageChangeListener(new WindCalendar.OnMonthPageChangeListener() {
             @Override
-            public void onChange(@Nullable MonthInfo previousMonth, MonthInfo currentMonth) {
-                String month = currentMonth.getYear() + "/" + (currentMonth.getMonth() + 1);
-                _monthInfoText.setText(month);
+            public void onChange(@Nullable MonthInfo preMonth, @NonNull MonthInfo curMonth) {
+                String preMonthText = preMonth != null ? preMonth.getYear() + "/" + (preMonth.getMonth() + 1) : "null";
+                String curMonthText = curMonth.getYear() + "/" + (curMonth.getMonth() + 1);
+                _monthInfoText.setText(String.format("pre month: %s, current month: %s", preMonthText, curMonthText));
             }
         }).setOnWeekDayItemClickListener(new WindCalendar.OnWeekDayItemClickListener() {
             @Override
