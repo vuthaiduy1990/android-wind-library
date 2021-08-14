@@ -1,5 +1,7 @@
 package the.wind.library;
 
+import java.util.Date;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -57,7 +59,7 @@ public abstract class CWHandler<T> {
      * Default constructor
      */
     public CWHandler() {
-        this(null);
+        this(Long.toString(new Date().getTime()) + Math.random());
     }
 
     /**

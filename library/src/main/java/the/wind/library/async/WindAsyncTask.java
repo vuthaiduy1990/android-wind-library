@@ -6,16 +6,19 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import androidx.annotation.Nullable;
 
 public class WindAsyncTask<Params, Progress, Result> implements Promise.IPromise<Result> {
 
     // Thread, promise
-    private final Executor executor = Executors.newSingleThreadExecutor();
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private final Promise<Result> mPromise = new Promise<>();
 
     // UI thread handler
+    @Nullable
     private Handler UIThread;
 
     // result and exception
@@ -51,7 +54,7 @@ public class WindAsyncTask<Params, Progress, Result> implements Promise.IPromise
         } catch (Exception ex) {
             exception = ex;
         }
-        if (!cancel) {
+        if (!cancel && UIThread != null) {
             UIThread.post(OnPostResultHandler);
         } else {
             // finish the task
@@ -60,11 +63,17 @@ public class WindAsyncTask<Params, Progress, Result> implements Promise.IPromise
     };
 
     /**
+     * Default constructor
+     */
+    public WindAsyncTask() {
+    }
+
+    /**
      * Constructor
      *
      * @param uiThread UI thread handler
      */
-    public WindAsyncTask(Handler uiThread) {
+    public WindAsyncTask(@Nullable Handler uiThread) {
         this.UIThread = uiThread;
     }
 
@@ -130,7 +139,7 @@ public class WindAsyncTask<Params, Progress, Result> implements Promise.IPromise
      */
     @SafeVarargs
     protected final void publishProgress(Progress... progressResult) {
-        if (!cancel) {
+        if (!cancel && UIThread != null) {
             OnProgressHandler.addAll(Arrays.asList(progressResult));
             UIThread.post(OnProgressHandler);
         }
