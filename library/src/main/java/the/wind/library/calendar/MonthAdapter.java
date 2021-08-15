@@ -214,6 +214,7 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
                 itemView.setBackgroundResource(calStyle.dateTodayBackground());
 
             } else if (isHighlight) {
+                calInfo.selectedDateViewMap.put(dateId, this);
                 _dateTextView.setTextColor(calStyle.dateHighlightTextColor());
                 itemView.setBackgroundResource(calStyle.dateHighlightBackground());
 

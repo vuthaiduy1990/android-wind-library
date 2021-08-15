@@ -19,6 +19,7 @@ import android.widget.TextView;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -429,6 +430,28 @@ public class WindCalendar extends LinearLayout {
     }
 
     /**
+     * @return mapping between date ID and respective view holder
+     */
+    public Map<String, MonthAdapter.ViewHolder> getSelectedDateViewMap() {
+        return info.selectedDateViewMap;
+    }
+
+    /**
+     * Select date item view
+     *
+     * @param viewHolder view holder
+     * @param data       date info
+     * @return true if item view is already selected before
+     */
+    public boolean selectDateItemView(MonthAdapter.ViewHolder viewHolder, DateInfo data) {
+        Map<String, MonthAdapter.ViewHolder> viewMap = getSelectedDateViewMap();
+        boolean alreadySelected = viewMap.containsKey(data.getId());
+        viewMap.put(data.getId(), viewHolder);
+        viewHolder.touchDown();
+        return alreadySelected;
+    }
+
+    /**
      * @return highlighted date IDs
      */
     public Set<String> getHighlightDates() {
@@ -438,8 +461,14 @@ public class WindCalendar extends LinearLayout {
     /**
      * Clear highlight events without refreshing page
      */
-    public void clearHighlights() {
+    public void clearSelectedDates() {
         info.highlightDates.clear();
+        Iterator<Map.Entry<String, MonthAdapter.ViewHolder>> itemIt = getSelectedDateViewMap().entrySet().iterator();
+        while (itemIt.hasNext()) {
+            itemIt.next().getValue().touchUp();
+            itemIt.remove();
+        }
+        info.selectedDateViewMap.clear();
     }
 
     /**
@@ -450,6 +479,7 @@ public class WindCalendar extends LinearLayout {
      */
     public void highlightDates(Iterable<String> dateIds) {
         info.highlightDates.clear();
+        info.selectedDateViewMap.clear();
         for (String id : dateIds) {
             info.highlightDates.add(id);
         }
@@ -466,6 +496,7 @@ public class WindCalendar extends LinearLayout {
     public void highlightDates(String... dateIds) {
         if (dateIds.length == 0) {
             info.highlightDates.clear();
+            info.selectedDateViewMap.clear();
             adapter.refreshCurrentPage();
         } else {
             highlightDates(Arrays.asList(dateIds));

@@ -2,7 +2,9 @@ package the.wind.library.calendar;
 
 import android.icu.util.Calendar;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import androidx.annotation.NonNull;
@@ -13,6 +15,7 @@ final class CalendarInfo {
     private final String todayId;
     public final Set<String> eventDates = new HashSet<>();
     public final Set<String> highlightDates = new HashSet<>();
+    public final Map<String, MonthAdapter.ViewHolder> selectedDateViewMap = new HashMap<>();
 
     @Nullable
     public CalendarType lunarType = null;
