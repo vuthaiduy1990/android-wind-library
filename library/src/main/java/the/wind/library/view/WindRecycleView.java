@@ -450,6 +450,12 @@ public class WindRecycleView extends RecyclerView {
 
     /**
      * Adapter wrapper
+     * Event trigger time and order
+     * <pre>
+     *      + Click event   : touch down -> touch up -> click event
+     *      + Double click  : touch down -> touch up -> touch down -> double click -> touch up
+     *      + Long click    : touch down -> long click -> touch up
+     * </pre>
      *
      * @param <T> View Holder
      */
