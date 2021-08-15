@@ -1,6 +1,5 @@
 package the.wind.library.calendar;
 
-import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -182,8 +181,6 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
             String dateId = data.getId();
             boolean hasEvent = calInfo.hasEvent(dateId);
             boolean isToday = calInfo.isToday(dateId);
-            boolean isWeekend = data.isWeekend();
-            boolean isHighlight = calInfo.isHighlight(dateId);
 
             // Set text value
             _dateTextView.setText(String.format(Locale.getDefault(), "%d", data.getDayOfMonth()));
@@ -194,6 +191,22 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
                 _lunarDateTextView.setVisibility(View.GONE);
             }
             _eventSymbol.setVisibility(hasEvent && !isToday ? View.VISIBLE : View.GONE);
+
+            // bind color
+            bindColor(data);
+        }
+
+        /**
+         * Bind color
+         *
+         * @param data item data
+         */
+        private void bindColor(DateInfo data) {
+            String dateId = data.getId();
+            boolean hasEvent = calInfo.hasEvent(dateId);
+            boolean isToday = calInfo.isToday(dateId);
+            boolean isWeekend = data.isWeekend();
+            boolean isHighlight = calInfo.isHighlight(dateId);
 
             // Set text color
             if (isToday) {
@@ -255,17 +268,15 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
         /**
          * Touch down on item
          */
-        private void touchDown() {
-            itemView.setTag(R.id.calendar_date_item_background_key, itemView.getBackground());
+        public void touchDown() {
             itemView.setBackgroundResource(calStyle.dateHoverBackground());
         }
 
         /**
          * Touch down on item
          */
-        private void touchUp() {
-            Drawable background = (Drawable) itemView.getTag(R.id.calendar_date_item_background_key);
-            itemView.setBackground(background);
+        public void touchUp() {
+            bindColor(getAdapterData());
         }
 
         /**

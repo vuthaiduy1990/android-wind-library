@@ -435,9 +435,15 @@ public class WindCalendar extends LinearLayout {
         return info.highlightDates;
     }
 
+    /**
+     * Clear highlight events without refreshing page
+     */
+    public void clearHighlights() {
+        info.highlightDates.clear();
+    }
 
     /**
-     * Set highlight dates
+     * Set highlight dates and refresh current page also.
      *
      * @param dateIds list of date ids
      * @see CalendarUtil#toId(int, int, int)
@@ -451,7 +457,8 @@ public class WindCalendar extends LinearLayout {
     }
 
     /**
-     * Set highlight dates
+     * Set highlight dates and refresh current page also
+     * Set empty to clear all events and refresh page also
      *
      * @param dateIds list of date ids
      * @see CalendarUtil#toId(int, int, int)
