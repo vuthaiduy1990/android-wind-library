@@ -576,6 +576,15 @@ public class WindRecycleView extends RecyclerView {
         }
 
         /**
+         * Check if dataset is empty or not
+         *
+         * @return true if empty
+         */
+        public boolean isEmpty() {
+            return dataset.isEmpty();
+        }
+
+        /**
          * Set data
          *
          * @param dataset dataset
