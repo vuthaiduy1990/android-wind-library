@@ -59,9 +59,9 @@
             android:paddingBottom="20dp"
             app:closeVisible="false"
             app:compactMode="false"
+            app:hint="Custom style"
             app:iconSize="@dimen/wl_icon_big"
             app:searchIcon="@drawable/wl_ic_tag"
-            app:text="Custom style"
             app:textSize="@dimen/wl_title_big" />
 
 
