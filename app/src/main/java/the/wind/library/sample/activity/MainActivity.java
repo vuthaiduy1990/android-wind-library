@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
             R.id._navCheckboxMenu,
             R.id._navButtonMenu,
             R.id._navDialogMenu,
+            R.id._navCurrencyDialogMenu,
             R.id._navRecycleViewMenu,
             R.id._navActionMenu,
             R.id._navSearchBoxMenu,

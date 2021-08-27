@@ -49,6 +49,12 @@
         tools:layout="@layout/fragment_dialog_layout" />
 
     <fragment
+        android:id="@+id/_navCurrencyDialogMenu"
+        android:name="the.wind.library.sample.activity.fragment.CurrencyDialogPage"
+        android:label="@string/drawer_currency_dialog"
+        tools:layout="@layout/fragment_currency_dialog_layout" />
+
+    <fragment
         android:id="@+id/_navRecycleViewMenu"
         android:name="the.wind.library.sample.activity.fragment.RecycleViewPage"
         android:label="@string/drawer_recycle_view"
