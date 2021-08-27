@@ -21,7 +21,7 @@ public class SupportTemplate implements WindDialog.ITemplate {
     public void onSetting(final WindDialog dialog) {
         Context context = dialog.getContext();
         dialog.setIcon(R.drawable.wl_dialog_icon_idea);
-        dialog.addButton(Button.Type.GRAY, context.getString(R.string.wl_dialog_button_close), null);
+        dialog.addButton(Button.Type.GRAY, context.getString(R.string.wl_close), null);
     }
 
     /**

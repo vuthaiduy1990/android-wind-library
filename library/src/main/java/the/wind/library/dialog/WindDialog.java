@@ -806,12 +806,7 @@ public class WindDialog extends Dialog {
         if (icon != null) {
             btn.setIconType(icon);
         }
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        btn.setOnClickListener(v -> dismiss());
         return addButton(idx, btn);
     }
 

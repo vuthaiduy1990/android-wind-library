@@ -78,56 +78,36 @@ public class CalendarPage extends Fragment {
         });
 
         // set highlight event
-        view.findViewById(R.id._highlightBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (highlighted) {
-                    _calendarView.highlightDates();
-                } else {
-                    _calendarView.highlightDates(neighborDates);
-                }
-                highlighted = !highlighted;
+        view.findViewById(R.id._highlightBtn).setOnClickListener(v -> {
+            if (highlighted) {
+                _calendarView.highlightDates();
+            } else {
+                _calendarView.highlightDates(neighborDates);
             }
+            highlighted = !highlighted;
         });
 
         // Set today
-        view.findViewById(R.id._todayBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _calendarView.setSelectedDate(new Date());
-            }
-        });
+        view.findViewById(R.id._todayBtn).setOnClickListener(v -> _calendarView.setSelectedDate(new Date()));
 
         // Change Lunar type
-        view.findViewById(R.id._IslamicLunarCalendar).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _calendarView.setLunarType(CalendarType.Islamic);
-                _calendarView.rebuild();
-            }
+        view.findViewById(R.id._IslamicLunarCalendar).setOnClickListener(v -> {
+            _calendarView.setLunarType(CalendarType.Islamic);
+            _calendarView.rebuild();
         });
-        view.findViewById(R.id._VietnameseLunarCalendar).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _calendarView.setLunarType(CalendarType.Vietnamese);
-                _calendarView.rebuild();
-            }
+        view.findViewById(R.id._VietnameseLunarCalendar).setOnClickListener(v -> {
+            _calendarView.setLunarType(CalendarType.Vietnamese);
+            _calendarView.rebuild();
         });
 
         // Set weeks start on
-        view.findViewById(R.id._startOnMonday).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _calendarView.setWeekStartsOn(WeekStartsOn.MONDAY);
-                _calendarView.rebuild();
-            }
+        view.findViewById(R.id._startOnMonday).setOnClickListener(v -> {
+            _calendarView.setWeekStartsOn(WeekStartsOn.MONDAY);
+            _calendarView.rebuild();
         });
-        view.findViewById(R.id._startOnSunday).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _calendarView.setWeekStartsOn(WeekStartsOn.SUNDAY);
-                _calendarView.rebuild();
-            }
+        view.findViewById(R.id._startOnSunday).setOnClickListener(v -> {
+            _calendarView.setWeekStartsOn(WeekStartsOn.SUNDAY);
+            _calendarView.rebuild();
         });
 
     }

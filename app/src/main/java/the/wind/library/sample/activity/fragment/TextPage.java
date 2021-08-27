@@ -52,26 +52,17 @@ public class TextPage extends Fragment {
             }
         });
 
-        view.findViewById(R.id._startTypingBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loopTyping = false;
-                fakulator.start();
-            }
+        view.findViewById(R.id._startTypingBtn).setOnClickListener(v -> {
+            loopTyping = false;
+            fakulator.start();
         });
-        view.findViewById(R.id._stopTypingBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fakulator.stop();
-                loopTyping = false;
-            }
+        view.findViewById(R.id._stopTypingBtn).setOnClickListener(v -> {
+            fakulator.stop();
+            loopTyping = false;
         });
-        view.findViewById(R.id._loopTypingBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loopTyping = true;
-                fakulator.start();
-            }
+        view.findViewById(R.id._loopTypingBtn).setOnClickListener(v -> {
+            loopTyping = true;
+            fakulator.start();
         });
 
     }

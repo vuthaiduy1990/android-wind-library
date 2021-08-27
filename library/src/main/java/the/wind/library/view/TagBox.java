@@ -354,24 +354,18 @@ public class TagBox extends FlexboxLayout {
         drawable.setColor(bgColor.value());
 
         // bind view event listener
-        _removeIcon.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (itemRemoveListener != null) {
-                    if (itemRemoveListener.onRemove(itemView, tag)) {
-                        remove(tag);
-                    }
-                } else {
+        _removeIcon.setOnClickListener(v -> {
+            if (itemRemoveListener != null) {
+                if (itemRemoveListener.onRemove(itemView, tag)) {
                     remove(tag);
                 }
+            } else {
+                remove(tag);
             }
         });
-        itemView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (itemClickListener != null) {
-                    itemClickListener.onClick(itemView, tag);
-                }
+        itemView.setOnClickListener(v -> {
+            if (itemClickListener != null) {
+                itemClickListener.onClick(itemView, tag);
             }
         });
 

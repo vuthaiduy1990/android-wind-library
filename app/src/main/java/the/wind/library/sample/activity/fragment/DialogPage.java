@@ -99,11 +99,8 @@ public class DialogPage extends Fragment {
         _simpleDialog.setTitle(R.string.nav_header_title);
         _simpleDialog.setContentText(R.string.nav_header_desc);
         _simpleDialog.addButton(Button.Type.GRAY, getString(R.string.button_close), null);
-        view.findViewById(R.id._simpleDialog).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _simpleDialog.show();
-            }
+        view.findViewById(R.id._simpleDialog).setOnClickListener(v -> {
+            _simpleDialog.show();
         });
     }
 
@@ -113,20 +110,14 @@ public class DialogPage extends Fragment {
                 .setContentText("Try your best and take your money.")
                 .setButtonText(1, "Yes");
         _simpleTaskDialog.setTitle("Buy a chance?");
-        _simpleTaskDialog.buttons().get(0).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _simpleTaskDialog.bundle().set("button", ((Button) v).textView().getText());
-                _simpleTaskDialog.dismiss();
-            }
+        _simpleTaskDialog.buttons().get(0).setOnClickListener(v -> {
+            _simpleTaskDialog.bundle().set("button", ((Button) v).textView().getText());
+            _simpleTaskDialog.dismiss();
         });
-        _simpleTaskDialog.buttons().get(1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _simpleTaskDialog.bundle().set("button", ((Button) v).textView().getText());
-                _simpleTaskDialog.dismissImmediately();
-                _errorDialog.show();
-            }
+        _simpleTaskDialog.buttons().get(1).setOnClickListener(v -> {
+            _simpleTaskDialog.bundle().set("button", ((Button) v).textView().getText());
+            _simpleTaskDialog.dismissImmediately();
+            _errorDialog.show();
         });
         _simpleTaskDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
@@ -135,12 +126,7 @@ public class DialogPage extends Fragment {
                 Toast.makeText(view.getContext(), "dismiss - " + buttonText, Toast.LENGTH_SHORT).show();
             }
         });
-        view.findViewById(R.id._simpleTaskDialog).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _simpleTaskDialog.show();
-            }
-        });
+        view.findViewById(R.id._simpleTaskDialog).setOnClickListener(v -> _simpleTaskDialog.show());
     }
 
     private void infoDialog(View view) {
@@ -148,12 +134,7 @@ public class DialogPage extends Fragment {
                 .apply(InfoTemplate.instance())
                 .setContentText(R.string.nav_header_desc);
         _infoDialog.setTitle(R.string.nav_header_title);
-        view.findViewById(R.id._infoDialog).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _infoDialog.show();
-            }
-        });
+        view.findViewById(R.id._infoDialog).setOnClickListener(v -> _infoDialog.show());
     }
 
     private void warnDialog(View view) {
@@ -163,12 +144,7 @@ public class DialogPage extends Fragment {
                 .setButtonText(1, "Migrate");
         _warnDialog.addButton(Button.Type.DANGER, "", Button.InlineIcon.TRASH).setMinimumWidth(0);
         _warnDialog.setTitle("Migrate Database");
-        view.findViewById(R.id._warnDialog).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _warnDialog.show();
-            }
-        });
+        view.findViewById(R.id._warnDialog).setOnClickListener(v -> _warnDialog.show());
     }
 
     private void dangerDialog(View view) {
@@ -177,20 +153,12 @@ public class DialogPage extends Fragment {
                 .setContentText("Won't be able to recover this love")
                 .setButtonText(1, "Yes, delete it!");
         _dangerDialog.setTitle("Are you sure");
-        _dangerDialog.buttons().get(1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _dangerDialog.dismissImmediately();
-                _successDialog.show();
-                openNotificationFromSuccess = true;
-            }
+        _dangerDialog.buttons().get(1).setOnClickListener(v -> {
+            _dangerDialog.dismissImmediately();
+            _successDialog.show();
+            openNotificationFromSuccess = true;
         });
-        view.findViewById(R.id._dangerDialog).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _dangerDialog.show();
-            }
-        });
+        view.findViewById(R.id._dangerDialog).setOnClickListener(v -> _dangerDialog.show());
     }
 
     private void errorDialog(View view) {
@@ -198,12 +166,7 @@ public class DialogPage extends Fragment {
                 .apply(ErrorTemplate.instance())
                 .setContentText("Something went wrong!");
         _errorDialog.setTitle("Oops...");
-        view.findViewById(R.id._errorDialog).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _errorDialog.show();
-            }
-        });
+        view.findViewById(R.id._errorDialog).setOnClickListener(v -> _errorDialog.show());
     }
 
     private void supportDialog(View view) {
@@ -211,12 +174,7 @@ public class DialogPage extends Fragment {
                 .apply(SupportTemplate.instance())
                 .setContentText("Please insert username and password");
         _supportDialog.setTitle("Validation");
-        view.findViewById(R.id._supportDialog).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _supportDialog.show();
-            }
-        });
+        view.findViewById(R.id._supportDialog).setOnClickListener(v -> _supportDialog.show());
     }
 
     private void successDialog(View view) {
@@ -224,22 +182,14 @@ public class DialogPage extends Fragment {
                 .apply(SuccessTemplate.instance())
                 .setContentText("We're all travelling through time together, everyday of out lives");
         _successDialog.setTitle("Completed!");
-        _successDialog.button().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _successDialog.dismissImmediately();
-                if (openNotificationFromSuccess) {
-                    _notifyDialog.showImmediately();
-                    openNotificationFromSuccess = false;
-                }
+        _successDialog.button().setOnClickListener(v -> {
+            _successDialog.dismissImmediately();
+            if (openNotificationFromSuccess) {
+                _notifyDialog.showImmediately();
+                openNotificationFromSuccess = false;
             }
         });
-        view.findViewById(R.id._successDialog).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _successDialog.show();
-            }
-        });
+        view.findViewById(R.id._successDialog).setOnClickListener(v -> _successDialog.show());
     }
 
     private void notifyDialog(View view) {
@@ -247,12 +197,7 @@ public class DialogPage extends Fragment {
                 .apply(NotificationTemplate.instance())
                 .setContentText("All we can do is do our best to relish the remarkable ride.");
         _notifyDialog.setTitle("Lovemory!");
-        view.findViewById(R.id._notifyDialog).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _notifyDialog.show();
-            }
-        });
+        view.findViewById(R.id._notifyDialog).setOnClickListener(v -> _notifyDialog.show());
     }
 
     private void loadingDialog(View view) {
@@ -260,35 +205,20 @@ public class DialogPage extends Fragment {
                 .apply(LoadingTemplate.instance())
                 .setContentText("This process may take a long time");
         _loadingDialog.setTitle("Please wait!");
-        view.findViewById(R.id._loadingDialog).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _loadingDialog.show(5000);
-            }
-        });
+        view.findViewById(R.id._loadingDialog).setOnClickListener(v -> _loadingDialog.show(5000));
     }
 
     private void progressDialog1(View view) {
         _progressDialog1 = new WindDialog(view.getContext())
                 .apply(ProgressTemplate.instance());
-        view.findViewById(R.id._progressDialog1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _progressDialog1.show(5000);
-            }
-        });
+        view.findViewById(R.id._progressDialog1).setOnClickListener(v -> _progressDialog1.show(5000));
     }
 
     private void progressDialog2(View view) {
         _progressDialog2 = new WindDialog(view.getContext())
                 .apply(ProgressTemplate.instance());
         _progressDialog2.getLayout().setBackground(null);
-        view.findViewById(R.id._progressDialog2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _progressDialog2.show(5000);
-            }
-        });
+        view.findViewById(R.id._progressDialog2).setOnClickListener(v -> _progressDialog2.show(5000));
     }
 
     private void showWaiting(View view) {
@@ -297,32 +227,19 @@ public class DialogPage extends Fragment {
                 .setContentText("This process may take a long time")
                 .setButtonText(1, "Update");
         _waitingDialog.setTitle("Update version");
-        _waitingDialog.buttons().get(1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _waitingDialog.waitMe();
-                // do something here
-                _waitingDialog.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        _waitingDialog.imDone(true);
-                    }
-                }, 5000);
-            }
+        _waitingDialog.buttons().get(1).setOnClickListener(v -> {
+            _waitingDialog.waitMe();
+            // do something here
+            _waitingDialog.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    _waitingDialog.imDone(true);
+                }
+            }, 5000);
         });
         _waitingDialog.addButton(Button.Type.NEUTRAL, "Wait", null);
-        _waitingDialog.buttons().get(2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _waitingDialog.waitMe(5000, false);
-            }
-        });
-        view.findViewById(R.id._waitingDialog).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _waitingDialog.show();
-            }
-        });
+        _waitingDialog.buttons().get(2).setOnClickListener(v -> _waitingDialog.waitMe(5000, false));
+        view.findViewById(R.id._waitingDialog).setOnClickListener(v -> _waitingDialog.show());
     }
 
     private WindDialog createFubukiDialog(View view) {
@@ -333,12 +250,7 @@ public class DialogPage extends Fragment {
                 .setIcon(R.drawable.treasure_map)
                 .addButton(Button.Type.NEUTRAL, "Thinking", null)
                 .setCustomIcon(R.drawable.ic_question)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.waitMe(3000, false);
-                    }
-                });
+                .setOnClickListener(v -> dialog.waitMe(3000, false));
         dialog.addButton(Button.Type.SUCCESS, "Let's go", null).setCustomIcon(R.drawable.ic_rocket);
         dialog.setContentView(R.layout.custom_fubuki_dialog_content);
         return dialog;
@@ -346,13 +258,10 @@ public class DialogPage extends Fragment {
 
     private void fubukiDialog(View view) {
         _fubukiDialog = createFubukiDialog(view);
-        view.findViewById(R.id._fubukiDialog).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _fubukiDialog.setInOutAnimType(WindDialog.InOutAnimType.SWEET_ALERT);
-                _fubukiDialog.setGravity(Gravity.CENTER);
-                _fubukiDialog.show();
-            }
+        view.findViewById(R.id._fubukiDialog).setOnClickListener(v -> {
+            _fubukiDialog.setInOutAnimType(WindDialog.InOutAnimType.SWEET_ALERT);
+            _fubukiDialog.setGravity(Gravity.CENTER);
+            _fubukiDialog.show();
         });
     }
 
@@ -362,100 +271,62 @@ public class DialogPage extends Fragment {
         _fullScreenDialog.setWidth(screenSize.getWidth()).setHeight(screenSize.getHeight());
         _fullScreenDialog.setLottieIcon(R.raw.cycle_ahead);
         _fullScreenDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_TOP_2_BOTTOM);
-        view.findViewById(R.id._fullScreenDialog).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _fullScreenDialog.show();
-            }
-        });
+        view.findViewById(R.id._fullScreenDialog).setOnClickListener(v -> _fullScreenDialog.show());
     }
 
     private void customAnimDialog(View view) {
-        view.findViewById(R.id._animSweetAlert).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _notifyDialog.setInOutAnimType(WindDialog.InOutAnimType.SWEET_ALERT);
-                _notifyDialog.show();
-            }
+        view.findViewById(R.id._animSweetAlert).setOnClickListener(v -> {
+            _notifyDialog.setInOutAnimType(WindDialog.InOutAnimType.SWEET_ALERT);
+            _notifyDialog.show();
         });
-        view.findViewById(R.id._animFade).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _notifyDialog.setInOutAnimType(WindDialog.InOutAnimType.FADE);
-                _notifyDialog.show();
-            }
+        view.findViewById(R.id._animFade).setOnClickListener(v -> {
+            _notifyDialog.setInOutAnimType(WindDialog.InOutAnimType.FADE);
+            _notifyDialog.show();
         });
-        view.findViewById(R.id._animLeftRight).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _notifyDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_LEFT_2_RIGHT);
-                _notifyDialog.show();
-            }
+        view.findViewById(R.id._animLeftRight).setOnClickListener(v -> {
+            _notifyDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_LEFT_2_RIGHT);
+            _notifyDialog.show();
         });
-        view.findViewById(R.id._animRightLeft).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _notifyDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_RIGHT_2_LEFT);
-                _notifyDialog.show();
-            }
+        view.findViewById(R.id._animRightLeft).setOnClickListener(v -> {
+            _notifyDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_RIGHT_2_LEFT);
+            _notifyDialog.show();
         });
-        view.findViewById(R.id._animTopBottom).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _fubukiDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_TOP_2_BOTTOM);
-                _fubukiDialog.show();
-            }
+        view.findViewById(R.id._animTopBottom).setOnClickListener(v -> {
+            _fubukiDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_TOP_2_BOTTOM);
+            _fubukiDialog.show();
         });
-        view.findViewById(R.id._animBottomTop).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _fubukiDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_BOTTOM_2_TOP);
-                _fubukiDialog.show();
-            }
+        view.findViewById(R.id._animBottomTop).setOnClickListener(v -> {
+            _fubukiDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_BOTTOM_2_TOP);
+            _fubukiDialog.show();
         });
     }
 
     private void customGravityDialog(View view) {
         _gravityDialog = createFubukiDialog(view);
-        view.findViewById(R.id._gravityLeft).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _gravityDialog.setGravity(Gravity.START);
-                _gravityDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_LEFT_2_RIGHT);
-                _gravityDialog.show();
-            }
+        view.findViewById(R.id._gravityLeft).setOnClickListener(v -> {
+            _gravityDialog.setGravity(Gravity.START);
+            _gravityDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_LEFT_2_RIGHT);
+            _gravityDialog.show();
         });
-        view.findViewById(R.id._gravityTop).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _gravityDialog.setGravity(Gravity.TOP);
-                _gravityDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_TOP_2_BOTTOM);
-                _gravityDialog.show();
-            }
+        view.findViewById(R.id._gravityTop).setOnClickListener(v -> {
+            _gravityDialog.setGravity(Gravity.TOP);
+            _gravityDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_TOP_2_BOTTOM);
+            _gravityDialog.show();
         });
-        view.findViewById(R.id._gravityRight).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _gravityDialog.setGravity(Gravity.END);
-                _gravityDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_RIGHT_2_LEFT);
-                _gravityDialog.show();
-            }
+        view.findViewById(R.id._gravityRight).setOnClickListener(v -> {
+            _gravityDialog.setGravity(Gravity.END);
+            _gravityDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_RIGHT_2_LEFT);
+            _gravityDialog.show();
         });
-        view.findViewById(R.id._gravityBottom).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _gravityDialog.setGravity(Gravity.BOTTOM);
-                _gravityDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_BOTTOM_2_TOP);
-                _gravityDialog.show();
-            }
+        view.findViewById(R.id._gravityBottom).setOnClickListener(v -> {
+            _gravityDialog.setGravity(Gravity.BOTTOM);
+            _gravityDialog.setInOutAnimType(WindDialog.InOutAnimType.SLIDE_BOTTOM_2_TOP);
+            _gravityDialog.show();
         });
-        view.findViewById(R.id._gravityCenter).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _gravityDialog.setGravity(Gravity.CENTER);
-                _gravityDialog.setInOutAnimType(WindDialog.InOutAnimType.SWEET_ALERT);
-                _gravityDialog.show();
-            }
+        view.findViewById(R.id._gravityCenter).setOnClickListener(v -> {
+            _gravityDialog.setGravity(Gravity.CENTER);
+            _gravityDialog.setInOutAnimType(WindDialog.InOutAnimType.SWEET_ALERT);
+            _gravityDialog.show();
         });
     }
 
@@ -472,12 +343,7 @@ public class DialogPage extends Fragment {
         headerSearchBox.setCompactMode(true);
         headerSearchBox.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
         _extraHeaderDialog.addViewToHeader(headerSearchBox);
-        view.findViewById(R.id._extraHeaderView).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _extraHeaderDialog.show();
-            }
-        });
+        view.findViewById(R.id._extraHeaderView).setOnClickListener(v -> _extraHeaderDialog.show());
         headerSearchBox.setOnToggleListener(new SearchBox.OnToggleListener() {
             @Override
             public void onToggle(boolean compactMode) {
@@ -496,12 +362,7 @@ public class DialogPage extends Fragment {
         footerSearchBox.setBackgroundResource(R.drawable.wl_button_background_gray);
         footerSearchBox.setCompactMode(true);
         _extraFooterDialog.addViewToFooter(0, footerSearchBox);
-        view.findViewById(R.id._extraFooterView).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _extraFooterDialog.show();
-            }
-        });
+        view.findViewById(R.id._extraFooterView).setOnClickListener(v -> _extraFooterDialog.show());
     }
 
 }

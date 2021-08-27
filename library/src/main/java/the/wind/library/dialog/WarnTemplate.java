@@ -29,8 +29,8 @@ public class WarnTemplate implements WindDialog.ITemplate {
         icon.setRepeatCount(LottieDrawable.INFINITE);
         icon.setMinProgress(5f / 80f);
         icon.setMaxProgress(1f);
-        dialog.addButton(Button.Type.GRAY, context.getString(R.string.wl_dialog_button_cancel), null);
-        dialog.addButton(Button.Type.WARNING, context.getString(R.string.wl_dialog_button_confirm), null);
+        dialog.addButton(Button.Type.GRAY, context.getString(R.string.wl_cancel), null);
+        dialog.addButton(Button.Type.WARNING, context.getString(R.string.wl_yes), null);
     }
 
     /**

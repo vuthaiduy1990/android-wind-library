@@ -83,12 +83,9 @@ public class ActionMenuPage extends Fragment {
             }
         });
 
-        view.findViewById(R.id._shortMenuBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeToolbarMenu();
-                _shortActionMenu.show();
-            }
+        view.findViewById(R.id._shortMenuBtn).setOnClickListener(v -> {
+            closeToolbarMenu();
+            _shortActionMenu.show();
         });
     }
 
@@ -106,12 +103,9 @@ public class ActionMenuPage extends Fragment {
         for (int i = 0; i < 10; i++) {
             _longActionMenu.addItem(R.id.wind_menu_item_more, R.drawable.wl_ic_search, R.string.wind_menu_more_item);
         }
-        view.findViewById(R.id._longMenuBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeToolbarMenu();
-                _longActionMenu.show();
-            }
+        view.findViewById(R.id._longMenuBtn).setOnClickListener(v -> {
+            closeToolbarMenu();
+            _longActionMenu.show();
         });
     }
 
@@ -120,24 +114,18 @@ public class ActionMenuPage extends Fragment {
         _toolbarMenu.addItem(R.id.wind_menu_item_set_background, R.drawable.wl_ic_edit, R.string.wind_menu_item_edit);
         _toolbarMenu.addItem(R.id.wind_menu_item_set_money, R.drawable.wl_ic_lock, R.string.wind_menu_item_set_money);
         _toolbarMenu.addItem(R.id.wind_menu_item_delete, R.drawable.wl_ic_trash, R.string.wind_menu_item_delete);
-        view.findViewById(R.id._toolbarMenu).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeToolbarMenu();
-                _toolbarMenu.show();
-            }
+        view.findViewById(R.id._toolbarMenu).setOnClickListener(v -> {
+            closeToolbarMenu();
+            _toolbarMenu.show();
         });
     }
 
     private void createToolbarMenuWithManyItem(View view) {
         _toolbarMenuWithManyItems = new WindActionMenu(view.getContext(), WindActionMenu.MenuType.TOOLBAR);
         initBaseMenuItem(_toolbarMenuWithManyItems);
-        view.findViewById(R.id._toolbarMenuWithManyItems).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeToolbarMenu();
-                _toolbarMenuWithManyItems.show();
-            }
+        view.findViewById(R.id._toolbarMenuWithManyItems).setOnClickListener(v -> {
+            closeToolbarMenu();
+            _toolbarMenuWithManyItems.show();
         });
     }
 
@@ -146,12 +134,9 @@ public class ActionMenuPage extends Fragment {
         _toolbarMenuWithoutLabel.addItem(R.id.wind_menu_item_set_background, R.drawable.wl_ic_edit, 0);
         _toolbarMenuWithoutLabel.addItem(R.id.wind_menu_item_set_money, R.drawable.wl_ic_lock, 0);
         _toolbarMenuWithoutLabel.addItem(R.id.wind_menu_item_delete, R.drawable.wl_ic_trash, 0);
-        view.findViewById(R.id._toolbarMenuWithoutLabel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeToolbarMenu();
-                _toolbarMenuWithoutLabel.show();
-            }
+        view.findViewById(R.id._toolbarMenuWithoutLabel).setOnClickListener(v -> {
+            closeToolbarMenu();
+            _toolbarMenuWithoutLabel.show();
         });
     }
 
@@ -162,16 +147,13 @@ public class ActionMenuPage extends Fragment {
         _sidebarMenu.addItem(R.id.wind_menu_item_set_money, R.drawable.wl_ic_lock, R.string.wind_menu_item_set_money);
         _sidebarMenu.addItem(R.id.wind_menu_item_delete, R.drawable.wl_ic_trash, R.string.wind_menu_item_delete);
         _sidebarMenu.show();
-        view.findViewById(R.id._sidebarMenu).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (toggleSideBarMenu) {
-                    _sidebarMenu.dismiss();
-                } else {
-                    _sidebarMenu.show();
-                }
-                toggleSideBarMenu = !toggleSideBarMenu;
+        view.findViewById(R.id._sidebarMenu).setOnClickListener(v -> {
+            if (toggleSideBarMenu) {
+                _sidebarMenu.dismiss();
+            } else {
+                _sidebarMenu.show();
             }
+            toggleSideBarMenu = !toggleSideBarMenu;
         });
     }
 

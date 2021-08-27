@@ -227,44 +227,30 @@ public class SearchBox extends LinearLayout {
                 return true; // prevent keyboard from auto closing
             }
         });
-        _icSearchBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // click on search button inside the search box
-                if (closeKeyboardOnSearch) {
-                    CWAndroidUtils.hideSoftKeyboard(_ipSearch);
+        _icSearchBtn.setOnClickListener(v -> {
+            // click on search button inside the search box
+            if (closeKeyboardOnSearch) {
+                CWAndroidUtils.hideSoftKeyboard(_ipSearch);
+            }
+            handleSearch();
+            if (enterListener != null) enterListener.onEnter(_ipSearch, oldSearchInput, inputText);
+        });
+        _icClearSearch.setOnClickListener(v -> {
+            _ipSearch.setText(""); // this will notify a text change
+            _icClearSearch.setVisibility(View.GONE);
+            _searchResultCountView.setVisibility(GONE);
+        });
+        _icCompactSearch.setOnClickListener(v -> {
+            setCompactMode(false);
+            _ipSearch.requestFocus();
+            _ipSearch.post(new Runnable() {
+                @Override
+                public void run() {
+                    CWAndroidUtils.showSoftKeyboard(_ipSearch);
                 }
-                handleSearch();
-                if (enterListener != null) enterListener.onEnter(_ipSearch, oldSearchInput, inputText);
-            }
+            });
         });
-        _icClearSearch.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _ipSearch.setText(""); // this will notify a text change
-                _icClearSearch.setVisibility(View.GONE);
-                _searchResultCountView.setVisibility(GONE);
-            }
-        });
-        _icCompactSearch.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setCompactMode(false);
-                _ipSearch.requestFocus();
-                _ipSearch.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        CWAndroidUtils.showSoftKeyboard(_ipSearch);
-                    }
-                });
-            }
-        });
-        _icCloseSearch.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeSearch();
-            }
-        });
+        _icCloseSearch.setOnClickListener(v -> closeSearch());
 
     }
 

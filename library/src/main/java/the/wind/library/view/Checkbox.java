@@ -106,20 +106,17 @@ public class Checkbox extends LottieAnimationView {
         setChecked(checked);
 
         // set event listeners
-        setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isAnimating()) {
-                    return;
-                }
-                if (checked) {
-                    setProgress(animType.getInitialProgress());
-                } else {
-                    playAnimation();
-                }
-                checked = !checked;
-                if (checkedListener != null) checkedListener.onChecked(v, checked);
+        setOnClickListener(v -> {
+            if (isAnimating()) {
+                return;
             }
+            if (checked) {
+                setProgress(animType.getInitialProgress());
+            } else {
+                playAnimation();
+            }
+            checked = !checked;
+            if (checkedListener != null) checkedListener.onChecked(v, checked);
         });
     }
 

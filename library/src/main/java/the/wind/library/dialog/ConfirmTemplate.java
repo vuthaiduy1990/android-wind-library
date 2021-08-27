@@ -22,8 +22,8 @@ public class ConfirmTemplate implements WindDialog.ITemplate {
         Context context = dialog.getContext();
         // https://www.flaticon.com/free-icon/completed-task_1632670#
         dialog.setIcon(R.drawable.wl_dialog_icon_confirm);
-        dialog.addButton(Button.Type.GRAY, context.getString(R.string.wl_dialog_button_cancel), null);
-        dialog.addButton(Button.Type.PRIMARY, context.getString(R.string.wl_dialog_button_confirm), null);
+        dialog.addButton(Button.Type.GRAY, context.getString(R.string.wl_cancel), null);
+        dialog.addButton(Button.Type.PRIMARY, context.getString(R.string.wl_yes), null);
     }
 
     /**

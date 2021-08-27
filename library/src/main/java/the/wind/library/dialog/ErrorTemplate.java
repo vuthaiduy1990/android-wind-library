@@ -28,7 +28,7 @@ public class ErrorTemplate implements WindDialog.ITemplate {
         icon.setRepeatCount(1);
         icon.setMinProgress(7f / 89f);
         icon.setMaxProgress(75f / 89f);
-        dialog.addButton(Button.Type.GRAY, context.getString(R.string.wl_dialog_button_close), null);
+        dialog.addButton(Button.Type.GRAY, context.getString(R.string.wl_close), null);
     }
 
     /**

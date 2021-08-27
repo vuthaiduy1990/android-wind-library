@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">AndroidWindLibrary</string>
-    <string name="wl_dialog_button_close">Close</string>
-    <string name="wl_dialog_button_cancel">Cancel</string>
-    <string name="wl_dialog_button_confirm">Confirm</string>
+
+    <!-- ||||||||||||||||||||||| Common String ||||||||||||||||||||||| -->
+    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <string name="wl_close">Close</string>
+    <string name="wl_cancel">Cancel</string>
+    <string name="wl_yes">Yes</string>
+    <string name="wl_ok">OK</string>
     <string name="wl_calendar_event_symbol">🔴</string>
 </resources>

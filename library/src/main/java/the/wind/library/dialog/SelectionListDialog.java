@@ -13,7 +13,6 @@ import java.util.List;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import the.wind.library.R;
 import the.wind.library.adapter.SelectionListAdapter;
 import the.wind.library.view.Button;
@@ -34,8 +33,6 @@ public abstract class SelectionListDialog<T> extends WindDialog {
     private SearchBox.OnToggleListener searchToggleListener;
 
     // style and string
-    private int closeButtonTextRes;
-    private int searchBoxBackgroundRes;
     private int itemBackgroundHoverRes;
 
     /**
@@ -49,10 +46,7 @@ public abstract class SelectionListDialog<T> extends WindDialog {
         setInOutAnimType(InOutAnimType.SWEET_ALERT);
         setCancelable(true);
         setCanceledOnTouchOutside(false);
-
-        setCloseButtonTextRes(R.string.wl_dialog_button_close);
         setItemBackgroundHoverRes(R.drawable.wl_background_hover);
-        setSearchBoxBackgroundRes(R.drawable.wl_form_input_background);
 
         // bind custom view layout
         _customViewLayout = contentView().findViewById(R.id._customViewLayout);
@@ -102,7 +96,7 @@ public abstract class SelectionListDialog<T> extends WindDialog {
         _searchBox.setLayoutParams(searchBoxLp);
         _searchBox.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
         _searchBox.setCompactMode(true);
-        _searchBox.setBackgroundResource(searchBoxBackgroundRes);
+        _searchBox.setBackgroundResource(R.drawable.wl_form_input_background);
         addViewToHeader(_searchBox);
         _searchBox.setVisibility(View.GONE);
         _searchBox.setOnSearchListener(new SearchBox.OnSearchListener() {
@@ -133,12 +127,7 @@ public abstract class SelectionListDialog<T> extends WindDialog {
         });
 
         // bind button
-        addButton(Button.Type.GRAY, context.getString(closeButtonTextRes), null).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        addButton(Button.Type.GRAY, context.getString(R.string.wl_close), null).setOnClickListener(v -> dismiss());
 
         // bind event
         setOnDismissListener(new OnDismissListener() {
@@ -258,24 +247,15 @@ public abstract class SelectionListDialog<T> extends WindDialog {
     }
 
     /**
-     * Set close button text resource id
-     *
-     * @param resId string resource id
-     * @return dialog
-     */
-    public SelectionListDialog<T> setCloseButtonTextRes(@StringRes int resId) {
-        closeButtonTextRes = resId;
-        return this;
-    }
-
-    /**
      * Set search box background
      *
      * @param resId string resource id
      * @return dialog
      */
     public SelectionListDialog<T> setSearchBoxBackgroundRes(@DrawableRes int resId) {
-        searchBoxBackgroundRes = resId;
+        if (_searchBox != null) {
+            _searchBox.setBackgroundResource(resId);
+        }
         return this;
     }
 

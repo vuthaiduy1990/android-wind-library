@@ -198,16 +198,13 @@ public class WindActionMenu extends WindDialog {
 
         // bind attribute and listener
         itemView.setClickable(true);
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (MenuType.LIST.equals(menuType)) {
-                    // For list type -> auto dismiss menu dialog when user select an menu item
-                    selectedId = id;
-                    dismiss();
-                } else {
-                    if (itemSelectListener != null) itemSelectListener.onSelect(id);
-                }
+        itemView.setOnClickListener(v -> {
+            if (MenuType.LIST.equals(menuType)) {
+                // For list type -> auto dismiss menu dialog when user select an menu item
+                selectedId = id;
+                dismiss();
+            } else {
+                if (itemSelectListener != null) itemSelectListener.onSelect(id);
             }
         });
 

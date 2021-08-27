@@ -40,25 +40,22 @@ public class ButtonPage extends Fragment {
         anim.setRepeatCount(Animation.INFINITE);
         anim.setDuration(800);
 
-        _eventButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (state == 0) /* animate icon */ {
-                    state = 1;
-                    _eventButton.setIconVisible(true);
-                    _eventButton.icon().startAnimation(anim);
+        _eventButton.setOnClickListener(v -> {
+            if (state == 0) /* animate icon */ {
+                state = 1;
+                _eventButton.setIconVisible(true);
+                _eventButton.icon().startAnimation(anim);
 
-                } else if (state == 1) /*hide text*/ {
-                    state = 2;
-                    _eventButton.icon().clearAnimation();
-                    _eventButton.setTextVisible(false);
-                } else if (state == 2) /*show text again*/ {
-                    state = 3;
-                    _eventButton.setTextVisible(true);
-                } else /* hide icon */ {
-                    state = 0;
-                    _eventButton.setIconVisible(false);
-                }
+            } else if (state == 1) /*hide text*/ {
+                state = 2;
+                _eventButton.icon().clearAnimation();
+                _eventButton.setTextVisible(false);
+            } else if (state == 2) /*show text again*/ {
+                state = 3;
+                _eventButton.setTextVisible(true);
+            } else /* hide icon */ {
+                state = 0;
+                _eventButton.setIconVisible(false);
             }
         });
     }

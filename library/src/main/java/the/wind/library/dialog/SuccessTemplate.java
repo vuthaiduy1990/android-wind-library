@@ -22,7 +22,7 @@ public class SuccessTemplate implements WindDialog.ITemplate {
         Context context = dialog.getContext();
         // https://lottiefiles.com/2492-check
         dialog.setLottieIcon(R.raw.wl_dialog_icon_success);
-        dialog.addButton(Button.Type.GRAY, context.getString(R.string.wl_dialog_button_close), null);
+        dialog.addButton(Button.Type.GRAY, context.getString(R.string.wl_close), null);
     }
 
     /**

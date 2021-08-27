@@ -28,7 +28,7 @@ public class NotificationTemplate implements WindDialog.ITemplate {
         LottieAnimationView icon = ((LottieAnimationView) dialog.icon());
         icon.setRepeatCount(LottieDrawable.INFINITE);
         icon.setMaxProgress(40f / 48f);
-        dialog.addButton(Button.Type.GRAY, context.getString(R.string.wl_dialog_button_close), null);
+        dialog.addButton(Button.Type.GRAY, context.getString(R.string.wl_close), null);
     }
 
     /**
