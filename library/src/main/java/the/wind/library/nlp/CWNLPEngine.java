@@ -5,7 +5,6 @@ import android.content.Context;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -169,15 +168,14 @@ public final class CWNLPEngine<T extends INLPText> {
      * Load targets to engine
      * Loaded targets will be stored in queue for later processing
      *
-     * @param targetIt iterator
+     * @param targets list of targets which implement {@link INLPText}
      * @return engine
      *
      * @see CWNLPEngine#build
      * @see CWNLPEngine#rebuild
      */
-    public CWNLPEngine<T> load(Iterator<T> targetIt) {
-        while (targetIt.hasNext()) {
-            T tx = targetIt.next();
+    public CWNLPEngine<T> load(Iterable<T> targets) {
+        for (T tx : targets) {
             if (tx == null) continue;
             targetQueue.add(tx);
         }
