@@ -49,10 +49,10 @@
         tools:layout="@layout/fragment_dialog_layout" />
 
     <fragment
-        android:id="@+id/_navCurrencyDialogMenu"
-        android:name="the.wind.library.sample.activity.fragment.CurrencyDialogPage"
-        android:label="@string/drawer_currency_dialog"
-        tools:layout="@layout/fragment_currency_dialog_layout" />
+        android:id="@+id/_navCustomFormDialogMenu"
+        android:name="the.wind.library.sample.activity.fragment.CustomFormDialogPage"
+        android:label="@string/drawer_custom_form_dialog"
+        tools:layout="@layout/fragment_custom_form_dialog_layout" />
 
     <fragment
         android:id="@+id/_navRecycleViewMenu"

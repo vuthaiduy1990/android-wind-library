@@ -6,10 +6,10 @@
     android:orientation="vertical">
 
     <the.wind.library.view.Button
-        android:id="@+id/_openDialogBtn"
+        android:id="@+id/_currencyDialogBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:text="Open dialog"
+        app:text="Currency Dialog"
         app:type="INFO" />
 
 </LinearLayout>

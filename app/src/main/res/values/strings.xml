@@ -12,7 +12,7 @@
     <string name="drawer_wind_dimen">Wind Dimension</string>
     <string name="drawer_button">Button</string>
     <string name="drawer_dialog">Alert Dialog</string>
-    <string name="drawer_currency_dialog">Currency Dialog</string>
+    <string name="drawer_custom_form_dialog">Custom Form Dialog</string>
     <string name="drawer_recycle_view">Recycle View</string>
     <string name="drawer_action_menu">Action Menu</string>
     <string name="drawer_search_box">SearchBox</string>

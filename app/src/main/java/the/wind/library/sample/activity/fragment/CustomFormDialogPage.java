@@ -15,22 +15,22 @@ import the.wind.library.dialog.SelectionListDialog;
 import the.wind.library.model.CurrencyWrapper;
 import the.wind.library.sample.R;
 
-public class CurrencyDialogPage extends Fragment {
+public class CustomFormDialogPage extends Fragment {
 
-    private CurrencyDialog dialog;
+    private CurrencyDialog currencyDialog;
     private CurrencyWrapper selectedCurrency;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_currency_dialog_layout, container, false);
+        return inflater.inflate(R.layout.fragment_custom_form_dialog_layout, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id._openDialogBtn).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id._currencyDialogBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getDialog(v.getContext()).show(selectedCurrency);
@@ -39,8 +39,8 @@ public class CurrencyDialogPage extends Fragment {
     }
 
     private CurrencyDialog getDialog(Context context) {
-        if (dialog == null) {
-            dialog = new CurrencyDialog(context) {
+        if (currencyDialog == null) {
+            currencyDialog = new CurrencyDialog(context) {
                 @Override
                 protected boolean onSelection(@NonNull SelectionListDialog<CurrencyWrapper> dialog, @NonNull View itemView, @NonNull CurrencyWrapper data) {
                     selectedCurrency = data;
@@ -49,6 +49,6 @@ public class CurrencyDialogPage extends Fragment {
                 }
             };
         }
-        return dialog;
+        return currencyDialog;
     }
 }
