@@ -25,25 +25,16 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 
 import java.io.File;
-import java.util.Collections;
-import java.util.Currency;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import the.wind.library.model.CurrencyWrapper;
 
 /**
  * Provide utility methods
  */
 public final class CWAndroidUtils {
-
-    // list of currencies
-    private static List<CurrencyWrapper> currencies;
 
     /**
      * Check if the internet is available or not
@@ -297,21 +288,5 @@ public final class CWAndroidUtils {
         ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText(label, text);
         clipboard.setPrimaryClip(clip);
-    }
-
-    /**
-     * Get available currencies
-     *
-     * @return list of wrapper currencies
-     */
-    public static List<CurrencyWrapper> getAvailableCurrencies() {
-        if (currencies == null || currencies.isEmpty()) {
-            currencies = new LinkedList<>();
-            for (Currency cur : Currency.getAvailableCurrencies()) {
-                currencies.add(new CurrencyWrapper(cur));
-            }
-            currencies.sort((cur1, cur2) -> cur1.get().getDisplayName(Locale.getDefault()).compareTo(cur2.get().getDisplayName(Locale.getDefault())));
-        }
-        return Collections.unmodifiableList(currencies);
     }
 }

@@ -2,36 +2,37 @@ package the.wind.library.model;
 
 import android.content.Context;
 
-import java.util.Currency;
 import java.util.Locale;
 
 import androidx.annotation.Nullable;
 import the.wind.library.nlp.INLPText;
 
 /**
- * Wrapper of currency
+ * Wrapper of locales
  */
-public class CurrencyWrapper implements INLPText {
+public class LocaleWrapper implements INLPText {
 
-    // currency instance
-    private final Currency currency;
+    // locale instance
+    private final Locale locale;
+    private final String code;
     private final String displayText;
 
     /**
      * Constructor
      *
-     * @param cur currency
+     * @param lc locale
      */
-    public CurrencyWrapper(Currency cur) {
-        currency = cur;
-        displayText = getCurrencyDisplayText(cur);
+    public LocaleWrapper(Locale lc) {
+        locale = lc;
+        code = String.format("%s,%s,%s", locale.getLanguage(), locale.getCountry(), locale.getVariant());
+        displayText = getLocaleDisplayText(lc);
     }
 
     /* ---------------------- OVERRIDE ----------------------- */
 
     @Override
     public String nlpTextId(@Nullable Context context) {
-        return getCode();
+        return code;
     }
 
     @Override
@@ -42,14 +43,18 @@ public class CurrencyWrapper implements INLPText {
     /* ---------------------- STATIC ------------------------- */
 
     /**
-     * Get currency display text
+     * Get locale display text
      *
-     * @param cur currency
+     * @param lc locale
      * @return display text
      */
-    public static String getCurrencyDisplayText(Currency cur) {
-        Locale lc = Locale.getDefault();
-        return String.format("%s (%s)", cur.getDisplayName(lc), cur.getSymbol(lc));
+    public static String getLocaleDisplayText(Locale lc) {
+        Locale defaultLc = Locale.getDefault();
+        String text = String.format("%s (%s)", lc.getDisplayCountry(defaultLc), lc.getDisplayLanguage(defaultLc));
+        if (!lc.getVariant().isEmpty()) {
+            text = String.format("%s (%s)", text, lc.getDisplayVariant(defaultLc));
+        }
+        return text;
     }
 
     /* ---------------------- ABSTRACT ----------------------- */
@@ -57,12 +62,12 @@ public class CurrencyWrapper implements INLPText {
     /* ---------------------- GET-SET ------------------------ */
 
     /**
-     * Get currency instance
+     * Get locale instance
      *
-     * @return currency instance
+     * @return locale instance
      */
-    public Currency get() {
-        return currency;
+    public Locale get() {
+        return locale;
     }
 
     /**
@@ -71,7 +76,7 @@ public class CurrencyWrapper implements INLPText {
      * @return unique code
      */
     public String getCode() {
-        return currency.getCurrencyCode();
+        return code;
     }
 
     /**

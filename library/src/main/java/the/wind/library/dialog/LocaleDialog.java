@@ -13,25 +13,25 @@ import the.wind.library.CWCallback;
 import the.wind.library.R;
 import the.wind.library.WindFactory;
 import the.wind.library.adapter.SelectionListAdapter;
-import the.wind.library.model.CurrencyWrapper;
+import the.wind.library.model.LocaleWrapper;
 import the.wind.library.nlp.CWNLPEngine;
 import the.wind.library.nlp.NLPMatchResult;
 import the.wind.library.utils.CWAndroidUtils;
 import the.wind.library.view.SearchBox;
 
 /**
- * Currency dialog
+ * Locale list dialog
  */
-public abstract class CurrencyDialog extends SelectionListDialog<CurrencyWrapper> {
+public abstract class LocaleDialog extends SelectionListDialog<LocaleWrapper> {
 
-    // List of currencies
-    private Collection<CurrencyWrapper> currencies;
+    // List of locales
+    private Collection<LocaleWrapper> locales;
 
     // search engine
-    private CWNLPEngine<CurrencyWrapper> searchEngine;
+    private CWNLPEngine<LocaleWrapper> searchEngine;
 
     // On search result handler
-    private final CWCallback<NLPMatchResult<CurrencyWrapper>> OnSearchResultHandler = new CWCallback<NLPMatchResult<CurrencyWrapper>>() {
+    private final CWCallback<NLPMatchResult<LocaleWrapper>> OnSearchResultHandler = new CWCallback<NLPMatchResult<LocaleWrapper>>() {
 
         @Override
         public void onBegin() {
@@ -40,7 +40,7 @@ public abstract class CurrencyDialog extends SelectionListDialog<CurrencyWrapper
         }
 
         @Override
-        public NLPMatchResult<CurrencyWrapper> onSuccess(NLPMatchResult<CurrencyWrapper> result) {
+        public NLPMatchResult<LocaleWrapper> onSuccess(NLPMatchResult<LocaleWrapper> result) {
             if (result != null && result.isFullMatched()) {
                 getAdapter().addData(result.target);
             }
@@ -54,10 +54,10 @@ public abstract class CurrencyDialog extends SelectionListDialog<CurrencyWrapper
      *
      * @param context application context
      */
-    public CurrencyDialog(@NonNull Context context) {
+    public LocaleDialog(@NonNull Context context) {
         super(context, new LinkedList<>());
-        setCurrencies(WindFactory.instance().getAvailableCurrencies());
-        setTitle(R.string.wl_currency);
+        setLocales(WindFactory.instance().getAvailableLocales());
+        setTitle(R.string.wl_locale);
         setHeight((int) (CWAndroidUtils.getScreenSize((Activity) context).getHeight() * 0.8));
 
         // Configure search box
@@ -65,10 +65,10 @@ public abstract class CurrencyDialog extends SelectionListDialog<CurrencyWrapper
         setOnSearchBoxListener(new SearchBox.OnSearchListener() {
             @Override
             public int onSearch(EditText view, String oldInput, String newInput) {
-                SelectionListAdapter<CurrencyWrapper> adapter = getAdapter();
+                SelectionListAdapter<LocaleWrapper> adapter = getAdapter();
                 if (oldInput.equals(newInput)) return adapter.getItemCount();
                 if (newInput.isEmpty()) {
-                    adapter.setData(new LinkedList<>(getCurrencies()));
+                    adapter.setData(new LinkedList<>(getLocales()));
                     adapter.notifyDataSetChanged();
                     return 0;
                 }
@@ -91,12 +91,12 @@ public abstract class CurrencyDialog extends SelectionListDialog<CurrencyWrapper
     /* ---------------------- OVERRIDE ----------------------- */
 
     @Override
-    protected boolean equal(@NonNull CurrencyWrapper a, @NonNull CurrencyWrapper b) {
+    protected boolean equal(@NonNull LocaleWrapper a, @NonNull LocaleWrapper b) {
         return a.getCode().equals(b.getCode());
     }
 
     @Override
-    protected String itemText(@NonNull CurrencyWrapper itemData) {
+    protected String itemText(@NonNull LocaleWrapper itemData) {
         return itemData.getDisplayText();
     }
 
@@ -113,26 +113,26 @@ public abstract class CurrencyDialog extends SelectionListDialog<CurrencyWrapper
     /* ---------------------- GET-SET ------------------------ */
 
     /**
-     * @return list of currencies
+     * @return list of locales
      */
-    public Collection<CurrencyWrapper> getCurrencies() {
-        return currencies;
+    public Collection<LocaleWrapper> getLocales() {
+        return locales;
     }
 
     /**
-     * Set currencies
+     * Set locales
      *
-     * @param currencies collection of currencies
+     * @param locales collection of locales
      */
-    public void setCurrencies(Collection<CurrencyWrapper> currencies) {
-        this.currencies = currencies;
-        getAdapter().setData(new LinkedList<>(currencies));
+    public void setLocales(Collection<LocaleWrapper> locales) {
+        this.locales = locales;
+        getAdapter().setData(new LinkedList<>(locales));
     }
 
     /**
      * @return build search engine
      */
-    private CWNLPEngine<CurrencyWrapper> searchEngine() {
+    private CWNLPEngine<LocaleWrapper> searchEngine() {
         if (searchEngine == null) {
             CWNLPEngine.Options opts = new CWNLPEngine.Options();
             opts.strip = true;
@@ -144,7 +144,7 @@ public abstract class CurrencyDialog extends SelectionListDialog<CurrencyWrapper
             searchEngine = new CWNLPEngine<>(null, opts);
 
             // load data
-            searchEngine.load(currencies);
+            searchEngine.load(locales);
             searchEngine.build();
         }
         return searchEngine;
@@ -153,9 +153,9 @@ public abstract class CurrencyDialog extends SelectionListDialog<CurrencyWrapper
     /**
      * Set search engine
      *
-     * @param engine currencies search engine
+     * @param engine locales search engine
      */
-    public void setSearchEngine(CWNLPEngine<CurrencyWrapper> engine) {
+    public void setSearchEngine(CWNLPEngine<LocaleWrapper> engine) {
         this.searchEngine = engine;
     }
 
