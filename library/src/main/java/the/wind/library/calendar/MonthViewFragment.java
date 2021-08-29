@@ -19,12 +19,13 @@ public class MonthViewFragment extends Fragment {
     private MonthAdapter monthAdapter;
 
     // model
-    public MonthInfo monthInfo;
+    private MonthInfo monthInfo;
+    private String tagCode; // unique tag for fragment management by each calendar instance
 
     // styling
-    public CalendarStyle calendarStyle;
-    public CalendarInfo calendarInfo;
-    public CalendarEvent calendarEvent;
+    private CalendarStyle calendarStyle;
+    private CalendarInfo calendarInfo;
+    private CalendarEvent calendarEvent;
 
     /**
      * Default constructor. Not used
@@ -41,10 +42,12 @@ public class MonthViewFragment extends Fragment {
      * @param calendarEvent calendar event listener
      */
     public MonthViewFragment(MonthInfo monthInfo, CalendarInfo calendarInfo, CalendarStyle calendarStyle, CalendarEvent calendarEvent) {
+        this();
         this.monthInfo = monthInfo;
         this.calendarInfo = calendarInfo;
         this.calendarStyle = calendarStyle;
         this.calendarEvent = calendarEvent;
+        setTagCode(calendarInfo.getTagCode());
     }
 
     @Nullable
@@ -69,6 +72,26 @@ public class MonthViewFragment extends Fragment {
     /* ---------------------- GET-SET ------------------------ */
 
     /**
+     * Get tag code which is used to identified month view fragments for each calendar instance.
+     * All month view fragments of each calendar instance will have the same tag code configured in {@link WindCalendar}
+     *
+     * @return tag code
+     */
+    @Nullable
+    public String getTagCode() {
+        return tagCode;
+    }
+
+    /**
+     * Set tag code
+     *
+     * @param tagCode tag code
+     */
+    private void setTagCode(String tagCode) {
+        this.tagCode = tagCode;
+    }
+
+    /**
      * @return month adapter
      */
     public MonthAdapter getMonthAdapter() {
@@ -83,7 +106,6 @@ public class MonthViewFragment extends Fragment {
     public MonthInfo getMonthInfo() {
         return monthInfo;
     }
-
 
     /**
      * @return month grid view

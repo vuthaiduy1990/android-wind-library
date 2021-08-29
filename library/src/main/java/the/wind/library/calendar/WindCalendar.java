@@ -8,6 +8,7 @@ import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.ContextThemeWrapper;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -170,16 +171,11 @@ public class WindCalendar extends LinearLayout {
         inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.wl_calendar, this);
 
+        // Get fragment manager
         if (context instanceof FragmentActivity) {
             fragManager = ((FragmentActivity) context).getSupportFragmentManager();
-            FragmentTransaction fragTrans = fragManager.beginTransaction();
-            for (Fragment frag : fragManager.getFragments()) {
-                if (frag instanceof MonthViewFragment) {
-                    fragTrans.remove(frag);
-                }
-            }
-            fragTrans.commitNow();
-
+        } else if (context instanceof ContextThemeWrapper && ((ContextThemeWrapper) context).getBaseContext() instanceof FragmentActivity) {
+            fragManager = ((FragmentActivity) ((ContextThemeWrapper) context).getBaseContext()).getSupportFragmentManager();
         } else {
             throw new ActivityNotFoundException("Context is not an fragment activity");
         }
@@ -253,6 +249,9 @@ public class WindCalendar extends LinearLayout {
             dateHighlightBackground = typeArray.getResourceId(R.styleable.WindCalendar_dateHighlightBackground, R.drawable.wl_calendar_highlight_background);
             dateHoverBackground = typeArray.getResourceId(R.styleable.WindCalendar_dateHoverBackground, R.drawable.wl_calendar_hover_background);
 
+            // tag code
+            info.setTagCode(typeArray.getString(R.styleable.WindCalendar_tagCode));
+
             // calendar type
             int calendarTypeIdx = typeArray.getInt(R.styleable.WindCalendar_lunar, -1);
             if (calendarTypeIdx >= 0) {
@@ -295,6 +294,18 @@ public class WindCalendar extends LinearLayout {
                 .dateTodayBackground(dateTodayBackground)
                 .dateHighlightBackground(dateHighlightBackground)
                 .dateHoverBackground(dateHoverBackground);
+
+        // Remove old fragment when activity is reloaded by system setting changed
+        FragmentTransaction fragTrans = fragManager.beginTransaction();
+        for (Fragment frag : fragManager.getFragments()) {
+            if (frag instanceof MonthViewFragment) {
+                String tagCode = ((MonthViewFragment) frag).getTagCode();
+                if (tagCode == null || tagCode.equals(info.getTagCode())) {
+                    fragTrans.remove(frag);
+                }
+            }
+        }
+        fragTrans.commit();
 
         // Init view
         if (autoBuild) {

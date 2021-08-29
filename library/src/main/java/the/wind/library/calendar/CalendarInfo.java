@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 
 final class CalendarInfo {
 
+    private String tagCode;
     private final String todayId;
     public final Set<String> eventDates = new HashSet<>();
     public final Set<String> highlightDates = new HashSet<>();
@@ -26,6 +27,26 @@ final class CalendarInfo {
      */
     public CalendarInfo(Calendar today) {
         this.todayId = CalendarUtil.toId(today);
+    }
+
+    /**
+     * Get tag code which is used to identified month view fragments for each calendar instance.
+     * All month view fragments of each calendar instance will have the same tag code configured in {@link WindCalendar}
+     *
+     * @return tag code
+     */
+    @Nullable
+    public String getTagCode() {
+        return tagCode;
+    }
+
+    /**
+     * Set tag code
+     *
+     * @param tagCode tag code
+     */
+    public void setTagCode(String tagCode) {
+        this.tagCode = tagCode;
     }
 
     /**
