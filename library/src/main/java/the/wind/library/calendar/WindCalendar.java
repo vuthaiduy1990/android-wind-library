@@ -334,6 +334,15 @@ public class WindCalendar extends LinearLayout {
     }
 
     /**
+     * Get calendar style
+     *
+     * @return style
+     */
+    public CalendarStyle getStyle() {
+        return style;
+    }
+
+    /**
      * @return calendar view pager
      */
     public CalendarViewPager getCalendarViewPager() {
@@ -733,20 +742,20 @@ public class WindCalendar extends LinearLayout {
     }
 
     /**
-     * rebuild the calendar
+     * Rebuild the calendar
+     *
+     * @return calendar
      */
-    public void rebuild() {
+    public WindCalendar rebuild() {
         // re-create week day panel
         createWeekDayPanel();
 
-        // Rebuild month view panel
-        FragmentTransaction fragTrans = fragManager.beginTransaction();
-        for (Fragment frag : adapter.getFragmentCache().values()) {
-            fragTrans.remove(frag);
-        }
-        fragTrans.commitNow();
-        adapter.getFragmentCache().clear();
+        // Refresh month view panel
         _calendarViewPager.refreshAdapter(adapter);
+        // set selected date -> set viewpager current page to center of calendar slideshow
+        setSelectedDate(new Date());
+
+        return this;
     }
 
     /**

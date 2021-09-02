@@ -63,7 +63,6 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
         if (preLoaded > 0) {
             this.preLoaded = preLoaded;
         }
-        currentPosition = getCenterSlidePosition();
     }
 
     /* ---------------------- OVERRIDE ----------------------- */
@@ -189,6 +188,13 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
      */
     void resetPositionToZero() {
         currentPosition = 0;
+    }
+
+    /**
+     * Reset page position to zero
+     */
+    void resetPositionToCenter() {
+        currentPosition = getCenterSlidePosition();
     }
 
     /**

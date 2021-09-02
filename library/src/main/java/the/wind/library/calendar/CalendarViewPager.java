@@ -123,9 +123,15 @@ public class CalendarViewPager extends ViewPager {
      * @param adapter calendar adapter
      */
     void refreshAdapter(CalendarAdapter adapter) {
+        // reset old adapter -> will call destroyItem in calendar adapter
+        setAdapter(null);
+
+        // set new adapter that lead viewpager back to start page
+        // Therefore, we should reset adapter position to zero too
         adapter.resetPositionToZero();
+        setOffscreenPageLimit(1); // set 1 to avoid creating too much cache fragment
         setAdapter(adapter);
-        setSelectedDate(new Date());
+        adapter.resetPositionToCenter();
     }
 
     /* ---------------------- INNER CLASS -------------------- */

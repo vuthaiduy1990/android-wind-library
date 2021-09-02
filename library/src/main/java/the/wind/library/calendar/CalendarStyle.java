@@ -1,6 +1,6 @@
 package the.wind.library.calendar;
 
-final class CalendarStyle {
+public class CalendarStyle {
 
     private String[] weekDays;
     private float weekDayTextSize;
