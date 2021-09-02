@@ -16,6 +16,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import the.wind.library.anim.PageTransformerType;
 import the.wind.library.calendar.CalendarType;
 import the.wind.library.calendar.CalendarUtil;
@@ -24,12 +25,21 @@ import the.wind.library.calendar.MonthAdapter;
 import the.wind.library.calendar.MonthInfo;
 import the.wind.library.calendar.WeekStartsOn;
 import the.wind.library.calendar.WindCalendar;
+import the.wind.library.calendar.WindCalendarDialog;
+import the.wind.library.dialog.WindDialog;
 import the.wind.library.sample.R;
 
 public class CalendarPage extends Fragment {
 
+    // Fragment manager
+    private FragmentManager fragManager;
+
+    // Views
     private WindCalendar _calendarView;
     private TextView _monthInfoText;
+    private WindCalendarDialog _calendarDialog;
+
+
     private boolean highlighted;
     private final Calendar cal = new GregorianCalendar();
     private final List<String> neighborDates = new ArrayList<>();
@@ -43,6 +53,7 @@ public class CalendarPage extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        fragManager = getChildFragmentManager();
         _calendarView = view.findViewById(R.id._calendarView);
         _monthInfoText = view.findViewById(R.id._monthInfoText);
 
@@ -110,9 +121,33 @@ public class CalendarPage extends Fragment {
             _calendarView.rebuild();
         });
 
+        // Show calendar dialog
+        view.findViewById(R.id._calendarDialog).setOnClickListener(v -> {
+            cal.setTime(new Date());
+            cal.add(Calendar.DATE, 3);
+            getCalendarDialog().show(fragManager, cal.getTime());
+        });
     }
 
     public void setPageTransformer(PageTransformerType type) {
         _calendarView.setPageTransformer(type);
+    }
+
+    public WindCalendarDialog getCalendarDialog() {
+        if (_calendarDialog == null) {
+            _calendarDialog = new WindCalendarDialog(requireContext());
+            WindDialog dialog = _calendarDialog.getWindDialog();
+            dialog.setTitle("Date Picker");
+            dialog.setIcon(R.drawable.wl_ic_calendar);
+            _calendarDialog.setOnDateSetListener(new WindCalendarDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(List<DateInfo> dateInfos) {
+                    Toast.makeText(requireContext(), dateInfos.size() + " selected", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            _calendarDialog.build();
+        }
+        return _calendarDialog;
     }
 }

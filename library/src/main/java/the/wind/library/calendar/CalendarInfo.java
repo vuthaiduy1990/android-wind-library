@@ -2,8 +2,11 @@ package the.wind.library.calendar;
 
 import android.icu.util.Calendar;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -125,5 +128,54 @@ final class CalendarInfo {
      */
     public void setWeekStartsOn(@NonNull WeekStartsOn day) {
         weekStartsOn = day;
+    }
+
+    /**
+     * Get selected dates
+     *
+     * @return list of selected dates
+     */
+    public List<DateInfo> getSelectedDate() {
+        List<DateInfo> list = new ArrayList<>();
+        for (Map.Entry<String, MonthAdapter.ViewHolder> entry : selectedDateViewMap.entrySet()) {
+            list.add(entry.getValue().getAdapterData());
+        }
+        return list;
+    }
+
+    /**
+     * Clear highlight events without refreshing page
+     */
+    public void clearSelectedDates() {
+        highlightDates.clear();
+        Iterator<Map.Entry<String, MonthAdapter.ViewHolder>> itemIt = selectedDateViewMap.entrySet().iterator();
+        while (itemIt.hasNext()) {
+            itemIt.next().getValue().touchUp();
+            itemIt.remove();
+        }
+        selectedDateViewMap.clear();
+    }
+
+    /**
+     * Select date item view
+     *
+     * @param viewHolder view holder
+     * @param data       date info
+     * @return true if item view is already selected before
+     */
+    public boolean selectDateItemView(MonthAdapter.ViewHolder viewHolder, DateInfo data) {
+        boolean alreadySelected = selectedDateViewMap.containsKey(data.getId());
+        selectedDateViewMap.put(data.getId(), viewHolder);
+        viewHolder.touchDown();
+        return alreadySelected;
+    }
+
+    /**
+     * Reset info
+     */
+    public void reset() {
+        eventDates.clear();
+        highlightDates.clear();
+        selectedDateViewMap.clear();
     }
 }

@@ -1,0 +1,440 @@
+package the.wind.library.calendar;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.res.Resources;
+import android.icu.util.Calendar;
+import android.icu.util.GregorianCalendar;
+import android.os.Bundle;
+import android.text.format.DateUtils;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
+import android.widget.TextView;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import the.wind.library.CWBundle;
+import the.wind.library.R;
+import the.wind.library.dialog.WindDialog;
+import the.wind.library.view.Button;
+
+/**
+ * Calendar dialog
+ */
+public class WindCalendarDialog extends DialogFragment {
+
+    // List if week days
+    private static final Map<Integer, Integer> WEEK_DAY_MAP = new HashMap<>();
+
+    static {
+        WEEK_DAY_MAP.put(Calendar.MONDAY, 0);
+        WEEK_DAY_MAP.put(Calendar.TUESDAY, 1);
+        WEEK_DAY_MAP.put(Calendar.WEDNESDAY, 2);
+        WEEK_DAY_MAP.put(Calendar.THURSDAY, 3);
+        WEEK_DAY_MAP.put(Calendar.FRIDAY, 4);
+        WEEK_DAY_MAP.put(Calendar.SATURDAY, 5);
+        WEEK_DAY_MAP.put(Calendar.SUNDAY, 6);
+    }
+
+    // views
+    private final LayoutInflater inflater;
+    private final WindDialog _coreDialog;
+    private CalendarViewPager _calendarViewPager;
+    private ViewGroup _weekDayPanelView;
+
+    // model
+    private final Calendar calendar = new GregorianCalendar();
+    private final CWBundle bundle = new CWBundle();
+    private final Style style = new Style();
+    private final CalendarInfo info = new CalendarInfo(calendar);
+    private final CalendarEvent eventListener = new CalendarEvent();
+    private Date selectedDate;
+
+    // animation
+    private RotateAnimation rotationIconAnim;
+
+    // listener
+    private OnDateSetListener dateSetListener;
+
+    /**
+     * Constructor
+     *
+     * @param context application context
+     */
+    public WindCalendarDialog(Context context) {
+        inflater = LayoutInflater.from(context);
+        Resources res = context.getResources();
+
+        // Week day style
+        style.weekDays(new String[]{"Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"});
+        style.weekDayTextSize(res.getDimension(R.dimen.wl_calendar_dialog_date_text_size));
+        style.weekDayTextColor(ContextCompat.getColor(context, R.color.wl_calendar_week_day));
+        style.weekDayPanelBackground(0);
+        style.weekDayHoverBackground(R.drawable.wl_calendar_hover_background);
+
+        // Date cell and text size
+        style.dateCellSize((int) res.getDimension(R.dimen.wl_calendar_dialog_date_cell_size));
+        style.dateTextSize(res.getDimension(R.dimen.wl_calendar_dialog_date_text_size));
+        style.dateLunarTextSize(res.getDimension(R.dimen.wl_calendar_dialog_lunar_date_text_size));
+        style.dateEventSymbolSize(res.getDimension(R.dimen.wl_calendar_event_symbol_size));
+
+        // Date text color
+        style.dateTextColor(ContextCompat.getColor(context, R.color.wl_black));
+        style.dateLunarTextColor(ContextCompat.getColor(context, R.color.wl_calendar_lunar_date_text));
+        style.dateEventTextColor(ContextCompat.getColor(context, R.color.wl_black));
+        style.dateWeekendTextColor(ContextCompat.getColor(context, R.color.wl_danger));
+        style.dateTodayTextColor(ContextCompat.getColor(context, R.color.wl_white));
+        style.dateHighlightTextColor(ContextCompat.getColor(context, R.color.wl_black));
+
+        // Date cell background
+        style.monthPanelViewBackground(0);
+        style.dateCellBackground(0);
+        style.dateEventBackground(0);
+        style.dateWeekendBackground(0);
+        style.dateTodayBackground(R.drawable.wl_calendar_today_background);
+        style.dateHighlightBackground(R.drawable.wl_calendar_highlight_background);
+        style.dateHoverBackground(R.drawable.wl_calendar_hover_background);
+
+        // set calendar info
+        info.setTagCode(WindCalendarDialog.class.getName());
+        setLunarType(CalendarType.Vietnamese);
+        setWeekStartsOn(WeekStartsOn.SUNDAY);
+
+        // set event listener
+        eventListener.dateItemTouchDownListener = (viewHolder, view, data) -> true;
+        eventListener.dateItemTouchUpListener = (viewHolder, view, data) -> true;
+        eventListener.dateItemClickListener = this::onDateItemClick;
+        eventListener.dateItemLongClickListener = this::onDateItemLongClick;
+        eventListener.monthPageChangeListener = this::onMonthPageChange;
+
+        // create animation
+        rotationIconAnim = new RotateAnimation(
+                0, 360,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f);
+        rotationIconAnim.setRepeatMode(Animation.RESTART);
+        rotationIconAnim.setRepeatCount(0);
+        rotationIconAnim.setDuration(500);
+
+        // create core dialog
+        _coreDialog = createCoreDialog(context);
+    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        // Rebuild month view panel
+        FragmentManager fragManager = getChildFragmentManager();
+        CalendarAdapter adapter = createMonthViewAdapter(fragManager);
+
+        if (_calendarViewPager.getAdapter() == null) {
+            _calendarViewPager.setAdapter(adapter);
+            _calendarViewPager.setSelectedDate(selectedDate);
+
+        } else {
+            adapter.setSelectedDate(new Date());
+            _calendarViewPager.refreshAdapter(adapter);
+            _calendarViewPager.setCurrentItem(-1);
+        }
+
+        return _coreDialog;
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        reset();
+    }
+
+    /* ---------------------- OVERRIDE ----------------------- */
+
+    @Override
+    public void show(FragmentManager manager, String tag) {
+        if (selectedDate == null) {
+            selectedDate = new Date();
+        }
+        info.setTagCode(tag);
+        calendar.setTime(selectedDate);
+        info.highlightDates.add(CalendarUtil.toId(calendar));
+        super.show(manager, tag);
+    }
+
+    /* ---------------------- STATIC ------------------------- */
+
+    /* ---------------------- ABSTRACT ----------------------- */
+
+    /**
+     * On calendar date item click handler
+     *
+     * @param viewHolder item view holder
+     * @param view       item view
+     * @param data       date info
+     * @return true if consume the event, else return false
+     */
+    protected boolean onDateItemClick(MonthAdapter.ViewHolder viewHolder, View view, DateInfo data) {
+        // clear old selected items
+        info.clearSelectedDates();
+        // highlight selected items
+        info.selectDateItemView(viewHolder, data);
+        return true;
+    }
+
+    /**
+     * On calendar date item long click handler
+     *
+     * @param viewHolder item view holder
+     * @param view       item view
+     * @param data       date info
+     * @return true if consume the event, else return false
+     */
+    protected boolean onDateItemLongClick(MonthAdapter.ViewHolder viewHolder, View view, DateInfo data) {
+        // highlight selected items
+        info.selectDateItemView(viewHolder, data);
+        return true;
+    }
+
+    /**
+     * On month page change handler
+     *
+     * @param preMonth previous month
+     * @param curMonth current month
+     */
+    protected void onMonthPageChange(@Nullable MonthInfo preMonth, @NonNull MonthInfo curMonth) {
+        // _monthLabelView.setText();
+        _coreDialog.setSubTitle(String.format("%s %s", formatTitleDate(curMonth.getDate()), "▼"));
+    }
+
+    /* ---------------------- GET-SET ------------------------ */
+
+    /**
+     * @return bundle data
+     */
+    public CWBundle bundle() {
+        return bundle;
+    }
+
+    /**
+     * Get wind dialog
+     *
+     * @return wind dialog
+     */
+    public WindDialog getWindDialog() {
+        return _coreDialog;
+    }
+
+    /**
+     * Get calendar dialog style
+     *
+     * @return style
+     */
+    public Style getStyle() {
+        return style;
+    }
+
+    /**
+     * Set lunar calendar type
+     *
+     * @param lunarType lunar calendar type
+     */
+    public void setLunarType(CalendarType lunarType) {
+        info.setLunarType(lunarType);
+    }
+
+    /**
+     * Set week start on option
+     *
+     * @param day start day of week
+     */
+    public void setWeekStartsOn(WeekStartsOn day) {
+        info.setWeekStartsOn(day);
+    }
+
+    /**
+     * Set on date set listener
+     *
+     * @param listener listener
+     */
+    public void setOnDateSetListener(OnDateSetListener listener) {
+        dateSetListener = listener;
+    }
+
+    /* ---------------------- METHOD ------------------------- */
+
+    /**
+     * Create wind dialog
+     *
+     * @param context application dialog
+     * @return wind dialog
+     */
+    private WindDialog createCoreDialog(Context context) {
+        WindDialog dialog = new WindDialog(context, WindDialog.LayoutType.FUBUKI) {
+            @Override
+            public void dismiss() {
+                dismissImmediately();
+            }
+        };
+        dialog.setInOutAnimType(WindDialog.InOutAnimType.SWEET_ALERT);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(false);
+
+        // set dialog content view
+        dialog.setContentView(R.layout.wl_calendar_dialog);
+        View contentView = dialog.contentView();
+        _weekDayPanelView = contentView.findViewById(R.id._weekDayPanelView);
+        _calendarViewPager = contentView.findViewById(R.id._calendarViewPager);
+
+        // Add extra header
+        View extraHeader = inflater.inflate(R.layout.wl_calendar_dialog_extra_header, dialog.headerLayout(), false);
+        dialog.addViewToHeader(extraHeader);
+        extraHeader.findViewById(R.id._reloadIconView).setOnClickListener(v -> {
+            v.startAnimation(rotationIconAnim);
+            _calendarViewPager.setSelectedDate(selectedDate);
+        });
+
+        // add action button
+        dialog.addButton(Button.Type.GRAY, context.getString(R.string.wl_cancel), null)
+                .setOnClickListener(v -> {
+                    dismiss();
+                });
+        dialog.addButton(Button.Type.SUCCESS, context.getString(R.string.wl_ok), null)
+                .setOnClickListener(v -> {
+                    if (dateSetListener != null) {
+                        dateSetListener.onDateSet(info.getSelectedDate());
+                    }
+                });
+        return dialog;
+    }
+
+    /**
+     * Rebuild the calendar
+     *
+     * @return calendar dialog
+     */
+    public WindCalendarDialog build() {
+        // re-create week day panel
+        createWeekDayPanel();
+
+        // setup calendar view pager
+        _calendarViewPager.setCalendarEvent(eventListener);
+        _calendarViewPager.setSaveEnabled(false); // do not keep fragment state when view is restart
+        _calendarViewPager.setBackgroundResource(style.monthPanelViewBackground());
+        return this;
+    }
+
+    /**
+     * Create month view panel
+     *
+     * @param fragManager fragment manager
+     * @return calendar adapter
+     */
+    private CalendarAdapter createMonthViewAdapter(FragmentManager fragManager) {
+        // Create new adapter
+        CalendarAdapter adapter = new CalendarAdapter(fragManager, new GregorianCalendar());
+        adapter.setCalendarStyle(style);
+        adapter.setCalendarInfo(info);
+        adapter.setCalendarEvent(eventListener);
+        return adapter;
+    }
+
+    /**
+     * Create week date panel view
+     */
+    private void createWeekDayPanel() {
+        _weekDayPanelView.removeAllViews();
+        _weekDayPanelView.setBackgroundResource(style.weekDayPanelBackground());
+        Integer[] weekDays;
+        switch (info.getWeekStartsOn()) {
+            case MONDAY:
+                weekDays = new Integer[]{Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY};
+                break;
+            case SATURDAY:
+                weekDays = new Integer[]{Calendar.SATURDAY, Calendar.SUNDAY, Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY};
+                break;
+            case SUNDAY:
+                weekDays = new Integer[]{Calendar.SUNDAY, Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY, Calendar.SATURDAY};
+                break;
+            default:
+                weekDays = new Integer[]{};
+        }
+
+        String[] weekDayTexts = style.weekDays();
+        for (Integer day : weekDays) {
+            View itemView = inflater.inflate(R.layout.wl_calendar_week_day_view, _weekDayPanelView, false);
+            itemView.setTag(day);
+            TextView _dayTextView = itemView.findViewById(R.id._dayTextView);
+            Integer dayIdx = WEEK_DAY_MAP.get(day);
+            _dayTextView.setText(weekDayTexts[dayIdx != null ? dayIdx : 0]);
+            _dayTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, style.weekDayTextSize());
+            _dayTextView.setTextColor(style.weekDayTextColor());
+
+            // add to layout
+            ViewGroup.LayoutParams lp = itemView.getLayoutParams();
+            lp.width = style.dateCellSize();
+            _weekDayPanelView.addView(itemView, lp);
+        }
+    }
+
+    /**
+     * Show calendar dialog
+     *
+     * @param manager fragment manager
+     * @param date    selected date
+     */
+    public void show(FragmentManager manager, Date date) {
+        selectedDate = date;
+        show(manager, WindCalendarDialog.class.getName());
+    }
+
+    /**
+     * Format title date
+     *
+     * @param date date
+     * @return date string
+     */
+    private String formatTitleDate(Date date) {
+        int flags = DateUtils.FORMAT_NO_MONTH_DAY | DateUtils.FORMAT_SHOW_YEAR | DateUtils.FORMAT_ABBREV_MONTH;
+        return DateUtils.formatDateTime(requireContext(), date.getTime(), flags);
+    }
+
+    /**
+     * Reset data
+     */
+    private void reset() {
+        info.reset();
+    }
+
+    /* ---------------------- INNER CLASS -------------------- */
+
+    /**
+     * On date select select listener
+     */
+    public interface OnDateSetListener {
+
+        /**
+         * On date set listener
+         *
+         * @param dateInfos list of selected dates
+         */
+        void onDateSet(List<DateInfo> dateInfos);
+    }
+
+    /**
+     * Dialog custom style
+     */
+    public static class Style extends CalendarStyle {
+
+    }
+}

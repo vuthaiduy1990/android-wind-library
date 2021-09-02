@@ -29,15 +29,6 @@ public class CalendarStyle {
     private int dateHoverBackground;
 
     /**
-     * Create new style configuration
-     *
-     * @return style
-     */
-    public static CalendarStyle config() {
-        return new CalendarStyle();
-    }
-
-    /**
      * @return day of weeks (monday, tuesday ... sunday)
      */
     public String[] weekDays() {

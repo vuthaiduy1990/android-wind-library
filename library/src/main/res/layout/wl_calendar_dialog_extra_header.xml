@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="end|center_vertical"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/_reloadIconView"
+        android:layout_width="@dimen/wl_icon"
+        android:layout_height="@dimen/wl_icon"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/wl_ic_reload"
+        tools:ignore="ContentDescription" />
+
+</LinearLayout>

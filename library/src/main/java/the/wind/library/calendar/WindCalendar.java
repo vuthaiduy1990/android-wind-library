@@ -20,7 +20,6 @@ import android.widget.TextView;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -65,7 +64,7 @@ public class WindCalendar extends LinearLayout {
     private final CWBundle bundle = new CWBundle();
 
     // model
-    private final CalendarStyle style = CalendarStyle.config();
+    private final Style style = new Style();
     private final CalendarInfo info = new CalendarInfo(new GregorianCalendar());
     private final CalendarEvent eventListener = new CalendarEvent();
 
@@ -338,7 +337,7 @@ public class WindCalendar extends LinearLayout {
      *
      * @return style
      */
-    public CalendarStyle getStyle() {
+    public Style getStyle() {
         return style;
     }
 
@@ -464,11 +463,14 @@ public class WindCalendar extends LinearLayout {
      * @return true if item view is already selected before
      */
     public boolean selectDateItemView(MonthAdapter.ViewHolder viewHolder, DateInfo data) {
-        Map<String, MonthAdapter.ViewHolder> viewMap = getSelectedDateViewMap();
-        boolean alreadySelected = viewMap.containsKey(data.getId());
-        viewMap.put(data.getId(), viewHolder);
-        viewHolder.touchDown();
-        return alreadySelected;
+        return info.selectDateItemView(viewHolder, data);
+    }
+
+    /**
+     * Clear highlight events without refreshing page
+     */
+    public void clearSelectedDates() {
+        info.clearSelectedDates();
     }
 
     /**
@@ -476,19 +478,6 @@ public class WindCalendar extends LinearLayout {
      */
     public Set<String> getHighlightDates() {
         return info.highlightDates;
-    }
-
-    /**
-     * Clear highlight events without refreshing page
-     */
-    public void clearSelectedDates() {
-        info.highlightDates.clear();
-        Iterator<Map.Entry<String, MonthAdapter.ViewHolder>> itemIt = getSelectedDateViewMap().entrySet().iterator();
-        while (itemIt.hasNext()) {
-            itemIt.next().getValue().touchUp();
-            itemIt.remove();
-        }
-        info.selectedDateViewMap.clear();
     }
 
     /**
@@ -768,6 +757,13 @@ public class WindCalendar extends LinearLayout {
     }
 
     /* ---------------------- INNER CLASS -------------------- */
+
+    /**
+     * Custom calendar style
+     */
+    public static class Style extends CalendarStyle {
+
+    }
 
     /**
      * On date item click listener

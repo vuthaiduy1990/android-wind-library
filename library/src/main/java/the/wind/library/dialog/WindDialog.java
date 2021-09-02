@@ -848,6 +848,13 @@ public class WindDialog extends Dialog {
     }
 
     /**
+     * @return header layout
+     */
+    public ViewGroup headerLayout() {
+        return _headerHolder;
+    }
+
+    /**
      * Add custom view to header
      *
      * @param view view

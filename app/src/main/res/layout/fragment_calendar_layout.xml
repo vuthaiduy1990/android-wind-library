@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/wl_spacing_level_1"
         android:textColor="@color/wl_text"
-        android:textSize="@dimen/wl_text_big" />
+        android:textSize="@dimen/wl_text" />
 
     <com.google.android.flexbox.FlexboxLayout
         android:layout_width="match_parent"
@@ -79,6 +79,13 @@
             app:text="Week starts on Sunday"
             app:type="SUCCESS" />
 
+        <the.wind.library.view.Button
+            android:id="@+id/_calendarDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/wl_spacing_level_3"
+            app:text="Calendar Dialog"
+            app:type="NEUTRAL" />
 
     </com.google.android.flexbox.FlexboxLayout>
 
