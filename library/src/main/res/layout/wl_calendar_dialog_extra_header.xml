@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/_reloadIconView"
-        android:layout_width="@dimen/wl_icon"
-        android:layout_height="@dimen/wl_icon"
+        android:layout_width="@dimen/wl_icon_big"
+        android:layout_height="@dimen/wl_icon_big"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:src="@drawable/wl_ic_reload"

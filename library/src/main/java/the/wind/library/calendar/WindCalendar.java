@@ -306,14 +306,17 @@ public class WindCalendar extends LinearLayout {
         }
         fragTrans.commit();
 
-        // Init view
+        // setup calendar view pager
+        _calendarViewPager.setCalendarEvent(eventListener);
+        _calendarViewPager.setSaveEnabled(false); // do not keep fragment state when view is restart
+        _calendarViewPager.setBackgroundResource(style.monthPanelViewBackground());
+
+        // If auto build is false, user need to call rebuild function after setting up the calendar
         if (autoBuild) {
             createWeekDayPanel();
-            createMonthViewPanel();
+            adapter = createCalendarAdapter();
+            _calendarViewPager.setAdapter(adapter);
             _calendarViewPager.setSelectedDate(new Date()); // set current date as default
-
-        } else {
-            createMonthViewPanel();
         }
     }
 
@@ -659,20 +662,17 @@ public class WindCalendar extends LinearLayout {
     /* ---------------------- METHOD ------------------------- */
 
     /**
-     * Create month view panel
+     * Create calendar adapter
+     *
+     * @return adapter
      */
-    private void createMonthViewPanel() {
+    private CalendarAdapter createCalendarAdapter() {
         // Create new adapter
-        adapter = new CalendarAdapter(fragManager, new GregorianCalendar());
+        CalendarAdapter adapter = new CalendarAdapter(fragManager, new GregorianCalendar());
         adapter.setCalendarStyle(style);
         adapter.setCalendarInfo(info);
         adapter.setCalendarEvent(eventListener);
-
-        // Configure view pager with adapter
-        _calendarViewPager.setCalendarEvent(eventListener);
-        _calendarViewPager.setSaveEnabled(false); // do not keep fragment state when view is restart
-        _calendarViewPager.setAdapter(adapter);
-        _calendarViewPager.setBackgroundResource(style.monthPanelViewBackground());
+        return adapter;
     }
 
     /**
@@ -723,11 +723,18 @@ public class WindCalendar extends LinearLayout {
         // re-create week day panel
         createWeekDayPanel();
 
-        // Refresh month view panel
-        _calendarViewPager.refreshAdapter(adapter);
-        // set selected date -> set viewpager current page to center of calendar slideshow
-        setSelectedDate(new Date());
-
+        // create calendar adapter if it not exist
+        if (adapter == null) {
+            adapter = createCalendarAdapter();
+            adapter.setSelectedDate(new Date());
+            _calendarViewPager.refreshAdapter(adapter);
+            _calendarViewPager.setCurrentItem(-1);
+        } else {
+            // Refresh month view panel
+            _calendarViewPager.refreshAdapter(adapter);
+            // set selected date -> set viewpager current page to center of calendar slideshow
+            setSelectedDate(new Date());
+        }
         return this;
     }
 
