@@ -132,6 +132,7 @@ public class CalendarViewPager extends ViewPager {
         adapter.resetPositionToZero();
         setOffscreenPageLimit(1); // set 1 to avoid creating too much cache fragment
         setAdapter(adapter);
+        adapter.resetPositionToCenter();
     }
 
     /* ---------------------- INNER CLASS -------------------- */

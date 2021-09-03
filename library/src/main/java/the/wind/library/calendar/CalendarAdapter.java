@@ -178,10 +178,17 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
     }
 
     /**
-     * Reset page position to zero
+     * Reset page position to zero of slideshow
      */
     void resetPositionToZero() {
         currentPosition = 0;
+    }
+
+    /**
+     * Reset position to center of slideshow
+     */
+    void resetPositionToCenter() {
+        currentPosition = MAX_SLIDE / 2;
     }
 
     /**

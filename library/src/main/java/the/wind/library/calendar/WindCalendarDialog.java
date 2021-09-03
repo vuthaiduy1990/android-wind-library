@@ -116,7 +116,7 @@ public class WindCalendarDialog extends DialogFragment {
 
         // set calendar info
         info.setTagCode(WindCalendarDialog.class.getName());
-        setLunarType(CalendarType.Vietnamese);
+        setLunarType(null);
         setWeekStartsOn(WeekStartsOn.SUNDAY);
 
         // set event listener
