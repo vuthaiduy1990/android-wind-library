@@ -28,6 +28,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import the.wind.library.CWBundle;
 import the.wind.library.R;
+import the.wind.library.WindFactory;
+import the.wind.library.dialog.SelectionListDialog;
 import the.wind.library.dialog.WindDialog;
 import the.wind.library.view.Button;
 
@@ -54,6 +56,10 @@ public class WindCalendarDialog extends DialogFragment {
     private final WindDialog _coreDialog;
     private CalendarViewPager _calendarViewPager;
     private ViewGroup _weekDayPanelView;
+    private SelectionListDialog<Integer> _yearSelectionDialog;
+
+    // adapter
+    private CalendarAdapter adapter;
 
     // model
     private final Calendar calendar = new GregorianCalendar();
@@ -64,7 +70,7 @@ public class WindCalendarDialog extends DialogFragment {
     private Date selectedDate;
 
     // animation
-    private RotateAnimation rotationIconAnim;
+    private final RotateAnimation rotationIconAnim;
 
     // listener
     private OnDateSetListener dateSetListener;
@@ -138,7 +144,7 @@ public class WindCalendarDialog extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         // Rebuild month view panel
         FragmentManager fragManager = getChildFragmentManager();
-        CalendarAdapter adapter = createMonthViewAdapter(fragManager);
+        adapter = createMonthViewAdapter(fragManager);
 
         if (_calendarViewPager.getAdapter() == null) {
             _calendarViewPager.setAdapter(adapter);
@@ -213,8 +219,28 @@ public class WindCalendarDialog extends DialogFragment {
      * @param curMonth current month
      */
     protected void onMonthPageChange(@Nullable MonthInfo preMonth, @NonNull MonthInfo curMonth) {
-        // _monthLabelView.setText();
         _coreDialog.setSubTitle(String.format("%s %s", formatTitleDate(curMonth.getDate()), "▼"));
+    }
+
+    /**
+     * On title view click
+     *
+     * @param v view
+     */
+    private void onTitleViewClick(View v) {
+        CalendarAdapter adapter = (CalendarAdapter) _calendarViewPager.getAdapter();
+        assert adapter != null;
+        Integer year = adapter.getSelectedMonth().getYear();
+        createYearSelectionDialog(v.getContext()).show(year);
+    }
+
+    /**
+     * On reload calendar to given date
+     *
+     * @param date date
+     */
+    protected void onReloadCalendar(Date date) {
+        _calendarViewPager.setSelectedDate(date);
     }
 
     /* ---------------------- GET-SET ------------------------ */
@@ -301,8 +327,13 @@ public class WindCalendarDialog extends DialogFragment {
         dialog.addViewToHeader(extraHeader);
         extraHeader.findViewById(R.id._reloadIconView).setOnClickListener(v -> {
             v.startAnimation(rotationIconAnim);
-            _calendarViewPager.setSelectedDate(selectedDate);
+            onReloadCalendar(selectedDate);
         });
+
+        // show year selection dialog when user click on title view of dialog
+        dialog.titleView().setOnClickListener(this::onTitleViewClick);
+        dialog.subTitleView().setOnClickListener(this::onTitleViewClick);
+        dialog.icon().setOnClickListener(this::onTitleViewClick);
 
         // add action button
         dialog.addButton(Button.Type.GRAY, context.getString(R.string.wl_cancel), null)
@@ -385,6 +416,40 @@ public class WindCalendarDialog extends DialogFragment {
             lp.width = style.dateCellSize();
             _weekDayPanelView.addView(itemView, lp);
         }
+    }
+
+    /**
+     * Create year selection dialog
+     *
+     * @param context application context
+     * @return dialog
+     */
+    private SelectionListDialog<Integer> createYearSelectionDialog(Context context) {
+        if (_yearSelectionDialog != null) return _yearSelectionDialog;
+        _yearSelectionDialog = new SelectionListDialog<Integer>(context, WindFactory.instance().getAvailableYears()) {
+
+            @Override
+            protected boolean equal(@NonNull Integer a, @NonNull Integer b) {
+                return a.equals(b);
+            }
+
+            @Override
+            protected String itemText(@NonNull Integer itemData) {
+                return Integer.toString(itemData);
+            }
+
+            @Override
+            protected boolean onSelection(@NonNull SelectionListDialog<Integer> dialog, @NonNull View itemView, @NonNull Integer data) {
+                calendar.set(data, adapter.getSelectedMonth().getMonth(), 1);
+                onReloadCalendar(calendar.getTime());
+                return false;
+            }
+        };
+        _yearSelectionDialog.headerLayout().setVisibility(View.GONE);
+        _yearSelectionDialog.setWidth((int) context.getResources().getDimension(R.dimen.wl_calendar_year_selection_dialog_width));
+        _yearSelectionDialog.setHeight(_coreDialog.getHeight());
+        _yearSelectionDialog.buttons().get(0).setType(Button.Type.GRAY_LIGHT);
+        return _yearSelectionDialog;
     }
 
     /**

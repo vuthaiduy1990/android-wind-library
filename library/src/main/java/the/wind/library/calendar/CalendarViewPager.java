@@ -77,8 +77,9 @@ public class CalendarViewPager extends ViewPager {
 
     @Override
     public void setCurrentItem(int item) {
-        if (item < 0 && getAdapter() != null) {
-            super.setCurrentItem(((CalendarAdapter) getAdapter()).getCurrentPagePosition());
+        CalendarAdapter adapter = (CalendarAdapter) getAdapter();
+        if (item < 0 && adapter != null) {
+            super.setCurrentItem(adapter.getCurrentPagePosition());
             return;
         }
         super.setCurrentItem(item);
@@ -131,7 +132,6 @@ public class CalendarViewPager extends ViewPager {
         adapter.resetPositionToZero();
         setOffscreenPageLimit(1); // set 1 to avoid creating too much cache fragment
         setAdapter(adapter);
-        adapter.resetPositionToCenter();
     }
 
     /* ---------------------- INNER CLASS -------------------- */

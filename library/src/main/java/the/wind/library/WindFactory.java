@@ -1,5 +1,6 @@
 package the.wind.library;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Currency;
 import java.util.LinkedList;
@@ -16,6 +17,9 @@ public final class WindFactory {
 
     // singleton instance
     private static final WindFactory instance = new WindFactory();
+
+    // list of years
+    private List<Integer> years;
 
     // list of currencies
     private List<CurrencyWrapper> currencies;
@@ -42,6 +46,21 @@ public final class WindFactory {
      */
     public static WindFactory instance() {
         return instance;
+    }
+
+    /**
+     * Get available years
+     *
+     * @return years
+     */
+    public List<Integer> getAvailableYears() {
+        if (years == null || years.isEmpty()) {
+            years = new ArrayList<>();
+            for (int i = 1900; i <= 2222; i++) {
+                years.add(i);
+            }
+        }
+        return years;
     }
 
     /**
