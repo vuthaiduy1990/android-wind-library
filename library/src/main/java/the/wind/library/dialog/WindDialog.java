@@ -291,6 +291,9 @@ public class WindDialog extends Dialog {
      * @return dialog's width
      */
     public int getWidth() {
+        if (_layout != null) {
+            _layout.getWidth();
+        }
         return width;
     }
 
@@ -309,6 +312,9 @@ public class WindDialog extends Dialog {
      * @return dialog's height
      */
     public int getHeight() {
+        if (_layout != null) {
+            return _layout.getHeight();
+        }
         return height;
     }
 
@@ -921,8 +927,8 @@ public class WindDialog extends Dialog {
      *
      * @param timeout in milliseconds
      */
-    public void show(long timeout) {
-        show(timeout, null);
+    public void showTimeout(long timeout) {
+        showTimeout(timeout, null);
     }
 
     /**
@@ -932,7 +938,7 @@ public class WindDialog extends Dialog {
      * @param timeout  in milliseconds
      * @param callback callback when timeout
      */
-    public void show(long timeout, final CWCallback<?> callback) {
+    public void showTimeout(long timeout, final CWCallback<?> callback) {
         show();
         timer.schedule(new TimerTask() {
             @Override
@@ -967,7 +973,7 @@ public class WindDialog extends Dialog {
      */
     public void showImmediately(long timeout) {
         showImmediately = true;
-        show(timeout);
+        showTimeout(timeout);
     }
 
     /**

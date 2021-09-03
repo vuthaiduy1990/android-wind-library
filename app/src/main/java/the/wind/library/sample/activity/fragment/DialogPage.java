@@ -205,20 +205,20 @@ public class DialogPage extends Fragment {
                 .apply(LoadingTemplate.instance())
                 .setContentText("This process may take a long time");
         _loadingDialog.setTitle("Please wait!");
-        view.findViewById(R.id._loadingDialog).setOnClickListener(v -> _loadingDialog.show(5000));
+        view.findViewById(R.id._loadingDialog).setOnClickListener(v -> _loadingDialog.showTimeout(5000));
     }
 
     private void progressDialog1(View view) {
         _progressDialog1 = new WindDialog(view.getContext())
                 .apply(ProgressTemplate.instance());
-        view.findViewById(R.id._progressDialog1).setOnClickListener(v -> _progressDialog1.show(5000));
+        view.findViewById(R.id._progressDialog1).setOnClickListener(v -> _progressDialog1.showTimeout(5000));
     }
 
     private void progressDialog2(View view) {
         _progressDialog2 = new WindDialog(view.getContext())
                 .apply(ProgressTemplate.instance());
         _progressDialog2.getLayout().setBackground(null);
-        view.findViewById(R.id._progressDialog2).setOnClickListener(v -> _progressDialog2.show(5000));
+        view.findViewById(R.id._progressDialog2).setOnClickListener(v -> _progressDialog2.showTimeout(5000));
     }
 
     private void showWaiting(View view) {
