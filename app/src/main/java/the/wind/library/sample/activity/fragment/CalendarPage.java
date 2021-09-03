@@ -91,9 +91,9 @@ public class CalendarPage extends Fragment {
         // set highlight event
         view.findViewById(R.id._highlightBtn).setOnClickListener(v -> {
             if (highlighted) {
-                _calendarView.highlightDates();
+                _calendarView.clearSelectedDates();
             } else {
-                _calendarView.highlightDates(neighborDates);
+                _calendarView.selectDates(neighborDates);
             }
             highlighted = !highlighted;
         });
@@ -125,7 +125,10 @@ public class CalendarPage extends Fragment {
         view.findViewById(R.id._calendarDialog).setOnClickListener(v -> {
             cal.setTime(new Date());
             cal.add(Calendar.DATE, 3);
-            getCalendarDialog().show(fragManager, cal.getTime());
+            Date d1 = cal.getTime();
+            cal.add(Calendar.MONTH, 10);
+            Date d2 = cal.getTime();
+            getCalendarDialog().show(fragManager, d1, d2);
         });
     }
 
@@ -142,9 +145,9 @@ public class CalendarPage extends Fragment {
             _calendarDialog.setLunarType(CalendarType.Vietnamese);
             _calendarDialog.setOnDateSetListener(new WindCalendarDialog.OnDateSetListener() {
                 @Override
-                public void onDateSet(List<DateInfo> dateInfos) {
-                    Toast.makeText(requireContext(), dateInfos.size() + " selected", Toast.LENGTH_SHORT).show();
-                    _calendarView.setSelectedDate(dateInfos.get(0).getDate());
+                public void onDateSet(List<Date> dates) {
+                    Toast.makeText(requireContext(), dates.size() + " selected", Toast.LENGTH_SHORT).show();
+                    _calendarView.setSelectedDate(dates.get(0));
                 }
             });
 

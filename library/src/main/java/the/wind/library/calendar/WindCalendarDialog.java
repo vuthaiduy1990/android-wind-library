@@ -16,6 +16,8 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -67,6 +69,7 @@ public class WindCalendarDialog extends DialogFragment {
     private final Style style = new Style();
     private final CalendarInfo info = new CalendarInfo(calendar);
     private final CalendarEvent eventListener = new CalendarEvent();
+    private final Map<String, Date> selectedDateMap = new HashMap<>();
     private Date selectedDate;
 
     // animation
@@ -89,7 +92,7 @@ public class WindCalendarDialog extends DialogFragment {
         style.weekDayTextSize(res.getDimension(R.dimen.wl_calendar_dialog_date_text_size));
         style.weekDayTextColor(ContextCompat.getColor(context, R.color.wl_calendar_week_day));
         style.weekDayPanelBackground(0);
-        style.weekDayHoverBackground(R.drawable.wl_calendar_hover_background);
+        style.weekDayHoverBackground(R.drawable.wl_calendar_highlight_background);
 
         // Date cell and text size
         style.dateCellSize((int) res.getDimension(R.dimen.wl_calendar_dialog_date_cell_size));
@@ -104,6 +107,7 @@ public class WindCalendarDialog extends DialogFragment {
         style.dateWeekendTextColor(ContextCompat.getColor(context, R.color.wl_danger));
         style.dateTodayTextColor(ContextCompat.getColor(context, R.color.wl_white));
         style.dateHighlightTextColor(ContextCompat.getColor(context, R.color.wl_black));
+        style.dateHighlightLunarTextColor(ContextCompat.getColor(context, R.color.wl_calendar_lunar_date_text));
 
         // Date cell background
         style.monthPanelViewBackground(0);
@@ -112,7 +116,6 @@ public class WindCalendarDialog extends DialogFragment {
         style.dateWeekendBackground(0);
         style.dateTodayBackground(R.drawable.wl_calendar_today_background);
         style.dateHighlightBackground(R.drawable.wl_calendar_highlight_background);
-        style.dateHoverBackground(R.drawable.wl_calendar_hover_background);
 
         // set calendar info
         info.setTagCode(WindCalendarDialog.class.getName());
@@ -151,7 +154,7 @@ public class WindCalendarDialog extends DialogFragment {
             _calendarViewPager.setSelectedDate(selectedDate);
 
         } else {
-            adapter.setSelectedDate(new Date());
+            adapter.setSelectedDate(selectedDate);
             _calendarViewPager.refreshAdapter(adapter);
             _calendarViewPager.setCurrentItem(-1);
         }
@@ -171,10 +174,9 @@ public class WindCalendarDialog extends DialogFragment {
     public void show(FragmentManager manager, String tag) {
         if (selectedDate == null) {
             selectedDate = new Date();
+            mapDate(selectedDate);
         }
         info.setTagCode(tag);
-        calendar.setTime(selectedDate);
-        info.highlightDates.add(CalendarUtil.toId(calendar));
         super.show(manager, tag);
     }
 
@@ -193,8 +195,10 @@ public class WindCalendarDialog extends DialogFragment {
     protected boolean onDateItemClick(MonthAdapter.ViewHolder viewHolder, View view, DateInfo data) {
         // clear old selected items
         info.clearSelectedDates();
+        selectedDateMap.clear();
         // highlight selected items
-        info.selectDateItemView(viewHolder, data);
+        info.selectDate(viewHolder);
+        selectedDateMap.put(data.getId(), data.getDate());
         return true;
     }
 
@@ -208,7 +212,8 @@ public class WindCalendarDialog extends DialogFragment {
      */
     protected boolean onDateItemLongClick(MonthAdapter.ViewHolder viewHolder, View view, DateInfo data) {
         // highlight selected items
-        info.selectDateItemView(viewHolder, data);
+        info.selectDate(viewHolder);
+        selectedDateMap.put(data.getId(), data.getDate());
         return true;
     }
 
@@ -343,7 +348,7 @@ public class WindCalendarDialog extends DialogFragment {
         dialog.addButton(Button.Type.SUCCESS, context.getString(R.string.wl_ok), null)
                 .setOnClickListener(v -> {
                     if (dateSetListener != null) {
-                        dateSetListener.onDateSet(info.getSelectedDate());
+                        dateSetListener.onDateSet(new ArrayList<>(selectedDateMap.values()));
                     }
                     dismiss();
                 });
@@ -457,11 +462,40 @@ public class WindCalendarDialog extends DialogFragment {
      * Show calendar dialog
      *
      * @param manager fragment manager
-     * @param date    selected date
+     * @param dates   selected dates
      */
-    public void show(FragmentManager manager, Date date) {
-        selectedDate = date;
+    public void show(FragmentManager manager, Date... dates) {
+        show(manager, Arrays.asList(dates));
+    }
+
+    /**
+     * Show calendar dialog
+     *
+     * @param manager fragment manager
+     * @param dates   selected dates
+     */
+    public void show(FragmentManager manager, Iterable<Date> dates) {
+        if (dates != null) {
+            for (Date date : dates) {
+                if (selectedDate == null) {
+                    selectedDate = date;
+                }
+                mapDate(date);
+            }
+        }
         show(manager, WindCalendarDialog.class.getName());
+    }
+
+    /**
+     * Map date
+     *
+     * @param date date
+     */
+    private void mapDate(Date date) {
+        calendar.setTime(date);
+        String dateId = CalendarUtil.toId(calendar);
+        selectedDateMap.put(dateId, date);
+        info.selectDates(dateId);
     }
 
     /**
@@ -480,6 +514,8 @@ public class WindCalendarDialog extends DialogFragment {
      */
     private void reset() {
         info.reset();
+        selectedDateMap.clear();
+        selectedDate = null;
     }
 
     /* ---------------------- INNER CLASS -------------------- */
@@ -492,9 +528,9 @@ public class WindCalendarDialog extends DialogFragment {
         /**
          * On date set listener
          *
-         * @param dateInfos list of selected dates
+         * @param dates list of selected dates
          */
-        void onDateSet(List<DateInfo> dateInfos);
+        void onDateSet(List<Date> dates);
     }
 
     /**

@@ -2,11 +2,11 @@ package the.wind.library.calendar;
 
 import android.icu.util.Calendar;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,7 +18,7 @@ final class CalendarInfo {
     private String tagCode;
     private final String todayId;
     public final Set<String> eventDates = new HashSet<>();
-    public final Set<String> highlightDates = new HashSet<>();
+    public final Set<String> selectedDates = new HashSet<>();
     public final Map<String, MonthAdapter.ViewHolder> selectedDateViewMap = new HashMap<>();
 
     @Nullable
@@ -75,18 +75,6 @@ final class CalendarInfo {
     }
 
     /**
-     * Check if date is highlight or not
-     *
-     * @param dateId date id
-     * @return true if highlight
-     *
-     * @see CalendarUtil#toId(int, int, int)
-     */
-    public boolean isHighlight(@NonNull String dateId) {
-        return highlightDates.contains(dateId);
-    }
-
-    /**
      * Set lunar calendar type
      *
      * @param lunarType lunar calendar type
@@ -131,43 +119,74 @@ final class CalendarInfo {
     }
 
     /**
+     * Check if date is selected or not
+     *
+     * @param dateId date id
+     * @return true if selected
+     *
+     * @see CalendarUtil#toId(int, int, int)
+     */
+    public boolean isSelected(@NonNull String dateId) {
+        return selectedDates.contains(dateId);
+    }
+
+    /**
      * Get selected dates
      *
-     * @return list of selected dates
+     * @return list of selected date IDs
      */
-    public List<DateInfo> getSelectedDate() {
-        List<DateInfo> list = new ArrayList<>();
-        for (Map.Entry<String, MonthAdapter.ViewHolder> entry : selectedDateViewMap.entrySet()) {
-            list.add(entry.getValue().getAdapterData());
-        }
-        return list;
+    public Collection<String> getSelectedDate() {
+        return selectedDates;
     }
 
     /**
      * Clear highlight events without refreshing page
      */
     public void clearSelectedDates() {
-        highlightDates.clear();
+        selectedDates.clear();
         Iterator<Map.Entry<String, MonthAdapter.ViewHolder>> itemIt = selectedDateViewMap.entrySet().iterator();
         while (itemIt.hasNext()) {
-            itemIt.next().getValue().touchUp();
+            MonthAdapter.ViewHolder vh = itemIt.next().getValue();
+            vh.touchUp();
             itemIt.remove();
         }
-        selectedDateViewMap.clear();
     }
 
     /**
      * Select date item view
      *
      * @param viewHolder view holder
-     * @param data       date info
      * @return true if item view is already selected before
      */
-    public boolean selectDateItemView(MonthAdapter.ViewHolder viewHolder, DateInfo data) {
-        boolean alreadySelected = selectedDateViewMap.containsKey(data.getId());
-        selectedDateViewMap.put(data.getId(), viewHolder);
+    public boolean selectDate(MonthAdapter.ViewHolder viewHolder) {
+        String dateId = viewHolder.getAdapterData().getId();
+        boolean alreadySelected = selectedDateViewMap.containsKey(dateId);
+        if (!alreadySelected) {
+            selectedDates.add(dateId);
+            selectedDateViewMap.put(dateId, viewHolder);
+        }
         viewHolder.touchDown();
         return alreadySelected;
+    }
+
+    /**
+     * Select dates
+     *
+     * @param dateIds list of date ids
+     * @see CalendarUtil#toId(int, int, int)
+     */
+    public void selectDates(Collection<String> dateIds) {
+        selectedDates.addAll(dateIds);
+    }
+
+    /**
+     * Select dates and refresh current page also
+     *
+     * @param dateIds list of date ids
+     * @see CalendarUtil#toId(int, int, int)
+     */
+    public void selectDates(String... dateIds) {
+        selectDates(Arrays.asList(dateIds));
     }
 
     /**
@@ -175,7 +194,7 @@ final class CalendarInfo {
      */
     public void reset() {
         eventDates.clear();
-        highlightDates.clear();
+        selectedDates.clear();
         selectedDateViewMap.clear();
     }
 }

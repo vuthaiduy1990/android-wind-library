@@ -206,7 +206,7 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
             boolean hasEvent = calInfo.hasEvent(dateId);
             boolean isToday = calInfo.isToday(dateId);
             boolean isWeekend = data.isWeekend();
-            boolean isHighlight = calInfo.isHighlight(dateId);
+            boolean isHighlight = calInfo.isSelected(dateId);
 
             // Set text color
             if (isToday) {
@@ -276,7 +276,9 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
          * Touch down on item
          */
         public void touchDown() {
-            itemView.setBackgroundResource(calStyle.dateHoverBackground());
+            itemView.setBackgroundResource(calStyle.dateHighlightBackground());
+            _dateTextView.setTextColor(calStyle.dateHighlightTextColor());
+            _lunarDateTextView.setTextColor(calStyle.dateHighlightLunarTextColor());
         }
 
         /**

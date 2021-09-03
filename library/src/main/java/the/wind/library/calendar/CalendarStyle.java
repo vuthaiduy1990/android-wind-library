@@ -19,6 +19,7 @@ public class CalendarStyle {
     private int dateWeekendTextColor;
     private int dateTodayTextColor;
     private int dateHighlightTextColor;
+    private int dateHighlightLunarTextColor;
 
     private int monthPanelViewBackground;
     private int dateCellBackground;
@@ -26,7 +27,6 @@ public class CalendarStyle {
     private int dateWeekendBackground;
     private int dateTodayBackground;
     private int dateHighlightBackground;
-    private int dateHoverBackground;
 
     /**
      * @return day of weeks (monday, tuesday ... sunday)
@@ -301,6 +301,24 @@ public class CalendarStyle {
     }
 
     /**
+     * @return highlight lunar text color
+     */
+    public int dateHighlightLunarTextColor() {
+        return dateHighlightLunarTextColor;
+    }
+
+    /**
+     * Set highlight lunar text color
+     *
+     * @param dateHighlightLunarTextColor color
+     * @return style
+     */
+    public CalendarStyle dateHighlightLunarTextColor(int dateHighlightLunarTextColor) {
+        this.dateHighlightLunarTextColor = dateHighlightLunarTextColor;
+        return this;
+    }
+
+    /**
      * @return month panel view background
      */
     public int monthPanelViewBackground() {
@@ -405,24 +423,6 @@ public class CalendarStyle {
      */
     public CalendarStyle dateHighlightBackground(int dateHighlightBackground) {
         this.dateHighlightBackground = dateHighlightBackground;
-        return this;
-    }
-
-    /**
-     * @return date cell background when user touch on date item
-     */
-    public int dateHoverBackground() {
-        return dateHoverBackground;
-    }
-
-    /**
-     * Set cell background when user touch on date item
-     *
-     * @param dateHoverBackground background
-     * @return style
-     */
-    public CalendarStyle dateHoverBackground(int dateHoverBackground) {
-        this.dateHoverBackground = dateHoverBackground;
         return this;
     }
 }

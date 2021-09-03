@@ -115,6 +115,7 @@
         <attr name="dateWeekendTextColor" format="color" />
         <attr name="dateTodayTextColor" format="color" />
         <attr name="dateHighlightTextColor" format="color" />
+        <attr name="dateHighlightLunarTextColor" format="color" />
 
         <attr name="monthPanelViewBackground" format="reference" />
         <attr name="dateCellBackground" format="reference" />
@@ -122,7 +123,6 @@
         <attr name="dateWeekendBackground" format="reference" />
         <attr name="dateTodayBackground" format="reference" />
         <attr name="dateHighlightBackground" format="reference" />
-        <attr name="dateHoverBackground" format="reference" />
 
         <attr name="lunar" format="enum">
             <enum name="Buddhist" value="0" />
