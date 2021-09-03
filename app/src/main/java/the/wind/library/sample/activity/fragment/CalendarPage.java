@@ -143,6 +143,7 @@ public class CalendarPage extends Fragment {
                 @Override
                 public void onDateSet(List<DateInfo> dateInfos) {
                     Toast.makeText(requireContext(), dateInfos.size() + " selected", Toast.LENGTH_SHORT).show();
+                    _calendarView.setSelectedDate(dateInfos.get(0).getDate());
                 }
             });
 

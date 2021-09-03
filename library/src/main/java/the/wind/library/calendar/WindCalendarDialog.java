@@ -345,6 +345,7 @@ public class WindCalendarDialog extends DialogFragment {
                     if (dateSetListener != null) {
                         dateSetListener.onDateSet(info.getSelectedDate());
                     }
+                    dismiss();
                 });
         return dialog;
     }
