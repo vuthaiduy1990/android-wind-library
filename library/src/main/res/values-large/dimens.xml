@@ -56,7 +56,7 @@
     <dimen name="wl_dialog_tatsumaki_icon_size">72dp</dimen>
     <dimen name="wl_dialog_tatsumaki_big_progress_icon_margin">36dp</dimen>
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <dimen name="wl_dialog_fubuki_width">420dp</dimen>
+    <dimen name="wl_dialog_fubuki_width">480dp</dimen>
     <dimen name="wl_dialog_fubuki_icon_size">60dp</dimen>
 
     <!-- ||||||||||||||||||||| Wind Action Menu |||||||||||||||||||||| -->
@@ -80,5 +80,11 @@
     <dimen name="wl_calendar_date_text_size">19sp</dimen>
     <dimen name="wl_calendar_lunar_date_text_size">14sp</dimen>
     <dimen name="wl_calendar_event_symbol_size">6dp</dimen>
+    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <dimen name="wl_calendar_dialog_viewpager_height">360dp</dimen>
+    <dimen name="wl_calendar_dialog_date_cell_size">52dp</dimen>
+    <dimen name="wl_calendar_dialog_date_text_size">18sp</dimen>
+    <dimen name="wl_calendar_dialog_lunar_date_text_size">13sp</dimen>
+    <dimen name="wl_calendar_year_selection_dialog_width">200dp</dimen>
 
 </resources>
