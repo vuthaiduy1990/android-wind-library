@@ -6,18 +6,26 @@
     android:orientation="vertical">
 
     <the.wind.library.view.Button
-        android:id="@+id/_currencyDialogBtn"
+        android:id="@+id/_currencyBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:text="Currency Dialog"
         app:type="INFO" />
 
     <the.wind.library.view.Button
-        android:id="@+id/_localeDialogBtn"
+        android:id="@+id/_localeBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/wl_spacing_level_2"
         app:text="Locale Dialog"
         app:type="SUCCESS" />
+
+    <the.wind.library.view.Button
+        android:id="@+id/_yearSelectionBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/wl_spacing_level_2"
+        app:text="Year Selection Dialog"
+        app:type="NEUTRAL" />
 
 </LinearLayout>

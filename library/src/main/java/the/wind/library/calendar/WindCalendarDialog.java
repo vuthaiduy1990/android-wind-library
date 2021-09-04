@@ -30,9 +30,9 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import the.wind.library.CWBundle;
 import the.wind.library.R;
-import the.wind.library.WindFactory;
 import the.wind.library.dialog.SelectionListDialog;
 import the.wind.library.dialog.WindDialog;
+import the.wind.library.dialog.YearSelectionDialog;
 import the.wind.library.view.Button;
 
 /**
@@ -432,18 +432,7 @@ public class WindCalendarDialog extends DialogFragment {
      */
     private SelectionListDialog<Integer> createYearSelectionDialog(Context context) {
         if (_yearSelectionDialog != null) return _yearSelectionDialog;
-        _yearSelectionDialog = new SelectionListDialog<Integer>(context, WindFactory.instance().getAvailableYears()) {
-
-            @Override
-            protected boolean equal(@NonNull Integer a, @NonNull Integer b) {
-                return a.equals(b);
-            }
-
-            @Override
-            protected String itemText(@NonNull Integer itemData) {
-                return Integer.toString(itemData);
-            }
-
+        _yearSelectionDialog = new YearSelectionDialog(context) {
             @Override
             protected boolean onSelection(@NonNull SelectionListDialog<Integer> dialog, @NonNull View itemView, @NonNull Integer data) {
                 calendar.set(data, adapter.getSelectedMonth().getMonth(), 1);
@@ -451,10 +440,7 @@ public class WindCalendarDialog extends DialogFragment {
                 return false;
             }
         };
-        _yearSelectionDialog.headerLayout().setVisibility(View.GONE);
-        _yearSelectionDialog.setWidth((int) context.getResources().getDimension(R.dimen.wl_calendar_year_selection_dialog_width));
         _yearSelectionDialog.setHeight(_coreDialog.getHeight());
-        _yearSelectionDialog.buttons().get(0).setType(Button.Type.GRAY_LIGHT);
         return _yearSelectionDialog;
     }
 

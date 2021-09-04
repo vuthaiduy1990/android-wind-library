@@ -13,17 +13,24 @@ import androidx.fragment.app.Fragment;
 import the.wind.library.dialog.CurrencyDialog;
 import the.wind.library.dialog.LocaleDialog;
 import the.wind.library.dialog.SelectionListDialog;
+import the.wind.library.dialog.YearSelectionDialog;
 import the.wind.library.model.CurrencyWrapper;
 import the.wind.library.model.LocaleWrapper;
 import the.wind.library.sample.R;
 
 public class CustomFormDialogPage extends Fragment {
 
+    // currency dialog
     private CurrencyDialog currencyDialog;
     private CurrencyWrapper selectedCurrency;
 
+    // locale dialog
     private LocaleDialog localeDialog;
     private LocaleWrapper selectedLocale;
+
+    // Year selection dialog
+    private YearSelectionDialog yearSelectionDialog;
+    private Integer selectedYear;
 
     @Nullable
     @Override
@@ -36,19 +43,14 @@ public class CustomFormDialogPage extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // currency button
-        view.findViewById(R.id._currencyDialogBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getCurrencyDialog(v.getContext()).show(selectedCurrency);
-            }
-        });
+        view.findViewById(R.id._currencyBtn).setOnClickListener(v -> getCurrencyDialog(v.getContext()).show(selectedCurrency));
 
         // local button
-        view.findViewById(R.id._localeDialogBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getLocaleDialog(v.getContext()).show(selectedLocale);
-            }
+        view.findViewById(R.id._localeBtn).setOnClickListener(v -> getLocaleDialog(v.getContext()).show(selectedLocale));
+
+        // year selection dialog
+        view.findViewById(R.id._yearSelectionBtn).setOnClickListener(v -> {
+            getYearSelectionDialog(v.getContext()).show(selectedYear);
         });
     }
 
@@ -78,5 +80,19 @@ public class CustomFormDialogPage extends Fragment {
             };
         }
         return localeDialog;
+    }
+
+    private YearSelectionDialog getYearSelectionDialog(Context context) {
+        if (yearSelectionDialog == null) {
+            yearSelectionDialog = new YearSelectionDialog(context) {
+                @Override
+                protected boolean onSelection(@NonNull SelectionListDialog<Integer> dialog, @NonNull View itemView, @NonNull Integer data) {
+                    selectedYear = data;
+                    Toast.makeText(getContext(), data, Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            };
+        }
+        return yearSelectionDialog;
     }
 }
