@@ -72,17 +72,17 @@ public class CalendarViewPager extends ViewPager {
         }
         super.setAdapter(adapter);
         CalendarAdapter _adapter = (CalendarAdapter) adapter;
-        setOffscreenPageLimit(_adapter.getPreLoaded());
+        setOffscreenPageLimit(_adapter.getOffscreen());
     }
 
     @Override
     public void setCurrentItem(int item) {
         CalendarAdapter adapter = (CalendarAdapter) getAdapter();
         if (item < 0 && adapter != null) {
-            super.setCurrentItem(adapter.getCurrentPagePosition());
+            super.setCurrentItem(adapter.getCurrentPagePosition(), true);
             return;
         }
-        super.setCurrentItem(item);
+        super.setCurrentItem(item, true);
     }
 
     /* ---------------------- STATIC ------------------------- */

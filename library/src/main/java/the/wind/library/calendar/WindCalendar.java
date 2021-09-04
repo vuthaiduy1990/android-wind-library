@@ -59,6 +59,7 @@ public class WindCalendar extends LinearLayout {
 
     //Adapter
     private CalendarAdapter adapter;
+    private int offscreen;
 
     // bundle data
     private final CWBundle bundle = new CWBundle();
@@ -250,6 +251,9 @@ public class WindCalendar extends LinearLayout {
 
             // tag code
             info.setTagCode(typeArray.getString(R.styleable.WindCalendar_tagCode));
+
+            // preload
+            offscreen = typeArray.getInteger(R.styleable.WindCalendar_offscreen, CalendarAdapter.DEFAULT_OFF_SCREEN);
 
             // calendar type
             int calendarTypeIdx = typeArray.getInt(R.styleable.WindCalendar_lunar, -1);
@@ -668,7 +672,7 @@ public class WindCalendar extends LinearLayout {
      */
     private CalendarAdapter createCalendarAdapter() {
         // Create new adapter
-        CalendarAdapter adapter = new CalendarAdapter(fragManager, new GregorianCalendar());
+        CalendarAdapter adapter = new CalendarAdapter(fragManager, new GregorianCalendar(), offscreen);
         adapter.setCalendarStyle(style);
         adapter.setCalendarInfo(info);
         adapter.setCalendarEvent(eventListener);

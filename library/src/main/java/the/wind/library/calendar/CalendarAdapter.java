@@ -17,8 +17,8 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
  */
 public class CalendarAdapter extends FragmentStatePagerAdapter {
 
-    // default number of month preloaded
-    private static final int DEFAULT_PRE_LOAD = 2;
+    // default number of month preloaded on both side of selected month page
+    public static final int DEFAULT_OFF_SCREEN = 2;
 
     // Maximum number of slide
     private static final int MAX_SLIDE = 2000;
@@ -28,7 +28,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
     private final Calendar calendar;
 
     // the number of month will be preloaded in the left side and right side of current month
-    private int preLoaded;
+    private int offscreen;
     private final Map<Integer, MonthViewFragment> fragmentCache = new HashMap<>();
 
     // selected month
@@ -47,7 +47,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
      * @param calendar abstract calendar with any given date
      */
     public CalendarAdapter(FragmentManager fm, Calendar calendar) {
-        this(fm, calendar, DEFAULT_PRE_LOAD);
+        this(fm, calendar, DEFAULT_OFF_SCREEN);
     }
 
     /**
@@ -55,13 +55,15 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
      *
      * @param fm        month view fragment
      * @param calendar  abstract calendar with any given date
-     * @param preLoaded the number of month will be preloaded in the left side and right side of current month
+     * @param offscreen the number of month will be preloaded in the left side and right side of current month
      */
-    public CalendarAdapter(FragmentManager fm, Calendar calendar, int preLoaded) {
+    public CalendarAdapter(FragmentManager fm, Calendar calendar, int offscreen) {
         super(fm);
         this.calendar = calendar;
-        if (preLoaded > 0) {
-            this.preLoaded = preLoaded;
+        if (offscreen > 0) {
+            this.offscreen = offscreen;
+        } else {
+            this.offscreen = DEFAULT_OFF_SCREEN;
         }
     }
 
@@ -147,7 +149,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
     protected void setSelectedDate(Date date) {
         int centerSlideShow = MAX_SLIDE / 2;
         currentPosition = currentPosition == centerSlideShow ? MAX_SLIDE / 4 : centerSlideShow;
-        selectedMonth = CalendarUtil.createMonthLink(calendar, calendarInfo.getLunarCalendar(), date, calendarInfo.getWeekStartsOn(), preLoaded);
+        selectedMonth = CalendarUtil.createMonthLink(calendar, calendarInfo.getLunarCalendar(), date, calendarInfo.getWeekStartsOn(), offscreen);
     }
 
     /**
@@ -155,8 +157,8 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
      *
      * @return the number of month will be preloaded in the left side and right side of current month
      */
-    public int getPreLoaded() {
-        return preLoaded;
+    public int getOffscreen() {
+        return offscreen;
     }
 
     /**

@@ -97,6 +97,7 @@
     <!--  Calendar attributes -->
     <declare-styleable name="WindCalendar">
         <attr name="tagCode" format="string" />
+        <attr name="offscreen" format="integer" />
 
         <attr name="weekDays" format="string" />
         <attr name="weekDayTextSize" format="dimension" />
