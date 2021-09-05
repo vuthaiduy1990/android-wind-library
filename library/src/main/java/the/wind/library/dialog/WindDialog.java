@@ -884,6 +884,13 @@ public class WindDialog extends Dialog {
     }
 
     /**
+     * @return footer layout
+     */
+    public ViewGroup footerLayout() {
+        return _footerHolder;
+    }
+
+    /**
      * Add custom view to footer
      *
      * @param view view
