@@ -104,21 +104,21 @@ public class CalendarPage extends Fragment {
         // Change Lunar type
         view.findViewById(R.id._IslamicLunarCalendar).setOnClickListener(v -> {
             _calendarView.setLunarType(CalendarType.Islamic);
-            _calendarView.rebuild();
+            _calendarView.rebuild(new Date());
         });
         view.findViewById(R.id._VietnameseLunarCalendar).setOnClickListener(v -> {
             _calendarView.setLunarType(CalendarType.Vietnamese);
-            _calendarView.rebuild();
+            _calendarView.rebuild(new Date());
         });
 
         // Set weeks start on
         view.findViewById(R.id._startOnMonday).setOnClickListener(v -> {
             _calendarView.setWeekStartsOn(WeekStartsOn.MONDAY);
-            _calendarView.rebuild();
+            _calendarView.rebuild(new Date());
         });
         view.findViewById(R.id._startOnSunday).setOnClickListener(v -> {
             _calendarView.setWeekStartsOn(WeekStartsOn.SUNDAY);
-            _calendarView.rebuild();
+            _calendarView.rebuild(new Date());
         });
 
         // Show calendar dialog

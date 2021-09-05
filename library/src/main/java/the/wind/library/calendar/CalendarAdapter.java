@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -28,7 +29,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
     private final Calendar calendar;
 
     // the number of month will be preloaded in the left side and right side of current month
-    private int offscreen;
+    private final int offscreen;
     private final Map<Integer, MonthViewFragment> fragmentCache = new HashMap<>();
 
     // selected month
@@ -71,6 +72,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        if (selectedMonth == null) return new MonthViewFragment(); // empty fragment
         int diff = position - currentPosition;
         if (diff == 0) return newMonthFragment(selectedMonth);
 
@@ -128,7 +130,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
      * @param monthInfo month info
      * @return fragment
      */
-    private MonthViewFragment newMonthFragment(MonthInfo monthInfo) {
+    private MonthViewFragment newMonthFragment(@Nullable MonthInfo monthInfo) {
         return new MonthViewFragment(monthInfo, calendarInfo, calendarStyle, calendarEvent);
     }
 
@@ -177,20 +179,6 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
      */
     public int getCurrentPagePosition() {
         return currentPosition;
-    }
-
-    /**
-     * Reset page position to zero of slideshow
-     */
-    void resetPositionToZero() {
-        currentPosition = 0;
-    }
-
-    /**
-     * Reset position to center of slideshow
-     */
-    void resetPositionToCenter() {
-        currentPosition = MAX_SLIDE / 2;
     }
 
     /**
@@ -298,6 +286,14 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
         if (frag != null) {
             frag.notifyDataSetChanged();
         }
+    }
+
+    /**
+     * Reset adapter
+     */
+    void reset() {
+        selectedMonth = null;
+        currentPosition = 0;
     }
 
     /* ---------------------- INNER CLASS -------------------- */

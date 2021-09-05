@@ -719,26 +719,21 @@ public class WindCalendar extends LinearLayout {
     }
 
     /**
-     * Rebuild the calendar
+     * Rebuild the calendar and set given date as default selected
      *
+     * @param date selected date
      * @return calendar
      */
-    public WindCalendar rebuild() {
+    public WindCalendar rebuild(Date date) {
         // re-create week day panel
         createWeekDayPanel();
 
         // create calendar adapter if it not exist
         if (adapter == null) {
             adapter = createCalendarAdapter();
-            adapter.setSelectedDate(new Date());
-            _calendarViewPager.refreshAdapter(adapter);
-            _calendarViewPager.setCurrentItem(-1);
-        } else {
-            // Refresh month view panel
-            _calendarViewPager.refreshAdapter(adapter);
-            // set selected date -> set viewpager current page to center of calendar slideshow
-            setSelectedDate(new Date());
         }
+        // Refresh adapter and set selected date
+        _calendarViewPager.refreshAdapter(adapter, date);
         return this;
     }
 

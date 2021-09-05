@@ -154,9 +154,7 @@ public class WindCalendarDialog extends DialogFragment {
             _calendarViewPager.setSelectedDate(selectedDate);
 
         } else {
-            adapter.setSelectedDate(selectedDate);
-            _calendarViewPager.refreshAdapter(adapter);
-            _calendarViewPager.setCurrentItem(-1);
+            _calendarViewPager.refreshAdapter(adapter, selectedDate);
         }
 
         return _coreDialog;
