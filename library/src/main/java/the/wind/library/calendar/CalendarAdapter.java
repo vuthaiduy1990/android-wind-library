@@ -22,7 +22,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
     public static final int DEFAULT_OFF_SCREEN = 2;
 
     // Maximum number of slide
-    private static final int MAX_SLIDE = 2000;
+    private static final int MAX_SLIDE = 1000;
 
     // Calendar type
     // solar calendar class, ex {@link android.icu.util.GregorianCalendar}
@@ -80,6 +80,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
         MonthInfo target = selectedMonth;
         int idx = 0;
         while (sign > 0 ? idx < diff : idx > diff) {
+            if (target == null) return new MonthViewFragment(); // empty fragment
             if (sign > 0) {
                 target = target.next();
                 idx++;

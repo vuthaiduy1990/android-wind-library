@@ -1,23 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/_rootView"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <!-- Week Day Panel -->
+    <!-- Main Layout -->
     <LinearLayout
-        android:id="@+id/_weekDayPanelView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal" />
+        android:orientation="vertical">
 
-    <!-- Date Panel  -->
-    <the.wind.library.calendar.CalendarViewPager
-        android:id="@+id/_calendarViewPager"
+        <!-- Week Day Panel -->
+        <LinearLayout
+            android:id="@+id/_weekDayPanelView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal" />
+
+        <!-- Date Panel  -->
+        <the.wind.library.calendar.CalendarViewPager
+            android:id="@+id/_calendarViewPager"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/wl_calendar_height" />
+
+    </LinearLayout>
+
+    <!-- Overlay View -->
+    <RelativeLayout
+        android:id="@+id/_overlayView"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/wl_calendar_height" />
+        android:layout_height="wrap_content"
+        android:background="@color/wl_transparent" />
 
-</LinearLayout>
+</RelativeLayout>

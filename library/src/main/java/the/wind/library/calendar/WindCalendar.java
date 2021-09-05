@@ -56,6 +56,7 @@ public class WindCalendar extends LinearLayout {
     private final CalendarViewPager _calendarViewPager;
     private final ViewGroup _weekDayPanelView;
     private View _weekDayTouchedView;
+    private final View _overlayView;
 
     //Adapter
     private CalendarAdapter adapter;
@@ -184,6 +185,7 @@ public class WindCalendar extends LinearLayout {
         _rootView = findViewById(R.id._rootView);
         _calendarViewPager = _rootView.findViewById(R.id._calendarViewPager);
         _weekDayPanelView = _rootView.findViewById(R.id._weekDayPanelView);
+        _overlayView = _rootView.findViewById(R.id._overlayView);
 
         // Styling
         TypedArray typeArray = context.getTheme().obtainStyledAttributes(
@@ -309,6 +311,14 @@ public class WindCalendar extends LinearLayout {
             }
         }
         fragTrans.commit();
+
+        // set overlay
+        _rootView.post(() -> {
+            ViewGroup.LayoutParams layout = _overlayView.getLayoutParams();
+            layout.width = _rootView.getWidth();
+            layout.height = _rootView.getHeight();
+            _overlayView.setLayoutParams(layout);
+        });
 
         // setup calendar view pager
         _calendarViewPager.setCalendarEvent(eventListener);
@@ -509,7 +519,9 @@ public class WindCalendar extends LinearLayout {
      * @param date selected date
      */
     public void setSelectedDate(Date date) {
+        showOverlay();
         _calendarViewPager.setSelectedDate(date);
+        hideOverlay();
     }
 
     /**
@@ -725,6 +737,8 @@ public class WindCalendar extends LinearLayout {
      * @return calendar
      */
     public WindCalendar rebuild(Date date) {
+        showOverlay();
+
         // re-create week day panel
         createWeekDayPanel();
 
@@ -734,6 +748,8 @@ public class WindCalendar extends LinearLayout {
         }
         // Refresh adapter and set selected date
         _calendarViewPager.refreshAdapter(adapter, date);
+
+        hideOverlay();
         return this;
     }
 
@@ -744,6 +760,20 @@ public class WindCalendar extends LinearLayout {
         if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
+    }
+
+    /**
+     * Show overlay
+     */
+    private void showOverlay() {
+        _overlayView.setClickable(true);
+    }
+
+    /**
+     * Hide overlay
+     */
+    private void hideOverlay() {
+        _calendarViewPager.postDelayed(() -> _overlayView.setClickable(false), 200);
     }
 
     /* ---------------------- INNER CLASS -------------------- */
