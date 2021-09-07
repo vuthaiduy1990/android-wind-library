@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -22,8 +23,6 @@ import com.airbnb.lottie.LottieAnimationView;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.LayoutRes;
@@ -37,6 +36,9 @@ import the.wind.library.R;
 import the.wind.library.view.Button;
 
 public class WindDialog extends Dialog {
+
+    // UI Thread
+    private final Handler UiThread = new Handler();
 
     // layout
     private final ViewGroup _layout;
@@ -72,13 +74,13 @@ public class WindDialog extends Dialog {
 
     // model
     private final LayoutType layoutType;
-    private final Timer timer;
     @DrawableRes
     private int iconResId;
     private Bitmap iconBitmap;
     @RawRes
     private int lottieIconResId;
     private final CWBundle bundle = new CWBundle();
+    private boolean showingAfterDelay = false;
 
     // Animation
     @Nullable
@@ -105,7 +107,6 @@ public class WindDialog extends Dialog {
         super(context, R.style.wind_dialog);
         super.setContentView(layoutType.getDialogLayout());
         this.layoutType = layoutType;
-        timer = new Timer();
 
         // Bind the layout and set default layout's size, padding, etc.
         _layout = findViewById(R.id._layout);
@@ -159,6 +160,7 @@ public class WindDialog extends Dialog {
 
     @Override
     public void dismiss() {
+        showingAfterDelay = false;
         if (_dialogView != null && outAnim != null) {
             _dialogView.startAnimation(outAnim);
         } else {
@@ -945,24 +947,49 @@ public class WindDialog extends Dialog {
      * @param timeout  in milliseconds
      * @param callback callback when timeout
      */
-    public void showTimeout(long timeout, final CWCallback<?> callback) {
+    public void showTimeout(long timeout, CWCallback<?> callback) {
         show();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (_dialogView == null) return;
-                // Fix: Only the original thread that created a view hierarchy can touch its views.
-                _dialogView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (callback != null) callback.onEnd();
-                        dismiss();
-                    }
-                });
-            }
+        postDelayed(() -> {
+            if (_dialogView == null) return;
+            if (callback != null) callback.onEnd();
+            dismiss();
         }, timeout);
     }
 
+    /**
+     * Delay a given time before showing dialog
+     *
+     * @param delay milliseconds
+     */
+    public void showDelay(long delay) {
+        showingAfterDelay = true;
+        UiThread.postDelayed(() -> {
+            if (showingAfterDelay) show();
+        }, delay);
+    }
+
+    /**
+     * Delay a given time before showing dialog
+     *
+     * @param delay   milliseconds
+     * @param timeout auto close dialog when timeout
+     */
+    public void showDelay(long delay, long timeout) {
+        showDelay(delay, timeout, null);
+    }
+
+    /**
+     * Delay a given time before showing dialog
+     *
+     * @param delay   milliseconds
+     * @param timeout auto close dialog when timeout
+     */
+    public void showDelay(long delay, long timeout, CWCallback<?> callback) {
+        showingAfterDelay = true;
+        UiThread.postDelayed(() -> {
+            if (showingAfterDelay) showTimeout(timeout, callback);
+        }, delay);
+    }
 
     /**
      * Show dialog immediately without animation
@@ -987,6 +1014,7 @@ public class WindDialog extends Dialog {
      * Dismiss immediately
      */
     public void dismissImmediately() {
+        showingAfterDelay = false;
         super.dismiss();
     }
 
@@ -1023,15 +1051,10 @@ public class WindDialog extends Dialog {
      */
     public void waitMe(long timeout, final boolean quit) {
         waitMe();
-        timer.schedule(new TimerTask() {
+        postDelayed(new Runnable() {
             @Override
             public void run() {
-                _dialogView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        imDone(quit);
-                    }
-                });
+                imDone(quit);
             }
         }, timeout);
     }

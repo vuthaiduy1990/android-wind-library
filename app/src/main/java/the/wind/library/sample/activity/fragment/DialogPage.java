@@ -45,6 +45,7 @@ public class DialogPage extends Fragment {
     private WindDialog _progressDialog1;
     private WindDialog _progressDialog2;
     private WindDialog _waitingDialog;
+    private WindDialog _delayShowingDialog;
 
     // Fubuki layout
     private WindDialog _fubukiDialog;
@@ -79,6 +80,7 @@ public class DialogPage extends Fragment {
         progressDialog1(view);
         progressDialog2(view);
         showWaiting(view);
+        delayShowingDialog(view);
 
         // fubuki dialog
         fubukiDialog(view);
@@ -240,6 +242,16 @@ public class DialogPage extends Fragment {
         _waitingDialog.addButton(Button.Type.NEUTRAL, "Wait", null);
         _waitingDialog.buttons().get(2).setOnClickListener(v -> _waitingDialog.waitMe(5000, false));
         view.findViewById(R.id._waitingDialog).setOnClickListener(v -> _waitingDialog.show());
+    }
+
+    private void delayShowingDialog(View view) {
+        _delayShowingDialog = new WindDialog(view.getContext())
+                .apply(LoadingTemplate.instance())
+                .setContentText("This process may take a long time");
+        _delayShowingDialog.setTitle("Please wait!");
+        view.findViewById(R.id._delayShowingDialog).setOnClickListener(v -> {
+            _delayShowingDialog.showDelay(2000, 5000);
+        });
     }
 
     private WindDialog createFubukiDialog(View view) {

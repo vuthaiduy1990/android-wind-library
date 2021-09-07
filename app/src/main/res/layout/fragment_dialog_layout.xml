@@ -138,6 +138,14 @@
             app:text="Wait me"
             app:type="PRIMARY" />
 
+        <the.wind.library.view.Button
+            android:id="@+id/_delayShowingDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            app:text="Delay Showing"
+            app:type="INFO" />
+
         <!-- Divider -->
         <RelativeLayout
             android:layout_width="match_parent"
