@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -126,6 +127,7 @@ public class WindCalendarDialog extends DialogFragment {
         eventListener.dateItemTouchDownListener = (viewHolder, view, data) -> true;
         eventListener.dateItemTouchUpListener = (viewHolder, view, data) -> true;
         eventListener.dateItemClickListener = this::onDateItemClick;
+        eventListener.dateItemDoubleClickListener = this::onDateItemDoubleClick;
         eventListener.dateItemLongClickListener = this::onDateItemLongClick;
         eventListener.monthPageChangeListener = this::onMonthPageChange;
 
@@ -170,6 +172,7 @@ public class WindCalendarDialog extends DialogFragment {
 
     @Override
     public void show(FragmentManager manager, String tag) {
+        if (isAdded()) return;
         if (selectedDate == null) {
             selectedDate = new Date();
             mapDate(selectedDate);
@@ -197,6 +200,23 @@ public class WindCalendarDialog extends DialogFragment {
         // highlight selected items
         info.selectDate(viewHolder);
         selectedDateMap.put(data.getId(), data.getDate());
+        return true;
+    }
+
+    /**
+     * On calendar date item double click handler
+     * Auto select date and close dialog
+     *
+     * @param viewHolder item view holder
+     * @param view       item view
+     * @param data       date info
+     * @return true if consume the event, else return false
+     */
+    protected boolean onDateItemDoubleClick(MonthAdapter.ViewHolder viewHolder, View view, DateInfo data) {
+        if (dateSetListener != null) {
+            dateSetListener.onDateSet(Collections.singletonList(data.getDate()));
+        }
+        dismiss();
         return true;
     }
 
@@ -449,6 +469,7 @@ public class WindCalendarDialog extends DialogFragment {
      * @param dates   selected dates
      */
     public void show(FragmentManager manager, Date... dates) {
+        if (isAdded()) return;
         show(manager, Arrays.asList(dates));
     }
 
@@ -459,6 +480,7 @@ public class WindCalendarDialog extends DialogFragment {
      * @param dates   selected dates
      */
     public void show(FragmentManager manager, Iterable<Date> dates) {
+        if (isAdded()) return;
         if (dates != null) {
             for (Date date : dates) {
                 if (selectedDate == null) {
