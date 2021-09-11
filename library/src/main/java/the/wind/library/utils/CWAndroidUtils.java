@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -114,8 +115,16 @@ public final class CWAndroidUtils {
      * @param context android activity
      * @return size of current screen
      */
-    public static Size getScreenSize(Activity context) {
-        Display display = context.getWindowManager().getDefaultDisplay();
+    public static Size getScreenSize(Context context) {
+        Activity act;
+        if (context instanceof Activity) {
+            act = (Activity) context;
+        } else if (context instanceof ContextWrapper) {
+            act = (Activity) ((ContextWrapper) context).getBaseContext();
+        } else {
+            throw new IllegalArgumentException("context is not an activity");
+        }
+        Display display = act.getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         return new Size(size.x, size.y);

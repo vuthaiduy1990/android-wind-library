@@ -2,10 +2,10 @@ package the.wind.library.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -924,8 +924,8 @@ public class WindDialog extends Dialog {
     public boolean isInContext(Context context) {
         Context dialogContext = getContext();
         if (dialogContext.equals(context)) return true;
-        if (dialogContext instanceof ContextThemeWrapper) {
-            return ((ContextThemeWrapper) dialogContext).getBaseContext().equals(context);
+        if (dialogContext instanceof ContextWrapper) {
+            return ((ContextWrapper) dialogContext).getBaseContext().equals(context);
         }
         return false;
     }

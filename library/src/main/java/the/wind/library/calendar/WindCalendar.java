@@ -2,13 +2,13 @@ package the.wind.library.calendar;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.view.ContextThemeWrapper;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -175,8 +175,8 @@ public class WindCalendar extends LinearLayout {
         // Get fragment manager
         if (context instanceof FragmentActivity) {
             fragManager = ((FragmentActivity) context).getSupportFragmentManager();
-        } else if (context instanceof ContextThemeWrapper && ((ContextThemeWrapper) context).getBaseContext() instanceof FragmentActivity) {
-            fragManager = ((FragmentActivity) ((ContextThemeWrapper) context).getBaseContext()).getSupportFragmentManager();
+        } else if (context instanceof ContextWrapper && ((ContextWrapper) context).getBaseContext() instanceof FragmentActivity) {
+            fragManager = ((FragmentActivity) ((ContextWrapper) context).getBaseContext()).getSupportFragmentManager();
         } else {
             throw new ActivityNotFoundException("Context is not an fragment activity");
         }
