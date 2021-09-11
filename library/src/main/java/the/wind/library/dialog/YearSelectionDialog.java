@@ -28,7 +28,7 @@ public abstract class YearSelectionDialog extends SelectionListDialog<Integer> {
         headerLayout().setVisibility(View.GONE);
         setWidth((int) context.getResources().getDimension(R.dimen.wl_calendar_year_selection_dialog_width));
         if (context instanceof Activity) {
-            setHeight((int) (CWAndroidUtils.getScreenSize((Activity) context).getHeight() * 0.8f));
+            setHeight((int) (CWAndroidUtils.getScreenSize(context).getHeight() * 0.8f));
         }
         buttons().get(0).setType(Button.Type.GRAY_LIGHT);
     }

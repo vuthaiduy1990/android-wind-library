@@ -1,6 +1,5 @@
 package the.wind.library.dialog;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.EditText;
@@ -58,7 +57,7 @@ public abstract class LocaleDialog extends SelectionListDialog<LocaleWrapper> {
         super(context, new LinkedList<>());
         setLocales(WindFactory.instance().getAvailableLocales());
         setTitle(R.string.wl_locale);
-        setHeight((int) (CWAndroidUtils.getScreenSize((Activity) context).getHeight() * 0.8));
+        setHeight((int) (CWAndroidUtils.getScreenSize(context).getHeight() * 0.8));
 
         // Configure search box
         setSearchBoxVisible(true);
