@@ -1,14 +1,19 @@
 package the.wind.library;
 
+import android.icu.util.TimeZone;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Currency;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import the.wind.library.model.CurrencyWrapper;
 import the.wind.library.model.LocaleWrapper;
+import the.wind.library.model.TimezoneWrapper;
 
 /**
  * The factory where you can get some default products
@@ -26,6 +31,9 @@ public final class WindFactory {
 
     // list of locales
     private List<LocaleWrapper> locales;
+
+    // list of timezone
+    private List<TimezoneWrapper> timezones;
 
     /**
      * Private constructor
@@ -97,6 +105,35 @@ public final class WindFactory {
         return Collections.unmodifiableList(locales);
     }
 
+    /**
+     * Get available timezones
+     *
+     * @return list of wrapper timezones
+     */
+    public List<TimezoneWrapper> getAvailableTimezones() {
+        if (timezones == null || timezones.isEmpty()) {
+            timezones = new LinkedList<>();
+            Set<String> duplicate = new HashSet<>();
+            for (String id : TimeZone.getAvailableIDs()) {
+                String lowerId = id.toLowerCase();
+                if (lowerId.startsWith("etc/") || lowerId.startsWith("systemv/")) {
+                    continue;
+                }
+                TimeZone tz = TimeZone.getTimeZone(id);
+                TimezoneWrapper wrapper = new TimezoneWrapper(tz);
+                String displayId = String.format("%s,%s", wrapper.getName(), wrapper.getLocation());
+                if (duplicate.contains(displayId)) {
+                    continue;
+                } else {
+                    duplicate.add(displayId);
+                }
+                timezones.add(wrapper);
+            }
+            timezones.sort((tz1, tz2) -> Integer.compare(tz1.get().getRawOffset(), tz2.get().getRawOffset()));
+        }
+        return Collections.unmodifiableList(timezones);
+    }
+
     /* ---------------------- METHOD ------------------------- */
 
     /**
@@ -105,6 +142,7 @@ public final class WindFactory {
     public void reset() {
         currencies = null;
         locales = null;
+        timezones = null;
     }
 
     /* ---------------------- INNER CLASS -------------------- */

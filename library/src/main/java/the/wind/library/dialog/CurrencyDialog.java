@@ -1,7 +1,6 @@
 package the.wind.library.dialog;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.widget.EditText;
 
 import java.util.Collection;
@@ -87,6 +86,7 @@ public abstract class CurrencyDialog extends SelectionListDialog<CurrencyWrapper
             }
         });
     }
+
     /* ---------------------- OVERRIDE ----------------------- */
 
     @Override
@@ -97,12 +97,6 @@ public abstract class CurrencyDialog extends SelectionListDialog<CurrencyWrapper
     @Override
     protected String itemText(@NonNull CurrencyWrapper itemData) {
         return itemData.getDisplayText();
-    }
-
-    @Override
-    protected void onDialogDismiss(@NonNull DialogInterface dialog) {
-        super.onDialogDismiss(dialog);
-        _searchBox.closeSearch();
     }
 
     /* ---------------------- STATIC ------------------------- */

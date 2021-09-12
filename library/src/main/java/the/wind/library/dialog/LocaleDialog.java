@@ -1,7 +1,6 @@
 package the.wind.library.dialog;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.widget.EditText;
 
 import java.util.Collection;
@@ -97,12 +96,6 @@ public abstract class LocaleDialog extends SelectionListDialog<LocaleWrapper> {
     @Override
     protected String itemText(@NonNull LocaleWrapper itemData) {
         return itemData.getDisplayText();
-    }
-
-    @Override
-    protected void onDialogDismiss(@NonNull DialogInterface dialog) {
-        super.onDialogDismiss(dialog);
-        _searchBox.closeSearch();
     }
 
     /* ---------------------- STATIC ------------------------- */

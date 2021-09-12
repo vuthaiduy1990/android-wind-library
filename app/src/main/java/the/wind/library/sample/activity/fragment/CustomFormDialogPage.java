@@ -13,9 +13,11 @@ import androidx.fragment.app.Fragment;
 import the.wind.library.dialog.CurrencyDialog;
 import the.wind.library.dialog.LocaleDialog;
 import the.wind.library.dialog.SelectionListDialog;
+import the.wind.library.dialog.TimezoneDialog;
 import the.wind.library.dialog.YearSelectionDialog;
 import the.wind.library.model.CurrencyWrapper;
 import the.wind.library.model.LocaleWrapper;
+import the.wind.library.model.TimezoneWrapper;
 import the.wind.library.sample.R;
 
 public class CustomFormDialogPage extends Fragment {
@@ -27,6 +29,10 @@ public class CustomFormDialogPage extends Fragment {
     // locale dialog
     private LocaleDialog localeDialog;
     private LocaleWrapper selectedLocale;
+
+    // Timezone dialog
+    private TimezoneDialog timezoneDialog;
+    private TimezoneWrapper selectedTimeZone;
 
     // Year selection dialog
     private YearSelectionDialog yearSelectionDialog;
@@ -47,6 +53,9 @@ public class CustomFormDialogPage extends Fragment {
 
         // local button
         view.findViewById(R.id._localeBtn).setOnClickListener(v -> getLocaleDialog(v.getContext()).show(selectedLocale));
+
+        // timezone button
+        view.findViewById(R.id._timezoneBtn).setOnClickListener(v -> getTimezoneDialog(v.getContext()).show(selectedTimeZone));
 
         // year selection dialog
         view.findViewById(R.id._yearSelectionBtn).setOnClickListener(v -> {
@@ -82,13 +91,27 @@ public class CustomFormDialogPage extends Fragment {
         return localeDialog;
     }
 
+    private TimezoneDialog getTimezoneDialog(Context context) {
+        if (timezoneDialog == null) {
+            timezoneDialog = new TimezoneDialog(context) {
+                @Override
+                protected boolean onSelection(@NonNull SelectionListDialog<TimezoneWrapper> dialog, @NonNull View itemView, @NonNull TimezoneWrapper data) {
+                    selectedTimeZone = data;
+                    Toast.makeText(getContext(), data.getName(), Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            };
+        }
+        return timezoneDialog;
+    }
+
     private YearSelectionDialog getYearSelectionDialog(Context context) {
         if (yearSelectionDialog == null) {
             yearSelectionDialog = new YearSelectionDialog(context) {
                 @Override
                 protected boolean onSelection(@NonNull SelectionListDialog<Integer> dialog, @NonNull View itemView, @NonNull Integer data) {
                     selectedYear = data;
-                    Toast.makeText(getContext(), data, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Integer.toString(data), Toast.LENGTH_SHORT).show();
                     return false;
                 }
             };

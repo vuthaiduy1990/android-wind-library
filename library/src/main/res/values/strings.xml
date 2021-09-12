@@ -9,5 +9,6 @@
     <string name="wl_ok">OK</string>
     <string name="wl_currency">Currency</string>
     <string name="wl_locale">Locale</string>
+    <string name="wl_timezone">Timezone</string>
     <string name="wl_calendar_event_symbol">🔴</string>
 </resources>

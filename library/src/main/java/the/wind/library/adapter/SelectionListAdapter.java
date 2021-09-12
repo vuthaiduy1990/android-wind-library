@@ -16,6 +16,7 @@ public class SelectionListAdapter<T> extends WindRecycleView.Adapter<T> {
 
     private DataTransformer<T> dataTransformer;
     private T selectedData;
+    private ViewHolderGenerator<T> vhGenerator;
 
     /**
      * Constructor
@@ -31,19 +32,21 @@ public class SelectionListAdapter<T> extends WindRecycleView.Adapter<T> {
     @NonNull
     @Override
     public WindRecycleView.ViewHolder<T> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (vhGenerator != null) {
+            return vhGenerator.newViewHolder(parent);
+        }
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.wl_dialog_selection_list_item, parent, false);
-        return new ViewHolder<>(view);
+        return new DefaultViewHolder<>(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull WindRecycleView.ViewHolder<T> holder, int position) {
-        super.onBindViewHolder(holder, position);
-        if (holder instanceof ViewHolder) {
+        if (holder instanceof SelectionListAdapter.ViewHolder) {
             ViewHolder<T> _holder = (ViewHolder<T>) holder;
-            T data = getData(position);
-            _holder._textView.setText(dataTransformer.dataToText(data));
-            _holder.bindChecked(selectedData != null && dataTransformer.compare(selectedData, data));
+            _holder.setDataTransformer(dataTransformer);
+            _holder.setSelected(selectedData);
         }
+        super.onBindViewHolder(holder, position);
     }
 
     /* ---------------------- STATIC ------------------------- */
@@ -51,6 +54,15 @@ public class SelectionListAdapter<T> extends WindRecycleView.Adapter<T> {
     /* ---------------------- ABSTRACT ----------------------- */
 
     /* ---------------------- GET-SET ------------------------ */
+
+    /**
+     * Set view holder generator
+     *
+     * @param generator view holder generator
+     */
+    public void setCustomViewHolderGenerator(ViewHolderGenerator<T> generator) {
+        this.vhGenerator = generator;
+    }
 
     /**
      * Set data transformer
@@ -84,7 +96,24 @@ public class SelectionListAdapter<T> extends WindRecycleView.Adapter<T> {
     /* ---------------------- INNER CLASS -------------------- */
 
     /**
+     * View holder generator
+     *
+     * @param <T> data template
+     */
+    public interface ViewHolderGenerator<T> {
+        /**
+         * Create new custom view holder
+         *
+         * @param parent parent view group
+         * @return new view holder
+         */
+        ViewHolder<T> newViewHolder(ViewGroup parent);
+    }
+
+    /**
      * Data transformation
+     *
+     * @param <T> data template
      */
     public interface DataTransformer<T> {
 
@@ -107,11 +136,49 @@ public class SelectionListAdapter<T> extends WindRecycleView.Adapter<T> {
     }
 
     /**
+     * View Holder
+     *
+     * @param <T>
+     */
+    public static class ViewHolder<T> extends WindRecycleView.ViewHolder<T> {
+
+        protected DataTransformer<T> dataTransformer;
+        protected T selectedData;
+
+        /**
+         * Constructor
+         *
+         * @param itemView item view
+         */
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+
+        /**
+         * Set data transformer
+         *
+         * @param transformer transformer
+         */
+        public void setDataTransformer(DataTransformer<T> transformer) {
+            dataTransformer = transformer;
+        }
+
+        /**
+         * Set selected item
+         *
+         * @param itemData item data
+         */
+        public void setSelected(T itemData) {
+            selectedData = itemData;
+        }
+    }
+
+    /**
      * Selection item view holder
      *
      * @param <T> item data type
      */
-    public static class ViewHolder<T> extends WindRecycleView.ViewHolder<T> {
+    public static class DefaultViewHolder<T> extends ViewHolder<T> {
 
         private final Checkbox _checkbox;
         private final TextView _textView;
@@ -121,7 +188,7 @@ public class SelectionListAdapter<T> extends WindRecycleView.Adapter<T> {
          *
          * @param itemView item view
          */
-        public ViewHolder(@NonNull View itemView) {
+        public DefaultViewHolder(@NonNull View itemView) {
             super(itemView);
             _checkbox = itemView.findViewById(R.id._checkbox);
             _textView = itemView.findViewById(R.id._textView);
@@ -129,13 +196,11 @@ public class SelectionListAdapter<T> extends WindRecycleView.Adapter<T> {
             _checkbox.setEnabled(false);
         }
 
-        /**
-         * Bind selected value
-         *
-         * @param checked true -> checked, else unchecked
-         */
-        private void bindChecked(boolean checked) {
-            _checkbox.setChecked(checked);
+        @Override
+        protected void bindData(T data) {
+            super.bindData(data);
+            _textView.setText(dataTransformer.dataToText(data));
+            _checkbox.setChecked(selectedData != null && dataTransformer.compare(selectedData, data));
         }
     }
 }

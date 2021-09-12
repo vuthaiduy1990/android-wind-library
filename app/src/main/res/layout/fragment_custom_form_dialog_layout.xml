@@ -21,11 +21,19 @@
         app:type="SUCCESS" />
 
     <the.wind.library.view.Button
+        android:id="@+id/_timezoneBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/wl_spacing_level_2"
+        app:text="TimeZone Dialog"
+        app:type="NEUTRAL" />
+
+    <the.wind.library.view.Button
         android:id="@+id/_yearSelectionBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/wl_spacing_level_2"
         app:text="Year Selection Dialog"
-        app:type="NEUTRAL" />
+        app:type="PRIMARY" />
 
 </LinearLayout>

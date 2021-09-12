@@ -55,7 +55,6 @@ public abstract class SelectionListDialog<T> extends WindDialog {
         _rvHolder = contentView().findViewById(R.id._rvHolder);
         _rvHolder.setHasFixedSize(true); // to improve the performance
         listAdapter = new SelectionListAdapter<>(dataset);
-        _rvHolder.setAdapter(listAdapter);
         listAdapter.setDataTransformer(new SelectionListAdapter.DataTransformer<T>() {
             @Override
             public String dataToText(@NonNull T itemData) {
@@ -87,6 +86,7 @@ public abstract class SelectionListDialog<T> extends WindDialog {
                 viewHolder.itemView.setBackground(null);
             }
         });
+        _rvHolder.setAdapter(listAdapter);
 
         // bind search box
         _searchBox = new SearchBox(getContext());
@@ -175,7 +175,7 @@ public abstract class SelectionListDialog<T> extends WindDialog {
      * @param dialog dialog
      */
     protected void onDialogDismiss(@NonNull DialogInterface dialog) {
-
+        _searchBox.closeSearch();
     }
 
     /* ---------------------- GET-SET ------------------------ */
@@ -185,6 +185,17 @@ public abstract class SelectionListDialog<T> extends WindDialog {
      */
     public SelectionListAdapter<T> getAdapter() {
         return listAdapter;
+    }
+
+    /**
+     * Set view holder generator
+     *
+     * @param generator view holder generator
+     */
+    public void setCustomViewHolderGenerator(SelectionListAdapter.ViewHolderGenerator<T> generator) {
+        if (listAdapter != null) {
+            listAdapter.setCustomViewHolderGenerator(generator);
+        }
     }
 
     /**

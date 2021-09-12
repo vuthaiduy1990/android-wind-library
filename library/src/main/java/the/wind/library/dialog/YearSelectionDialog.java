@@ -1,6 +1,5 @@
 package the.wind.library.dialog;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 
@@ -27,9 +26,7 @@ public abstract class YearSelectionDialog extends SelectionListDialog<Integer> {
         super(context, dataset);
         headerLayout().setVisibility(View.GONE);
         setWidth((int) context.getResources().getDimension(R.dimen.wl_calendar_year_selection_dialog_width));
-        if (context instanceof Activity) {
-            setHeight((int) (CWAndroidUtils.getScreenSize(context).getHeight() * 0.8f));
-        }
+        setHeight((int) (CWAndroidUtils.getScreenSize(context).getHeight() * 0.8f));
         buttons().get(0).setType(Button.Type.GRAY_LIGHT);
     }
 
