@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
+import android.icu.util.TimeZone;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.TypedValue;
@@ -66,6 +67,7 @@ public class WindCalendarDialog extends DialogFragment {
 
     // model
     private final Calendar calendar = new GregorianCalendar();
+    private final Calendar eventCal = new GregorianCalendar();
     private final CWBundle bundle = new CWBundle();
     private final Style style = new Style();
     private final CalendarInfo info = new CalendarInfo(calendar);
@@ -175,7 +177,7 @@ public class WindCalendarDialog extends DialogFragment {
         if (isAdded()) return;
         if (selectedDate == null) {
             selectedDate = new Date();
-            mapDate(selectedDate);
+            mapDate(selectedDate, null);
         }
         info.setTagCode(tag);
         super.show(manager, tag);
@@ -476,17 +478,40 @@ public class WindCalendarDialog extends DialogFragment {
     /**
      * Show calendar dialog
      *
+     * @param manager  fragment manager
+     * @param dates    selected dates
+     * @param timeZone event timezone
+     */
+    public void show(FragmentManager manager, @Nullable TimeZone timeZone, Date... dates) {
+        if (isAdded()) return;
+        show(manager, Arrays.asList(dates), timeZone);
+    }
+
+    /**
+     * Show calendar dialog
+     *
      * @param manager fragment manager
      * @param dates   selected dates
      */
     public void show(FragmentManager manager, Iterable<Date> dates) {
+        show(manager, dates, null);
+    }
+
+    /**
+     * Show calendar dialog
+     *
+     * @param manager  fragment manager
+     * @param dates    selected dates
+     * @param timeZone event timezone
+     */
+    public void show(FragmentManager manager, Iterable<Date> dates, @Nullable TimeZone timeZone) {
         if (isAdded()) return;
         if (dates != null) {
             for (Date date : dates) {
                 if (selectedDate == null) {
                     selectedDate = date;
                 }
-                mapDate(date);
+                mapDate(date, timeZone);
             }
         }
         show(manager, WindCalendarDialog.class.getName());
@@ -495,11 +520,15 @@ public class WindCalendarDialog extends DialogFragment {
     /**
      * Map date
      *
-     * @param date date
+     * @param date     date
+     * @param timeZone timezone
      */
-    private void mapDate(Date date) {
-        calendar.setTime(date);
-        String dateId = CalendarUtil.toId(calendar);
+    private void mapDate(Date date, @Nullable TimeZone timeZone) {
+        if (timeZone != null) {
+            eventCal.setTimeZone(timeZone);
+        }
+        eventCal.setTime(date);
+        String dateId = CalendarUtil.toId(eventCal);
         selectedDateMap.put(dateId, date);
         info.selectDates(dateId);
     }

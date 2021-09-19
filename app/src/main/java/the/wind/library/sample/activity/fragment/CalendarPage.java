@@ -129,6 +129,8 @@ public class CalendarPage extends Fragment {
             cal.add(Calendar.MONTH, 10);
             Date d2 = cal.getTime();
             getCalendarDialog().show(fragManager, d1, d2);
+            // Support show date with timezone also
+            // getCalendarDialog().show(fragManager, TimeZone.getTimeZone("Pacific/Pago_Pago"), d1, d2);
         });
     }
 
