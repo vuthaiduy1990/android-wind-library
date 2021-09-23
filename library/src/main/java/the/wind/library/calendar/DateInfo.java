@@ -25,12 +25,14 @@ public class DateInfo implements Serializable {
     private int month;
     private int dayOfMonth;
     private int dayOfWeek;
+    private int solarLeapMonth;
 
     // Lunar date info
     private boolean hasLunarDate = false;
     private int lunarYear;
     private int lunarMonth;
     private int lunarDayOfMonth;
+    private int lunarLeapMonth;
 
     /**
      * Private constructor for serialization
@@ -53,6 +55,7 @@ public class DateInfo implements Serializable {
         this.month = solarCal.get(Calendar.MONTH);
         this.dayOfMonth = solarCal.get(Calendar.DAY_OF_MONTH);
         this.dayOfWeek = solarCal.get(Calendar.DAY_OF_WEEK);
+        this.solarLeapMonth = solarCal.get(Calendar.IS_LEAP_MONTH);
         this.id = CalendarUtil.toId(year, month, dayOfMonth);
 
         // lunar calendar
@@ -62,6 +65,7 @@ public class DateInfo implements Serializable {
             this.lunarYear = lunarInfo[0];
             this.lunarMonth = lunarInfo[1];
             this.lunarDayOfMonth = lunarInfo[2];
+            this.lunarLeapMonth = lunarInfo[3];
         }
     }
 
@@ -137,6 +141,13 @@ public class DateInfo implements Serializable {
     }
 
     /**
+     * @return true if date is in solar leap month
+     */
+    public boolean isSolarLeapMonth() {
+        return solarLeapMonth == 1;
+    }
+
+    /**
      * @return true if having lunar date
      */
     public boolean hasLunarDate() {
@@ -162,6 +173,13 @@ public class DateInfo implements Serializable {
      */
     public int getLunarDayOfMonth() {
         return lunarDayOfMonth;
+    }
+
+    /**
+     * @return true if date is in lunar leap month
+     */
+    public boolean isLunarLeapMonth() {
+        return lunarLeapMonth == 1;
     }
 
     /**

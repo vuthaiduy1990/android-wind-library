@@ -528,6 +528,10 @@ public class WindCalendarDialog extends DialogFragment {
             eventCal.setTimeZone(timeZone);
         }
         eventCal.setTime(date);
+        eventCal.set(Calendar.HOUR_OF_DAY, 0);
+        eventCal.set(Calendar.MINUTE, 0);
+        eventCal.set(Calendar.SECOND, 0);
+        eventCal.set(Calendar.MILLISECOND, 0);
         String dateId = CalendarUtil.toId(eventCal);
         selectedDateMap.put(dateId, date);
         info.selectDates(dateId);
