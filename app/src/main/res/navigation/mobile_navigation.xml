@@ -79,6 +79,12 @@
         tools:layout="@layout/fragment_tag_box" />
 
     <fragment
+        android:id="@+id/_navDropdownMenu"
+        android:name="the.wind.library.sample.activity.fragment.DropdownPage"
+        android:label="@string/drawer_dropdown"
+        tools:layout="@layout/fragment_dropdown" />
+
+    <fragment
         android:id="@+id/_navCalendarMenu"
         android:name="the.wind.library.sample.activity.fragment.CalendarPage"
         android:label="@string/drawer_calendar"

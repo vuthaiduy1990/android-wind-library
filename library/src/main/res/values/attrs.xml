@@ -70,6 +70,11 @@
         <attr name="spacing" />
     </declare-styleable>
 
+    <!--  Dropdown attributes-->
+    <declare-styleable name="Dropdown">
+        <attr name="popupBackground" format="reference" />
+    </declare-styleable>
+
     <!--  SearchBox attributes-->
     <declare-styleable name="SearchBox">
         <attr name="text" />
@@ -144,6 +149,5 @@
         </attr>
 
         <attr name="autoBuild" format="boolean" />
-
     </declare-styleable>
 </resources>

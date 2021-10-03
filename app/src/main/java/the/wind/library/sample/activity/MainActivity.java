@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
             R.id._navActionMenu,
             R.id._navSearchBoxMenu,
             R.id._navTagBoxMenu,
+            R.id._navDropdownMenu,
             R.id._navCalendarMenu,
     };
     private AppBarConfiguration mAppBarConfiguration;
