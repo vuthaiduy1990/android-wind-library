@@ -14,11 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import the.wind.library.adapter.DropdownAdapter;
 import the.wind.library.sample.R;
 import the.wind.library.view.Dropdown;
+import the.wind.library.view.DropdownAdapter;
 
 public class DropdownPage extends Fragment {
+
+    private Dropdown _dropdown1;
 
     @Nullable
     @Override
@@ -31,7 +33,7 @@ public class DropdownPage extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         // dropdown 1
         {
-            Dropdown _dropdown1 = view.findViewById(R.id._dropdown1);
+            _dropdown1 = view.findViewById(R.id._dropdown1);
             _dropdown1.setAdapter(createAdapter(view.getContext()));
         }
 
@@ -44,12 +46,13 @@ public class DropdownPage extends Fragment {
             adapter.setPopupTextSize(R.dimen.wl_text_big);
             adapter.setPopupCheckboxSizeRestId(R.dimen.wl_icon_big);
             adapter.setPopupItemBackground(R.drawable.wl_button_background_highlight_light);
-            adapter.setSelected(Color.One);
             _dropdown2.setAdapter(adapter);
+            _dropdown2.setSelectedData(Color.One);
             _dropdown2.setOnItemSelectedListener(new Dropdown.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, Object item) {
                     Color color = (Color) item;
+                    _dropdown1.setSelection(position);
                     Toast.makeText(getContext(), color.getText(), Toast.LENGTH_SHORT).show();
                 }
 

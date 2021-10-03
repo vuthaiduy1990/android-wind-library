@@ -1,4 +1,4 @@
-package the.wind.library.adapter;
+package the.wind.library.view;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -19,7 +19,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import the.wind.library.R;
-import the.wind.library.view.Checkbox;
 
 public class DropdownAdapter<T> extends ArrayAdapter<T> {
 
@@ -38,7 +37,7 @@ public class DropdownAdapter<T> extends ArrayAdapter<T> {
     private int popupCheckboxSize;
 
     // data
-    private int selectedPosition;
+    private int selection;
     private DataTransformer<T> dataTransformer;
 
     /**
@@ -128,7 +127,7 @@ public class DropdownAdapter<T> extends ArrayAdapter<T> {
             ViewGroup.LayoutParams lp = _checkbox.getLayoutParams();
             lp.width = popupCheckboxSize;
             lp.height = popupCheckboxSize;
-            _checkbox.setChecked(selectedPosition == position);
+            _checkbox.setChecked(selection == position);
         }
         return view;
     }
@@ -215,19 +214,28 @@ public class DropdownAdapter<T> extends ArrayAdapter<T> {
     }
 
     /**
-     * @return selected data
-     */
-    public T getSelectedData() {
-        return getItem(selectedPosition);
-    }
-
-    /**
      * Get selected position
      *
      * @return selected position
      */
-    public int getSelectedPosition() {
-        return selectedPosition;
+    public int getSelection() {
+        return selection;
+    }
+
+    /**
+     * Set selection position
+     *
+     * @param position position
+     */
+    void setSelection(int position) {
+        this.selection = position;
+    }
+
+    /**
+     * @return selected data
+     */
+    public T getSelectedData() {
+        return getItem(selection);
     }
 
     /**
@@ -235,9 +243,16 @@ public class DropdownAdapter<T> extends ArrayAdapter<T> {
      *
      * @param itemData item data
      */
-    @SuppressWarnings("unchecked")
-    public void setSelected(@Nullable Object itemData) {
-        selectedPosition = getPosition((T) itemData);
+    @Nullable
+    Integer getItemPosition(@Nullable T itemData) {
+        if (itemData == null) return null;
+        for (int i = 0; i < getCount(); i++) {
+            T item = getItem(i);
+            if (item != null && dataTransformer.compare(item, itemData)) {
+                return i;
+            }
+        }
+        return null;
     }
 
     /* ---------------------- METHOD ------------------------- */

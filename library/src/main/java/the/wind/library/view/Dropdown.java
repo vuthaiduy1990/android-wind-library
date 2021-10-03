@@ -13,7 +13,6 @@ import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
 import the.wind.library.R;
-import the.wind.library.adapter.DropdownAdapter;
 
 /**
  * Dropdown view
@@ -105,7 +104,7 @@ public class Dropdown extends RelativeLayout {
                 Object data = parent.getItemAtPosition(position);
                 Adapter adapter = parent.getAdapter();
                 if (adapter instanceof DropdownAdapter) {
-                    ((DropdownAdapter<?>) adapter).setSelected(data);
+                    ((DropdownAdapter<?>) adapter).setSelection(position);
                 }
                 if (itemSelectListener != null) itemSelectListener.onItemSelected(parent, view, position, data);
             }
@@ -146,7 +145,44 @@ public class Dropdown extends RelativeLayout {
      */
     public void setAdapter(DropdownAdapter<?> adapter) {
         _spinner.setAdapter(adapter);
-        _spinner.setSelection(adapter.getSelectedPosition());
+        int position = _spinner.getSelectedItemPosition();
+        if (position > 0) {
+            adapter.setSelection(position);
+        }
+    }
+
+    /**
+     * Jump directly to a specific item in the adapter data.
+     *
+     * @param position given position
+     * @param animate  use animation or not
+     */
+    public void setSelection(int position, boolean animate) {
+        _spinner.setSelection(position, animate);
+    }
+
+    /**
+     * Jump directly to a specific item in the adapter data.
+     *
+     * @param position given position
+     */
+    public void setSelection(int position) {
+        _spinner.setSelection(position);
+    }
+
+    /**
+     * Set selected data
+     *
+     * @param data given data
+     */
+    @SuppressWarnings("unchecked")
+    public <T> void setSelectedData(T data) {
+        DropdownAdapter<T> adapter = (DropdownAdapter<T>) _spinner.getAdapter();
+        Integer position = null;
+        if (data != null) {
+            position = adapter.getItemPosition(data);
+        }
+        setSelection(position != null ? position : 0);
     }
 
     /**
