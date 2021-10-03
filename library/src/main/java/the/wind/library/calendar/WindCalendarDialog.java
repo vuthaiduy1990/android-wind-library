@@ -216,7 +216,7 @@ public class WindCalendarDialog extends DialogFragment {
      */
     protected boolean onDateItemDoubleClick(MonthAdapter.ViewHolder viewHolder, View view, DateInfo data) {
         if (dateSetListener != null) {
-            dateSetListener.onDateSet(Collections.singletonList(data.getDate()));
+            dateSetListener.onDateSet(this, Collections.singletonList(data.getDate()));
         }
         dismiss();
         return true;
@@ -368,7 +368,7 @@ public class WindCalendarDialog extends DialogFragment {
         dialog.addButton(Button.Type.SUCCESS, context.getString(R.string.wl_ok), null)
                 .setOnClickListener(v -> {
                     if (dateSetListener != null) {
-                        dateSetListener.onDateSet(new ArrayList<>(selectedDateMap.values()));
+                        dateSetListener.onDateSet(WindCalendarDialog.this, new ArrayList<>(selectedDateMap.values()));
                     }
                     dismiss();
                 });
@@ -567,9 +567,10 @@ public class WindCalendarDialog extends DialogFragment {
         /**
          * On date set listener
          *
-         * @param dates list of selected dates
+         * @param dialog wind calendar dialog
+         * @param dates  list of selected dates
          */
-        void onDateSet(List<Date> dates);
+        void onDateSet(WindCalendarDialog dialog, List<Date> dates);
     }
 
     /**
