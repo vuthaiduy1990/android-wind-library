@@ -180,4 +180,18 @@ public final class CalendarUtil {
         return result;
     }
 
+    /**
+     * Get lunar date info
+     *
+     * @param solarCal solar calendar
+     * @return [year, month, month day, leap, week day, hour, minute, second]
+     */
+    public static int[] getSolarDateInfo(Calendar solarCal) {
+        return new int[]{
+                solarCal.get(Calendar.YEAR), solarCal.get(Calendar.MONTH), solarCal.get(Calendar.DAY_OF_MONTH),
+                solarCal.get(Calendar.IS_LEAP_MONTH), solarCal.get(Calendar.DAY_OF_WEEK),
+                solarCal.get(Calendar.HOUR_OF_DAY), solarCal.get(Calendar.MINUTE), solarCal.get(Calendar.SECOND)
+        };
+    }
+
 }
