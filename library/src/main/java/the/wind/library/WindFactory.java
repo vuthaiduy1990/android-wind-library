@@ -1,5 +1,6 @@
 package the.wind.library;
 
+import android.icu.util.Calendar;
 import android.icu.util.TimeZone;
 
 import java.util.ArrayList;
@@ -25,6 +26,9 @@ public final class WindFactory {
 
     // list of years
     private List<Integer> years;
+
+    // list of month
+    private List<Integer> months;
 
     // list of currencies
     private List<CurrencyWrapper> currencies;
@@ -69,6 +73,30 @@ public final class WindFactory {
             }
         }
         return years;
+    }
+
+    /**
+     * Get available months
+     *
+     * @return months
+     */
+    public List<Integer> getAvailableMonths() {
+        if (months == null || months.isEmpty()) {
+            months = new ArrayList<>();
+            months.add(Calendar.JANUARY);
+            months.add(Calendar.FEBRUARY);
+            months.add(Calendar.MARCH);
+            months.add(Calendar.APRIL);
+            months.add(Calendar.MARCH);
+            months.add(Calendar.JUNE);
+            months.add(Calendar.JULY);
+            months.add(Calendar.AUGUST);
+            months.add(Calendar.SEPTEMBER);
+            months.add(Calendar.OCTOBER);
+            months.add(Calendar.NOVEMBER);
+            months.add(Calendar.DECEMBER);
+        }
+        return months;
     }
 
     /**

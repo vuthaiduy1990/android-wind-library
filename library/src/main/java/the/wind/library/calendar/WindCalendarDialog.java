@@ -32,9 +32,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import the.wind.library.CWBundle;
 import the.wind.library.R;
-import the.wind.library.dialog.SelectionListDialog;
 import the.wind.library.dialog.WindDialog;
-import the.wind.library.dialog.YearSelectionDialog;
+import the.wind.library.dialog.YearMonthSelectionDialog;
 import the.wind.library.view.Button;
 
 /**
@@ -60,7 +59,7 @@ public class WindCalendarDialog extends DialogFragment {
     private final WindDialog _coreDialog;
     private CalendarViewPager _calendarViewPager;
     private ViewGroup _weekDayPanelView;
-    private SelectionListDialog<Integer> _yearSelectionDialog;
+    private YearMonthSelectionDialog _yearSelectionDialog;
 
     // adapter
     private CalendarAdapter adapter;
@@ -255,8 +254,8 @@ public class WindCalendarDialog extends DialogFragment {
     private void onTitleViewClick(View v) {
         CalendarAdapter adapter = (CalendarAdapter) _calendarViewPager.getAdapter();
         assert adapter != null;
-        Integer year = adapter.getSelectedMonth().getYear();
-        createYearSelectionDialog(v.getContext()).show(year);
+        MonthInfo monthInfo = adapter.getSelectedMonth();
+        createYearSelectionDialog(v.getContext()).show(monthInfo.getYear(), monthInfo.getMonth());
     }
 
     /**
@@ -450,17 +449,17 @@ public class WindCalendarDialog extends DialogFragment {
      * @param context application context
      * @return dialog
      */
-    private SelectionListDialog<Integer> createYearSelectionDialog(Context context) {
+    private YearMonthSelectionDialog createYearSelectionDialog(Context context) {
         if (_yearSelectionDialog != null) return _yearSelectionDialog;
-        _yearSelectionDialog = new YearSelectionDialog(context) {
+        _yearSelectionDialog = new YearMonthSelectionDialog(context) {
+
             @Override
-            protected boolean onSelection(@NonNull SelectionListDialog<Integer> dialog, @NonNull View itemView, @NonNull Integer data) {
-                calendar.set(data, adapter.getSelectedMonth().getMonth(), 1);
+            protected boolean onSelection(@NonNull YearMonthSelectionDialog dialog, int year, int month) {
+                calendar.set(year, month, 1);
                 onReloadCalendar(calendar.getTime());
                 return false;
             }
         };
-        _yearSelectionDialog.setHeight(_coreDialog.getHeight());
         return _yearSelectionDialog;
     }
 

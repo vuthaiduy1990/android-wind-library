@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/wl_spacing_level_2"
+    android:paddingTop="@dimen/wl_spacing_level_2"
+    android:paddingEnd="@dimen/wl_spacing_level_2"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wl_year"
+            android:textColor="@color/wl_text"
+            android:textSize="@dimen/wl_title_small" />
+
+        <the.wind.library.view.Dropdown
+            android:id="@+id/_yearSelectionView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/wl_spacing_level_2"
+        android:layout_weight="0.5"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wl_month"
+            android:textColor="@color/wl_text"
+            android:textSize="@dimen/wl_title_small" />
+
+        <the.wind.library.view.Dropdown
+            android:id="@+id/_monthSelectionView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</LinearLayout>
