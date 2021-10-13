@@ -87,7 +87,7 @@ public final class WindFactory {
             months.add(Calendar.FEBRUARY);
             months.add(Calendar.MARCH);
             months.add(Calendar.APRIL);
-            months.add(Calendar.MARCH);
+            months.add(Calendar.MAY);
             months.add(Calendar.JUNE);
             months.add(Calendar.JULY);
             months.add(Calendar.AUGUST);
