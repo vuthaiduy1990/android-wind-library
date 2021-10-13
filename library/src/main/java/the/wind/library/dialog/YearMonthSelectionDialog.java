@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -14,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import the.wind.library.R;
 import the.wind.library.WindFactory;
+import the.wind.library.utils.CWAndroidUtils;
 import the.wind.library.view.Button;
 import the.wind.library.view.Dropdown;
 import the.wind.library.view.DropdownAdapter;
@@ -49,6 +51,9 @@ public abstract class YearMonthSelectionDialog extends WindDialog {
         setCancelable(true);
         setCanceledOnTouchOutside(false);
         View contentView = contentView();
+        int screenHeight = CWAndroidUtils.getScreenSize(context).getHeight();
+        setGravity(Gravity.TOP);
+        setMarginTop((int) (screenHeight * 0.3f));
 
         // add action button
         addButton(Button.Type.GRAY_LIGHT, context.getString(R.string.wl_close), null).setOnClickListener(v -> {
