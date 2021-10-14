@@ -196,10 +196,12 @@ public class WindCalendar extends LinearLayout {
         int weekDayTextColor = 0;
         int weekDayPanelBackground = 0;
         int weekDayHoverBackground = 0;
+
         int dateCellSize = 0;
         float dateTextSize = 0f;
         float dateLunarTextSize = 0f;
         float dateEventSymbolSize = 0f;
+
         int dateTextColor = 0;
         int dateLunarTextColor = 0;
         int dateEventTextColor = 0;
@@ -207,6 +209,8 @@ public class WindCalendar extends LinearLayout {
         int dateTodayTextColor = 0;
         int dateHighlightTextColor = 0;
         int dateHighlightLunarTextColor = 0;
+        int dateEventSymbolColor = 0;
+
         int monthPanelViewBackground = 0;
         int dateCellBackground = 0;
         int dateEventBackground = 0;
@@ -242,6 +246,7 @@ public class WindCalendar extends LinearLayout {
             dateTodayTextColor = typeArray.getColor(R.styleable.WindCalendar_dateTodayTextColor, ContextCompat.getColor(context, R.color.wl_white));
             dateHighlightTextColor = typeArray.getColor(R.styleable.WindCalendar_dateHighlightTextColor, ContextCompat.getColor(context, R.color.wl_black));
             dateHighlightLunarTextColor = typeArray.getColor(R.styleable.WindCalendar_dateHighlightLunarTextColor, ContextCompat.getColor(context, R.color.wl_calendar_lunar_date_text));
+            dateEventSymbolColor = typeArray.getColor(R.styleable.WindCalendar_dateEventSymbolColor, ContextCompat.getColor(context, R.color.wl_danger));
 
             // Date cell background
             monthPanelViewBackground = typeArray.getResourceId(R.styleable.WindCalendar_monthPanelViewBackground, 0);
@@ -293,6 +298,7 @@ public class WindCalendar extends LinearLayout {
                 .dateTodayTextColor(dateTodayTextColor)
                 .dateHighlightTextColor(dateHighlightTextColor)
                 .dateHighlightLunarTextColor(dateHighlightLunarTextColor)
+                .dateEventSymbolColor(dateEventSymbolColor)
                 .monthPanelViewBackground(monthPanelViewBackground)
                 .dateCellBackground(dateCellBackground)
                 .dateEventBackground(dateEventBackground)

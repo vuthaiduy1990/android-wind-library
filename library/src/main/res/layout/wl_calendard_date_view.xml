@@ -21,8 +21,9 @@
         android:id="@+id/_eventSymbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:gravity="top"
         android:text="@string/wl_calendar_event_symbol"
-        android:textColor="@color/wl_danger"
         android:textStyle="bold" />
 
 </LinearLayout>

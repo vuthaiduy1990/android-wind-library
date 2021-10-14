@@ -190,7 +190,7 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
             } else {
                 _lunarDateTextView.setVisibility(View.GONE);
             }
-            _eventSymbol.setVisibility(hasEvent && !isToday ? View.VISIBLE : View.GONE);
+            _eventSymbol.setVisibility(hasEvent ? View.VISIBLE : View.GONE);
 
             // bind color
             bindColor(data);
@@ -241,6 +241,11 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
             if (isHighlight) {
                 calInfo.selectedDateViewMap.put(dateId, this);
             }
+
+            // event symbol color
+            if (hasEvent) {
+                _eventSymbol.setTextColor(isToday ? calStyle.dateTodayTextColor() : calStyle.dateEventSymbolColor());
+            }
         }
 
         /**
@@ -279,6 +284,7 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
             itemView.setBackgroundResource(calStyle.dateHighlightBackground());
             _dateTextView.setTextColor(calStyle.dateHighlightTextColor());
             _lunarDateTextView.setTextColor(calStyle.dateHighlightLunarTextColor());
+            _eventSymbol.setTextColor(calStyle.dateEventSymbolColor());
         }
 
         /**

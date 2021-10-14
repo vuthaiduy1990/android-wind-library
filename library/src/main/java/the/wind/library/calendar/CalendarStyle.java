@@ -20,6 +20,7 @@ public class CalendarStyle {
     private int dateTodayTextColor;
     private int dateHighlightTextColor;
     private int dateHighlightLunarTextColor;
+    private int dateEventSymbolColor;
 
     private int monthPanelViewBackground;
     private int dateCellBackground;
@@ -315,6 +316,24 @@ public class CalendarStyle {
      */
     public CalendarStyle dateHighlightLunarTextColor(int dateHighlightLunarTextColor) {
         this.dateHighlightLunarTextColor = dateHighlightLunarTextColor;
+        return this;
+    }
+
+    /**
+     * @return event symbol color
+     */
+    public int dateEventSymbolColor() {
+        return dateEventSymbolColor;
+    }
+
+    /**
+     * Set event symbol color
+     *
+     * @param dateEventSymbolColor color
+     * @return style
+     */
+    public CalendarStyle dateEventSymbolColor(int dateEventSymbolColor) {
+        this.dateEventSymbolColor = dateEventSymbolColor;
         return this;
     }
 
