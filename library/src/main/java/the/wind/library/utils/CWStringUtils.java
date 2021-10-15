@@ -34,7 +34,7 @@ public class CWStringUtils {
             builder.append(delimiter).append(el);
         }
         String result = builder.toString();
-        return result.length() > 0 ? result.substring(1) : result;
+        return result.length() > 0 ? result.substring(delimiter.length()) : result;
     }
 
     /**
@@ -55,7 +55,7 @@ public class CWStringUtils {
         for (String element : elements) {
             builder.append(delimiter).append(element);
         }
-        return builder.length() > 0 ? builder.substring(1) : "";
+        return builder.length() > 0 ? builder.substring(delimiter.length()) : "";
     }
 
     /**

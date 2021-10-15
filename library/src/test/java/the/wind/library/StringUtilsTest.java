@@ -42,6 +42,11 @@ public class StringUtilsTest {
             set.add("wind");
             Assert.assertEquals("color.the.wind", CWStringUtils.join(".", set));
         }
+
+        // Testcase: test with delimiter more than one characters
+        {
+            Assert.assertEquals("color??of??the wind", CWStringUtils.join("??", "color", "of", "the wind"));
+        }
     }
 
     @Test
