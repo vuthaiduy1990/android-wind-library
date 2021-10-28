@@ -1,6 +1,9 @@
 package the.wind.library.calendar;
 
+import android.icu.util.Calendar;
 import android.icu.util.ChineseCalendar;
+
+import androidx.annotation.NonNull;
 
 /**
  * Copyright (c) 2006 Ho Ngoc Duc. All Rights Reserved.
@@ -283,5 +286,28 @@ public class VietnameseCalendar extends ChineseCalendar {
         }
         monthStart = getNewMoonDay(k + off, timeZone);
         return jdToDate(monthStart + lunarDay - 1);
+    }
+
+    /**
+     * Get date info
+     *
+     * @param solarCal solar calendar
+     * @return [year, month, month day, leap, week day, hour, minute, second]
+     */
+    public int[] getDateInfo(@NonNull Calendar solarCal) {
+        int[] result = new int[8];
+        float timezone = CalendarUtil.getTimeZone(this, solarCal.getTime());
+        int[] lunarDate = convertSolar2Lunar(
+                solarCal.get(Calendar.YEAR), solarCal.get(Calendar.MONTH) + 1, solarCal.get(Calendar.DAY_OF_MONTH),
+                timezone);
+        result[0] = lunarDate[0]; // year
+        result[1] = lunarDate[1] - 1; // month
+        result[2] = lunarDate[2]; // day
+        result[3] = lunarDate[3]; // leap
+        result[4] = solarCal.get(Calendar.DAY_OF_WEEK);
+        result[5] = solarCal.get(Calendar.HOUR_OF_DAY);
+        result[6] = solarCal.get(Calendar.MINUTE);
+        result[7] = solarCal.get(Calendar.SECOND);
+        return result;
     }
 }

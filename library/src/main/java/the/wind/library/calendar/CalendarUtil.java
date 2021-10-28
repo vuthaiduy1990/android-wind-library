@@ -1,11 +1,13 @@
 package the.wind.library.calendar;
 
 import android.icu.util.Calendar;
+import android.icu.util.GregorianCalendar;
 
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public final class CalendarUtil {
@@ -151,47 +153,52 @@ public final class CalendarUtil {
     /**
      * Get lunar date info
      *
-     * @param lunarCal lunar calendar
+     * @param cal      target calendar
      * @param solarCal solar calendar
      * @return [year, month, month day, leap, week day, hour, minute, second]
      */
-    public static int[] getLunarDateInfo(Calendar lunarCal, Calendar solarCal) {
-        int[] result = new int[8];
-        lunarCal.setTime(solarCal.getTime());
-        if (VietnameseCalendar.class.equals(lunarCal.getClass())) {
-            float timezone = getTimeZone(lunarCal, solarCal.getTime());
-            int[] lunarDate = ((VietnameseCalendar) lunarCal).convertSolar2Lunar(
-                    solarCal.get(Calendar.YEAR), solarCal.get(Calendar.MONTH) + 1, solarCal.get(Calendar.DAY_OF_MONTH),
-                    timezone);
-            result[0] = lunarDate[0]; // year
-            result[1] = lunarDate[1] - 1; // month
-            result[2] = lunarDate[2]; // day
-            result[3] = lunarDate[3]; // leap
-        } else {
-            result[0] = lunarCal.get(Calendar.YEAR);
-            result[1] = lunarCal.get(Calendar.MONTH);
-            result[2] = lunarCal.get(Calendar.DAY_OF_MONTH);
-            result[3] = lunarCal.get(Calendar.IS_LEAP_MONTH);
+    public static int[] getDateInfo(@NonNull Calendar cal, @NonNull Calendar solarCal) {
+        if (VietnameseCalendar.class.equals(cal.getClass())) {
+            return ((VietnameseCalendar) cal).getDateInfo(solarCal);
         }
-        result[4] = lunarCal.get(Calendar.DAY_OF_WEEK);
-        result[5] = lunarCal.get(Calendar.HOUR_OF_DAY);
-        result[6] = lunarCal.get(Calendar.MINUTE);
-        result[7] = lunarCal.get(Calendar.SECOND);
-        return result;
+        cal.setTime(solarCal.getTime());
+        return new int[]{
+                cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH),
+                cal.get(Calendar.IS_LEAP_MONTH), cal.get(Calendar.DAY_OF_WEEK),
+                cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND)
+        };
     }
 
     /**
-     * Get lunar date info
+     * Get date info
      *
-     * @param solarCal solar calendar
+     * @param cal  target calendar
+     * @param date solar calendar
      * @return [year, month, month day, leap, week day, hour, minute, second]
      */
-    public static int[] getSolarDateInfo(Calendar solarCal) {
+    public static int[] getDateInfo(@NonNull Calendar cal, @NonNull Date date) {
+        if (cal instanceof VietnameseCalendar) {
+            GregorianCalendar solarCal = new GregorianCalendar();
+            solarCal.setTimeZone(cal.getTimeZone());
+            solarCal.setTime(date);
+            return ((VietnameseCalendar) cal).getDateInfo(solarCal);
+        }
+        cal.setTime(date);
         return new int[]{
-                solarCal.get(Calendar.YEAR), solarCal.get(Calendar.MONTH), solarCal.get(Calendar.DAY_OF_MONTH),
-                solarCal.get(Calendar.IS_LEAP_MONTH), solarCal.get(Calendar.DAY_OF_WEEK),
-                solarCal.get(Calendar.HOUR_OF_DAY), solarCal.get(Calendar.MINUTE), solarCal.get(Calendar.SECOND)
+                cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH),
+                cal.get(Calendar.IS_LEAP_MONTH), cal.get(Calendar.DAY_OF_WEEK),
+                cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND)
         };
+    }
+
+    /**
+     * Get date info
+     *
+     * @param cal target calendar
+     * @return [year, month, month day, leap, week day, hour, minute, second]
+     */
+    public static int[] getDateInfo(@NonNull Calendar cal) {
+        return getDateInfo(cal, cal.getTime());
     }
 
 }

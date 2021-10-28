@@ -19,20 +19,13 @@ public class DateInfo implements Serializable {
     // Unique ID
     private String id;
 
-    // Standard date info
     private Date date;
-    private int year;
-    private int month;
-    private int dayOfMonth;
-    private int dayOfWeek;
-    private int solarLeapMonth;
+    // Standard date info
+    private int[] solarInfo;
 
     // Lunar date info
     private boolean hasLunarDate = false;
-    private int lunarYear;
-    private int lunarMonth;
-    private int lunarDayOfMonth;
-    private int lunarLeapMonth;
+    private int[] lunarInfo;
 
     /**
      * Private constructor for serialization
@@ -51,21 +44,13 @@ public class DateInfo implements Serializable {
 
         // solar calendar
         this.date = solarCal.getTime();
-        this.year = solarCal.get(Calendar.YEAR);
-        this.month = solarCal.get(Calendar.MONTH);
-        this.dayOfMonth = solarCal.get(Calendar.DAY_OF_MONTH);
-        this.dayOfWeek = solarCal.get(Calendar.DAY_OF_WEEK);
-        this.solarLeapMonth = solarCal.get(Calendar.IS_LEAP_MONTH);
-        this.id = CalendarUtil.toId(year, month, dayOfMonth);
+        solarInfo = CalendarUtil.getDateInfo(solarCal);
+        this.id = CalendarUtil.toId(solarInfo[0], solarInfo[1], solarInfo[2]);
 
         // lunar calendar
         if (lunarCal != null) {
             this.hasLunarDate = true;
-            int[] lunarInfo = CalendarUtil.getLunarDateInfo(lunarCal, solarCal);
-            this.lunarYear = lunarInfo[0];
-            this.lunarMonth = lunarInfo[1];
-            this.lunarDayOfMonth = lunarInfo[2];
-            this.lunarLeapMonth = lunarInfo[3];
+            lunarInfo = CalendarUtil.getDateInfo(lunarCal, solarCal);
         }
     }
 
@@ -116,35 +101,35 @@ public class DateInfo implements Serializable {
      * @return year
      */
     public int getYear() {
-        return year;
+        return solarInfo[0];
     }
 
     /**
      * @return month
      */
     public int getMonth() {
-        return month;
+        return solarInfo[1];
     }
 
     /**
      * @return day of month
      */
     public int getDayOfMonth() {
-        return dayOfMonth;
+        return solarInfo[2];
     }
 
     /**
      * @return day of week
      */
     public int getDayOfWeek() {
-        return dayOfWeek;
+        return solarInfo[4];
     }
 
     /**
      * @return true if date is in solar leap month
      */
     public boolean isSolarLeapMonth() {
-        return solarLeapMonth == 1;
+        return solarInfo[3] == 1;
     }
 
     /**
@@ -158,35 +143,35 @@ public class DateInfo implements Serializable {
      * @return lunar year
      */
     public int getLunarYear() {
-        return lunarYear;
+        return lunarInfo[0];
     }
 
     /**
      * @return lunar month
      */
     public int getLunarMonth() {
-        return lunarMonth;
+        return lunarInfo[1];
     }
 
     /**
      * @return lunar day of month
      */
     public int getLunarDayOfMonth() {
-        return lunarDayOfMonth;
+        return lunarInfo[2];
     }
 
     /**
      * @return true if date is in lunar leap month
      */
     public boolean isLunarLeapMonth() {
-        return lunarLeapMonth == 1;
+        return lunarInfo[3] == 1;
     }
 
     /**
      * @return true if the date is weekend (Saturday and Sunday)
      */
     public boolean isWeekend() {
-        return dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY;
+        return solarInfo[4] == Calendar.SATURDAY || solarInfo[4] == Calendar.SUNDAY;
     }
 
     /* ---------------------- METHOD ------------------------- */
