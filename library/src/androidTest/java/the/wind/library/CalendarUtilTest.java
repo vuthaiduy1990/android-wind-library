@@ -98,7 +98,7 @@ public class CalendarUtilTest {
 
         // Testcase: convert from solar to lunar date
         {
-            int[] lunarDate = cal.convertSolar2Lunar(2021, 1, 1, 7);
+            int[] lunarDate = VietnameseCalendar.convertSolar2Lunar(2021, 1, 1, 7);
             Assert.assertEquals(2020, lunarDate[0]);
             Assert.assertEquals(11, lunarDate[1]);
             Assert.assertEquals(19, lunarDate[2]);
@@ -107,14 +107,14 @@ public class CalendarUtilTest {
 
         // Testcase: convert from solar to lunar date in leap month
         {
-            int[] lunarDate = cal.convertSolar2Lunar(2020, 4, 23, 7);
+            int[] lunarDate = VietnameseCalendar.convertSolar2Lunar(2020, 4, 23, 7);
             Assert.assertEquals(2020, lunarDate[0]);
             Assert.assertEquals(4, lunarDate[1]);
             Assert.assertEquals(1, lunarDate[2]);
             Assert.assertEquals(0, lunarDate[3]);
 
             // leap month
-            lunarDate = cal.convertSolar2Lunar(2020, 5, 23, 7);
+            lunarDate = VietnameseCalendar.convertSolar2Lunar(2020, 5, 23, 7);
             Assert.assertEquals(2020, lunarDate[0]);
             Assert.assertEquals(4, lunarDate[1]);
             Assert.assertEquals(1, lunarDate[2]);
@@ -123,7 +123,7 @@ public class CalendarUtilTest {
 
         // Testcase: convert from lunar to solar date
         {
-            int[] lunarDate = cal.convertLunar2Solar(2020, 11, 19, true, 7);
+            int[] lunarDate = VietnameseCalendar.convertLunar2Solar(2020, 11, 19, true, 7);
             Assert.assertEquals(2021, lunarDate[0]);
             Assert.assertEquals(1, lunarDate[1]);
             Assert.assertEquals(1, lunarDate[2]);
@@ -131,12 +131,12 @@ public class CalendarUtilTest {
 
         // Testcase: convert from lunar to solar date with leap year
         {
-            int[] lunarDate = cal.convertLunar2Solar(2020, 4, 1, false, 7);
+            int[] lunarDate = VietnameseCalendar.convertLunar2Solar(2020, 4, 1, false, 7);
             Assert.assertEquals(2020, lunarDate[0]);
             Assert.assertEquals(4, lunarDate[1]);
             Assert.assertEquals(23, lunarDate[2]);
 
-            lunarDate = cal.convertLunar2Solar(2020, 4, 1, true, 7);
+            lunarDate = VietnameseCalendar.convertLunar2Solar(2020, 4, 1, true, 7);
             Assert.assertEquals(2020, lunarDate[0]);
             Assert.assertEquals(5, lunarDate[1]);
             Assert.assertEquals(23, lunarDate[2]);

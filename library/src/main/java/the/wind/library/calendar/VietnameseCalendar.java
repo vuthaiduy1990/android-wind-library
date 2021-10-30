@@ -17,7 +17,7 @@ import androidx.annotation.NonNull;
  */
 public class VietnameseCalendar extends ChineseCalendar {
 
-    private final double PI = Math.PI;
+    private static final double PI = Math.PI;
 
     /**
      * Discard the fractional part of a number, e.g., INT(3.2) = 3
@@ -25,7 +25,7 @@ public class VietnameseCalendar extends ChineseCalendar {
      * @param number number
      * @return round number
      */
-    private int INT(double number) {
+    private static int INT(double number) {
         return (int) Math.floor(number);
     }
 
@@ -39,7 +39,7 @@ public class VietnameseCalendar extends ChineseCalendar {
      * @param yy year
      * @return number of julian day
      */
-    private int jdFromDate(int dd, int mm, int yy) {
+    private static int jdFromDate(int dd, int mm, int yy) {
         int a, y, m, jd;
         a = INT((14 - mm) / 12d);
         y = yy + 4800 - a;
@@ -57,7 +57,7 @@ public class VietnameseCalendar extends ChineseCalendar {
      * @param jd julian day
      * @return date [year, month, day]
      */
-    private int[] jdToDate(int jd) {
+    private static int[] jdToDate(int jd) {
         int a, b, c, d, e, m, day, month, year;
         if (jd > 2299160) { // After 5/10/1582, Gregorian calendar
             a = jd + 32044;
@@ -84,7 +84,7 @@ public class VietnameseCalendar extends ChineseCalendar {
      * @param k the k-th new moon
      * @return a floating number, e.g., 2415079.9758617813 for k=2 or 2414961.935157746 for k=-2.
      */
-    private double NewMoon(int k) {
+    private static double NewMoon(int k) {
         double T, T2, T3, dr, Jd1, M, Mpr, F, C1, delta, JdNew;
         T = k / 1236.85; // Time in Julian centuries from 1900 January 0.5
         T2 = T * T;
@@ -118,7 +118,7 @@ public class VietnameseCalendar extends ChineseCalendar {
      * @param jdn floating number jdn, the number of days since 1/1/4713 BC noon
      * @return the longitude of the sun
      */
-    private double SunLongitude(double jdn) {
+    private static double SunLongitude(double jdn) {
         double T, T2, dr, M, L0, DL, L;
         T = (jdn - 2451545.0) / 36525; // Time in Julian centuries from 2000-01-01 12:00:00 GMT
         T2 = T * T;
@@ -144,7 +144,7 @@ public class VietnameseCalendar extends ChineseCalendar {
      * @param timeZone time zone
      * @return sun longitude
      */
-    private int getSunLongitude(int jdn, float timeZone) {
+    private static int getSunLongitude(int jdn, float timeZone) {
         return INT(SunLongitude(jdn - 0.5 - timeZone / 24d) / PI * 6);
     }
 
@@ -155,7 +155,7 @@ public class VietnameseCalendar extends ChineseCalendar {
      * @param k        the k-th new moon
      * @param timeZone timezone
      */
-    private int getNewMoonDay(int k, float timeZone) {
+    private static int getNewMoonDay(int k, float timeZone) {
         return INT(NewMoon(k) + 0.5 + timeZone / 24f);
     }
 
@@ -166,7 +166,7 @@ public class VietnameseCalendar extends ChineseCalendar {
      * @param timeZone timezone
      * @return lunar month
      */
-    private int getLunarMonth11(int yy, float timeZone) {
+    private static int getLunarMonth11(int yy, float timeZone) {
         int k, off, nm, sunLong;
         //off = jdFromDate(31, 12, yy) - 2415021.076998695;
         off = jdFromDate(31, 12, yy) - 2415021;
@@ -186,7 +186,7 @@ public class VietnameseCalendar extends ChineseCalendar {
      * @param timeZone timezone
      * @return leap month offset
      */
-    private int getLeapMonthOffset(int a11, float timeZone) {
+    private static int getLeapMonthOffset(int a11, float timeZone) {
         int k, arc, i, last;
         k = INT((a11 - 2415021.076998695) / 29.530588853 + 0.5);
         i = 1; // We start with the month following lunar month 11
@@ -208,7 +208,7 @@ public class VietnameseCalendar extends ChineseCalendar {
      * @param timeZone timezone
      * @return lunar date [yyyy, mm, dd, leap]
      */
-    public int[] convertSolar2Lunar(int yy, int mm, int dd, float timeZone) {
+    public static int[] convertSolar2Lunar(int yy, int mm, int dd, float timeZone) {
         int k, dayNumber, monthStart, a11, b11, lunarDay, lunarMonth, lunarYear, lunarLeap;
         dayNumber = jdFromDate(dd, mm, yy);
         k = INT((dayNumber - 2415021.076998695) / 29.530588853);
@@ -258,7 +258,7 @@ public class VietnameseCalendar extends ChineseCalendar {
      * @param timeZone   timezone
      * @return solar date [yyyy, mm, dd]
      */
-    public int[] convertLunar2Solar(int lunarYear, int lunarMonth, int lunarDay, boolean lunarLeap, float timeZone) {
+    public static int[] convertLunar2Solar(int lunarYear, int lunarMonth, int lunarDay, boolean lunarLeap, float timeZone) {
         int k, a11, b11, off, leapOff, leapMonth, monthStart;
         if (lunarMonth < 11) {
             a11 = getLunarMonth11(lunarYear - 1, timeZone);
