@@ -3,6 +3,8 @@ package the.wind.library.calendar;
 import android.icu.util.Calendar;
 import android.icu.util.ChineseCalendar;
 
+import java.util.Date;
+
 import androidx.annotation.NonNull;
 
 /**
@@ -246,6 +248,18 @@ public class VietnameseCalendar extends ChineseCalendar {
             lunarYear -= 1;
         }
         return new int[]{lunarYear, lunarMonth, lunarDay, lunarLeap};
+    }
+
+    /**
+     * Convert solar date to lunar date
+     *
+     * @param solarCal solar calendar
+     * @return lunar date info
+     */
+    public static int[] convertSolar2Lunar(Calendar solarCal, Date date) {
+        solarCal.setTime(date);
+        float timezone = CalendarUtil.getTimeZone(solarCal, date);
+        return convertSolar2Lunar(solarCal.get(Calendar.YEAR), solarCal.get(Calendar.MONTH), solarCal.get(Calendar.DATE), timezone);
     }
 
     /**
