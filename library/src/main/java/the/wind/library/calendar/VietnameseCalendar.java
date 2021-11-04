@@ -202,7 +202,8 @@ public class VietnameseCalendar extends ChineseCalendar {
     }
 
     /**
-     * Convert solar date dd/mm/yyyy to the corresponding lunar date
+     * Convert solar date dd/mm/yyyy to the corresponding lunar date.
+     * Note: month is start from 1, not 0 as in solar calendar
      *
      * @param yy       year
      * @param mm       month
@@ -251,7 +252,8 @@ public class VietnameseCalendar extends ChineseCalendar {
     }
 
     /**
-     * Convert solar date to lunar date
+     * Convert solar date to lunar date.
+     * Note: month is start from 1, not 0 as in solar calendar
      *
      * @param solarCal solar calendar
      * @return lunar date info
@@ -259,11 +261,12 @@ public class VietnameseCalendar extends ChineseCalendar {
     public static int[] convertSolar2Lunar(Calendar solarCal, Date date) {
         solarCal.setTime(date);
         float timezone = CalendarUtil.getTimeZone(solarCal, date);
-        return convertSolar2Lunar(solarCal.get(Calendar.YEAR), solarCal.get(Calendar.MONTH), solarCal.get(Calendar.DATE), timezone);
+        return convertSolar2Lunar(solarCal.get(Calendar.YEAR), solarCal.get(Calendar.MONTH) + 1, solarCal.get(Calendar.DATE), timezone);
     }
 
     /**
-     * Convert a lunar date to the corresponding solar date
+     * Convert a lunar date to the corresponding solar date.
+     * Note: month is start from 1, not 0 as in solar calendar
      *
      * @param lunarYear  lunar year
      * @param lunarMonth lunar month
