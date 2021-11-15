@@ -27,6 +27,7 @@ import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
@@ -73,6 +74,12 @@ public class WindCalendarDialog extends DialogFragment {
     private final CalendarEvent eventListener = new CalendarEvent();
     private final Map<String, Date> selectedDateMap = new HashMap<>();
     private Date selectedDate;
+
+    // label resource
+    private int yearLabelResId;
+    private int monthLabelResId;
+    private int cancelBtnResId;
+    private int selectBtnResId;
 
     // animation
     private final RotateAnimation rotationIconAnim;
@@ -295,6 +302,42 @@ public class WindCalendarDialog extends DialogFragment {
     }
 
     /**
+     * Set year label resource id
+     *
+     * @param resId string resource id
+     */
+    public void setYearLabelResId(@StringRes int resId) {
+        this.yearLabelResId = resId;
+    }
+
+    /**
+     * Set month label resource id
+     *
+     * @param resId string resource id
+     */
+    public void setMonthLabelResId(@StringRes int resId) {
+        this.monthLabelResId = resId;
+    }
+
+    /**
+     * Set cancel button label resource id
+     *
+     * @param resId string resource id
+     */
+    public void setCancelBtnResId(@StringRes int resId) {
+        this.cancelBtnResId = resId;
+    }
+
+    /**
+     * Set select button label resource id
+     *
+     * @param resId string resource id
+     */
+    public void setSelectBtnResId(@StringRes int resId) {
+        this.selectBtnResId = resId;
+    }
+
+    /**
      * Set lunar calendar type
      *
      * @param lunarType lunar calendar type
@@ -460,6 +503,10 @@ public class WindCalendarDialog extends DialogFragment {
                 return false;
             }
         };
+        _yearSelectionDialog.setButtonText(0, cancelBtnResId);
+        _yearSelectionDialog.setButtonText(1, selectBtnResId);
+        _yearSelectionDialog.setYearLabel(yearLabelResId);
+        _yearSelectionDialog.setMonthLabel(monthLabelResId);
         return _yearSelectionDialog;
     }
 

@@ -16,6 +16,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/_yearLabelView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/wl_year"
@@ -37,6 +38,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/_monthLabelView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/wl_month"

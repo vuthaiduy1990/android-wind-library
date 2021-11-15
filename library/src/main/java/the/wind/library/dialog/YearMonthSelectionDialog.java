@@ -7,11 +7,13 @@ import android.icu.util.GregorianCalendar;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import java.util.Date;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
 import the.wind.library.R;
 import the.wind.library.WindFactory;
@@ -26,7 +28,9 @@ import the.wind.library.view.DropdownAdapter;
 public abstract class YearMonthSelectionDialog extends WindDialog {
 
     // views
+    private final TextView _yearLabeView;
     private final Dropdown _yearSelectionView;
+    private final TextView _monthLabelView;
     private final Dropdown _monthSelectionView;
 
     // adapter
@@ -71,6 +75,7 @@ public abstract class YearMonthSelectionDialog extends WindDialog {
         setOnDismissListener(this::onDialogDismiss);
 
         // bind year selection view
+        _yearLabeView = contentView.findViewById(R.id._yearLabelView);
         _yearSelectionView = contentView.findViewById(R.id._yearSelectionView);
         yearAdapter = new DropdownAdapter<>(context, WindFactory.instance().getAvailableYears());
         // data transformer
@@ -104,6 +109,7 @@ public abstract class YearMonthSelectionDialog extends WindDialog {
         });
 
         // bind month selection view
+        _monthLabelView = contentView.findViewById(R.id._monthLabelView);
         _monthSelectionView = contentView.findViewById(R.id._monthSelectionView);
         monthAdapter = new DropdownAdapter<>(context, WindFactory.instance().getAvailableMonths());
         monthAdapter.setDataTransformer(new DropdownAdapter.DataTransformer<Integer>() {
@@ -162,6 +168,24 @@ public abstract class YearMonthSelectionDialog extends WindDialog {
     }
 
     /* ---------------------- GET-SET ------------------------ */
+
+    /**
+     * Set year label
+     *
+     * @param resId label resource id
+     */
+    public void setYearLabel(@StringRes int resId) {
+        _yearLabeView.setText(resId);
+    }
+
+    /**
+     * Set month label
+     *
+     * @param resId label resource id
+     */
+    public void setMonthLabel(@StringRes int resId) {
+        _monthLabelView.setText(resId);
+    }
 
     /* ---------------------- METHOD ------------------------- */
 
