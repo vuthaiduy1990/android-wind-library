@@ -151,7 +151,13 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
      */
     protected void setSelectedDate(Date date) {
         int centerSlideShow = MAX_SLIDE / 2;
-        currentPosition = currentPosition == centerSlideShow ? MAX_SLIDE / 4 : centerSlideShow;
+        /*
+         * Testcase:
+         * 1. slide month up/down -> to change current position
+         * 2. Select another month from YearMonthSelectionDialog
+         * Expected: the current position should be changed large number so that the viewpage can re-render month page view
+         */
+        currentPosition = (currentPosition >= centerSlideShow - offscreen && currentPosition <= centerSlideShow + offscreen) ? MAX_SLIDE / 4 : centerSlideShow;
         selectedMonth = CalendarUtil.createMonthLink(calendar, calendarInfo.getLunarCalendar(), date, calendarInfo.getWeekStartsOn(), offscreen);
     }
 

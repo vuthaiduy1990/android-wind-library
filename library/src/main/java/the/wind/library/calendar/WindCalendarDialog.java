@@ -76,10 +76,10 @@ public class WindCalendarDialog extends DialogFragment {
     private Date selectedDate;
 
     // label resource
-    private int yearLabelResId;
-    private int monthLabelResId;
-    private int cancelBtnResId;
-    private int selectBtnResId;
+    private Integer yearLabelResId;
+    private Integer monthLabelResId;
+    private Integer cancelBtnResId;
+    private Integer selectBtnResId;
 
     // animation
     private final RotateAnimation rotationIconAnim;
@@ -503,10 +503,18 @@ public class WindCalendarDialog extends DialogFragment {
                 return false;
             }
         };
-        _yearSelectionDialog.setButtonText(0, cancelBtnResId);
-        _yearSelectionDialog.setButtonText(1, selectBtnResId);
-        _yearSelectionDialog.setYearLabel(yearLabelResId);
-        _yearSelectionDialog.setMonthLabel(monthLabelResId);
+        if (cancelBtnResId != null) {
+            _yearSelectionDialog.setButtonText(0, cancelBtnResId);
+        }
+        if (selectBtnResId != null) {
+            _yearSelectionDialog.setButtonText(1, selectBtnResId);
+        }
+        if (yearLabelResId != null) {
+            _yearSelectionDialog.setYearLabel(yearLabelResId);
+        }
+        if (monthLabelResId != null) {
+            _yearSelectionDialog.setMonthLabel(monthLabelResId);
+        }
         return _yearSelectionDialog;
     }
 
