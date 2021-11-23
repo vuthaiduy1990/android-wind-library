@@ -124,4 +124,60 @@ public final class CWDateUtils {
         cal.set(Calendar.MILLISECOND, 999);
         return cal.getTime();
     }
+
+    /**
+     * Check if two date info is equal.
+     * Note: compare date without time
+     *
+     * @param d1 date info [year, month, month day, leap, week day, hour, minute, second]
+     * @param d2 date info [year, month, month day, leap, week day, hour, minute, second]
+     * @return true if equal else, return false
+     */
+    public static boolean equalDate(int[] d1, int[] d2) {
+        // equal from date
+        int m1 = d1[0] * 12 + d1[1] + d1[3];
+        int m2 = d2[0] * 12 + d2[1] + d2[3];
+        return m1 == m2 && d1[2] == d2[2];
+    }
+
+    /**
+     * Check if the first date less than the second date.
+     * Note: compare date without time
+     *
+     * @param d1 date info [year, month, month day, leap, week day, hour, minute, second]
+     * @param d2 date info [year, month, month day, leap, week day, hour, minute, second]
+     * @return true if the first date less than the second date
+     */
+    public static boolean dateLessThan(int[] d1, int[] d2) {
+        int m1 = d1[0] * 12 + d1[1] + d1[3];
+        int m2 = d2[0] * 12 + d2[1] + d2[3];
+
+        if (m1 < m2) return true; // month less than
+        else if (m1 == m2) {
+            // month equal -> compare date
+            return d1[2] < d2[2]; // date less than
+        }
+        return false;
+    }
+
+    /**
+     * Check if the first date less than the second date.
+     * Note: compare date without time
+     * Note: compare date without time
+     *
+     * @param d1 date info [year, month, month day, leap, week day, hour, minute, second]
+     * @param d2 date info [year, month, month day, leap, week day, hour, minute, second]
+     * @return true if the first date less than the second date
+     */
+    public static boolean dateGreaterThan(int[] d1, int[] d2) {
+        int m1 = d1[0] * 12 + d1[1] + d1[3];
+        int m2 = d2[0] * 12 + d2[1] + d2[3];
+
+        if (m1 > m2) return true; // month greater than
+        else if (m1 == m2) {
+            // month equal -> compare date
+            return d1[2] > d2[2]; // date greater than
+        }
+        return false;
+    }
 }
