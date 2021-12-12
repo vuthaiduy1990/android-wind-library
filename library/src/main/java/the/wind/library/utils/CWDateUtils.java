@@ -180,4 +180,15 @@ public final class CWDateUtils {
         }
         return false;
     }
+
+    /**
+     * Compute number of days difference between two dates
+     *
+     * @param startDate start date
+     * @param endDate   end date
+     * @return number of days difference
+     */
+    public static int diffDays(Date startDate, Date endDate) {
+        return (int) Math.floor((endDate.getTime() - startDate.getTime()) / 86400000d); // 24 * 60 * 60 * 1000
+    }
 }
