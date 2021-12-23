@@ -191,4 +191,15 @@ public final class CWDateUtils {
     public static int diffDays(Date startDate, Date endDate) {
         return (int) Math.floor((endDate.getTime() - startDate.getTime()) / 86400000d); // 24 * 60 * 60 * 1000
     }
+
+    /**
+     * Compute number of days difference between two dates
+     *
+     * @param startTime start time in milliseconds
+     * @param endTime   end time in milliseconds
+     * @return number of days difference
+     */
+    public static int diffDays(long startTime, long endTime) {
+        return (int) Math.floor((endTime - startTime) / 86400000d); // 24 * 60 * 60 * 1000
+    }
 }
