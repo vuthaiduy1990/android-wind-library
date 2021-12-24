@@ -135,9 +135,21 @@ public final class CWDateUtils {
      */
     public static boolean equalDate(int[] d1, int[] d2) {
         // equal from date
-        int m1 = d1[0] * 12 + d1[1] + d1[3];
-        int m2 = d2[0] * 12 + d2[1] + d2[3];
-        return m1 == m2 && d1[2] == d2[2];
+        int m1 = d1[0] * 12 + d1[1];
+        int m2 = d2[0] * 12 + d2[1];
+        return m1 == m2 && d1[3] == d2[3] && d1[2] == d2[2];
+    }
+
+    /**
+     * Check if two date info is equal without comparing year.
+     * Note: compare date without time
+     *
+     * @param d1 date info [year, month, month day, leap, week day, hour, minute, second]
+     * @param d2 date info [year, month, month day, leap, week day, hour, minute, second]
+     * @return true if equal else, return false
+     */
+    public static boolean equalDateWithoutYear(int[] d1, int[] d2) {
+        return d1[1] == d2[1] && d1[3] == d2[3] && d1[2] == d2[2];
     }
 
     /**
@@ -149,13 +161,38 @@ public final class CWDateUtils {
      * @return true if the first date less than the second date
      */
     public static boolean dateLessThan(int[] d1, int[] d2) {
-        int m1 = d1[0] * 12 + d1[1] + d1[3];
-        int m2 = d2[0] * 12 + d2[1] + d2[3];
+        int m1 = d1[0] * 12 + d1[1];
+        int m2 = d2[0] * 12 + d2[1];
 
         if (m1 < m2) return true; // month less than
         else if (m1 == m2) {
-            // month equal -> compare date
-            return d1[2] < d2[2]; // date less than
+            //  month less than (leap month)
+            if (d1[3] < d2[3]) return true;
+            else if (d1[3] == d2[3]) {
+                // month equal -> compare date
+                return d1[2] < d2[2]; // date less than
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Check if the first date less than the second date without comparing year.
+     * Note: compare date without time
+     *
+     * @param d1 date info [year, month, month day, leap, week day, hour, minute, second]
+     * @param d2 date info [year, month, month day, leap, week day, hour, minute, second]
+     * @return true if the first date less than the second date
+     */
+    public static boolean dateLessThanWithoutYear(int[] d1, int[] d2) {
+        if (d1[1] < d2[1]) return true; // month less than
+        else if (d1[1] == d2[1]) {
+            //  month less than (leap month)
+            if (d1[3] < d2[3]) return true;
+            else if (d1[3] == d2[3]) {
+                // month equal -> compare date
+                return d1[2] < d2[2]; // date less than
+            }
         }
         return false;
     }
@@ -170,13 +207,39 @@ public final class CWDateUtils {
      * @return true if the first date less than the second date
      */
     public static boolean dateGreaterThan(int[] d1, int[] d2) {
-        int m1 = d1[0] * 12 + d1[1] + d1[3];
-        int m2 = d2[0] * 12 + d2[1] + d2[3];
+        int m1 = d1[0] * 12 + d1[1];
+        int m2 = d2[0] * 12 + d2[1];
 
         if (m1 > m2) return true; // month greater than
         else if (m1 == m2) {
-            // month equal -> compare date
-            return d1[2] > d2[2]; // date greater than
+            //  month greater than (leap month)
+            if (d1[3] > d2[3]) return true;
+            else if (d1[3] == d2[3]) {
+                // month equal -> compare date
+                return d1[2] > d2[2]; // date greater than
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Check if the first date less than the second date without comparing year.
+     * Note: compare date without time
+     * Note: compare date without time
+     *
+     * @param d1 date info [year, month, month day, leap, week day, hour, minute, second]
+     * @param d2 date info [year, month, month day, leap, week day, hour, minute, second]
+     * @return true if the first date less than the second date
+     */
+    public static boolean dateGreaterThanWithoutYear(int[] d1, int[] d2) {
+        if (d1[1] > d2[1]) return true; // month greater than
+        else if (d1[1] == d2[1]) {
+            //  month greater than (leap month)
+            if (d1[3] > d2[3]) return true;
+            else if (d1[3] == d2[3]) {
+                // month equal -> compare date
+                return d1[2] > d2[2]; // date greater than
+            }
         }
         return false;
     }
