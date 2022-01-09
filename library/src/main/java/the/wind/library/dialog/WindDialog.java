@@ -161,7 +161,7 @@ public class WindDialog extends Dialog {
         _waitingIcon.setMaxProgress(310f / 841f);
 
         // Set
-        setOnShowListener(dialog -> {
+        super.setOnShowListener(dialog -> {
             reshapeHeight();
             if (showListener != null) {
                 showListener.onShow(dialog);
