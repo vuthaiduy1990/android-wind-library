@@ -45,6 +45,7 @@ public class WindDialog extends Dialog {
     private View _customContentView;
     private int width;
     private int height;
+    private int maxHeight;
     private int paddingLeft;
     private int paddingTop;
     private int paddingRight;
@@ -88,6 +89,9 @@ public class WindDialog extends Dialog {
     @Nullable
     private Animation outAnim;
 
+    // Listener
+    private OnShowListener showListener;
+
     /**
      * Constructor
      *
@@ -116,6 +120,7 @@ public class WindDialog extends Dialog {
             setWidth((int) context.getResources().getDimension(R.dimen.wl_dialog_tatsumaki_width));
         }
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        setMaxHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         setPadding(
                 (int) context.getResources().getDimension(R.dimen.wl_dialog_padding_start),
                 (int) context.getResources().getDimension(R.dimen.wl_spacing_level_2),
@@ -154,6 +159,14 @@ public class WindDialog extends Dialog {
         setCanceledOnTouchOutside(false);
         setCustomWaitingIcon(R.raw.wl_dialog_icon_waiting);
         _waitingIcon.setMaxProgress(310f / 841f);
+
+        // Set
+        setOnShowListener(dialog -> {
+            reshapeHeight();
+            if (showListener != null) {
+                showListener.onShow(dialog);
+            }
+        });
     }
 
     /* ---------------------- OVERRIDE ----------------------- */
@@ -247,6 +260,11 @@ public class WindDialog extends Dialog {
         }
     }
 
+    @Override
+    public void setOnShowListener(@Nullable OnShowListener listener) {
+        this.showListener = listener;
+    }
+
     /* ---------------------- STATIC ------------------------- */
 
     /* ---------------------- ABSTRACT ----------------------- */
@@ -328,6 +346,17 @@ public class WindDialog extends Dialog {
      */
     public WindDialog setHeight(int height) {
         this.height = height;
+        return this;
+    }
+
+    /**
+     * Set max height
+     *
+     * @param maxHeight max height
+     * @return max height
+     */
+    public WindDialog setMaxHeight(int maxHeight) {
+        this.maxHeight = maxHeight;
         return this;
     }
 
@@ -1108,6 +1137,22 @@ public class WindDialog extends Dialog {
      */
     public boolean postDelayed(Runnable action, long delayMillis) {
         return _dialogView.postDelayed(action, delayMillis);
+    }
+
+    /**
+     * Reshape dialog match with setting max height
+     */
+    private void reshapeHeight() {
+        if (maxHeight > 0 && _layout.getHeight() > maxHeight) {
+            // user set max height
+            ViewGroup.LayoutParams layoutParams = _layout.getLayoutParams();
+            layoutParams.height = maxHeight;
+            _layout.setLayoutParams(layoutParams);
+
+            ViewGroup.LayoutParams _dialogLayoutParams = _dialogView.getLayoutParams();
+            _dialogLayoutParams.height = maxHeight;
+            _dialogView.setLayoutParams(_dialogLayoutParams);
+        }
     }
 
     /* ---------------------- INNER CLASS -------------------- */
