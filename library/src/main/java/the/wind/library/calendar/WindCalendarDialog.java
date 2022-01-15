@@ -85,7 +85,7 @@ public class WindCalendarDialog extends DialogFragment {
     private final RotateAnimation rotationIconAnim;
 
     // listener
-    private OnDateSetListener dateSetListener;
+    private final List<OnDateSetListener> dateSetListeners = new ArrayList<>();
 
     /**
      * Constructor
@@ -221,9 +221,7 @@ public class WindCalendarDialog extends DialogFragment {
      * @return true if consume the event, else return false
      */
     protected boolean onDateItemDoubleClick(MonthAdapter.ViewHolder viewHolder, View view, DateInfo data) {
-        if (dateSetListener != null) {
-            dateSetListener.onDateSet(this, Collections.singletonList(data.getDate()));
-        }
+        onSelectedDate(Collections.singletonList(data.getDate()));
         dismiss();
         return true;
     }
@@ -356,12 +354,21 @@ public class WindCalendarDialog extends DialogFragment {
     }
 
     /**
+     * Get on selected date listener
+     *
+     * @return listeners
+     */
+    public List<OnDateSetListener> getDateSetListeners() {
+        return dateSetListeners;
+    }
+
+    /**
      * Set on date set listener
      *
      * @param listener listener
      */
-    public void setOnDateSetListener(OnDateSetListener listener) {
-        dateSetListener = listener;
+    public void addOnDateSetListener(OnDateSetListener listener) {
+        dateSetListeners.add(listener);
     }
 
     /* ---------------------- METHOD ------------------------- */
@@ -409,9 +416,7 @@ public class WindCalendarDialog extends DialogFragment {
                 });
         dialog.addButton(Button.Type.SUCCESS, context.getString(R.string.wl_ok), null)
                 .setOnClickListener(v -> {
-                    if (dateSetListener != null) {
-                        dateSetListener.onDateSet(WindCalendarDialog.this, new ArrayList<>(selectedDateMap.values()));
-                    }
+                    onSelectedDate(new ArrayList<>(selectedDateMap.values()));
                     dismiss();
                 });
         return dialog;
@@ -609,6 +614,17 @@ public class WindCalendarDialog extends DialogFragment {
         info.reset();
         selectedDateMap.clear();
         selectedDate = null;
+    }
+
+    /**
+     * On selected date
+     *
+     * @param dates selected date
+     */
+    private void onSelectedDate(List<Date> dates) {
+        for (OnDateSetListener listener : dateSetListeners) {
+            listener.onDateSet(WindCalendarDialog.this, new ArrayList<>(selectedDateMap.values()));
+        }
     }
 
     /* ---------------------- INNER CLASS -------------------- */

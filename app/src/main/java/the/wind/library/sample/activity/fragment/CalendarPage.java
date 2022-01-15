@@ -145,7 +145,7 @@ public class CalendarPage extends Fragment {
             dialog.setTitle("Date Picker");
             dialog.setIcon(R.drawable.wl_ic_calendar);
             _calendarDialog.setLunarType(CalendarType.Vietnamese);
-            _calendarDialog.setOnDateSetListener(new WindCalendarDialog.OnDateSetListener() {
+            _calendarDialog.addOnDateSetListener(new WindCalendarDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(WindCalendarDialog dialog, List<Date> dates) {
                     Toast.makeText(requireContext(), dates.size() + " selected", Toast.LENGTH_SHORT).show();
