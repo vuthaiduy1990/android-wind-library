@@ -261,4 +261,15 @@ public class CWStringUtils {
         }
         return false;
     }
+
+    /**
+     * Get brief note with ellipsis if exceed max value
+     *
+     * @param note      reminder note
+     * @param maxLength max display characters
+     * @return brief note
+     */
+    public static String getBrief(String note, int maxLength) {
+        return note.length() > maxLength ? note.substring(0, maxLength) + " ..." : note;
+    }
 }
