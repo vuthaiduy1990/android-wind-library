@@ -15,7 +15,9 @@ import java.util.Set;
 public final class CWTestTable extends CWTable {
 
     // Primitive type
+    @Column(indexing = true)
     public int intPrim;
+
     public Integer mIntObj;
     public float floatPrim;
     public Float mFloatObj;
@@ -29,7 +31,7 @@ public final class CWTestTable extends CWTable {
     public EnumType mEnumType;
 
     // date
-    @Column(name = "updated_date")
+    @Column(name = "updated_date", indexing = true)
     public Date mDateObj;
 
     @Column(ignore = true)

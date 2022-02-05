@@ -15,4 +15,6 @@ public @interface Column {
     // true -> not adding column to table
     boolean ignore() default false;
 
+    // indexing
+    boolean indexing() default false;
 }

@@ -10,6 +10,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -199,48 +200,61 @@ public class WindDB extends SQLiteOpenHelper {
      * @param clazz table class
      */
     public void createTable(Class<? extends CWTable> clazz) {
+        SQLiteDatabase db = getWritableDatabase();
+        List<String> indexingCols = new ArrayList<>();
+        String tableName = getTableName(clazz);
+
         // Generate table structure script
         StringBuilder builder = new StringBuilder();
-        builder.append("CREATE TABLE IF NOT EXISTS ").append(getTableName(clazz)).append(" (");
+        builder.append("CREATE TABLE IF NOT EXISTS ").append(tableName).append(" (");
         builder.append("id").append(" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, ");
         for (Field field : getColumnFields(clazz)) {
             Class<?> type = field.getType();
-            String key = getColumnName(field);
+            Column colDef = field.getAnnotation(Column.class);
+            String colName = getColumnName(field);
 
-            if (key.equals(CWTable.HASH)) {
-                builder.append(key).append(" NVARCHAR NOT NULL UNIQUE, ");
+            if (colName.equals(CWTable.HASH)) {
+                builder.append(colName).append(" NVARCHAR NOT NULL UNIQUE, ");
 
             } else if (type.equals(String.class) || type.equals(Character.class) || type.equals(char.class)) {
-                builder.append(key).append(" NVARCHAR, ");
+                builder.append(colName).append(" NVARCHAR, ");
 
             } else if (type.equals(boolean.class) || type.equals(Boolean.class)) {
-                builder.append(key).append(" NVARCHAR, ");
+                builder.append(colName).append(" NVARCHAR, ");
 
             } else if (type.equals(double.class) || type.equals(Double.class)
                     || type.equals(float.class) || type.equals(Float.class)) {
-                builder.append(key).append(" REAL, ");
+                builder.append(colName).append(" REAL, ");
 
             } else if (type.equals(short.class) || type.equals(Short.class)
                     || type.equals(int.class) || type.equals(Integer.class)
                     || type.equals(long.class) || type.equals(Long.class)
                     || type.equals(Date.class)) {
-                builder.append(key).append(" INTEGER, ");
+                builder.append(colName).append(" INTEGER, ");
 
             } else if (type.equals(byte[].class) || type.equals(Byte[].class)) {
-                builder.append(key).append(" BLOB, ");
+                builder.append(colName).append(" BLOB, ");
 
             } else {
                 // other field type which SQLite does not support. Ex, array, collection, date ...
                 // -> convert to json then save as long string -> text
-                builder.append(key).append(" TEXT, ");
+                builder.append(colName).append(" TEXT, ");
+            }
+
+            // collect indexing columns
+            if (colDef != null && colDef.indexing()) {
+                indexingCols.add(colName);
             }
         }
-        String sql = builder.toString();
-        sql = sql.substring(0, sql.lastIndexOf(',')) + ");";
+        builder.deleteCharAt(builder.lastIndexOf(",")).append(");");
+        db.execSQL(builder.toString());
 
-        // execute script to create new table
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL(sql);
+        // create index script
+        for (String colName : indexingCols) {
+            String idxName = String.format("idx_%s_%s", tableName, colName);
+            String sql = String.format("CREATE INDEX %1$s ON %2$s (%3$s);", idxName, tableName, colName);
+            db.execSQL(sql);
+        }
     }
 
     /**
@@ -256,13 +270,27 @@ public class WindDB extends SQLiteOpenHelper {
     /**
      * Add column to table
      *
-     * @param clazz  table class
-     * @param column column's name
-     * @param type   column's type
+     * @param clazz   table class
+     * @param colName column's name
+     * @param type    column's type
      */
-    public void addColumn(Class<? extends CWTable> clazz, String column, String type) {
+    public void addColumn(Class<? extends CWTable> clazz, String colName, String type) {
         SQLiteDatabase db = getWritableDatabase();
-        String sql = String.format("ALTER TABLE %s$1 ADD COLUMN %2$s %3$s;", getTableName(clazz), column, type);
+        String sql = String.format("ALTER TABLE %s$1 ADD COLUMN %2$s %3$s;", getTableName(clazz), colName, type);
+        db.execSQL(sql);
+    }
+
+    /**
+     * Create index for given column of table
+     *
+     * @param clazz   table class
+     * @param colName column name
+     */
+    public void createIndex(Class<? extends CWTable> clazz, String colName) {
+        SQLiteDatabase db = getWritableDatabase();
+        String tableName = getTableName(clazz);
+        String idxName = String.format("idx_%s_%s", tableName, colName);
+        String sql = String.format("CREATE INDEX %1$s ON %2$s (%3$s);", idxName, tableName, colName);
         db.execSQL(sql);
     }
 
@@ -551,7 +579,7 @@ public class WindDB extends SQLiteOpenHelper {
 
         for (Field field : getColumnFields(entity.getClass())) {
             Class<?> type = field.getType();
-            String key = getColumnName(field);
+            String colName = getColumnName(field);
 
             // get value by field
             Object val;
@@ -566,32 +594,32 @@ public class WindDB extends SQLiteOpenHelper {
             // if (val == null) continue;
 
             if (type.equals(String.class) || type.equals(Character.class) || type.equals(char.class)) {
-                values.put(key, (String) val);
+                values.put(colName, (String) val);
             } else if (type.equals(double.class) || type.equals(Double.class)) {
-                values.put(key, (Double) val);
+                values.put(colName, (Double) val);
             } else if (type.equals(float.class) || type.equals(Float.class)) {
-                values.put(key, (Float) val);
+                values.put(colName, (Float) val);
             } else if (type.equals(long.class) || type.equals(Long.class)) {
-                values.put(key, (Long) val);
+                values.put(colName, (Long) val);
             } else if (type.equals(int.class) || type.equals(Integer.class)) {
-                values.put(key, (Integer) val);
+                values.put(colName, (Integer) val);
             } else if (type.equals(short.class) || type.equals(Short.class)) {
-                values.put(key, (Short) val);
+                values.put(colName, (Short) val);
             } else if (type.equals(byte[].class) || type.equals(Byte[].class)) {
-                values.put(key, (byte[]) val);
+                values.put(colName, (byte[]) val);
             } else if (type.equals(Date.class)) {
                 if (val != null) {
-                    values.put(key, ((Date) val).getTime());
+                    values.put(colName, ((Date) val).getTime());
                 } else {
-                    values.put(key, (Long) null);
+                    values.put(colName, (Long) null);
                 }
             } else {
                 // other field type which SQLite does not support. Ex, enum, array, collection, date ...
                 // -> convert to json string -> store as string
                 if (val != null) {
-                    values.put(key, Windson.$.serialize(val).toString());
+                    values.put(colName, Windson.$.serialize(val).toString());
                 } else {
-                    values.put(key, (String) null);
+                    values.put(colName, (String) null);
                 }
             }
         }
@@ -615,8 +643,8 @@ public class WindDB extends SQLiteOpenHelper {
             field.setAccessible(true);
             Object val;
             Class<?> type = field.getType();
-            String key = getColumnName(field);
-            int colIndex = cursor.getColumnIndex(key);
+            String colName = getColumnName(field);
+            int colIndex = cursor.getColumnIndex(colName);
 
             // does not exist column or null value
             if (colIndex == -1 || cursor.isNull(colIndex)) {
