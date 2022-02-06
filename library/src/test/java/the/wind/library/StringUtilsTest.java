@@ -47,6 +47,18 @@ public class StringUtilsTest {
         {
             Assert.assertEquals("color??of??the wind", CWStringUtils.join("??", "color", "of", "the wind"));
         }
+
+        // Testcase: joint with number of recurrent text
+        {
+            Assert.assertEquals("?", CWStringUtils.join(",", "?", 1));
+            Assert.assertEquals("?,?", CWStringUtils.join(",", "?", 2));
+            Assert.assertEquals("?,?,?", CWStringUtils.join(",", "?", 3));
+
+            Assert.assertEquals("xxx", CWStringUtils.join("++", "xxx", 1));
+            Assert.assertEquals("xxx++xxx", CWStringUtils.join("++", "xxx", 2));
+            Assert.assertEquals("xxx++xxx++xxx", CWStringUtils.join("++", "xxx", 3));
+
+        }
     }
 
     @Test

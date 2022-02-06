@@ -25,6 +25,7 @@ public class WindDBTest {
     public static void beforeClass() {
         WindDB.setTables(CWTestTable.class);
         WindDB.init(context, "test_database", 3);
+        WindDB.$.clear(CWTestTable.class);
     }
 
     @After
@@ -104,6 +105,10 @@ public class WindDBTest {
                 "stringObj = ?", new String[]{"Color the wind"},
                 null, "1");
         Assert.assertEquals(1, result.size());
+
+        // find by hash
+        result = WindDB.$.findByHash(CWTestTable.class, record1.getHash(), record2.getHash());
+        Assert.assertEquals(2, result.size());
 
         // find all
         result = WindDB.$.findAll(CWTestTable.class);
@@ -253,6 +258,23 @@ public class WindDBTest {
         {
             int numberOfRow = WindDB.$.delete(new CWTestTable());
             Assert.assertEquals(0, numberOfRow);
+        }
+
+        // Testcase: delete empty
+        {
+            Assert.assertEquals(0, WindDB.$.delete());
+        }
+
+        // Testcase: Delete by hash
+        {
+            CWTestTable record1 = new CWTestTable();
+            CWTestTable record2 = CWTestTable.newTestTable();
+            CWTestTable record3 = CWTestTable.newTestTable();
+            WindDB.$.insert(record1, record2, record3);
+
+            int numberOfRow = WindDB.$.deleteByHash(CWTestTable.class, record1.getHash(), record2.getHash(), record3.getHash());
+            Assert.assertEquals(3, numberOfRow);
+            Assert.assertEquals(0, WindDB.$.findAll(CWTestTable.class).size());
         }
     }
 

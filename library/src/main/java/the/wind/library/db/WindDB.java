@@ -11,6 +11,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -21,6 +23,7 @@ import androidx.annotation.NonNull;
 import the.wind.library.Windson;
 import the.wind.library.utils.CWAndroidUtils;
 import the.wind.library.utils.CWClazzUtils;
+import the.wind.library.utils.CWStringUtils;
 
 /**
  * Usage
@@ -345,7 +348,7 @@ public class WindDB extends SQLiteOpenHelper {
      *
      * @param type    model class
      * @param columns selected columns
-     * @param where   where statement. For example: "gender = ? and userName like ?"
+     * @param where   where statement. For example: "gender = ? and userName like ? and old IN (?,?,?)"
      * @param args    where arguments
      * @param orderBy order clause. For example: "userName DESC"
      * @param limit   Limits the number of rows. For example: "5"
@@ -361,7 +364,7 @@ public class WindDB extends SQLiteOpenHelper {
      *
      * @param type    model class
      * @param columns selected columns
-     * @param where   where statement. For example: "gender = ? and userName like ?"
+     * @param where   where statement. For example: "gender = ? and userName like ? and old IN (?,?,?)"
      * @param args    where arguments
      * @return list of entity model object
      */
@@ -383,13 +386,78 @@ public class WindDB extends SQLiteOpenHelper {
      * Find record by table and hash string
      *
      * @param type model class
-     * @param hash hash string which identify a table
+     * @param hash unique ID of data
      * @param <T>  class
      * @return record
      */
     public <T extends CWTable> T findByHash(Class<T> type, String hash) {
-        List<T> result = find(type, null, CWTable.HASH + " = ?", new String[]{hash});
+        List<T> result = findByCol(type, CWTable.HASH, hash);
         return (result.isEmpty()) ? null : result.get(0);
+    }
+
+    /**
+     * Find record by table and hash string
+     *
+     * @param type   model class
+     * @param hashes unique ID of data
+     * @param <T>    class
+     * @return record
+     */
+    public <T extends CWTable> List<T> findByHash(Class<T> type, Collection<String> hashes) {
+        return findByCol(type, CWTable.HASH, hashes);
+    }
+
+    /**
+     * Find record by table and hash string
+     *
+     * @param type   model class
+     * @param hashes unique ID of data
+     * @param <T>    class
+     * @return record
+     */
+    public <T extends CWTable> List<T> findByHash(Class<T> type, String... hashes) {
+        return findByCol(type, CWTable.HASH, hashes);
+    }
+
+    /**
+     * Find record by column
+     *
+     * @param type  model class
+     * @param col   column's name
+     * @param value search value
+     * @param <T>   class
+     * @return record
+     */
+    public <T extends CWTable> List<T> findByCol(Class<T> type, String col, String value) {
+        return find(type, null, col + " = ?", new String[]{value});
+    }
+
+    /**
+     * Find record by given column value
+     *
+     * @param type   model class
+     * @param col    column's name
+     * @param values search value
+     * @param <T>    class
+     * @return record
+     */
+    public <T extends CWTable> List<T> findByCol(Class<T> type, String col, Collection<String> values) {
+        String[] args = values.toArray(new String[0]);
+        return findByCol(type, col, args);
+    }
+
+    /**
+     * Find record by given column value
+     *
+     * @param type   model class
+     * @param col    column's name
+     * @param values search value
+     * @param <T>    class
+     * @return record
+     */
+    public <T extends CWTable> List<T> findByCol(Class<T> type, String col, String... values) {
+        String where = String.format("%s IN (%s)", col, CWStringUtils.join(",", "?", values.length));
+        return find(type, null, where, values);
     }
 
     /**
@@ -413,8 +481,7 @@ public class WindDB extends SQLiteOpenHelper {
      * @param entities model objects
      * @return id of lasted inserted row or -1 if error occurs
      */
-    @SafeVarargs
-    public final <T extends CWTable> long insert(T... entities) {
+    public final <T extends CWTable> long insert(Iterable<T> entities) {
         long result = -1;
 
         // use transaction to ensure the integrity of data
@@ -451,13 +518,24 @@ public class WindDB extends SQLiteOpenHelper {
     }
 
     /**
+     * Insert data to database
+     *
+     * @param entities model objects
+     * @return id of lasted inserted row or -1 if error occurs
+     */
+    @SafeVarargs
+    public final <T extends CWTable> long insert(T... entities) {
+        if (entities == null || entities.length == 0) return 0;
+        return insert(Arrays.asList(entities));
+    }
+
+    /**
      * Update table
      *
      * @param entities model objects
      * @return the number of row affected
      */
-    @SafeVarargs
-    public final <T extends CWTable> int update(T... entities) {
+    public final <T extends CWTable> int update(Iterable<T> entities) {
         int result = 0;
 
         // use transaction to ensure the integrity of data
@@ -488,6 +566,18 @@ public class WindDB extends SQLiteOpenHelper {
     }
 
     /**
+     * Update table
+     *
+     * @param entities model objects
+     * @return the number of row affected
+     */
+    @SafeVarargs
+    public final <T extends CWTable> int update(T... entities) {
+        if (entities == null || entities.length == 0) return 0;
+        return update(Arrays.asList(entities));
+    }
+
+    /**
      * Insert record if not exist, otherwise update record
      *
      * @param entity table object
@@ -510,8 +600,7 @@ public class WindDB extends SQLiteOpenHelper {
      * @param entities model objects
      * @return the number of row affected
      */
-    @SafeVarargs
-    public final <T extends CWTable> int delete(T... entities) {
+    public final <T extends CWTable> int delete(Iterable<T> entities) {
         int result = 0;
 
         // use transaction to ensure the integrity of data
@@ -519,7 +608,9 @@ public class WindDB extends SQLiteOpenHelper {
         db.beginTransactionNonExclusive();
         try {
             for (T entity : entities) {
-                result += db.delete(getTableName(entity.getClass()), CWTable.HASH + "=?", new String[]{entity.getHash()});
+                String hash = entity.getHash();
+                if (hash == null) continue;
+                result += db.delete(getTableName(entity.getClass()), CWTable.HASH + "=?", new String[]{hash});
             }
             db.setTransactionSuccessful();
 
@@ -534,6 +625,126 @@ public class WindDB extends SQLiteOpenHelper {
         // if (db != null) db.close();
 
         return result;
+    }
+
+    /**
+     * Remove data from table
+     *
+     * @param entities model objects
+     * @return the number of row affected
+     */
+    @SafeVarargs
+    public final <T extends CWTable> int delete(T... entities) {
+        if (entities == null || entities.length == 0) return 0;
+        return delete(Arrays.asList(entities));
+    }
+
+    /**
+     * Remove data from table
+     *
+     * @param type  model class
+     * @param where where statement. For example: "gender = ? and userName like ? and old IN (?,?,?)"
+     * @param args  where arguments
+     * @return the number of row affected
+     */
+    public final <T extends CWTable> int delete(Class<T> type, String where, String[] args) {
+        int result = 0;
+
+        // use transaction to ensure the integrity of data
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransactionNonExclusive();
+        try {
+            result += db.delete(getTableName(type), where, args);
+            db.setTransactionSuccessful();
+
+        } catch (Exception ex) {
+            result = 0;
+            ex.printStackTrace();
+        }
+
+        db.endTransaction();
+
+        // According to issue #27, no need to close the database connection.
+        // if (db != null) db.close();
+
+        return result;
+    }
+
+    /**
+     * Delete record by table and hash string
+     *
+     * @param type model class
+     * @param hash hash string which identify a table
+     * @param <T>  class
+     * @return the number of row affected
+     */
+    public <T extends CWTable> int deleteByHash(Class<T> type, String hash) {
+        return deleteByCol(type, CWTable.HASH, hash);
+    }
+
+    /**
+     * Delete record by table and hash string
+     *
+     * @param type   model class
+     * @param hashes hash string which identify a table
+     * @param <T>    class
+     * @return the number of row affected
+     */
+    public <T extends CWTable> int deleteByHash(Class<T> type, Collection<String> hashes) {
+        return deleteByCol(type, CWTable.HASH, hashes);
+    }
+
+    /**
+     * Delete record by table and hash string
+     *
+     * @param type   model class
+     * @param hashes hash string which identify a table
+     * @param <T>    class
+     * @return the number of row affected
+     */
+    public <T extends CWTable> int deleteByHash(Class<T> type, String... hashes) {
+        return deleteByCol(type, CWTable.HASH, hashes);
+    }
+
+    /**
+     * Delete record by given column value
+     *
+     * @param type  model class
+     * @param col   column's name
+     * @param value search value
+     * @param <T>   class
+     * @return the number of row affected
+     */
+    public <T extends CWTable> int deleteByCol(Class<T> type, String col, String value) {
+        return delete(type, col + " = ?", new String[]{value});
+    }
+
+    /**
+     * Delete record by give column value
+     *
+     * @param type   model class
+     * @param col    column's name
+     * @param values search value
+     * @param <T>    class
+     * @return the number of row affected
+     */
+    public <T extends CWTable> int deleteByCol(Class<T> type, String col, Collection<String> values) {
+        String[] args = values.toArray(new String[0]);
+        return deleteByCol(type, col, args);
+    }
+
+    /**
+     * Delete record by give column value
+     *
+     * @param type   model class
+     * @param col    column's name
+     * @param values search value
+     * @param <T>    class
+     * @return the number of row affected
+     */
+    public <T extends CWTable> int deleteByCol(Class<T> type, String col, String... values) {
+        String where = String.format("%s IN (%s)", col, CWStringUtils.join(",", "?", values.length));
+        return delete(type, where, values);
     }
 
     /**

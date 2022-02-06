@@ -33,8 +33,7 @@ public class CWStringUtils {
         for (CharSequence el : elements) {
             builder.append(delimiter).append(el);
         }
-        String result = builder.toString();
-        return result.length() > 0 ? result.substring(delimiter.length()) : result;
+        return builder.length() > 0 ? builder.substring(delimiter.length()) : "";
     }
 
     /**
@@ -54,6 +53,27 @@ public class CWStringUtils {
         StringBuilder builder = new StringBuilder();
         for (String element : elements) {
             builder.append(delimiter).append(element);
+        }
+        return builder.length() > 0 ? builder.substring(delimiter.length()) : "";
+    }
+
+    /**
+     * Joins string with given delimiter and number of texts.
+     * <pre>
+     *     List<String> list = new LinkedList();
+     *     join(".", "?", 3) -> ?,?,?
+     *     join("-", "?", 3) -> ?-?-?
+     * </pre>
+     *
+     * @param delimiter delimiter
+     * @param text      text
+     * @param number    number of recurrent text
+     * @return joined string
+     */
+    public static String join(String delimiter, String text, int number) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < number; i++) {
+            builder.append(delimiter).append(text);
         }
         return builder.length() > 0 ? builder.substring(delimiter.length()) : "";
     }

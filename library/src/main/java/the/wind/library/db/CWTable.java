@@ -20,7 +20,7 @@ public abstract class CWTable implements Serializable {
     // because SQL id field is not sync to server
     // and may be changed each time we re-insert (import) data to database
     // ⚠⚠⚠ Do not modify this field
-    @Column(name = "hash")
+    @Column(name = HASH, indexing = true)
     private String hash;
 
     // sync state
