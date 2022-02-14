@@ -51,6 +51,7 @@ public class WindAsyncTask<Params, Progress, Result> implements Promise.IPromise
             if (!cancel) {
                 result = doInBackground(params);
             }
+            exception = null;
         } catch (Exception ex) {
             exception = ex;
         }
@@ -121,10 +122,10 @@ public class WindAsyncTask<Params, Progress, Result> implements Promise.IPromise
      * @param result result
      */
     protected void onPostExecute(Result result, Exception exception) {
-        if (result != null) {
-            mPromise.resolve(result);
-        } else {
+        if (exception != null) {
             mPromise.resolve(exception);
+        } else {
+            mPromise.resolve(result);
         }
     }
 
