@@ -18,7 +18,7 @@ public enum PageTransformerType {
     ZOOM_OUT(new ZoomOutPageTransformer());
 
     // transformer
-    private ViewPager.PageTransformer transformer;
+    private final ViewPager.PageTransformer transformer;
 
     /**
      * Constructor

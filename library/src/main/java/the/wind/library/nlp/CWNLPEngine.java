@@ -530,7 +530,7 @@ public final class CWNLPEngine<T extends INLPText> {
             }
             // then add new one
             cacheSearchKeys.add(_search);
-            mCaches.put(_search, new LinkedList<NLPMatchResult<T>>());
+            mCaches.put(_search, new LinkedList<>());
 
             // do searching on previous result
             if (preResults != null) {

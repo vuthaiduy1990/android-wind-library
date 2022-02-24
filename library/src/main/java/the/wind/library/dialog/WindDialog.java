@@ -127,8 +127,7 @@ public class WindDialog extends Dialog {
                 (int) context.getResources().getDimension(R.dimen.wl_dialog_padding_end),
                 (int) context.getResources().getDimension(R.dimen.wl_spacing_level_2)
         );
-        setMargin(0, 0, 0, 0);
-        ; // default margin
+        setMargin(0, 0, 0, 0); // default margin
 
         // bind views
         _dialogView = findViewById(android.R.id.content);

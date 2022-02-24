@@ -247,7 +247,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
          * Iterate over next month
          */
         MonthInfo monthIt = selectedMonth;
-        MonthInfo nextMonth = null;
+        MonthInfo nextMonth;
         while ((nextMonth = monthIt.next()) != null) {
             monthIt = nextMonth;
         }
@@ -267,7 +267,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
          * Iterate over previous month
          */
         monthIt = selectedMonth;
-        MonthInfo preMonth = null;
+        MonthInfo preMonth;
         while ((preMonth = monthIt.previous()) != null) {
             monthIt = preMonth;
         }

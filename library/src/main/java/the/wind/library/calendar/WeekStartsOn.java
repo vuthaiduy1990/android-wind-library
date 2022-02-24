@@ -8,7 +8,7 @@ public enum WeekStartsOn {
     SUNDAY(Calendar.SUNDAY);
 
     // day of week
-    private int day;
+    private final int day;
 
     /**
      * Constructor
