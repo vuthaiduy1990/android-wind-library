@@ -306,6 +306,30 @@ public class VietnameseCalendar extends ChineseCalendar {
     }
 
     /**
+     * Vietnamese calendar use same year cycle as Solar Calendar
+     * the year in lunar calendar may be different from year in solar calendar.
+     * For example, year 2021/01 in solar calendar will be year 2020/12 in vietnamese lunar calendar and 37/12 in Chinese calendar
+     * Need to covert lunar year to solar year number. This value may not equal to year of respective solar date
+     * Solution: use solar year corresponding to first day month of lunar calendar
+     * Note: this function will create a clone of vietnamese calendar, so be-careful when calling this function in while looop
+     *
+     * @param cal      vietnamese calendar
+     * @param solarCal solar calendar
+     * @return year in Vietnamese calendar
+     */
+    public static int getVietnameseYear(VietnameseCalendar cal, Calendar solarCal) {
+        // Vietnamese calendar use same year cycle as Solar Calendar
+        // the year in lunar calendar may be different from year in solar calendar.
+        // For example, year 2021/01 in solar calendar will be year 2020/12
+        // Need to covert lunar year to solar year number. This value may not equal to year of respective solar date
+        // Solution: use solar year corresponding to first day month of lunar calendar
+        cal.set(Calendar.MONTH, Calendar.JANUARY);
+        cal.set(Calendar.DATE, 1);
+        solarCal.setTime(cal.getTime());
+        return solarCal.get(Calendar.YEAR);
+    }
+
+    /**
      * Get date info
      *
      * @param solarCal solar calendar
@@ -334,19 +358,12 @@ public class VietnameseCalendar extends ChineseCalendar {
      * For example, year 2021/01 in solar calendar will be year 2020/12 in vietnamese lunar calendar and 37/12 in Chinese calendar
      * Need to covert lunar year to solar year number. This value may not equal to year of respective solar date
      * Solution: use solar year corresponding to first day month of lunar calendar
+     * Note: this function will create a clone of vietnamese calendar, so be-careful when calling this function in while looop
      *
      * @param solarCal solar calendar
-     * @return year in vietnames calendar
+     * @return year in Vietnamese calendar
      */
     public int getYear(Calendar solarCal) {
-        // Vietnamese calendar use same year cycle as Solar Calendar
-        // the year in lunar calendar may be different from year in solar calendar.
-        // For example, year 2021/01 in solar calendar will be year 2020/12
-        // Need to covert lunar year to solar year number. This value may not equal to year of respective solar date
-        // Solution: use solar year corresponding to first day month of lunar calendar
-        set(Calendar.MONTH, Calendar.JANUARY);
-        set(Calendar.DATE, 1);
-        solarCal.setTime(getTime());
-        return solarCal.get(Calendar.YEAR);
+        return getVietnameseYear((VietnameseCalendar) this.clone(), solarCal);
     }
 }
