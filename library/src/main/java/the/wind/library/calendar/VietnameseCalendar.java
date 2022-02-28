@@ -327,4 +327,26 @@ public class VietnameseCalendar extends ChineseCalendar {
         result[7] = solarCal.get(Calendar.SECOND);
         return result;
     }
+
+    /**
+     * Vietnamese calendar use same year cycle as Solar Calendar
+     * the year in lunar calendar may be different from year in solar calendar.
+     * For example, year 2021/01 in solar calendar will be year 2020/12 in vietnamese lunar calendar and 37/12 in Chinese calendar
+     * Need to covert lunar year to solar year number. This value may not equal to year of respective solar date
+     * Solution: use solar year corresponding to first day month of lunar calendar
+     *
+     * @param solarCal solar calendar
+     * @return year in vietnames calendar
+     */
+    public int getYear(Calendar solarCal) {
+        // Vietnamese calendar use same year cycle as Solar Calendar
+        // the year in lunar calendar may be different from year in solar calendar.
+        // For example, year 2021/01 in solar calendar will be year 2020/12
+        // Need to covert lunar year to solar year number. This value may not equal to year of respective solar date
+        // Solution: use solar year corresponding to first day month of lunar calendar
+        set(Calendar.MONTH, Calendar.JANUARY);
+        set(Calendar.DATE, 1);
+        solarCal.setTime(getTime());
+        return solarCal.get(Calendar.YEAR);
+    }
 }
