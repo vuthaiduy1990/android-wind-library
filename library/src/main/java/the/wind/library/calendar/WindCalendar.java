@@ -501,11 +501,38 @@ public class WindCalendar extends LinearLayout {
      * Select dates
      *
      * @param dateIds list of date ids
+     * @param refresh true to refresh view, else user need to call {{{@link WindCalendar#refreshCurrentPage()}}} by themself
+     * @see CalendarUtil#toId(int, int, int)
+     * @see WindCalendar#refreshCurrentPage()
+     */
+    public void selectDateViews(Collection<String> dateIds, boolean refresh) {
+        info.selectDates(dateIds);
+        if (adapter != null && refresh) {
+            adapter.refreshCurrentPage();
+        }
+    }
+
+    /**
+     * Select dates
+     *
+     * @param dateIds list of date ids
      * @see CalendarUtil#toId(int, int, int)
      */
     public void selectDateViews(Collection<String> dateIds) {
-        info.selectDates(dateIds);
-        adapter.refreshCurrentPage();
+        selectDateViews(dateIds, true);
+    }
+
+    /**
+     * Set highlight dates but does not refresh page view
+     * Set empty to clear all events.
+     * Usser need to call {{{@link WindCalendar#refreshCurrentPage()}}} by themself
+     *
+     * @param dateIds list of date ids
+     * @see CalendarUtil#toId(int, int, int)
+     * @see WindCalendar#refreshCurrentPage()
+     */
+    public void selectDateViewsNoRefresh(String... dateIds) {
+        selectDateViews(Arrays.asList(dateIds), false);
     }
 
     /**
@@ -516,7 +543,7 @@ public class WindCalendar extends LinearLayout {
      * @see CalendarUtil#toId(int, int, int)
      */
     public void selectDateViews(String... dateIds) {
-        selectDateViews(Arrays.asList(dateIds));
+        selectDateViews(Arrays.asList(dateIds), true);
     }
 
     /**
@@ -765,6 +792,15 @@ public class WindCalendar extends LinearLayout {
     public void notifyDataSetChanged() {
         if (adapter != null) {
             adapter.notifyDataSetChanged();
+        }
+    }
+
+    /**
+     * Refresh current page
+     */
+    public void refreshCurrentPage() {
+        if (adapter != null) {
+            adapter.refreshCurrentPage();
         }
     }
 
