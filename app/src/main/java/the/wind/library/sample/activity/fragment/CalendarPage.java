@@ -93,7 +93,7 @@ public class CalendarPage extends Fragment {
             if (highlighted) {
                 _calendarView.clearSelectedDates();
             } else {
-                _calendarView.selectDatesView(neighborDates);
+                _calendarView.selectDateViews(neighborDates);
             }
             highlighted = !highlighted;
         });

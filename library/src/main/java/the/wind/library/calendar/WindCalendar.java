@@ -503,7 +503,7 @@ public class WindCalendar extends LinearLayout {
      * @param dateIds list of date ids
      * @see CalendarUtil#toId(int, int, int)
      */
-    public void selectDatesView(Collection<String> dateIds) {
+    public void selectDateViews(Collection<String> dateIds) {
         info.selectDates(dateIds);
         adapter.refreshCurrentPage();
     }
@@ -515,8 +515,8 @@ public class WindCalendar extends LinearLayout {
      * @param dateIds list of date ids
      * @see CalendarUtil#toId(int, int, int)
      */
-    public void selectDatesView(String... dateIds) {
-        selectDatesView(Arrays.asList(dateIds));
+    public void selectDateViews(String... dateIds) {
+        selectDateViews(Arrays.asList(dateIds));
     }
 
     /**
