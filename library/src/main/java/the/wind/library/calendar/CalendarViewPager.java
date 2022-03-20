@@ -92,12 +92,12 @@ public class CalendarViewPager extends ViewPager {
     /* ---------------------- GET-SET ------------------------ */
 
     /**
-     * Set selected date.
+     * Scroll calendar view to selected date
      * Must set after setting adapter
      *
      * @param date selected date
      */
-    void setSelectedDate(Date date) {
+    void scrollToDate(Date date) {
         CalendarAdapter adapter = (CalendarAdapter) getAdapter();
         if (adapter != null) {
             adapter.setSelectedDate(date);
@@ -135,7 +135,7 @@ public class CalendarViewPager extends ViewPager {
         setAdapter(adapter); // that will reset offscreen limit to configured value
 
         // set selected date
-        setSelectedDate(date);
+        scrollToDate(date);
     }
 
     /* ---------------------- INNER CLASS -------------------- */

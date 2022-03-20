@@ -161,7 +161,7 @@ public class WindCalendarDialog extends DialogFragment {
 
         if (_calendarViewPager.getAdapter() == null) {
             _calendarViewPager.setAdapter(adapter);
-            _calendarViewPager.setSelectedDate(selectedDate);
+            _calendarViewPager.scrollToDate(selectedDate);
 
         } else {
             _calendarViewPager.refreshAdapter(adapter, selectedDate);
@@ -269,7 +269,7 @@ public class WindCalendarDialog extends DialogFragment {
      * @param date date
      */
     protected void onReloadCalendar(Date date) {
-        _calendarViewPager.setSelectedDate(date);
+        _calendarViewPager.scrollToDate(date);
     }
 
     /* ---------------------- GET-SET ------------------------ */

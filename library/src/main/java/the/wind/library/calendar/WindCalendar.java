@@ -336,7 +336,7 @@ public class WindCalendar extends LinearLayout {
             createWeekDayPanel();
             adapter = createCalendarAdapter();
             _calendarViewPager.setAdapter(adapter);
-            _calendarViewPager.setSelectedDate(new Date()); // set current date as default
+            _calendarViewPager.scrollToDate(new Date()); // set current date as default
         }
     }
 
@@ -493,7 +493,7 @@ public class WindCalendar extends LinearLayout {
      * @param viewHolder view holder
      * @return true if item view is already selected before
      */
-    public boolean selectDate(MonthAdapter.ViewHolder viewHolder) {
+    public boolean selectDateView(MonthAdapter.ViewHolder viewHolder) {
         return info.selectDate(viewHolder);
     }
 
@@ -503,7 +503,7 @@ public class WindCalendar extends LinearLayout {
      * @param dateIds list of date ids
      * @see CalendarUtil#toId(int, int, int)
      */
-    public void selectDates(Collection<String> dateIds) {
+    public void selectDatesView(Collection<String> dateIds) {
         info.selectDates(dateIds);
         adapter.refreshCurrentPage();
     }
@@ -515,8 +515,8 @@ public class WindCalendar extends LinearLayout {
      * @param dateIds list of date ids
      * @see CalendarUtil#toId(int, int, int)
      */
-    public void selectDates(String... dateIds) {
-        selectDates(Arrays.asList(dateIds));
+    public void selectDatesView(String... dateIds) {
+        selectDatesView(Arrays.asList(dateIds));
     }
 
     /**
@@ -526,7 +526,7 @@ public class WindCalendar extends LinearLayout {
      */
     public void setSelectedDate(Date date) {
         showOverlay();
-        _calendarViewPager.setSelectedDate(date);
+        _calendarViewPager.scrollToDate(date);
         hideOverlay();
     }
 
