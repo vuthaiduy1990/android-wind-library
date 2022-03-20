@@ -520,11 +520,11 @@ public class WindCalendar extends LinearLayout {
     }
 
     /**
-     * Set selected date
+     * Scroll calendar view to selected date
      *
      * @param date selected date
      */
-    public void setSelectedDate(Date date) {
+    public void scrollToDate(Date date) {
         showOverlay();
         _calendarViewPager.scrollToDate(date);
         hideOverlay();

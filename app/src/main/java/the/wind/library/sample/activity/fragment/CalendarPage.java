@@ -99,7 +99,7 @@ public class CalendarPage extends Fragment {
         });
 
         // Set today
-        view.findViewById(R.id._todayBtn).setOnClickListener(v -> _calendarView.setSelectedDate(new Date()));
+        view.findViewById(R.id._todayBtn).setOnClickListener(v -> _calendarView.scrollToDate(new Date()));
 
         // Change Lunar type
         view.findViewById(R.id._IslamicLunarCalendar).setOnClickListener(v -> {
@@ -149,7 +149,7 @@ public class CalendarPage extends Fragment {
                 @Override
                 public void onDateSet(WindCalendarDialog dialog, List<Date> dates) {
                     Toast.makeText(requireContext(), dates.size() + " selected", Toast.LENGTH_SHORT).show();
-                    _calendarView.setSelectedDate(dates.get(0));
+                    _calendarView.scrollToDate(dates.get(0));
                 }
             });
 
