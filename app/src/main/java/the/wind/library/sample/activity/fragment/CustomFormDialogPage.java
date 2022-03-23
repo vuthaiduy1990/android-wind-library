@@ -107,7 +107,7 @@ public class CustomFormDialogPage extends Fragment {
                 @Override
                 protected boolean onSelection(@NonNull SelectionListDialog<TimezoneWrapper> dialog, @NonNull View itemView, @NonNull TimezoneWrapper data) {
                     selectedTimeZone = data;
-                    Toast.makeText(getContext(), data.getName(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), data.getCode() + ": " + data.getName(), Toast.LENGTH_SHORT).show();
                     return false;
                 }
             };
