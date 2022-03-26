@@ -38,6 +38,8 @@ public abstract class CWTable implements Serializable {
     // true -> Table/model is retrieved from offline database
     // false -> Table/model is retrieved from server (online)
     private transient boolean offline = false;
+    // record is deleted or not
+    private transient boolean deleted = false;
 
     // attaching
     private final transient CWBundle bundle;
@@ -137,7 +139,7 @@ public abstract class CWTable implements Serializable {
     }
 
     /**
-     * Check if sticker is already saved offline to local storage
+     * Check if data is already saved offline to local storage
      *
      * @return true if offline
      */
@@ -150,6 +152,22 @@ public abstract class CWTable implements Serializable {
      */
     protected void setOffline() {
         offline = true;
+    }
+
+    /**
+     * Check if record is deleted or not
+     *
+     * @return deleted
+     */
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    /**
+     * Mark the record as delete
+     */
+    protected void setDeleted() {
+        this.deleted = true;
     }
 
     /**

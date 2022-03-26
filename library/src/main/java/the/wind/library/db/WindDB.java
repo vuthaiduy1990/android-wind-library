@@ -610,6 +610,7 @@ public class WindDB extends SQLiteOpenHelper {
             for (T entity : entities) {
                 String hash = entity.getHash();
                 if (hash == null) continue;
+                entity.setDeleted();
                 result += db.delete(getTableName(entity.getClass()), CWTable.HASH + "=?", new String[]{hash});
             }
             db.setTransactionSuccessful();
