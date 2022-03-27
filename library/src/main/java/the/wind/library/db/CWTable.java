@@ -166,7 +166,7 @@ public abstract class CWTable implements Serializable {
     /**
      * Mark the record as delete
      */
-    protected void setDeleted() {
+    public void setDeleted() {
         this.deleted = true;
     }
 
