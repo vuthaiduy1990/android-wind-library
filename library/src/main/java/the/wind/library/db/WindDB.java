@@ -327,7 +327,6 @@ public class WindDB extends SQLiteOpenHelper {
                 do {
                     // Parse cursor to model object
                     T obj = parseRowCursor(cur, tableClazz);
-                    obj.setOffline();
                     result.add(obj);
                 } while (cur.moveToNext());
             }
@@ -460,18 +459,6 @@ public class WindDB extends SQLiteOpenHelper {
         return find(type, null, where, values);
     }
 
-    /**
-     * Find record by state
-     *
-     * @param type  model class
-     * @param state record state
-     * @param <T>   class
-     * @return list of records
-     */
-    public <T extends CWTable> List<T> findByState(Class<T> type, CWTable.SyncState state) {
-        return find(type, null, "syncState = ?", new String[]{"\"" + state.name() + "\""});
-    }
-
     /* ------------------- METHOD - DML ---------------------- */
     /* ------------------- ------------ ---------------------- */
 
@@ -500,7 +487,6 @@ public class WindDB extends SQLiteOpenHelper {
                 // insert
                 ContentValues values = toRowValue(entity);
                 result = db.insert(getTableName(entity.getClass()), null, values);
-                entity.setOffline(); // save successfully -> mark as offline
             }
             db.setTransactionSuccessful();
 
@@ -543,7 +529,6 @@ public class WindDB extends SQLiteOpenHelper {
         db.beginTransactionNonExclusive();
         try {
             for (T entity : entities) {
-                entity.setOffline();
                 entity.setVersion(db.getVersion());
                 Date date = new Date();
                 entity.setUpdateDate(date);

@@ -23,9 +23,6 @@ public abstract class CWTable implements Serializable {
     @Column(name = HASH, indexing = true)
     private String hash;
 
-    // sync state
-    private SyncState syncState = SyncState.NEW;
-
     // table version.
     // Normally it should be the same as app/database version
     private int version;
@@ -34,10 +31,6 @@ public abstract class CWTable implements Serializable {
     private Date createdDate;
     private Date updatedDate;
 
-    // offline state.
-    // true -> Table/model is retrieved from offline database
-    // false -> Table/model is retrieved from server (online)
-    private transient boolean offline = false;
     // record is deleted or not
     private transient boolean deleted = false;
 
@@ -89,24 +82,6 @@ public abstract class CWTable implements Serializable {
     }
 
     /**
-     * Get synchronization state of data
-     *
-     * @return state of data
-     */
-    public SyncState getSyncState() {
-        return syncState;
-    }
-
-    /**
-     * Set sync state
-     *
-     * @param state state of data
-     */
-    public void setSyncState(@NonNull SyncState state) {
-        syncState = state;
-    }
-
-    /**
      * @return created date
      */
     public Date getCreatedDate() {
@@ -136,22 +111,6 @@ public abstract class CWTable implements Serializable {
      */
     public void setUpdateDate(Date updatedDate) {
         this.updatedDate = updatedDate;
-    }
-
-    /**
-     * Check if data is already saved offline to local storage
-     *
-     * @return true if offline
-     */
-    public boolean isOffline() {
-        return offline;
-    }
-
-    /**
-     * Set model offline
-     */
-    protected void setOffline() {
-        offline = true;
     }
 
     /**
@@ -191,14 +150,4 @@ public abstract class CWTable implements Serializable {
 
     /* ---------------------- INNER CLASS -------------------- */
 
-    /**
-     * Sync state
-     */
-    public enum SyncState {
-        NEW, // data have not been uploaded to server
-        MODIFIED, // data have been uploaded to server but not latest version
-        SYNCED,  // data have been uploaded to server and is latest version
-        DELETED, // data have been deleted from local but not synced to server
-        TEMP    // data is marked as temporary and should be deleted later
-    }
 }
