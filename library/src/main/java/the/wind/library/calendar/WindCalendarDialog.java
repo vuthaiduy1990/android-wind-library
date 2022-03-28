@@ -236,8 +236,14 @@ public class WindCalendarDialog extends DialogFragment {
      */
     protected boolean onDateItemLongClick(MonthAdapter.ViewHolder viewHolder, View view, DateInfo data) {
         // highlight selected items
-        info.selectDate(viewHolder);
-        selectedDateMap.put(data.getId(), data.getDate());
+        String dateId = data.getId();
+        if (info.selectedDateViewMap.containsKey(dateId)) {
+            info.unselectDate(viewHolder);
+            selectedDateMap.remove(dateId);
+        } else {
+            info.selectDate(viewHolder);
+            selectedDateMap.put(dateId, data.getDate());
+        }
         return true;
     }
 

@@ -488,13 +488,31 @@ public class WindCalendar extends LinearLayout {
     }
 
     /**
+     * Check if date view is selected or not
+     *
+     * @param dateId date ID
+     * @return true if date view which is corresponding to date ID is selected
+     */
+    public boolean isDateViewSelected(String dateId) {
+        return info.selectedDateViewMap.containsKey(dateId);
+    }
+
+    /**
      * Select date item view
      *
      * @param viewHolder view holder
-     * @return true if item view is already selected before
      */
-    public boolean selectDateView(MonthAdapter.ViewHolder viewHolder) {
-        return info.selectDate(viewHolder);
+    public void selectDateView(MonthAdapter.ViewHolder viewHolder) {
+        info.selectDate(viewHolder);
+    }
+
+    /**
+     * Select date item view
+     *
+     * @param viewHolder view holder
+     */
+    public void unselectDateView(MonthAdapter.ViewHolder viewHolder) {
+        info.unselectDate(viewHolder);
     }
 
     /**

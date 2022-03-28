@@ -156,9 +156,8 @@ final class CalendarInfo {
      * Select date item view
      *
      * @param viewHolder view holder
-     * @return true if item view is already selected before
      */
-    public boolean selectDate(MonthAdapter.ViewHolder viewHolder) {
+    public void selectDate(MonthAdapter.ViewHolder viewHolder) {
         String dateId = viewHolder.getAdapterData().getId();
         boolean alreadySelected = selectedDateViewMap.containsKey(dateId);
         if (!alreadySelected) {
@@ -166,7 +165,18 @@ final class CalendarInfo {
             selectedDateViewMap.put(dateId, viewHolder);
         }
         viewHolder.touchDown();
-        return alreadySelected;
+    }
+
+    /**
+     * Un-select date item view
+     *
+     * @param viewHolder view holder
+     */
+    public void unselectDate(MonthAdapter.ViewHolder viewHolder) {
+        String dateId = viewHolder.getAdapterData().getId();
+        selectedDates.remove(dateId);
+        selectedDateViewMap.remove(dateId);
+        viewHolder.touchUp();
     }
 
     /**
