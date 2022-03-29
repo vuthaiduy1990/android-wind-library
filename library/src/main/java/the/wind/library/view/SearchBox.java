@@ -196,7 +196,7 @@ public class SearchBox extends LinearLayout {
             @Override
             public void afterTextChanged(Editable s) {
                 oldSearchInput = inputText;
-                inputText = s.toString().trim();
+                inputText = s.toString();
 
                 // show/hide the clear icon
                 if (s.length() > 0) {
