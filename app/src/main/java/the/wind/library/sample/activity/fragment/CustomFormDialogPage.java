@@ -7,8 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,7 +31,7 @@ public class CustomFormDialogPage extends Fragment {
 
     // multiple selection list dialog
     private CurrencyDialog multiCurrencyDialog;
-    private Collection<CurrencyWrapper> multiSelectedCurrencies;
+    private List<CurrencyWrapper> multiSelectedCurrencies;
 
     // locale dialog
     private LocaleDialog localeDialog;
@@ -103,8 +102,8 @@ public class CustomFormDialogPage extends Fragment {
             multiCurrencyDialog = new CurrencyDialog(context, SelectionListDialog.SelectionMode.MULTIPLE);
             multiCurrencyDialog.setOnMultiSelectionListener(new SelectionListDialog.OnMultiSelectionListener<CurrencyWrapper>() {
                 @Override
-                public boolean onSelect(@NonNull SelectionListDialog<CurrencyWrapper> dialog, Collection<CurrencyWrapper> items) {
-                    multiSelectedCurrencies = new ArrayList<>(items);
+                public boolean onSelect(@NonNull SelectionListDialog<CurrencyWrapper> dialog, List<CurrencyWrapper> items) {
+                    multiSelectedCurrencies = items;
                     Toast.makeText(getContext(), items.size() + " items selected", Toast.LENGTH_SHORT).show();
                     return false;
                 }

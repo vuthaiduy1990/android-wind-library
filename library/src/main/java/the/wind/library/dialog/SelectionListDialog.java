@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -336,7 +335,7 @@ public abstract class SelectionListDialog<T> extends WindDialog {
      *
      * @param items selected data
      */
-    public void show(@Nullable Collection<T> items) {
+    public void show(@Nullable List<T> items) {
         show();
         if (items == null || items.isEmpty()) {
             listAdapter.setSelectors(null);
@@ -401,7 +400,7 @@ public abstract class SelectionListDialog<T> extends WindDialog {
          * @param items  list of selected items
          * @return true if consume the event, else return false
          */
-        boolean onSelect(@NonNull SelectionListDialog<T> dialog, Collection<T> items);
+        boolean onSelect(@NonNull SelectionListDialog<T> dialog, List<T> items);
     }
 
     /**

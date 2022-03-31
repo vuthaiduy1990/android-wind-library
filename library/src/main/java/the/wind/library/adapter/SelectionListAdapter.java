@@ -5,8 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,8 +82,8 @@ public class SelectionListAdapter<T> extends WindRecycleView.Adapter<T> {
     /**
      * @return selected data
      */
-    public Collection<T> getSelectors() {
-        return Collections.unmodifiableCollection(selectorMap.values());
+    public List<T> getSelectors() {
+        return new ArrayList<>(selectorMap.values());
     }
 
     /**
@@ -103,7 +102,7 @@ public class SelectionListAdapter<T> extends WindRecycleView.Adapter<T> {
      *
      * @param items list of selected data
      */
-    public void setSelectors(Collection<T> items) {
+    public void setSelectors(List<T> items) {
         selectorMap.clear();
         if (dataTransformer != null && items != null) {
             for (T item : items) {
