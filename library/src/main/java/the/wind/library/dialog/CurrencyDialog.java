@@ -20,7 +20,7 @@ import the.wind.library.view.SearchBox;
 /**
  * Currency dialog
  */
-public abstract class CurrencyDialog extends SelectionListDialog<CurrencyWrapper> {
+public class CurrencyDialog extends SelectionListDialog<CurrencyWrapper> {
 
     // List of currencies
     private Collection<CurrencyWrapper> currencies;
@@ -46,14 +46,14 @@ public abstract class CurrencyDialog extends SelectionListDialog<CurrencyWrapper
         }
     };
 
-
     /**
      * Constructor
      *
      * @param context application context
+     * @param mode    selection mode
      */
-    public CurrencyDialog(@NonNull Context context) {
-        super(context, new LinkedList<>());
+    public CurrencyDialog(@NonNull Context context, SelectionMode mode) {
+        super(context, mode, new LinkedList<>());
         setCurrencies(WindFactory.instance().getAvailableCurrencies());
         setTitle(R.string.wl_currency);
         setHeight((int) (CWAndroidUtils.getScreenSize(context).getHeight() * 0.8));
@@ -87,11 +87,20 @@ public abstract class CurrencyDialog extends SelectionListDialog<CurrencyWrapper
         });
     }
 
+    /**
+     * Constructor
+     *
+     * @param context application context
+     */
+    public CurrencyDialog(@NonNull Context context) {
+        this(context, SelectionMode.SINGLE);
+    }
+
     /* ---------------------- OVERRIDE ----------------------- */
 
     @Override
-    protected boolean equal(@NonNull CurrencyWrapper a, @NonNull CurrencyWrapper b) {
-        return a.getCode().equals(b.getCode());
+    protected String itemId(@NonNull CurrencyWrapper itemData) {
+        return itemData.getCode();
     }
 
     @Override

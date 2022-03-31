@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -26,6 +29,10 @@ public class CustomFormDialogPage extends Fragment {
     // currency dialog
     private CurrencyDialog currencyDialog;
     private CurrencyWrapper selectedCurrency;
+
+    // multiple selection list dialog
+    private CurrencyDialog multiCurrencyDialog;
+    private Collection<CurrencyWrapper> multiSelectedCurrencies;
 
     // locale dialog
     private LocaleDialog localeDialog;
@@ -56,6 +63,9 @@ public class CustomFormDialogPage extends Fragment {
         // currency button
         view.findViewById(R.id._currencyBtn).setOnClickListener(v -> getCurrencyDialog(v.getContext()).show(selectedCurrency));
 
+        // multiple currency button
+        view.findViewById(R.id._multipleCurrencyBtn).setOnClickListener(v -> getMultiSelectCurrencyDialog(v.getContext()).show(multiSelectedCurrencies));
+
         // local button
         view.findViewById(R.id._localeBtn).setOnClickListener(v -> getLocaleDialog(v.getContext()).show(selectedLocale));
 
@@ -75,56 +85,75 @@ public class CustomFormDialogPage extends Fragment {
 
     private CurrencyDialog getCurrencyDialog(Context context) {
         if (currencyDialog == null) {
-            currencyDialog = new CurrencyDialog(context) {
+            currencyDialog = new CurrencyDialog(context);
+            currencyDialog.setOnItemSelectionListener(new SelectionListDialog.OnItemSelectionListener<CurrencyWrapper>() {
                 @Override
-                protected boolean onSelection(@NonNull SelectionListDialog<CurrencyWrapper> dialog, @NonNull View itemView, @NonNull CurrencyWrapper data) {
+                public boolean onSelect(@NonNull SelectionListDialog<CurrencyWrapper> dialog, @NonNull View itemView, @NonNull CurrencyWrapper data) {
                     selectedCurrency = data;
                     Toast.makeText(getContext(), data.getDisplayText(), Toast.LENGTH_SHORT).show();
                     return false;
                 }
-            };
+            });
         }
         return currencyDialog;
     }
 
+    private CurrencyDialog getMultiSelectCurrencyDialog(Context context) {
+        if (multiCurrencyDialog == null) {
+            multiCurrencyDialog = new CurrencyDialog(context, SelectionListDialog.SelectionMode.MULTIPLE);
+            multiCurrencyDialog.setOnMultiSelectionListener(new SelectionListDialog.OnMultiSelectionListener<CurrencyWrapper>() {
+                @Override
+                public boolean onSelect(@NonNull SelectionListDialog<CurrencyWrapper> dialog, Collection<CurrencyWrapper> items) {
+                    multiSelectedCurrencies = new ArrayList<>(items);
+                    Toast.makeText(getContext(), items.size() + " items selected", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            });
+        }
+        return multiCurrencyDialog;
+    }
+
     private LocaleDialog getLocaleDialog(Context context) {
         if (localeDialog == null) {
-            localeDialog = new LocaleDialog(context) {
+            localeDialog = new LocaleDialog(context);
+            localeDialog.setOnItemSelectionListener(new SelectionListDialog.OnItemSelectionListener<LocaleWrapper>() {
                 @Override
-                protected boolean onSelection(@NonNull SelectionListDialog<LocaleWrapper> dialog, @NonNull View itemView, @NonNull LocaleWrapper data) {
+                public boolean onSelect(@NonNull SelectionListDialog<LocaleWrapper> dialog, @NonNull View itemView, @NonNull LocaleWrapper data) {
                     selectedLocale = data;
                     Toast.makeText(getContext(), data.getDisplayText(), Toast.LENGTH_SHORT).show();
                     return false;
                 }
-            };
+            });
         }
         return localeDialog;
     }
 
     private TimezoneDialog getTimezoneDialog(Context context) {
         if (timezoneDialog == null) {
-            timezoneDialog = new TimezoneDialog(context) {
+            timezoneDialog = new TimezoneDialog(context);
+            timezoneDialog.setOnItemSelectionListener(new SelectionListDialog.OnItemSelectionListener<TimezoneWrapper>() {
                 @Override
-                protected boolean onSelection(@NonNull SelectionListDialog<TimezoneWrapper> dialog, @NonNull View itemView, @NonNull TimezoneWrapper data) {
+                public boolean onSelect(@NonNull SelectionListDialog<TimezoneWrapper> dialog, @NonNull View itemView, @NonNull TimezoneWrapper data) {
                     selectedTimeZone = data;
                     Toast.makeText(getContext(), data.getCode() + ": " + data.getName(), Toast.LENGTH_SHORT).show();
                     return false;
                 }
-            };
+            });
         }
         return timezoneDialog;
     }
 
     private YearSelectionDialog getYearSelectionDialog(Context context) {
         if (yearSelectionDialog == null) {
-            yearSelectionDialog = new YearSelectionDialog(context) {
+            yearSelectionDialog = new YearSelectionDialog(context);
+            yearSelectionDialog.setOnItemSelectionListener(new SelectionListDialog.OnItemSelectionListener<Integer>() {
                 @Override
-                protected boolean onSelection(@NonNull SelectionListDialog<Integer> dialog, @NonNull View itemView, @NonNull Integer data) {
+                public boolean onSelect(@NonNull SelectionListDialog<Integer> dialog, @NonNull View itemView, @NonNull Integer data) {
                     selectedYear = data;
                     Toast.makeText(getContext(), Integer.toString(data), Toast.LENGTH_SHORT).show();
                     return false;
                 }
-            };
+            });
         }
         return yearSelectionDialog;
     }

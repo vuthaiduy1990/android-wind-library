@@ -5,7 +5,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import the.wind.library.R;
@@ -15,7 +19,7 @@ import the.wind.library.view.WindRecycleView;
 public class SelectionListAdapter<T> extends WindRecycleView.Adapter<T> {
 
     private DataTransformer<T> dataTransformer;
-    private T selectedData;
+    private final Map<String, T> selectorMap = new HashMap<>();
     private ViewHolderGenerator<T> vhGenerator;
 
     /**
@@ -44,7 +48,7 @@ public class SelectionListAdapter<T> extends WindRecycleView.Adapter<T> {
         if (holder instanceof SelectionListAdapter.ViewHolder) {
             ViewHolder<T> _holder = (ViewHolder<T>) holder;
             _holder.setDataTransformer(dataTransformer);
-            _holder.setSelected(selectedData);
+            _holder.setSelectors(selectorMap);
         }
         super.onBindViewHolder(holder, position);
     }
@@ -75,21 +79,78 @@ public class SelectionListAdapter<T> extends WindRecycleView.Adapter<T> {
         return this;
     }
 
+
     /**
      * @return selected data
      */
-    public T getSelected() {
-        return selectedData;
+    public Collection<T> getSelectors() {
+        return Collections.unmodifiableCollection(selectorMap.values());
     }
 
     /**
-     * Set selected item
+     * Check if item is selected or not
      *
-     * @param itemData item data
+     * @param item item
+     * @return true of item is selected
      */
-    public void setSelected(T itemData) {
-        selectedData = itemData;
+    public boolean isSelectedItem(T item) {
+        return selectorMap.get(dataTransformer.dataToId(item)) != null;
     }
+
+    /**
+     * Set selected item.
+     * This function should called after user set data transformer
+     *
+     * @param items list of selected data
+     */
+    public void setSelectors(Collection<T> items) {
+        selectorMap.clear();
+        if (dataTransformer != null && items != null) {
+            for (T item : items) {
+                String id = dataTransformer.dataToId(item);
+                selectorMap.put(id, item);
+            }
+        }
+    }
+
+    /**
+     * Set selected item.
+     * This function should called after user set data transformer
+     *
+     * @param item selected item
+     */
+    public void setSelector(T item) {
+        selectorMap.clear();
+        if (dataTransformer != null && item != null) {
+            String id = dataTransformer.dataToId(item);
+            selectorMap.put(id, item);
+        }
+    }
+
+    /**
+     * add selected item
+     *
+     * @param item item
+     */
+    public void addSelector(T item) {
+        if (dataTransformer != null && item != null) {
+            String id = dataTransformer.dataToId(item);
+            selectorMap.put(id, item);
+        }
+    }
+
+    /**
+     * Remove selected item
+     *
+     * @param item selected item
+     */
+    public void removeSelector(T item) {
+        if (dataTransformer != null && item != null) {
+            String id = dataTransformer.dataToId(item);
+            selectorMap.remove(id);
+        }
+    }
+
 
     /* ---------------------- METHOD ------------------------- */
 
@@ -118,7 +179,7 @@ public class SelectionListAdapter<T> extends WindRecycleView.Adapter<T> {
     public interface DataTransformer<T> {
 
         /**
-         * get item text
+         * Get item text
          *
          * @param itemData item data
          * @return item text
@@ -126,13 +187,11 @@ public class SelectionListAdapter<T> extends WindRecycleView.Adapter<T> {
         String dataToText(@NonNull T itemData);
 
         /**
-         * Compare two item data
+         * retrieve item's id
          *
-         * @param a item data 1
-         * @param b item data 2
-         * @return true if equal
+         * @return unique ID of item
          */
-        boolean compare(@NonNull T a, @NonNull T b);
+        String dataToId(@NonNull T itemData);
     }
 
     /**
@@ -143,7 +202,7 @@ public class SelectionListAdapter<T> extends WindRecycleView.Adapter<T> {
     public static class ViewHolder<T> extends WindRecycleView.ViewHolder<T> {
 
         protected DataTransformer<T> dataTransformer;
-        protected T selectedData;
+        protected Map<String, T> selectorMap;
 
         /**
          * Constructor
@@ -166,10 +225,10 @@ public class SelectionListAdapter<T> extends WindRecycleView.Adapter<T> {
         /**
          * Set selected item
          *
-         * @param itemData item data
+         * @param selectorMap map between ID and selected item
          */
-        public void setSelected(T itemData) {
-            selectedData = itemData;
+        public void setSelectors(Map<String, T> selectorMap) {
+            this.selectorMap = selectorMap;
         }
     }
 
@@ -200,7 +259,25 @@ public class SelectionListAdapter<T> extends WindRecycleView.Adapter<T> {
         protected void bindData(T data) {
             super.bindData(data);
             _textView.setText(dataTransformer.dataToText(data));
-            _checkbox.setChecked(selectedData != null && dataTransformer.compare(selectedData, data));
+            if (selectorMap != null) {
+                _checkbox.setChecked(selectorMap.get(dataTransformer.dataToId(data)) != null);
+            } else {
+                _checkbox.setChecked(false);
+            }
+        }
+
+        /**
+         * Select item
+         */
+        public void select() {
+            _checkbox.setChecked(true);
+        }
+
+        /**
+         * Select item
+         */
+        public void unselect() {
+            _checkbox.setChecked(false);
         }
     }
 }

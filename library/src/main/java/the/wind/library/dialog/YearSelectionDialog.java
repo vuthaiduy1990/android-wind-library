@@ -14,16 +14,17 @@ import the.wind.library.view.Button;
 /**
  * Year selection dialog
  */
-public abstract class YearSelectionDialog extends SelectionListDialog<Integer> {
+public class YearSelectionDialog extends SelectionListDialog<Integer> {
 
     /**
      * Constructor
      *
      * @param context application context
+     * @param mode    selection mode
      * @param dataset dataset
      */
-    public YearSelectionDialog(@NonNull Context context, List<Integer> dataset) {
-        super(context, dataset);
+    public YearSelectionDialog(@NonNull Context context, SelectionMode mode, List<Integer> dataset) {
+        super(context, mode, dataset);
         headerLayout().setVisibility(View.GONE);
         setWidth((int) context.getResources().getDimension(R.dimen.wl_calendar_year_selection_dialog_width));
         setHeight((int) (CWAndroidUtils.getScreenSize(context).getHeight() * 0.8f));
@@ -34,14 +35,34 @@ public abstract class YearSelectionDialog extends SelectionListDialog<Integer> {
      * Constructor
      *
      * @param context application context
+     * @param dataset dataset
+     */
+    public YearSelectionDialog(@NonNull Context context, List<Integer> dataset) {
+        this(context, SelectionMode.SINGLE, dataset);
+    }
+
+    /**
+     * Constructor
+     *
+     * @param context application context
+     * @param mode    selection mode
+     */
+    public YearSelectionDialog(@NonNull Context context, SelectionMode mode) {
+        this(context, mode, WindFactory.instance().getAvailableYears());
+    }
+
+    /**
+     * Constructor
+     *
+     * @param context application context
      */
     public YearSelectionDialog(@NonNull Context context) {
-        this(context, WindFactory.instance().getAvailableYears());
+        this(context, SelectionMode.SINGLE);
     }
 
     @Override
-    protected boolean equal(@NonNull Integer a, @NonNull Integer b) {
-        return a.equals(b);
+    protected String itemId(@NonNull Integer itemData) {
+        return Integer.toString(itemData);
     }
 
     @Override

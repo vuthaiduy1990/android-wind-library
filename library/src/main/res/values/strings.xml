@@ -7,6 +7,7 @@
     <string name="wl_cancel">Cancel</string>
     <string name="wl_yes">Yes</string>
     <string name="wl_ok">OK</string>
+    <string name="wl_select">Select</string>
     <string name="wl_currency">Currency</string>
     <string name="wl_locale">Locale</string>
     <string name="wl_timezone">Timezone</string>

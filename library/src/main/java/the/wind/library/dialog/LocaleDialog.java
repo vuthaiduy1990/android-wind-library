@@ -20,7 +20,7 @@ import the.wind.library.view.SearchBox;
 /**
  * Locale list dialog
  */
-public abstract class LocaleDialog extends SelectionListDialog<LocaleWrapper> {
+public class LocaleDialog extends SelectionListDialog<LocaleWrapper> {
 
     // List of locales
     private Collection<LocaleWrapper> locales;
@@ -51,9 +51,10 @@ public abstract class LocaleDialog extends SelectionListDialog<LocaleWrapper> {
      * Constructor
      *
      * @param context application context
+     * @param mode    selection mode
      */
-    public LocaleDialog(@NonNull Context context) {
-        super(context, new LinkedList<>());
+    public LocaleDialog(@NonNull Context context, SelectionMode mode) {
+        super(context, mode, new LinkedList<>());
         setLocales(WindFactory.instance().getAvailableLocales());
         setTitle(R.string.wl_locale);
         setHeight((int) (CWAndroidUtils.getScreenSize(context).getHeight() * 0.8));
@@ -86,11 +87,21 @@ public abstract class LocaleDialog extends SelectionListDialog<LocaleWrapper> {
             }
         });
     }
+
+    /**
+     * Constructor
+     *
+     * @param context application context
+     */
+    public LocaleDialog(@NonNull Context context) {
+        this(context, SelectionMode.SINGLE);
+    }
+
     /* ---------------------- OVERRIDE ----------------------- */
 
     @Override
-    protected boolean equal(@NonNull LocaleWrapper a, @NonNull LocaleWrapper b) {
-        return a.getCode().equals(b.getCode());
+    protected String itemId(@NonNull LocaleWrapper itemData) {
+        return itemData.getCode();
     }
 
     @Override

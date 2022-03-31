@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.DrawableRes;
@@ -23,7 +25,7 @@ public abstract class SelectionListDialog<T> extends WindDialog {
 
     // views
     private final WindRecycleView _rvHolder;
-    private final SelectionListAdapter<T> listAdapter;
+    protected final SelectionListAdapter<T> listAdapter;
     private final ViewGroup _customViewLayout;
 
     // search box
@@ -35,13 +37,23 @@ public abstract class SelectionListDialog<T> extends WindDialog {
     // style and string
     private int itemBackgroundHoverRes;
 
+    // listener
+    protected OnItemSelectionListener<T> itemSelectionListener;
+    private OnMultiSelectionListener<T> multiSelectionListener;
+
+    // mode
+    private SelectionMode selectionMode;
+
     /**
      * Constructor
      *
-     * @param context application context
+     * @param context       application context
+     * @param selectionMode selection mode
+     * @param dataset       data
      */
-    public SelectionListDialog(@NonNull Context context, List<T> dataset) {
+    public SelectionListDialog(@NonNull Context context, SelectionMode selectionMode, List<T> dataset) {
         super(context, LayoutType.FUBUKI);
+        this.selectionMode = selectionMode;
         setContentView(R.layout.wl_dialog_selection_list);
         setInOutAnimType(InOutAnimType.SWEET_ALERT);
         setCancelable(true);
@@ -62,17 +74,39 @@ public abstract class SelectionListDialog<T> extends WindDialog {
             }
 
             @Override
-            public boolean compare(@NonNull T a, @NonNull T b) {
-                return equal(a, b);
+            public String dataToId(@NonNull T itemData) {
+                return itemId(itemData);
             }
         });
         listAdapter.setOnItemClickListener(new WindRecycleView.Adapter.OnItemClickListener<T>() {
             @Override
             public void onClick(WindRecycleView.ViewHolder<T> viewHolder, View view, T data) {
-                listAdapter.setSelected(data);
-                listAdapter.notifyDataSetChanged();
-                if (!onSelection(SelectionListDialog.this, viewHolder.itemView, data)) {
-                    dismiss();
+                if (SelectionMode.MULTIPLE.equals(selectionMode)) {
+                    SelectionListAdapter.DefaultViewHolder<T> _holder = null;
+                    if (viewHolder instanceof SelectionListAdapter.DefaultViewHolder) {
+                        _holder = (SelectionListAdapter.DefaultViewHolder<T>) viewHolder;
+                    }
+
+                    boolean isSelected = listAdapter.isSelectedItem(data);
+                    if (isSelected) {
+                        listAdapter.removeSelector(data);
+                        if (_holder != null) _holder.unselect();
+                    } else {
+                        listAdapter.addSelector(data);
+                        if (_holder != null) _holder.select();
+                    }
+
+                    if (itemSelectionListener != null) {
+                        itemSelectionListener.onSelect(SelectionListDialog.this, viewHolder.itemView, data);
+                    }
+
+                } else {
+                    listAdapter.setSelector(data);
+                    if (itemSelectionListener != null) {
+                        if (!itemSelectionListener.onSelect(SelectionListDialog.this, viewHolder.itemView, data)) {
+                            dismiss();
+                        }
+                    }
                 }
             }
         }).setOnItemTouchDownListener(new WindRecycleView.Adapter.OnItemTouchDownListener<T>() {
@@ -128,12 +162,20 @@ public abstract class SelectionListDialog<T> extends WindDialog {
 
         // bind button
         addButton(Button.Type.GRAY, context.getString(R.string.wl_close), null).setOnClickListener(v -> dismiss());
+        if (SelectionMode.MULTIPLE.equals(selectionMode)) {
+            addButton(Button.Type.SUCCESS, context.getString(R.string.wl_select), null).setOnClickListener(v -> {
+                if (multiSelectionListener != null) {
+                    if (!multiSelectionListener.onSelect(SelectionListDialog.this, getAdapter().getSelectors())) {
+                        dismiss();
+                    }
+                }
+            });
+        }
 
         // bind event
         setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                listAdapter.setSelected(null);
                 onDialogDismiss(dialog);
             }
         });
@@ -146,28 +188,16 @@ public abstract class SelectionListDialog<T> extends WindDialog {
     /* ---------------------- ABSTRACT ----------------------- */
 
     /**
-     * Check if two item is equal or not
-     *
-     * @param a item data 1
-     * @param b item data 2
-     * @return true if equal
+     * @param itemData data respective to selection item
+     * @return selection item's ID
      */
-    protected abstract boolean equal(@NonNull T a, @NonNull T b);
+    protected abstract String itemId(@NonNull T itemData);
 
     /**
      * @param itemData data respective to selection item
      * @return selection item's text
      */
     protected abstract String itemText(@NonNull T itemData);
-
-    /**
-     * Trigger when user click on item item view
-     *
-     * @param itemView item view
-     * @param data     item data
-     * @return true if consume the event, else return false
-     */
-    protected abstract boolean onSelection(@NonNull SelectionListDialog<T> dialog, @NonNull View itemView, @NonNull T data);
 
     /**
      * On dismiss
@@ -281,35 +311,105 @@ public abstract class SelectionListDialog<T> extends WindDialog {
         return this;
     }
 
+    /**
+     * Set on item selection listener
+     *
+     * @param listener item selection listener
+     */
+    public void setOnItemSelectionListener(OnItemSelectionListener<T> listener) {
+        this.itemSelectionListener = listener;
+    }
+
+    /**
+     * Set on multiple item selection result listener
+     *
+     * @param listener listener
+     */
+    public void setOnMultiSelectionListener(OnMultiSelectionListener<T> listener) {
+        this.multiSelectionListener = listener;
+    }
+
     /* ---------------------- METHOD ------------------------- */
 
     /**
      * Show dialog with given selected data
      *
-     * @param data selected data
+     * @param items selected data
      */
-    public void show(@Nullable T data) {
+    public void show(@Nullable Collection<T> items) {
         show();
-        if (data == null) {
+        if (items == null || items.isEmpty()) {
+            listAdapter.setSelectors(null);
             listAdapter.notifyDataSetChanged();
             return;
         }
 
         // scroll to selected item
-        listAdapter.setSelected(data);
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < listAdapter.getItemCount(); i++) {
-                    if (equal(listAdapter.getData(i), listAdapter.getSelected())) {
-                        _rvHolder.scrollToPosition(i);
-                        break;
-                    }
+        listAdapter.setSelectors(items);
+        postDelayed(() -> {
+            for (int i = 0; i < listAdapter.getItemCount(); i++) {
+                T data = listAdapter.getData(i);
+                if (listAdapter.isSelectedItem(data)) {
+                    _rvHolder.scrollToPosition(i);
+                    break;
                 }
-                listAdapter.notifyDataSetChanged();
             }
+            listAdapter.notifyDataSetChanged();
         }, 300);
     }
 
+    /**
+     * Show dialog with given selected data
+     *
+     * @param item selected data
+     */
+    public void show(@Nullable T item) {
+        show(item != null ? Collections.singletonList(item) : null);
+    }
+
     /* ---------------------- INNER CLASS -------------------- */
+
+    /**
+     * On item selection listener
+     *
+     * @param <T> data type
+     */
+    public interface OnItemSelectionListener<T> {
+
+        /**
+         * Trigger when user click on item item view
+         *
+         * @param dialog   selection dialog
+         * @param itemView selected item view
+         * @param data     seected item data
+         * @return true if consume the event, else return false
+         */
+        boolean onSelect(@NonNull SelectionListDialog<T> dialog, @NonNull View itemView, @NonNull T data);
+    }
+
+    /**
+     * On multiple items selection listener
+     *
+     * @param <T> data type
+     */
+    public interface OnMultiSelectionListener<T> {
+
+        /**
+         * Trigger when user click select button
+         *
+         * @param dialog selection dialog
+         * @param items  list of selected items
+         * @return true if consume the event, else return false
+         */
+        boolean onSelect(@NonNull SelectionListDialog<T> dialog, Collection<T> items);
+    }
+
+    /**
+     * Selection Mode
+     */
+    public enum SelectionMode {
+        SINGLE,
+        MULTIPLE
+    }
+
 }

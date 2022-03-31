@@ -30,7 +30,7 @@ import the.wind.library.view.SearchBox;
 /**
  * Timezone dialog
  */
-public abstract class TimezoneDialog extends SelectionListDialog<TimezoneWrapper> {
+public class TimezoneDialog extends SelectionListDialog<TimezoneWrapper> {
 
     // Layout inflater
     private final LayoutInflater inflater;
@@ -79,9 +79,10 @@ public abstract class TimezoneDialog extends SelectionListDialog<TimezoneWrapper
      * Constructor
      *
      * @param context application context
+     * @param mode    selection mode
      */
-    public TimezoneDialog(@NonNull Context context) {
-        super(context, new ArrayList<>());
+    public TimezoneDialog(@NonNull Context context, SelectionMode mode) {
+        super(context, mode, new ArrayList<>());
         inflater = LayoutInflater.from(context);
         setTimezones(WindFactory.instance().getAvailableTimezones());
         setTitle(R.string.wl_timezone);
@@ -117,11 +118,20 @@ public abstract class TimezoneDialog extends SelectionListDialog<TimezoneWrapper
         });
     }
 
+    /**
+     * Constructor
+     *
+     * @param context application context
+     */
+    public TimezoneDialog(@NonNull Context context) {
+        this(context, SelectionMode.SINGLE);
+    }
+
     /* ---------------------- OVERRIDE ----------------------- */
 
     @Override
-    protected boolean equal(@NonNull TimezoneWrapper a, @NonNull TimezoneWrapper b) {
-        return a.getCode().equals(b.getCode());
+    protected String itemId(@NonNull TimezoneWrapper itemData) {
+        return itemData.getCode();
     }
 
     @Override
@@ -130,9 +140,9 @@ public abstract class TimezoneDialog extends SelectionListDialog<TimezoneWrapper
     }
 
     @Override
-    public void show(@Nullable TimezoneWrapper data) {
+    public void show(@Nullable TimezoneWrapper item) {
         solarCal.setTime(new Date());
-        super.show(data);
+        super.show(item);
     }
 
     /* ---------------------- STATIC ------------------------- */
