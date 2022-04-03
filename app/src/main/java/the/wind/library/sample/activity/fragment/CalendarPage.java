@@ -18,14 +18,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import the.wind.library.anim.PageTransformerType;
-import the.wind.library.calendar.CalendarType;
 import the.wind.library.calendar.CalendarUtil;
 import the.wind.library.calendar.DateInfo;
 import the.wind.library.calendar.MonthAdapter;
 import the.wind.library.calendar.MonthInfo;
-import the.wind.library.calendar.WeekStartsOn;
 import the.wind.library.calendar.WindCalendar;
 import the.wind.library.calendar.WindCalendarDialog;
+import the.wind.library.calendar.model.CalendarType;
+import the.wind.library.calendar.model.WeekStartsOn;
 import the.wind.library.dialog.WindDialog;
 import the.wind.library.sample.R;
 

@@ -33,6 +33,8 @@ import androidx.fragment.app.FragmentTransaction;
 import the.wind.library.CWBundle;
 import the.wind.library.R;
 import the.wind.library.anim.PageTransformerType;
+import the.wind.library.calendar.model.CalendarType;
+import the.wind.library.calendar.model.WeekStartsOn;
 
 public class WindCalendar extends LinearLayout {
 

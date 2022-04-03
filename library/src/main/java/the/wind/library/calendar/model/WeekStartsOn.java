@@ -1,4 +1,4 @@
-package the.wind.library.calendar;
+package the.wind.library.calendar.model;
 
 import android.icu.util.Calendar;
 

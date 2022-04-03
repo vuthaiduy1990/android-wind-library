@@ -1,4 +1,4 @@
-package the.wind.library.calendar;
+package the.wind.library.calendar.model;
 
 import android.icu.util.BuddhistCalendar;
 import android.icu.util.Calendar;
@@ -9,6 +9,8 @@ import android.icu.util.IndianCalendar;
 import android.icu.util.IslamicCalendar;
 import android.icu.util.JapaneseCalendar;
 import android.icu.util.TaiwanCalendar;
+
+import the.wind.library.calendar.VietnameseCalendar;
 
 /**
  * Calendar type

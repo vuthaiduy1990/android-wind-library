@@ -17,7 +17,7 @@ import the.wind.library.calendar.CalendarUtil;
 import the.wind.library.calendar.DateInfo;
 import the.wind.library.calendar.MonthInfo;
 import the.wind.library.calendar.VietnameseCalendar;
-import the.wind.library.calendar.WeekStartsOn;
+import the.wind.library.calendar.model.WeekStartsOn;
 
 @RunWith(AndroidJUnit4.class)
 public class CalendarUtilTest {
