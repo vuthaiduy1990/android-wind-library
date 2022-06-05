@@ -34,11 +34,10 @@ public final class CWBundle implements Serializable {
     /**
      * Get tagged object by class key
      *
-     * @param clazz class
      * @return tagged object
      */
-    public Object get(Class<?> clazz) {
-        return tags.get(clazz.getName());
+    public Object get() {
+        return tags.get(CWBundle.class.getName());
     }
 
     /**
@@ -54,11 +53,10 @@ public final class CWBundle implements Serializable {
     /**
      * Add tagged object
      *
-     * @param clazz     class key
      * @param taggedObj tagged object
      */
-    public void set(Class<?> clazz, Object taggedObj) {
-        tags.put(clazz.getName(), taggedObj);
+    public void set(Object taggedObj) {
+        tags.put(CWBundle.class.getName(), taggedObj);
     }
 
     /**
@@ -68,6 +66,13 @@ public final class CWBundle implements Serializable {
      */
     public void remove(String key) {
         tags.remove(key);
+    }
+
+    /**
+     * Remove attached object
+     */
+    public void remove() {
+        tags.remove(CWBundle.class.getName());
     }
 
     /* ---------------------- METHOD ------------------------- */

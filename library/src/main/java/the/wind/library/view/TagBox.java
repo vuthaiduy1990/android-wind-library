@@ -203,6 +203,7 @@ public class TagBox extends FlexboxLayout {
         tags.clear();
         _boxLayout.removeAllViews();
         viewMap.clear();
+        colorIt = null;
     }
 
     /**
