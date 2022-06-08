@@ -39,7 +39,7 @@ public class LocaleDialog extends SelectionListDialog<LocaleWrapper> {
 
         @Override
         public NLPMatchResult<LocaleWrapper> onSuccess(NLPMatchResult<LocaleWrapper> result) {
-            if (result != null && result.isFullMatched()) {
+            if (result.isMatching()) {
                 getAdapter().addData(result.target);
             }
             return super.onSuccess(result);
@@ -139,9 +139,9 @@ public class LocaleDialog extends SelectionListDialog<LocaleWrapper> {
         if (searchEngine == null) {
             CWNLPEngine.Options opts = new CWNLPEngine.Options();
             opts.strip = true;
-            opts.useSpecialChars = true;
+            opts.escapeSpecialChars = true;
             opts.caseSensitive = false;
-            opts.matchOnly = true;
+            opts.fullMatch = true;
             opts.cache = 0; // small data -> no need to cache
             opts.greedy = false;
             searchEngine = new CWNLPEngine<>(null, opts);

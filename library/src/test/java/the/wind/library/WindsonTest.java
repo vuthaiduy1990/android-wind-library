@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import the.wind.library.db.CWTable;
 import the.wind.library.db.CWTestTable;
 
 public class WindsonTest {
@@ -72,11 +71,11 @@ public class WindsonTest {
 
         // Testcase: parse enum type
         {
-            String json = Windson.$.serialize(CWTable.SyncState.MODIFIED).toString();
+            String json = Windson.$.serialize(CWTestTable.EnumType.HIGH).toString();
             JsonElement el = Windson.$.parse(json);
-            Assert.assertEquals("MODIFIED", el.getAsString());
+            Assert.assertEquals("HIGH", el.getAsString());
             Assert.assertEquals(json, el.toString());
-            Assert.assertEquals("\"MODIFIED\"", json);
+            Assert.assertEquals("\"HIGH\"", json);
         }
 
         // Testcase: parse date type
@@ -201,8 +200,8 @@ public class WindsonTest {
 
         // Testcase: serialize/deserialize enum type
         {
-            CWTable.SyncState state = CWTable.SyncState.DELETED;
-            Assert.assertEquals(state, Windson.$.deserialize(Windson.$.serialize(state), CWTable.SyncState.class));
+            CWTestTable.EnumType state = CWTestTable.EnumType.HIGH;
+            Assert.assertEquals(state, Windson.$.deserialize(Windson.$.serialize(state), CWTestTable.EnumType.class));
         }
 
         // Testcase: serialize/deserialize datetime type

@@ -426,9 +426,9 @@ public class SearchBox extends LinearLayout {
     public void setSuggestions(CharSequence... suggestions) {
         CWNLPEngine.Options opts = new CWNLPEngine.Options();
         opts.strip = true;
-        opts.useSpecialChars = false;
+        opts.escapeSpecialChars = true;
         opts.caseSensitive = false;
-        opts.matchOnly = true;
+        opts.fullMatch = false;
         opts.cache = 1; // use 1 caching for searching on previous result
         opts.greedy = false;
         CWNLPEngine<NLPString> nlpEngine = new CWNLPEngine<>(getContext(), opts);

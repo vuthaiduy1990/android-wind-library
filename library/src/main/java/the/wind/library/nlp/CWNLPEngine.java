@@ -4,7 +4,6 @@ import android.content.Context;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -242,13 +241,15 @@ public final class CWNLPEngine<T extends INLPText> {
     private <X extends INLPText> String preProcess(X target) {
         String text = target.nlpRawText(getContext());
 
-        if (!options.useSpecialChars) {
+        if (!options.escapeSpecialChars) {
             String regex = "[" + options.specialChars + "]+";
             text = text.replaceAll(regex, " ");
         }
 
         if (options.strip) {
             text = CWStringUtils.strip(text);
+        } else {
+            text = text.trim();
         }
 
         if (!options.caseSensitive) {
@@ -334,11 +335,25 @@ public final class CWNLPEngine<T extends INLPText> {
                 "(\\d+)",
                 "([^\\s\\d" + CWUnicode.JAV_CHARS + CWUnicode.THAI_CHARS + "]+)"
         );
-        Matcher splitPar = Pattern.compile(regex).matcher(_search);
         Map<String, Pattern> _searchPat = new LinkedHashMap<>();
-        while (splitPar.find()) {
-            String key = splitPar.group();
-            _searchPat.put(key, Pattern.compile(key));
+        Matcher splitPar = Pattern.compile(regex).matcher(_search);
+        if (options.fullMatch) {
+            StringBuilder searchRegexBuilder = new StringBuilder();
+            String delimiter = "\\s*";
+            while (splitPar.find()) {
+                String key = splitPar.group();
+                searchRegexBuilder.append(key).append(delimiter);
+            }
+            int length = searchRegexBuilder.length();
+            String searchRegex = length > 0 ? searchRegexBuilder.substring(0, length - delimiter.length()) : "";
+            if (!searchRegex.trim().isEmpty()) {
+                _searchPat.put(searchRegex, Pattern.compile(searchRegex));
+            }
+        } else {
+            while (splitPar.find()) {
+                String key = splitPar.group();
+                _searchPat.put(key, Pattern.compile(key));
+            }
         }
         return _searchPat;
     }
@@ -360,34 +375,21 @@ public final class CWNLPEngine<T extends INLPText> {
      *
      * @param searchPat the search pattern. {{buildSearchPattern}}
      * @param target    the target for searching
-     * @return match result
+     * @return both matching and un-matching result
      */
-    @Nullable
     private NLPMatchResult<T> doMatching(Map<String, Pattern> searchPat, T target) {
         NLPMatchResult<T> result = new NLPMatchResult<>(target);
-        Set<String> matchingKeys = new HashSet<>();
         for (Map.Entry<String, Pattern> entry : searchPat.entrySet()) {
             Matcher m = entry.getValue().matcher(Objects.requireNonNull(textMap.get(target.nlpTextId(getContext()))));
             while (m.find()) {
+                result.match = true;
+                result.keys.add(m.group());
                 result.indexes.add(m.start());
                 result.indexes.add(m.end());
-                result.keys.add(entry.getKey());
-                matchingKeys.add(entry.getKey());
                 if (!options.greedy) break; // not greedy search
             }
         }
-        if (matchingKeys.size() == searchPat.size()) {
-            result.status = NLPMatchResult.Status.FULL_MATCH;
-        } else if (matchingKeys.size() > 0) {
-            result.status = NLPMatchResult.Status.PARTIAL_MATCH;
-        } else {
-            if (options.matchOnly) {
-                // do not include the not-match item in the result
-                return null;
-            } else {
-                result.status = NLPMatchResult.Status.NOT_MATCH;
-            }
-        }
+        // result both matching and un-matching
         return result;
     }
 
@@ -417,9 +419,10 @@ public final class CWNLPEngine<T extends INLPText> {
             NLPMatchResult<T> result = doMatching(_searchPat, tx);
             // we can decide to accept this result or not by control the returned value of onSuccess function.
             // Return null to inform that the result is not accepted.
-            // For example: we can use this way to accept the result which is full-match only
+            // For example: we can use this way to filter matching result at client
             result = callback.onSuccess(result);
-            if (result != null && useCache()) {
+            if (result != null && result.isMatching() && useCache()) {
+                // Cache the matching result only
                 // cache result is caching is available
                 Objects.requireNonNull(mCaches.get(_search)).add(result);
             }
@@ -452,9 +455,10 @@ public final class CWNLPEngine<T extends INLPText> {
             NLPMatchResult<T> result = doMatching(_searchPat, rsx.target);
             // we can decide to accept this result or not by control the returned value of onSuccess function.
             // Return null to inform that the result is not accepted.
-            // For example: we can use this way to accept the result which is full-match only
+            // For example: we can use this way to filter matching result at client
             result = callback.onSuccess(result);
-            if (result != null && useCache()) {
+            if (result != null && result.isMatching() && useCache()) {
+                // Cache the matching result only
                 // cache result is caching is available
                 Objects.requireNonNull(mCaches.get(_search)).add(result);
             }
@@ -593,13 +597,14 @@ public final class CWNLPEngine<T extends INLPText> {
         public boolean caseSensitive = false;
 
         // use special characters when performing the match/search/
-        public boolean useSpecialChars = false;
+        public boolean escapeSpecialChars = false;
         // default special characters are all latin symbols
         public String specialChars = CWUnicode.LATIN_SYMBOLS;
 
-        // Whether include result which is not matched or not
-        // set false if you want to include the not-match item in the returned result
-        public boolean matchOnly = true;
+        // For example, search key is "color the wind"
+        // true: search full key. need match the whole sentence
+        // false: search partial key. match "color" or "the" or "wind"
+        public boolean fullMatch = true;
 
         // greedy search
         // find to the end of text

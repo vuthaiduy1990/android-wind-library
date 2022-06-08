@@ -39,7 +39,7 @@ public class CurrencyDialog extends SelectionListDialog<CurrencyWrapper> {
 
         @Override
         public NLPMatchResult<CurrencyWrapper> onSuccess(NLPMatchResult<CurrencyWrapper> result) {
-            if (result != null && result.isFullMatched()) {
+            if (result.isMatching()) {
                 getAdapter().addData(result.target);
             }
             return super.onSuccess(result);
@@ -138,9 +138,9 @@ public class CurrencyDialog extends SelectionListDialog<CurrencyWrapper> {
         if (searchEngine == null) {
             CWNLPEngine.Options opts = new CWNLPEngine.Options();
             opts.strip = true;
-            opts.useSpecialChars = true;
+            opts.escapeSpecialChars = true;
             opts.caseSensitive = false;
-            opts.matchOnly = true;
+            opts.fullMatch = true;
             opts.cache = 0; // small data -> no need to cache
             opts.greedy = false;
             searchEngine = new CWNLPEngine<>(null, opts);

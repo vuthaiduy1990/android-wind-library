@@ -93,7 +93,7 @@ public class AutoCompleteAdapter<T extends INLPText> extends ArrayAdapter<T> imp
 
                     @Override
                     public NLPMatchResult<T> onSuccess(NLPMatchResult<T> result) {
-                        if (result != null) {
+                        if (result.isMatching()) {
                             filterResult.add(result.target);
                         }
                         return super.onSuccess(result);

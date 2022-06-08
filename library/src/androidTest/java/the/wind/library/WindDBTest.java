@@ -45,12 +45,6 @@ public class WindDBTest {
                 Windson.$.serialize(origin).toString(),
                 Windson.$.serialize(fromDB).toString());
 
-        // find by state
-        fromDB = WindDB.$.findByState(CWTestTable.class, origin.getSyncState()).get(0);
-        Assert.assertEquals(
-                Windson.$.serialize(origin).toString(),
-                Windson.$.serialize(fromDB).toString());
-
         // find with where condition
         fromDB = WindDB.$.find(CWTestTable.class, null, "intPrim = ?", new String[]{"1"}).get(0);
         Assert.assertEquals(
