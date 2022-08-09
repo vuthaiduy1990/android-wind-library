@@ -208,7 +208,7 @@ public final class Promise<Model> {
                     if (nextHolderPromise.finishListener != null) {
                         nextHolderPromise.resolve(data);
                     } else {
-                        nextHolderPromise.resolve(null);
+                        nextHolderPromise.resolve((Model) null);
                     }
                 }
             }
