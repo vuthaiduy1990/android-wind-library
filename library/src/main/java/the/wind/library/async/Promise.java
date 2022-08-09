@@ -205,7 +205,11 @@ public final class Promise<Model> {
                     // no next promise returned
                     // --->> this is the last one (should be Finish promise)
                     // --->> resolve Finish promise which then trigger OnFinishListener callback
-                    nextHolderPromise.resolve(data);
+                    if (nextHolderPromise.finishListener != null) {
+                        nextHolderPromise.resolve(data);
+                    } else {
+                        nextHolderPromise.resolve(null);
+                    }
                 }
             }
 
