@@ -66,7 +66,7 @@ public class WindAsyncTask<Params, Progress, Result> implements Promise.IPromise
     /**
      * Default constructor
      */
-    public WindAsyncTask() {
+    private WindAsyncTask() {
     }
 
     /**

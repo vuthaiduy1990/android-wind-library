@@ -1,8 +1,6 @@
 package the.wind.library.async;
 
 import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
@@ -26,15 +24,13 @@ public final class UndergroundService {
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     // Task is pushed to a queue
-    private final Queue<CWHandler<Object>> taskQueue = new ConcurrentLinkedQueue<>();
-    // Map between task name and parameters
-    private final Map<String, Object[]> dataMap = new LinkedHashMap<>();
+    private final Queue<Task> taskQueue = new ConcurrentLinkedQueue<>();
 
     // check if service is running or not
     private boolean running = false;
 
     // current running task
-    private CWHandler<Object> task;
+    private Task task;
 
     // Task handler
     private final Runnable OnTaskExecuting = new Runnable() {
@@ -44,10 +40,9 @@ public final class UndergroundService {
             running = true;
             while ((task = taskQueue.poll()) != null) {
                 // handle tasks sequentially
-                Object[] params = dataMap.remove(task.getTaskName());
-                task.onBefore(params);
-                task.onHandle(params);
-                task.onAfter(params);
+                task.handler.onBefore(task.params);
+                task.handler.onHandle(task.params);
+                task.handler.onAfter(task.params);
                 task = null;
             }
             running = false;
@@ -61,13 +56,13 @@ public final class UndergroundService {
     /**
      * Register a background task.
      *
-     * @param task background task
-     * @param data array of data
+     * @param name    task name
+     * @param handler handler
+     * @param params  array of parameters
      * @return service
      */
-    public UndergroundService register(@NonNull CWHandler<Object> task, Object... data) {
-        taskQueue.add(task); // put task to queue
-        dataMap.put(task.getTaskName(), data);
+    public UndergroundService register(String name, @NonNull CWHandler<Object> handler, Object... params) {
+        taskQueue.add(new Task(name, handler, params)); // put task to queue
         return this;
     }
 
@@ -86,12 +81,11 @@ public final class UndergroundService {
      * @param taskName task name
      */
     public void cancel(@NonNull String taskName) {
-        Iterator<CWHandler<Object>> it = taskQueue.iterator();
+        Iterator<Task> it = taskQueue.iterator();
         while (it.hasNext()) {
-            CWHandler<?> task = it.next();
-            if (taskName.equals(task.getTaskName())) {
+            Task task = it.next();
+            if (taskName.equals(task.name)) {
                 it.remove();
-                dataMap.remove(task.getTaskName());
                 return;
             }
         }
@@ -113,7 +107,7 @@ public final class UndergroundService {
      * @return true if running
      */
     public boolean isRunning(@NonNull String taskName) {
-        return running && task != null && taskName.equals(task.getTaskName());
+        return running && task != null && taskName.equals(task.name);
     }
 
     /* ---------------------- ABSTRACT ----------------------- */
@@ -123,4 +117,21 @@ public final class UndergroundService {
     /* ---------------------- METHOD ------------------------- */
 
     /* ---------------------- INNER CLASS -------------------- */
+
+    /**
+     * Define task model
+     */
+    private static class Task {
+
+        private final String name;
+        private final CWHandler<Object> handler;
+        private final Object[] params;
+
+        public Task(String name, CWHandler<Object> handler, Object[] params) {
+            this.name = name;
+            this.handler = handler;
+            this.params = params;
+        }
+
+    }
 }
