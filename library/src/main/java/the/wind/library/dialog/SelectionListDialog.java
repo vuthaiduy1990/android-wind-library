@@ -104,6 +104,13 @@ public abstract class SelectionListDialog<T> extends WindDialog {
                     if (itemSelectionListener != null) {
                         if (!itemSelectionListener.onSelect(SelectionListDialog.this, viewHolder.itemView, data)) {
                             dismiss();
+                        } else {
+                            if (listAdapter.getPreSelectedItem() != null) {
+                                listAdapter.notifyItemChanged(listAdapter.getPreSelectedItem().getPosition());
+                                listAdapter.notifyItemChanged(viewHolder.getBindingAdapterPosition());
+                            } else {
+                                listAdapter.notifyDataSetChanged();
+                            }
                         }
                     }
                 }
