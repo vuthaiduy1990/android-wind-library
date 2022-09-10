@@ -298,4 +298,19 @@ public final class CWAndroidUtils {
         ClipData clip = ClipData.newPlainText(label, text);
         clipboard.setPrimaryClip(clip);
     }
+
+    /**
+     * Share app to others
+     *
+     * @param context application context
+     */
+    public static void shareApp(Context context) {
+        final String appPackageName = context.getPackageName();
+        String appLink = "https://play.google.com/store/apps/details?id=" + appPackageName;
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.putExtra(Intent.EXTRA_TEXT, appLink);
+        i.setType("text/plain");
+        Intent shareIntent = Intent.createChooser(i, null);
+        context.startActivity(shareIntent);
+    }
 }
