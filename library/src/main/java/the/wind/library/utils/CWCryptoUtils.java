@@ -219,7 +219,8 @@ public final class CWCryptoUtils {
      *     SHA3-224, SHA3-256, SHA3-384, SHA3-512
      * </pre>
      *
-     * @param text original string
+     * @param text      original string
+     * @param algorithm algorithm
      * @return hash string
      */
     @Nullable
@@ -229,13 +230,35 @@ public final class CWCryptoUtils {
             md = MessageDigest.getInstance(algorithm);
             md.update(CWStreamUtils.stringToBytes(text), 0, text.length());
             byte[] hashByte = md.digest();
-            return CWStreamUtils.bytesToHex(hashByte);
+            return CWStreamUtils.bytesToString(hashByte);
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
         return null;
+    }
+
+    /**
+     * Convert string to hash using specific algorithm
+     * Available algorithm
+     * https://docs.oracle.com/javase/9/docs/specs/security/standard-names.html#messagedigest-algorithms
+     * <pre>
+     *     MD2, MD5
+     *     SHA-1, SHA-224, SHA-256, SHA-384, SHA-512, SHA-512/224, SHA-512/256
+     *     SHA3-224, SHA3-256, SHA3-384, SHA3-512
+     * </pre>
+     *
+     * @param text      original string
+     * @param algorithm algorithm
+     * @return hash string
+     *
+     * @throws NoSuchAlgorithmException algorithm does not support
+     */
+    public static byte[] hashBytes(String text, String algorithm) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance(algorithm);
+        md.update(CWStreamUtils.stringToBytes(text), 0, text.length());
+        return md.digest();
     }
 
     /**
