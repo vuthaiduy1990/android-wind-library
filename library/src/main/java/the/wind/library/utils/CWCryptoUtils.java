@@ -230,7 +230,7 @@ public final class CWCryptoUtils {
             md = MessageDigest.getInstance(algorithm);
             md.update(CWStreamUtils.stringToBytes(text), 0, text.length());
             byte[] hashByte = md.digest();
-            return CWStreamUtils.bytesToString(hashByte);
+            return CWStreamUtils.bytesToHex(hashByte);
 
         } catch (Exception ex) {
             ex.printStackTrace();
