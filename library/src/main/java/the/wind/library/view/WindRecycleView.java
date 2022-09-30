@@ -964,30 +964,48 @@ public class WindRecycleView extends RecyclerView {
             }
         });
 
+        /**
+         * Constructor
+         *
+         * @param itemView item view
+         */
         public ViewHolder(@NonNull final View itemView) {
+            this(itemView, true);
+        }
+
+        /**
+         * Constructor
+         *
+         * @param itemView item view
+         * @param enable   enable or disable item. If disable -> disable all click, touch event on item
+         *                 This can be use for loading item or ads item
+         */
+        public ViewHolder(@NonNull final View itemView, boolean enable) {
             super(itemView);
-            itemView.setOnTouchListener(new OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    v.performClick();
-                    touchedView = v;
-                    switch (event.getActionMasked()) {
-                        case MotionEvent.ACTION_DOWN:
-                            if (itemTouchDownListener != null) {
-                                itemTouchDownListener.onTouchDown(ViewHolder.this, touchedView, getAdapterData());
-                            }
-                            break;
-                        case MotionEvent.ACTION_UP:
-                        case MotionEvent.ACTION_CANCEL:
-                            if (itemTouchUpListener != null) {
-                                itemTouchUpListener.onTouchUp(ViewHolder.this, touchedView, getAdapterData());
-                            }
-                            break;
+            if (enable) {
+                itemView.setOnTouchListener(new OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        v.performClick();
+                        touchedView = v;
+                        switch (event.getActionMasked()) {
+                            case MotionEvent.ACTION_DOWN:
+                                if (itemTouchDownListener != null) {
+                                    itemTouchDownListener.onTouchDown(ViewHolder.this, touchedView, getAdapterData());
+                                }
+                                break;
+                            case MotionEvent.ACTION_UP:
+                            case MotionEvent.ACTION_CANCEL:
+                                if (itemTouchUpListener != null) {
+                                    itemTouchUpListener.onTouchUp(ViewHolder.this, touchedView, getAdapterData());
+                                }
+                                break;
+                        }
+                        gestureDetector.onTouchEvent(event);
+                        return true;
                     }
-                    gestureDetector.onTouchEvent(event);
-                    return true;
-                }
-            });
+                });
+            }
         }
 
         /**
@@ -1077,7 +1095,7 @@ public class WindRecycleView extends RecyclerView {
     private static class LoadingViewHolder<T> extends ViewHolder<T> {
 
         private LoadingViewHolder(@NonNull View itemView) {
-            super(itemView);
+            super(itemView, false);
         }
     }
 
