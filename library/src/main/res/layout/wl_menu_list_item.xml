@@ -5,9 +5,9 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="horizontal"
-    android:paddingStart="@dimen/wl_spacing_level_3"
+    android:paddingStart="@dimen/wl_spacing_level_2"
     android:paddingTop="@dimen/wl_spacing_level_2"
-    android:paddingEnd="@dimen/wl_spacing_level_3"
+    android:paddingEnd="@dimen/wl_spacing_level_2"
     android:paddingBottom="@dimen/wl_spacing_level_2">
 
     <ImageView

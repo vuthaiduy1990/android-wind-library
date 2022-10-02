@@ -61,7 +61,8 @@
 
     <!-- ||||||||||||||||||||| Wind Action Menu |||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <dimen name="wl_action_menu_padding_hoz">20dp</dimen>
+    <dimen name="wl_action_menu_padding_start">20dp</dimen>
+    <dimen name="wl_action_menu_padding_end">12dp</dimen>
     <dimen name="wl_toolbar_menu_background_radius">16dp</dimen>
     <dimen name="wl_sidebar_menu_margin_top">96dp</dimen>
 
