@@ -69,6 +69,6 @@
     <string name="wind_menu_item_track_time">Track time</string>
     <string name="wind_menu_item_set_money">Set money</string>
     <string name="wind_menu_item_set_color">Set color</string>
-    <string name="wind_menu_item_set_background">Set background</string>
+    <string name="wind_menu_item_set_background">Set background with color of the wind</string>
     <string name="wind_menu_more_item">more item here more item here more item here more item here</string>
 </resources>

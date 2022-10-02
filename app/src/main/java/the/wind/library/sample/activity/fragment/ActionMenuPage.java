@@ -159,7 +159,7 @@ public class ActionMenuPage extends Fragment {
 
     private void initBaseMenuItem(WindActionMenu menu) {
         menu.addItem(R.id.wind_menu_item_set_background, R.drawable.wl_ic_edit, R.string.wind_menu_item_set_background);
-        menu.addItem(R.id.wind_menu_item_set_color, R.drawable.wl_ic_save, R.string.wind_menu_item_set_color);
+        menu.addItem(R.id.wind_menu_item_set_color, R.drawable.wl_ic_save, R.string.wind_menu_item_set_color, true);
         menu.addItem(R.id.wind_menu_item_set_money, R.drawable.wl_ic_lock, R.string.wind_menu_item_set_money);
         menu.addItem(R.id.wind_menu_item_track_time, R.drawable.wl_ic_ok, R.string.wind_menu_item_track_time);
         menu.addItem(R.id.wind_menu_item_setting, R.drawable.wl_ic_setting, R.string.wind_menu_item_setting);

@@ -170,12 +170,24 @@ public class WindActionMenu extends WindDialog {
      * @return menu
      */
     public WindActionMenu addItem(@IdRes final int id, @DrawableRes int iconResId, @StringRes int textResId) {
+        return addItem(id, iconResId, textResId, false);
+    }
+
+    /**
+     * Add item
+     *
+     * @param iconResId icon resource id
+     * @param textResId text resource id
+     * @param vip       pro item or not
+     * @return menu
+     */
+    public WindActionMenu addItem(@IdRes final int id, @DrawableRes int iconResId, @StringRes int textResId, boolean vip) {
         View itemView = inflater.inflate(menuType.getItemLayout(), _menuHolder, false);
         itemView.setId(id);
         itemView.setBackgroundResource(itemBackground);
         _menuHolder.addView(itemView);
 
-        // bind data
+        // bind icon
         ImageView _iconView = itemView.findViewById(R.id._iconView);
         if (iconResId != 0) {
             _iconView.setImageResource(iconResId);
@@ -187,6 +199,8 @@ public class WindActionMenu extends WindDialog {
         } else {
             _iconView.setVisibility(View.GONE);
         }
+
+        // bind text
         TextView _textView = itemView.findViewById(R.id._textView);
         if (textResId != 0) {
             _textView.setText(textResId);
@@ -194,6 +208,12 @@ public class WindActionMenu extends WindDialog {
             _textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getContext().getResources().getDimension(itemTextSize));
         } else {
             _textView.setVisibility(View.GONE);
+        }
+
+        // bin VIP marker
+        View _vipMarker = itemView.findViewById(R.id._vipMarker);
+        if (_vipMarker != null) {
+            _vipMarker.setVisibility(vip ? View.VISIBLE : View.GONE);
         }
 
         // bind attribute and listener

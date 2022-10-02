@@ -25,13 +25,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/wl_spacing_level_2"
+        android:layout_marginEnd="@dimen/wl_spacing_level_2"
         android:layout_weight="1"
         android:background="@color/wl_transparent"
         android:ellipsize="end"
         android:maxLines="1"
         android:paddingTop="0dp"
         android:paddingBottom="0dp"
-        android:textColor="#000000"
+        android:textColor="@color/wl_text"
         tools:ignore="LabelFor" />
+
+    <include
+        android:id="@+id/_vipMarker"
+        layout="@layout/wl_vip_marker"
+        android:visibility="gone" />
 
 </LinearLayout>

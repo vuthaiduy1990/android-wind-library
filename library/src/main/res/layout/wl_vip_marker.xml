@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/wl_button_background_warning"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/wl_spacing_level_2"
+    android:paddingTop="@dimen/wl_spacing_level_0"
+    android:paddingEnd="@dimen/wl_spacing_level_2"
+    android:paddingBottom="@dimen/wl_spacing_level_0">
+
+    <ImageView
+        android:layout_width="@dimen/wl_icon_small"
+        android:layout_height="@dimen/wl_icon_small"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/wl_ic_vip"
+        android:tint="@color/wl_white"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/wl_spacing_level_1"
+        android:text="@string/wl_vip"
+        android:textColor="@color/wl_button_text_white"
+        android:textSize="@dimen/wl_text_small"
+        android:textStyle="bold" />
+
+</LinearLayout>
