@@ -12,6 +12,8 @@ import org.junit.runner.RunWith;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.LinkedList;
+import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -24,6 +26,12 @@ public class FileUtilsAdrTest {
 
     @Before
     public void before() {
+        CWFileUtils.clearDir(context.getExternalFilesDir(null));
+    }
+
+
+    @After
+    public void after() {
         CWFileUtils.clearDir(context.getExternalFilesDir(null));
     }
 
@@ -176,11 +184,126 @@ public class FileUtilsAdrTest {
         File dest = new File(context.getExternalFilesDir(null), "dest.text");
 
         // Copy data from source file to dest file
-        CWFileUtils.copy(src, dest);
+        CWFileUtils.copyFile(src, dest);
         Assert.assertTrue(src.exists());
         Assert.assertTrue(dest.exists());
         Assert.assertEquals(data, CWFileUtils.readString(src));
         Assert.assertEquals(data, CWFileUtils.readString(dest));
+    }
+
+    @Test
+    public void copyDir() throws Exception {
+        File rootDir = context.getExternalFilesDir(null);
+        String rootPath = rootDir.getAbsolutePath();
+        File srcDir = createSampleDir(rootDir);
+
+        File destDir = new File(rootDir, "dest");
+        CWFileUtils.copyDir(srcDir, destDir);
+
+        // List all copied file in destination directory
+        List<String> paths = listDir(destDir);
+        Assert.assertEquals(rootPath + "/dest", paths.get(0));
+        Assert.assertEquals(rootPath + "/dest/file1.txt", paths.get(1));
+        Assert.assertEquals(rootPath + "/dest/file2.txt", paths.get(2));
+        Assert.assertEquals(rootPath + "/dest/sub-1", paths.get(3));
+        Assert.assertEquals(rootPath + "/dest/sub-1/file3.txt", paths.get(4));
+        Assert.assertEquals(rootPath + "/dest/sub-1/file4.txt", paths.get(5));
+        Assert.assertEquals(rootPath + "/dest/sub-2", paths.get(6));
+        Assert.assertEquals(rootPath + "/dest/sub-2/sub-3", paths.get(7));
+        Assert.assertEquals(rootPath + "/dest/sub-2/sub-3/file5.txt", paths.get(8));
+        Assert.assertEquals(rootPath + "/dest/empty", paths.get(9));
+
+        // Delete directory
+        CWFileUtils.deleteDir(srcDir);
+        CWFileUtils.deleteDir(destDir);
+    }
+
+    @Test
+    public void zipAndUnzipDir() throws IOException {
+        File rootDir = context.getExternalFilesDir(null);
+        String rootPath = rootDir.getAbsolutePath();
+        File srcDir = createSampleDir(rootDir);
+        File zipFile = new File(rootDir, "src.zip");
+        File destDir = new File(rootDir, "dest");
+
+        // zip directory
+        CWFileUtils.zipDir(srcDir, zipFile);
+
+        // Unzip directory
+        CWFileUtils.unzipDir(zipFile, destDir);
+        // List all copied file in destination directory
+        List<String> paths = listDir(destDir);
+        Assert.assertEquals(rootPath + "/dest", paths.get(0));
+        Assert.assertEquals(rootPath + "/dest/file1.txt", paths.get(1));
+        Assert.assertEquals(rootPath + "/dest/file2.txt", paths.get(2));
+        Assert.assertEquals(rootPath + "/dest/sub-1", paths.get(3));
+        Assert.assertEquals(rootPath + "/dest/sub-1/file3.txt", paths.get(4));
+        Assert.assertEquals(rootPath + "/dest/sub-1/file4.txt", paths.get(5));
+        Assert.assertEquals(rootPath + "/dest/sub-2", paths.get(6));
+        Assert.assertEquals(rootPath + "/dest/sub-2/sub-3", paths.get(7));
+        Assert.assertEquals(rootPath + "/dest/sub-2/sub-3/file5.txt", paths.get(8));
+
+        // Delete directory
+        CWFileUtils.deleteDir(srcDir);
+        CWFileUtils.deleteDir(destDir);
+        CWFileUtils.deleteFile(zipFile);
+
+    }
+
+    private File createSampleDir(File rootDir) throws IOException {
+        /*
+         * |- src
+         *      |- file1.txt
+         *      |- file2.txt
+         *      |- sub-1
+         *          |- file3.txt
+         *          |- file4.txt
+         *      |- sub-2
+         *          |- sub-3
+         *              |- file5.txt
+         *      |-empty
+         * |- dest
+         */
+        File srcDir = new File(rootDir, "src");
+        {
+            srcDir.mkdirs();
+            String data = "Color the wind";
+            CWFileUtils.write(data.getBytes(StandardCharsets.UTF_8), new File(srcDir, "file1.txt"));
+            CWFileUtils.write(data.getBytes(StandardCharsets.UTF_8), new File(srcDir, "file2.txt"));
+
+            // sub-1 dir
+            {
+                File sub1Dir = new File(srcDir, "sub-1");
+                sub1Dir.mkdirs();
+                CWFileUtils.write(data.getBytes(StandardCharsets.UTF_8), new File(sub1Dir, "file3.txt"));
+                CWFileUtils.write(data.getBytes(StandardCharsets.UTF_8), new File(sub1Dir, "file4.txt"));
+            }
+
+            // sub-2 dir
+            {
+                File sub2Dir = new File(srcDir, "sub-2");
+                File sub3Dir = new File(sub2Dir, "sub-3");
+                sub3Dir.mkdirs();
+                CWFileUtils.write(data.getBytes(StandardCharsets.UTF_8), new File(sub3Dir, "file5.txt"));
+            }
+
+            // empty dir
+            new File(srcDir, "empty").mkdirs();
+        }
+        return srcDir;
+    }
+
+    private static List<String> listDir(File dir) {
+        List<String> results = new LinkedList<>();
+        results.add(dir.getAbsolutePath());
+        for (File file : dir.listFiles()) {
+            if (file.isDirectory()) {
+                results.addAll(listDir(file));
+            } else {
+                results.add(file.getAbsolutePath());
+            }
+        }
+        return results;
     }
 
     @Test
@@ -208,11 +331,6 @@ public class FileUtilsAdrTest {
             CWFileUtils.write(data.getBytes(StandardCharsets.UTF_8), file);
             Assert.assertEquals(data, CWFileUtils.readString(file));
         }
-    }
-
-    @After
-    public void after() {
-        CWFileUtils.clearDir(context.getExternalFilesDir(null));
     }
 
 }

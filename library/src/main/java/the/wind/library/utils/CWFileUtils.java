@@ -3,16 +3,22 @@ package the.wind.library.utils;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.net.Uri;
-import android.os.Build;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 
@@ -211,13 +217,13 @@ public final class CWFileUtils {
     /**
      * Copy file to specific path
      *
-     * @param src source file path
-     * @param dst destination file path
+     * @param srcFile  source file path
+     * @param destFile destination file path
      * @throws IOException exception
      */
-    public static void copy(File src, File dst) throws IOException {
-        InputStream in = new FileInputStream(src);
-        OutputStream out = new FileOutputStream(dst);
+    public static void copyFile(File srcFile, File destFile) throws IOException {
+        InputStream in = new FileInputStream(srcFile);
+        OutputStream out = new FileOutputStream(destFile);
 
         // Transfer bytes from in to out
         byte[] buf = new byte[1024];
@@ -227,6 +233,35 @@ public final class CWFileUtils {
         }
         in.close();
         out.close();
+    }
+
+    /**
+     * Copy directory to specific directory
+     *
+     * @param srcDir  source directory
+     * @param destDir destination directory
+     * @throws IOException exception
+     */
+    public static void copyDir(@NonNull File srcDir, @NonNull File destDir) throws Exception {
+        if (!srcDir.isDirectory()) {
+            throw new IllegalArgumentException(srcDir.getAbsolutePath() + " is not directory");
+        }
+
+        if (destDir.exists() || destDir.mkdirs()) {
+            File[] files = srcDir.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    File destFile = new File(destDir, file.getName());
+                    if (file.isDirectory()) {
+                        copyDir(file, destFile);
+                    } else {
+                        copyFile(file, destFile);
+                    }
+                }
+            }
+        } else {
+            throw new FileNotFoundException(destDir.getAbsolutePath() + " does not exist");
+        }
     }
 
     /**
@@ -250,6 +285,106 @@ public final class CWFileUtils {
             }
         }
         return false;
+    }
+
+    /**
+     * This method populates all the files in a directory to a List
+     *
+     * @param dir directory
+     * @return all files and folder
+     */
+    public static List<File> populateFilesList(@NonNull File dir) {
+        List<File> fileListInDir = new LinkedList<>();
+        File[] files = dir.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile()) {
+                    fileListInDir.add(file);
+                } else {
+                    fileListInDir.addAll(populateFilesList(file));
+                }
+            }
+        }
+        return fileListInDir;
+    }
+
+    /**
+     * Zip directory.
+     * Zip operation will ignore empty directory
+     * https://www.digitalocean.com/community/tutorials/java-zip-file-folder-example
+     *
+     * @param dir directory
+     * @throws IOException exception
+     */
+    public static void zipDir(@NonNull File dir, @NonNull File zipFile) throws IOException {
+        //create ZipOutputStream to write to the zip file
+        FileOutputStream fos = new FileOutputStream(zipFile);
+        ZipOutputStream zos = new ZipOutputStream(fos);
+
+        //now zip files one by one
+        int dirPathLength = dir.getAbsolutePath().length();
+        byte[] buffer = new byte[1024];
+        int len;
+        for (File file : populateFilesList(dir)) {
+            //for ZipEntry we need to keep only relative file path, so we used substring on absolute path
+            String filePath = file.getAbsolutePath();
+            ZipEntry ze = new ZipEntry(filePath.substring(dirPathLength + 1));
+            zos.putNextEntry(ze);
+            //read the file and write to ZipOutputStream
+            FileInputStream fis = new FileInputStream(filePath);
+            while ((len = fis.read(buffer)) > 0) {
+                zos.write(buffer, 0, len);
+            }
+            zos.closeEntry();
+            fis.close();
+        }
+        zos.close();
+        fos.close();
+    }
+
+    /**
+     * Unzip data
+     * https://www.digitalocean.com/community/tutorials/java-unzip-file-example
+     *
+     * @param zipFile zip file
+     * @param destDir destination directory
+     * @throws IOException exception
+     */
+    public static void unzipDir(@NonNull File zipFile, @NonNull File destDir) throws IOException {
+        if (!zipFile.isFile()) {
+            throw new IllegalArgumentException(zipFile.getAbsolutePath() + " is not zip file");
+        }
+        if (!(destDir.exists() || destDir.mkdirs())) {
+            throw new FileNotFoundException(destDir.getAbsolutePath() + " does not exist");
+        }
+
+        // create output directory if it doesn't exist
+        //buffer for read and write data to file
+        FileInputStream fis = new FileInputStream(zipFile);
+        ZipInputStream zis = new ZipInputStream(fis);
+        byte[] buffer = new byte[1024];
+        int len;
+        ZipEntry ze = zis.getNextEntry();
+        while (ze != null) {
+            String fileName = ze.getName();
+            File newFile = new File(destDir.getAbsolutePath() + File.separator + fileName);
+            File fileDir = newFile.getParentFile();
+            //create directories for sub directories in zip
+            if (fileDir != null && (fileDir.exists() || fileDir.mkdirs())) {
+                FileOutputStream fos = new FileOutputStream(newFile);
+                while ((len = zis.read(buffer)) > 0) {
+                    fos.write(buffer, 0, len);
+                }
+                fos.close();
+                //close this ZipEntry
+                zis.closeEntry();
+                ze = zis.getNextEntry();
+            }
+        }
+        //close last ZipEntry
+        zis.closeEntry();
+        zis.close();
+        fis.close();
     }
 
     /**
@@ -374,13 +509,10 @@ public final class CWFileUtils {
      */
     public static Uri getUriFromFile(Context context, File file) {
         if (!file.exists()) return null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return FileProvider.getUriForFile(
-                    context,
-                    context.getApplicationContext().getPackageName() + ".provider",
-                    file);
-        }
-        return Uri.fromFile(file);
+        return FileProvider.getUriForFile(
+                context,
+                context.getApplicationContext().getPackageName() + ".provider",
+                file);
     }
 
 }
