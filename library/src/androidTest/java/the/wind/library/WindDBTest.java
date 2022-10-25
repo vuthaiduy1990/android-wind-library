@@ -195,6 +195,26 @@ public class WindDBTest {
 
             WindDB.$.clear(CWTestTable.class);
         }
+
+        // Testcase: update single record with specific updated column
+        {
+            CWTestTable record = CWTestTable.newTestTable();
+            WindDB.$.insert(record);
+            Integer oldIntVal = record.intPrim;
+            String oldStringVal = record.mStringObj;
+            record.intPrim = 999;
+            record.mFloatObj = null;
+            record.mStringObj = "change the value";
+            WindDB.$.update(record, new String[]{"stringObj", "floatObj"});
+
+            // Check updated column
+            record = WindDB.$.findByHash(CWTestTable.class, record.getHash());
+            Assert.assertEquals(oldIntVal, record.mIntObj);
+            Assert.assertEquals("change the value", record.mStringObj);
+            Assert.assertNotEquals(oldStringVal, record.mStringObj);
+            Assert.assertNull(record.mFloatObj);
+            WindDB.$.clear(CWTestTable.class);
+        }
     }
 
     @Test

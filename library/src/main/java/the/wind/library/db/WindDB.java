@@ -13,6 +13,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Set;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import the.wind.library.Windson;
 import the.wind.library.utils.CWAndroidUtils;
 import the.wind.library.utils.CWClazzUtils;
@@ -468,6 +470,18 @@ public class WindDB extends SQLiteOpenHelper {
      * @param entities model objects
      * @return id of lasted inserted row or -1 if error occurs
      */
+    @SafeVarargs
+    public final <T extends CWTable> long insert(T... entities) {
+        if (entities == null || entities.length == 0) return 0;
+        return insert(Arrays.asList(entities));
+    }
+
+    /**
+     * Insert data to database
+     *
+     * @param entities model objects
+     * @return id of lasted inserted row or -1 if error occurs
+     */
     public final <T extends CWTable> long insert(Iterable<T> entities) {
         long result = -1;
 
@@ -504,15 +518,14 @@ public class WindDB extends SQLiteOpenHelper {
     }
 
     /**
-     * Insert data to database
+     * Update table
      *
      * @param entities model objects
-     * @return id of lasted inserted row or -1 if error occurs
+     * @return the number of row affected
      */
     @SafeVarargs
-    public final <T extends CWTable> long insert(T... entities) {
-        if (entities == null || entities.length == 0) return 0;
-        return insert(Arrays.asList(entities));
+    public final <T extends CWTable> int update(T... entities) {
+        return update(Arrays.asList(entities));
     }
 
     /**
@@ -522,6 +535,28 @@ public class WindDB extends SQLiteOpenHelper {
      * @return the number of row affected
      */
     public final <T extends CWTable> int update(Iterable<T> entities) {
+        return update(entities, null);
+    }
+
+    /**
+     * Update table
+     *
+     * @param entity  model objects
+     * @param columns update by specific column name
+     * @return the number of row affected
+     */
+    public final <T extends CWTable> int update(T entity, String[] columns) {
+        return update(Collections.singletonList(entity), columns);
+    }
+
+    /**
+     * Update table
+     *
+     * @param columns  update by specific column name
+     * @param entities model objects
+     * @return the number of row affected
+     */
+    public final <T extends CWTable> int update(Iterable<T> entities, String[] columns) {
         int result = 0;
 
         // use transaction to ensure the integrity of data
@@ -532,7 +567,7 @@ public class WindDB extends SQLiteOpenHelper {
                 entity.setVersion(db.getVersion());
                 Date date = new Date();
                 entity.setUpdateDate(date);
-                ContentValues values = toRowValue(entity);
+                ContentValues values = toRowValue(entity, columns);
                 result += db.update(getTableName(entity.getClass()), values, CWTable.HASH + "=?", new String[]{entity.getHash()});
             }
             db.setTransactionSuccessful();
@@ -548,18 +583,6 @@ public class WindDB extends SQLiteOpenHelper {
         // if (db != null) db.close();
 
         return result;
-    }
-
-    /**
-     * Update table
-     *
-     * @param entities model objects
-     * @return the number of row affected
-     */
-    @SafeVarargs
-    public final <T extends CWTable> int update(T... entities) {
-        if (entities == null || entities.length == 0) return 0;
-        return update(Arrays.asList(entities));
     }
 
     /**
@@ -772,11 +795,31 @@ public class WindDB extends SQLiteOpenHelper {
      * @param entity table entity
      */
     private <T extends CWTable> ContentValues toRowValue(T entity) {
+        return toRowValue(entity, null);
+    }
+
+    /**
+     * Convert entity to row value
+     * By default, all field will be store to database except
+     * fields are marked as CWColumnIgnore or are transient
+     *
+     * @param columns update by specific column name
+     * @param entity  table entity
+     */
+    private <T extends CWTable> ContentValues toRowValue(T entity, @Nullable String[] columns) {
         ContentValues values = new ContentValues();
+        List<String> updatedCols = columns == null ? new ArrayList<>() : Arrays.asList(columns);
+        boolean specificColUpdate = updatedCols.size() > 0;
 
         for (Field field : getColumnFields(entity.getClass())) {
             Class<?> type = field.getType();
             String colName = getColumnName(field);
+
+            // Update by specific columns only
+            // If column is not specified, update all
+            if (specificColUpdate && !updatedCols.contains(colName)) {
+                continue;
+            }
 
             // get value by field
             Object val;
