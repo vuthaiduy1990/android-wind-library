@@ -21,9 +21,9 @@
     <color name="wl_black">#000000</color>
     <color name="wl_black_light">#2d2d2d</color>
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <color name="wl_primary">#3191bf</color>
-    <color name="wl_primary_light">#83bdd8</color>
-    <color name="wl_primary_pressed">#1b85b8</color>
+    <color name="wl_primary">#4ca2ff</color>
+    <color name="wl_primary_light">#81bdff</color>
+    <color name="wl_primary_pressed">#3c81cc</color>
     <color name="wl_success">#41b3a3</color>
     <color name="wl_success_light">#8dd1c7</color>
     <color name="wl_success_pressed">#3aa192</color>
