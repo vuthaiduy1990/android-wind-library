@@ -400,6 +400,7 @@ public class WindCalendarDialog extends DialogFragment {
 
         // set dialog content view
         dialog.setContentView(R.layout.wl_calendar_dialog);
+        dialog.setWidth((int) context.getResources().getDimension(R.dimen.wl_calendar_dialog_width));
         View contentView = dialog.contentView();
         _weekDayPanelView = contentView.findViewById(R.id._weekDayPanelView);
         _calendarViewPager = contentView.findViewById(R.id._calendarViewPager);

@@ -30,7 +30,7 @@
         android:layout_width="@dimen/wl_icon_tiny"
         android:layout_height="@dimen/wl_icon_tiny"
         android:layout_weight="0"
-        android:padding="@dimen/wl_spacing_level_0"
+        android:padding="2dp"
         tools:ignore="ContentDescription" />
 
 </LinearLayout>

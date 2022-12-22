@@ -86,6 +86,7 @@
     <dimen name="wl_calendar_lunar_date_text_size">10sp</dimen>
     <dimen name="wl_calendar_event_symbol_size">6dp</dimen>
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <dimen name="wl_calendar_dialog_width">@dimen/wl_dialog_fubuki_width</dimen>
     <dimen name="wl_calendar_dialog_viewpager_height">280dp</dimen>
     <dimen name="wl_calendar_dialog_date_cell_size">38dp</dimen>
     <dimen name="wl_calendar_dialog_date_text_size">13sp</dimen>

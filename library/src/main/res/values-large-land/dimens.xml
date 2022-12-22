@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- |||||||||||||||||||||||||| Calendar ||||||||||||||||||||||||| -->
+    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <dimen name="wl_calendar_height">300dp</dimen>
+    <dimen name="wl_calendar_date_cell_size">42dp</dimen>
+    <dimen name="wl_calendar_date_text_size">13sp</dimen>
+    <dimen name="wl_calendar_lunar_date_text_size">9sp</dimen>
+    <dimen name="wl_calendar_event_symbol_size">6dp</dimen>
+    <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <dimen name="wl_calendar_dialog_width">430dp</dimen>
+    <dimen name="wl_calendar_dialog_viewpager_height">333dp</dimen>
+    <dimen name="wl_calendar_dialog_date_cell_size">48dp</dimen>
+    <dimen name="wl_calendar_dialog_date_text_size">16sp</dimen>
+    <dimen name="wl_calendar_dialog_lunar_date_text_size">11sp</dimen>
+    <dimen name="wl_calendar_year_selection_dialog_width">200dp</dimen>
+
+</resources>

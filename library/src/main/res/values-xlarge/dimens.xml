@@ -14,19 +14,19 @@
     <dimen name="wl_spacing_neg_level_3">-16dp</dimen>
     <dimen name="wl_spacing_neg_level_4">-20dp</dimen>
     <!-- Text -->
-    <dimen name="wl_text_tiny">16sp</dimen>
-    <dimen name="wl_text_small">18sp</dimen>
-    <dimen name="wl_text">20sp</dimen>
-    <dimen name="wl_text_big">22sp</dimen>
+    <dimen name="wl_text_tiny">17sp</dimen>
+    <dimen name="wl_text_small">20sp</dimen>
+    <dimen name="wl_text">22sp</dimen>
+    <dimen name="wl_text_big">24sp</dimen>
     <!-- Title -->
-    <dimen name="wl_title_small">22sp</dimen>
-    <dimen name="wl_title">24sp</dimen>
-    <dimen name="wl_title_big">26sp</dimen>
+    <dimen name="wl_title_small">24sp</dimen>
+    <dimen name="wl_title">26sp</dimen>
+    <dimen name="wl_title_big">28sp</dimen>
     <!-- Icon -->
-    <dimen name="wl_icon_tiny">20dp</dimen>
-    <dimen name="wl_icon_small">22dp</dimen>
-    <dimen name="wl_icon">24dp</dimen>
-    <dimen name="wl_icon_big">26dp</dimen>
+    <dimen name="wl_icon_tiny">22dp</dimen>
+    <dimen name="wl_icon_small">24dp</dimen>
+    <dimen name="wl_icon">26dp</dimen>
+    <dimen name="wl_icon_big">28dp</dimen>
     <!-- Radius -->
     <dimen name="wl_background_radius_small">6dp</dimen>
     <dimen name="wl_background_radius">8dp</dimen>
@@ -34,15 +34,15 @@
 
     <!-- |||||||||||||||||||||||||| Checkbox ||||||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <dimen name="wl_checkbox_vinnhed_size">36dp</dimen>
-    <dimen name="wl_checkbox_takaya_deguchi_size">37dp</dimen>
-    <dimen name="wl_checkbox_victor_kai_size">39dp</dimen>
-    <dimen name="wl_checkbox_lorin_size">33dp</dimen>
-    <dimen name="wl_checkbox_darius_afchar_size">46dp</dimen>
-    <dimen name="wl_checkbox_gilson_santos_size">38dp</dimen>
-    <dimen name="wl_checkbox_aviral_bahuguna_size">38dp</dimen>
-    <dimen name="wl_checkbox_default_square_size">39dp</dimen>
-    <dimen name="wl_checkbox_default_checklist_size">31dp</dimen>
+    <dimen name="wl_checkbox_vinnhed_size">38dp</dimen>
+    <dimen name="wl_checkbox_takaya_deguchi_size">39dp</dimen>
+    <dimen name="wl_checkbox_victor_kai_size">41dp</dimen>
+    <dimen name="wl_checkbox_lorin_size">35dp</dimen>
+    <dimen name="wl_checkbox_darius_afchar_size">48dp</dimen>
+    <dimen name="wl_checkbox_gilson_santos_size">40dp</dimen>
+    <dimen name="wl_checkbox_aviral_bahuguna_size">40dp</dimen>
+    <dimen name="wl_checkbox_default_square_size">41dp</dimen>
+    <dimen name="wl_checkbox_default_checklist_size">33dp</dimen>
 
     <!-- |||||||||||||||||||||||| Wind Dialog |||||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
@@ -68,7 +68,7 @@
 
     <!-- ||||||||||||||||||||||| Wind Search Box ||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <dimen name="wl_search_box_padding_ver">10dp</dimen>
+    <dimen name="wl_search_box_padding_ver">14dp</dimen>
 
     <!-- |||||||||||||||||||||||||| Tag Box |||||||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
@@ -86,6 +86,7 @@
     <dimen name="wl_calendar_lunar_date_text_size">16sp</dimen>
     <dimen name="wl_calendar_event_symbol_size">10dp</dimen>
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    <dimen name="wl_calendar_dialog_width">@dimen/wl_dialog_fubuki_width</dimen>
     <dimen name="wl_calendar_dialog_viewpager_height">480dp</dimen>
     <dimen name="wl_calendar_dialog_date_cell_size">60dp</dimen>
     <dimen name="wl_calendar_dialog_date_text_size">20sp</dimen>
