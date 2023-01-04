@@ -165,9 +165,9 @@ public final class CWAndroidUtils {
      * @param context android context
      * @return true if device has an extra-large screen
      */
-    public static boolean isXLargeTablet(Context context) {
+    public static boolean isLargeTablet(Context context) {
         return (context.getResources().getConfiguration().screenLayout
-                & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
+                & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 
     /**
