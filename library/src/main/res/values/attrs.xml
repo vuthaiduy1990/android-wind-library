@@ -7,6 +7,7 @@
     <attr name="textColor" format="color" />
     <attr name="iconSize" format="dimension" />
     <attr name="spacing" format="dimension" />
+    <attr name="offscreen" format="integer" />
 
     <!-- Checkbox's attributes -->
     <!-- Should have the same name with View class so that the Android hint can work in layout resource file -->
@@ -102,7 +103,7 @@
     <!--  Calendar attributes -->
     <declare-styleable name="WindCalendar">
         <attr name="tagCode" format="string" />
-        <attr name="offscreen" format="integer" />
+        <attr name="offscreen" />
 
         <attr name="weekDays" format="string" />
         <attr name="weekDayTextSize" format="dimension" />
@@ -150,5 +151,11 @@
         </attr>
 
         <attr name="autoBuild" format="boolean" />
+    </declare-styleable>
+
+    <!--  Slider attributes -->
+    <declare-styleable name="ImageSlider">
+        <attr name="offscreen" />
+        <attr name="maxDots" format="integer" />
     </declare-styleable>
 </resources>

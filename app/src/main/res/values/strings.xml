@@ -20,6 +20,7 @@
     <string name="drawer_dropdown">Dropdown</string>
     <string name="drawer_text_effect">Text Effect</string>
     <string name="drawer_calendar">Calendar</string>
+    <string name="drawer_image_slider">Image Slider</string>
 
     <string name="action_menu_recycle_list_view">List View</string>
     <string name="action_menu_recycle_grid_view">Grid View</string>
@@ -43,6 +44,7 @@
     <string name="action_menu_calendar_zoom_out_transform">Zoom Out Transformer</string>
 
     <string name="action_menu_settings">Settings</string>
+    <string name="action_menu_image_slider_dialog">Show dialog</string>
 
     <string name="button_primary">Primary</string>
     <string name="button_success">Success</string>
@@ -71,4 +73,6 @@
     <string name="wind_menu_item_set_color">Set color</string>
     <string name="wind_menu_item_set_background">Set background with color of the wind</string>
     <string name="wind_menu_more_item">more item here more item here more item here more item here</string>
+
+    <string name="illustration_text">You think you own whatever land you land on. The Earth is just a dead thing you can claim. But I know every rock and tree and creature. Has a life, has a spirit, has a name</string>
 </resources>

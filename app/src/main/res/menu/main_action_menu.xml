@@ -133,4 +133,10 @@
         android:orderInCategory="6"
         android:title="@string/action_menu_settings"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_menu_image_slider_show_dialog"
+        android:orderInCategory="6"
+        android:title="@string/action_menu_image_slider_dialog"
+        app:showAsAction="never" />
 </menu>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <!-- Image Slider -->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Slider Dot -->
+    <LinearLayout
+        android:id="@+id/_dotListView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/wl_spacing_level_2"
+        android:orientation="horizontal" />
+
+</LinearLayout>

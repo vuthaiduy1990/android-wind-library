@@ -62,6 +62,11 @@
                 android:title="@string/drawer_dropdown" />
 
             <item
+                android:id="@+id/_navImageSliderMenu"
+                android:icon="@drawable/ic_nav_dropdown"
+                android:title="@string/drawer_image_slider" />
+
+            <item
                 android:id="@+id/_navCalendarMenu"
                 android:icon="@drawable/wl_ic_calendar"
                 android:title="@string/drawer_calendar" />

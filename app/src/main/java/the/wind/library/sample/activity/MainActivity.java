@@ -21,6 +21,7 @@ import androidx.navigation.ui.NavigationUI;
 import the.wind.library.anim.PageTransformerType;
 import the.wind.library.sample.R;
 import the.wind.library.sample.activity.fragment.CalendarPage;
+import the.wind.library.sample.activity.fragment.ImageSliderPage;
 import the.wind.library.sample.activity.fragment.RecycleViewPage;
 import the.wind.library.view.WindRecycleView;
 
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
             R.id._navSearchBoxMenu,
             R.id._navTagBoxMenu,
             R.id._navDropdownMenu,
+            R.id._navImageSliderMenu,
             R.id._navCalendarMenu,
     };
     private AppBarConfiguration mAppBarConfiguration;
@@ -115,6 +117,9 @@ public class MainActivity extends AppCompatActivity {
         menu.findItem(R.id.action_menu_calendar_zoom_in_transform).setVisible(calendarItemVisible);
         menu.findItem(R.id.action_menu_calendar_zoom_out_transform).setVisible(calendarItemVisible);
 
+        // Show action menu for image slider page
+        boolean imageSliderItemVisible = navDes != null && navDes.getId() == R.id._navImageSliderMenu;
+        menu.findItem(R.id.action_menu_image_slider_show_dialog).setVisible(imageSliderItemVisible);
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -225,6 +230,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_menu_calendar_zoom_out_transform:
                 if (currentPage instanceof CalendarPage) {
                     ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.ZOOM_OUT);
+                }
+                break;
+            case R.id.action_menu_image_slider_show_dialog:
+                if (currentPage instanceof ImageSliderPage) {
+                    ((ImageSliderPage) currentPage).showDialog();
                 }
                 break;
             default:
