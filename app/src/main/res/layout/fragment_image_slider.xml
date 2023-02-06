@@ -9,5 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:maxDots="5"
-        app:offscreen="3" />
+        app:offscreen="3"
+        app:textColor="@color/wl_neutral"
+        app:textSize="@dimen/wl_text_small"
+        app:titleColor="@color/wl_info"
+        app:titleSize="@dimen/wl_text_big" />
 </FrameLayout>

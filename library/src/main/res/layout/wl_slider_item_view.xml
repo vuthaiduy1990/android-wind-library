@@ -5,27 +5,37 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:weightSum="5">
+    android:weightSum="9">
 
     <!-- Image Slider -->
     <ImageView
         android:id="@+id/_imageView"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="4"
+        android:layout_weight="7"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         tools:ignore="ContentDescription" />
 
-    <TextView
-        android:id="@+id/_textView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/wl_spacing_level_2"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:textColor="@color/wl_text"
-        android:textIsSelectable="true"
-        android:textSize="@dimen/wl_text_small" />
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/wl_spacing_level_1"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/_titleView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true" />
+    </LinearLayout>
 
 </LinearLayout>

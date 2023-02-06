@@ -16,13 +16,13 @@ import the.wind.library.view.ImageSlider;
 public class ImageSliderPage extends Fragment {
 
     private final ImageSlider.Data[] dataset = new ImageSlider.Data[]{
-            new ImageSlider.Data(R.drawable.illustration_1, R.string.illustration_text),
-            new ImageSlider.Data(R.drawable.illustration_2, R.string.illustration_text),
-            new ImageSlider.Data(R.drawable.illustration_3, R.string.illustration_text),
-            new ImageSlider.Data(R.drawable.illustration_4, R.string.illustration_text),
-            new ImageSlider.Data(R.drawable.illustration_5, R.string.illustration_text),
-            new ImageSlider.Data(R.drawable.illustration_6, R.string.illustration_text),
-            new ImageSlider.Data(R.drawable.illustration_7, R.string.illustration_text),
+            new ImageSlider.Data(R.drawable.illustration_1, R.string.illustration_title, R.string.illustration_text),
+            new ImageSlider.Data(R.drawable.illustration_2, 0, 0),
+            new ImageSlider.Data(R.drawable.illustration_3, R.string.illustration_title, R.string.illustration_text),
+            new ImageSlider.Data(R.drawable.illustration_4, R.string.illustration_title, R.string.illustration_text),
+            new ImageSlider.Data(R.drawable.illustration_5, R.string.illustration_title, R.string.illustration_text),
+            new ImageSlider.Data(R.drawable.illustration_6, R.string.illustration_title, R.string.illustration_text),
+            new ImageSlider.Data(R.drawable.illustration_7, R.string.illustration_title, R.string.illustration_text),
     };
 
     private IntroductionDialog introDialog;
@@ -50,7 +50,7 @@ public class ImageSliderPage extends Fragment {
         introDialog = new IntroductionDialog(rootView.getContext());
         introDialog.setDataset(dataset);
         int height = CWAndroidUtils.getScreenSize(rootView.getContext()).getHeight();
-        introDialog.setMaxHeight((int) (height * 0.7f));
+        introDialog.setMaxHeight((int) (height * 0.75f));
         introDialog.setOffScreen(1);
         introDialog.setMaxDots(15);
     }

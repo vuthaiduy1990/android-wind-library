@@ -31,7 +31,7 @@
     <dimen name="wl_background_radius_small">4dp</dimen>
     <dimen name="wl_background_radius">6dp</dimen>
     <dimen name="wl_background_radius_big">8dp</dimen>
-    <dimen name="wl_dot_size">10dp</dimen>
+    <dimen name="wl_dot_size">8dp</dimen>
 
     <!-- |||||||||||||||||||||||||| Checkbox ||||||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->

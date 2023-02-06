@@ -3,6 +3,7 @@ package the.wind.library.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,12 @@ import android.widget.TextView;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import the.wind.library.CWBundle;
@@ -34,6 +37,14 @@ public class ImageSlider extends LinearLayout {
     private final ViewGroup _dotListView;
     private View preDotView;
     private final Map<Integer, View> dotViewMap = new HashMap<>();
+
+    // style
+    private float titleSize;
+    @ColorInt
+    private int titleColor;
+    private float textSize;
+    @ColorInt
+    private int textColor;
 
     // Listener
     private ViewPager.OnPageChangeListener pageChangeListener;
@@ -97,6 +108,18 @@ public class ImageSlider extends LinearLayout {
         try {
             offscreen = typeArray.getInteger(R.styleable.ImageSlider_offscreen, DEFAULT_OFFSCREEN);
             maxDots = typeArray.getInteger(R.styleable.ImageSlider_maxDots, DEFAULT_MAX_DOTS);
+            titleSize = typeArray.getDimension(
+                    R.styleable.ImageSlider_titleSize,
+                    getResources().getDimension(R.dimen.wl_text_big));
+            titleColor = typeArray.getColor(
+                    R.styleable.ImageSlider_titleColor,
+                    ContextCompat.getColor(context, R.color.wl_text));
+            textSize = typeArray.getDimension(
+                    R.styleable.ImageSlider_textSize,
+                    getResources().getDimension(R.dimen.wl_text_small));
+            textColor = typeArray.getColor(
+                    R.styleable.ImageSlider_textColor,
+                    ContextCompat.getColor(context, R.color.wl_text));
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -106,6 +129,10 @@ public class ImageSlider extends LinearLayout {
 
         // Set adapter
         adapter = new SliderAdapter(context);
+        adapter.titleColor = titleColor;
+        adapter.titleSize = titleSize;
+        adapter.textColor = textColor;
+        adapter.textSize = textSize;
         _viewpager.setOffscreenPageLimit(offscreen);
         _viewpager.setAdapter(adapter);
         _viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -260,6 +287,8 @@ public class ImageSlider extends LinearLayout {
         @DrawableRes
         private final int imageResId;
         @StringRes
+        private final int titleResId;
+        @StringRes
         private final int textResId;
 
         /**
@@ -268,8 +297,9 @@ public class ImageSlider extends LinearLayout {
          * @param imageResId image source ID
          * @param textResId  text resource ID
          */
-        public Data(@DrawableRes int imageResId, @StringRes int textResId) {
+        public Data(@DrawableRes int imageResId, @StringRes int titleResId, @StringRes int textResId) {
             this.imageResId = imageResId;
+            this.titleResId = titleResId;
             this.textResId = textResId;
         }
     }
@@ -280,6 +310,16 @@ public class ImageSlider extends LinearLayout {
     public static class SliderAdapter extends PagerAdapter {
 
         private final LayoutInflater inflater;
+
+
+        // style
+        private float titleSize;
+        @ColorInt
+        private int titleColor;
+        private float textSize;
+        @ColorInt
+        private int textColor;
+
         private Data[] dataset = new Data[]{};
 
         /**
@@ -305,11 +345,24 @@ public class ImageSlider extends LinearLayout {
             // bind view
             View view = inflater.inflate(R.layout.wl_slider_item_view, container, false);
             ImageView _imageView = view.findViewById(R.id._imageView);
+            TextView _titleView = view.findViewById(R.id._titleView);
             TextView _textView = view.findViewById(R.id._textView);
+
+            // bind style
+            _titleView.setTextColor(titleColor);
+            _titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleSize);
+            _textView.setTextColor(textColor);
+            _textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 
             // bind data
             Data data = dataset[position];
             _imageView.setImageResource(data.imageResId);
+            if (data.titleResId > 0) {
+                _titleView.setText(data.titleResId);
+                _titleView.setVisibility(VISIBLE);
+            } else {
+                _titleView.setVisibility(GONE);
+            }
             if (data.textResId > 0) {
                 _textView.setText(data.textResId);
                 _textView.setVisibility(VISIBLE);
