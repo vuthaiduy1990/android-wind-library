@@ -5,14 +5,14 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:weightSum="9">
+    android:weightSum="7">
 
     <!-- Image Slider -->
     <ImageView
         android:id="@+id/_imageView"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="7"
+        android:layout_weight="5"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         tools:ignore="ContentDescription" />
@@ -22,19 +22,22 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/wl_spacing_level_1"
         android:layout_weight="2"
-        android:orientation="vertical">
+        android:gravity="center_horizontal|top"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/wl_spacing_level_2">
 
         <TextView
             android:id="@+id/_titleView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textIsSelectable="true"
-            android:textStyle="bold" />
+            android:textIsSelectable="true" />
 
         <TextView
             android:id="@+id/_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/wl_spacing_level_2"
+            android:gravity="center"
             android:textIsSelectable="true" />
     </LinearLayout>
 

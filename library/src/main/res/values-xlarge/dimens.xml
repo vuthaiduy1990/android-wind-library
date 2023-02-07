@@ -18,6 +18,7 @@
     <dimen name="wl_text_small">20sp</dimen>
     <dimen name="wl_text">22sp</dimen>
     <dimen name="wl_text_big">24sp</dimen>
+    <dimen name="wl_text_intro_title">30sp</dimen>
     <!-- Title -->
     <dimen name="wl_title_small">24sp</dimen>
     <dimen name="wl_title">26sp</dimen>

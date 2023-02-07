@@ -110,7 +110,7 @@ public class ImageSlider extends LinearLayout {
             maxDots = typeArray.getInteger(R.styleable.ImageSlider_maxDots, DEFAULT_MAX_DOTS);
             titleSize = typeArray.getDimension(
                     R.styleable.ImageSlider_titleSize,
-                    getResources().getDimension(R.dimen.wl_text_big));
+                    getResources().getDimension(R.dimen.wl_text_intro_title));
             titleColor = typeArray.getColor(
                     R.styleable.ImageSlider_titleColor,
                     ContextCompat.getColor(context, R.color.wl_text));
