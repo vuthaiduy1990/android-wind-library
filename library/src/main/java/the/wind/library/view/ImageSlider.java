@@ -1,6 +1,7 @@
 package the.wind.library.view;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.DimenRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,14 +39,6 @@ public class ImageSlider extends LinearLayout {
     private final ViewGroup _dotListView;
     private View preDotView;
     private final Map<Integer, View> dotViewMap = new HashMap<>();
-
-    // style
-    private float titleSize;
-    @ColorInt
-    private int titleColor;
-    private float textSize;
-    @ColorInt
-    private int textColor;
 
     // Listener
     private ViewPager.OnPageChangeListener pageChangeListener;
@@ -100,6 +94,9 @@ public class ImageSlider extends LinearLayout {
         _viewpager = findViewById(R.id._viewpager);
         _dotListView = findViewById(R.id._dotListView);
 
+        // Create adapter
+        adapter = new SliderAdapter(context);
+
         // bind attributes
         TypedArray typeArray = context.getTheme().obtainStyledAttributes(
                 attrs, R.styleable.ImageSlider,
@@ -108,16 +105,16 @@ public class ImageSlider extends LinearLayout {
         try {
             offscreen = typeArray.getInteger(R.styleable.ImageSlider_offscreen, DEFAULT_OFFSCREEN);
             maxDots = typeArray.getInteger(R.styleable.ImageSlider_maxDots, DEFAULT_MAX_DOTS);
-            titleSize = typeArray.getDimension(
+            adapter.titleSize = typeArray.getDimension(
                     R.styleable.ImageSlider_titleSize,
                     getResources().getDimension(R.dimen.wl_text_intro_title));
-            titleColor = typeArray.getColor(
+            adapter.titleColor = typeArray.getColor(
                     R.styleable.ImageSlider_titleColor,
                     ContextCompat.getColor(context, R.color.wl_text));
-            textSize = typeArray.getDimension(
+            adapter.textSize = typeArray.getDimension(
                     R.styleable.ImageSlider_textSize,
                     getResources().getDimension(R.dimen.wl_text_small));
-            textColor = typeArray.getColor(
+            adapter.textColor = typeArray.getColor(
                     R.styleable.ImageSlider_textColor,
                     ContextCompat.getColor(context, R.color.wl_text));
 
@@ -128,11 +125,6 @@ public class ImageSlider extends LinearLayout {
         }
 
         // Set adapter
-        adapter = new SliderAdapter(context);
-        adapter.titleColor = titleColor;
-        adapter.titleSize = titleSize;
-        adapter.textColor = textColor;
-        adapter.textSize = textSize;
         _viewpager.setOffscreenPageLimit(offscreen);
         _viewpager.setAdapter(adapter);
         _viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -211,6 +203,44 @@ public class ImageSlider extends LinearLayout {
         if (dsLength > 0) {
             createDots(Math.min(dsLength, maxDots));
         }
+    }
+
+    /**
+     * Set title size
+     *
+     * @param titleSize resource dimension ID
+     */
+    public void setTitleSize(@DimenRes int titleSize) {
+        Resources res = getContext().getResources();
+        adapter.titleSize = res.getDimension(titleSize);
+    }
+
+    /**
+     * Set title color
+     *
+     * @param color android color
+     */
+    public void setTitleColor(@ColorInt int color) {
+        adapter.titleColor = color;
+    }
+
+    /**
+     * Set text size
+     *
+     * @param titleSize resource dimension ID
+     */
+    public void setTextSize(@DimenRes int titleSize) {
+        Resources res = getContext().getResources();
+        adapter.textSize = res.getDimension(titleSize);
+    }
+
+    /**
+     * Set text color
+     *
+     * @param color android color
+     */
+    public void setTextColor(@ColorInt int color) {
+        adapter.textColor = color;
     }
 
     /**
