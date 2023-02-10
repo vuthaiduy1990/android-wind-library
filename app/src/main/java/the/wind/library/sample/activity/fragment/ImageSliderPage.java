@@ -51,8 +51,8 @@ public class ImageSliderPage extends Fragment {
         introDialog.setDataset(dataset);
         int height = CWAndroidUtils.getScreenSize(rootView.getContext()).getHeight();
         introDialog.setMaxHeight((int) (height * 0.75f));
-        introDialog.setOffScreen(1);
-        introDialog.setMaxDots(15);
+        introDialog.getImageSlider().setOffScreen(1);
+        introDialog.getImageSlider().setMaxDots(15);
     }
 
     public void showDialog() {

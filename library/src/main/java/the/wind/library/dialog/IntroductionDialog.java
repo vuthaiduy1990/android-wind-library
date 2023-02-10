@@ -56,24 +56,6 @@ public class IntroductionDialog extends WindDialog {
         _imageSlider.setDataset(dataset);
     }
 
-    /**
-     * Set offscreen
-     *
-     * @param offscreen offscreen
-     */
-    public void setOffScreen(int offscreen) {
-        _imageSlider.setOffScreen(offscreen);
-    }
-
-    /**
-     * Set max number of dots
-     *
-     * @param maxDots max number of dots
-     */
-    public void setMaxDots(int maxDots) {
-        _imageSlider.setMaxDots(maxDots);
-    }
-
     /* ---------------------- METHOD ------------------------- */
 
     /* ---------------------- INNER CLASS -------------------- */
