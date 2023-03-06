@@ -1,10 +1,11 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 32
+    namespace 'the.wind.library'
+    compileSdkVersion 33
     defaultConfig {
         minSdkVersion 24
-        targetSdkVersion 32
+        targetSdkVersion 33
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -21,16 +22,16 @@ dependencies {
 
     // Required for test
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     // Android library
     api 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'androidx.exifinterface:exifinterface:1.3.5'
+    implementation 'androidx.exifinterface:exifinterface:1.3.6'
 
     // G-SON library
     // https://github.com/google/gson
-    api 'com.google.code.gson:gson:2.8.6'
+    api 'com.google.code.gson:gson:2.8.9'
 
     // Lottie Animation
     // https://github.com/airbnb/lottie-android/
