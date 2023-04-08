@@ -236,7 +236,7 @@ public final class CWAndroidUtils {
                 + seed
                 + Math.random()
                 + new Date().getTime();
-        return CWCryptoUtils.sha1(hash);
+        return CWCryptoUtils.sha256(hash);
     }
 
     /**
