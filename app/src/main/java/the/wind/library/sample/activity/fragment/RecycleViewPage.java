@@ -102,7 +102,7 @@ public class RecycleViewPage extends Fragment {
         // _recycleView.enableSwapPosition(null);
 
         // enable swipe to remove
-        _recycleView.setLeftSwipeIcon(CWImageUtils.drawbleToBitmap(view.getContext(), R.drawable.wl_ic_setting));
+        _recycleView.setLeftSwipeIcon(CWImageUtils.drawbleToBitmap(view.getContext(), R.drawable.wl_ic_tool));
         _recycleView.setRightSwipeIcon(CWImageUtils.drawbleToBitmap(view.getContext(), R.drawable.wl_ic_trash));
         _recycleView.setSwipeIconSize(view.getResources().getDimension(R.dimen.wl_icon));
         _recycleView.enableSwipeToRemove(new WindRecycleView.OnSwipeToRemoveListener() {

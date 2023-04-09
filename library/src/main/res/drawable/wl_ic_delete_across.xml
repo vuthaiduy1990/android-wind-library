@@ -1,10 +1,10 @@
-<!-- @Copyright Freepik: https://www.flaticon.com/free-icon/delete-cross_63694 -->
+<!-- @Copyright https://www.flaticon.com/free-icon/delete-cross_63694 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="128dp"
     android:height="128dp"
     android:viewportWidth="45.334"
     android:viewportHeight="45.334">
     <path
-        android:fillColor="#FF2d2d2d"
+        android:fillColor="#FF000000"
         android:pathData="M43.576,35.092L31.152,22.668l12.424,-12.424c2.343,-2.343 2.343,-6.142 0,-8.485c-2.343,-2.343 -6.142,-2.343 -8.485,0L22.666,14.183L10.242,1.758c-2.344,-2.343 -6.143,-2.343 -8.485,0c-2.343,2.344 -2.343,6.143 0,8.485l12.425,12.424L1.757,35.091c-2.343,2.344 -2.343,6.143 0,8.485C2.93,44.748 4.464,45.333 6,45.333c1.535,0 3.071,-0.586 4.243,-1.757l12.423,-12.423l12.425,12.424c1.173,1.171 2.707,1.757 4.243,1.757s3.071,-0.586 4.243,-1.757C45.919,41.234 45.919,37.436 43.576,35.092z" />
 </vector>

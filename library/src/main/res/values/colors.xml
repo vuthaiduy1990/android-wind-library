@@ -2,7 +2,6 @@
 <resources>
     <!-- |||||||||||||||||||||||||| Common ||||||||||||||||||||||||||| -->
     <!-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-    <color name="wl_icon">#2d2d2d</color>
     <color name="wl_text">@color/wl_black</color>
     <color name="wl_text_light">#a0a0a0</color>
     <color name="wl_text_hint">@color/wl_text_light</color>

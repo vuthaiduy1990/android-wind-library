@@ -142,7 +142,7 @@ public class ActionMenuPage extends Fragment {
 
     private void createSideBarMenu(View view) {
         _sidebarMenu = new WindActionMenu(view.getContext(), WindActionMenu.MenuType.SIDEBAR);
-        _sidebarMenu.addItem(R.id.wind_menu_item_setting, R.drawable.wl_ic_setting, R.string.wind_menu_item_setting);
+        _sidebarMenu.addItem(R.id.wind_menu_item_setting, R.drawable.wl_ic_tool, R.string.wind_menu_item_setting);
         _sidebarMenu.addItem(R.id.wind_menu_item_set_background, R.drawable.wl_ic_edit, R.string.wind_menu_item_edit);
         _sidebarMenu.addItem(R.id.wind_menu_item_set_money, R.drawable.wl_ic_lock, R.string.wind_menu_item_set_money);
         _sidebarMenu.addItem(R.id.wind_menu_item_delete, R.drawable.wl_ic_trash, R.string.wind_menu_item_delete);
@@ -162,7 +162,7 @@ public class ActionMenuPage extends Fragment {
         menu.addItem(R.id.wind_menu_item_set_color, R.drawable.wl_ic_save, R.string.wind_menu_item_set_color, true);
         menu.addItem(R.id.wind_menu_item_set_money, R.drawable.wl_ic_lock, R.string.wind_menu_item_set_money);
         menu.addItem(R.id.wind_menu_item_track_time, R.drawable.wl_ic_ok, R.string.wind_menu_item_track_time);
-        menu.addItem(R.id.wind_menu_item_setting, R.drawable.wl_ic_setting, R.string.wind_menu_item_setting);
+        menu.addItem(R.id.wind_menu_item_setting, R.drawable.wl_ic_tool, R.string.wind_menu_item_setting);
         menu.addItem(R.id.wind_menu_item_delete, R.drawable.wl_ic_trash, R.string.wind_menu_item_delete);
     }
 

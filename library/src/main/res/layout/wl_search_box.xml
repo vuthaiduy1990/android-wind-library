@@ -15,7 +15,7 @@
         android:layout_marginEnd="@dimen/wl_spacing_level_2"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/wl_ic_search_close"
+        android:src="@drawable/wl_ic_arrow_left"
         tools:ignore="ContentDescription" />
 
     <!-- Search Box -->

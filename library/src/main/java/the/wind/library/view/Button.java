@@ -464,7 +464,7 @@ public class Button extends LinearLayout {
         SEARCH(R.drawable.wl_ic_search, false),
         INFO(R.drawable.wl_ic_info, false),
         LOCK(R.drawable.wl_ic_lock, false),
-        SETTING(R.drawable.wl_ic_setting, false);
+        SETTING(R.drawable.wl_ic_tool, false);
 
         private final int iconRes;
         private final boolean useAnim;

@@ -1,16 +1,16 @@
-<!-- @Copyright Icons8 -->
+<!-- @Copyright Those Icons https://www.flaticon.com/free-icon/menu_2089793 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="128dp"
     android:height="128dp"
-    android:viewportWidth="512"
-    android:viewportHeight="512">
+    android:viewportWidth="515.55"
+    android:viewportHeight="515.55">
     <path
-        android:fillColor="#FF2d2d2d"
-        android:pathData="M256,256m-64,0a64,64 0,1 1,128 0a64,64 0,1 1,-128 0" />
+        android:fillColor="#FF000000"
+        android:pathData="m303.35,18.88c25.17,25.17 25.17,65.97 0,91.14s-65.97,25.17 -91.14,0 -25.17,-65.97 0,-91.14c25.17,-25.17 65.97,-25.17 91.14,0" />
     <path
-        android:fillColor="#FF2d2d2d"
-        android:pathData="M256,448m-64,0a64,64 0,1 1,128 0a64,64 0,1 1,-128 0" />
+        android:fillColor="#FF000000"
+        android:pathData="m303.35,212.21c25.17,25.17 25.17,65.97 0,91.14s-65.97,25.17 -91.14,0 -25.17,-65.97 0,-91.14c25.17,-25.17 65.97,-25.17 91.14,0" />
     <path
-        android:fillColor="#FF2d2d2d"
-        android:pathData="M256,64m-64,0a64,64 0,1 1,128 0a64,64 0,1 1,-128 0" />
+        android:fillColor="#FF000000"
+        android:pathData="m303.35,405.54c25.17,25.17 25.17,65.97 0,91.14s-65.97,25.17 -91.14,0 -25.17,-65.97 0,-91.14c25.17,-25.17 65.97,-25.17 91.14,0" />
 </vector>
