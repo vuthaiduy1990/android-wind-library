@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 
 /**
  * Provide method for handling date
- * https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html
+ * <a href="https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html">...</a>
  */
 public final class CWDateUtils {
 

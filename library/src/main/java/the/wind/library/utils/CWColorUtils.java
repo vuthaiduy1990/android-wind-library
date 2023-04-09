@@ -110,7 +110,7 @@ public final class CWColorUtils {
 
     /**
      * Convert RGB to HEX string
-     * https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
+     * <a href="https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb">...</a>
      *
      * @param r red
      * @param g green

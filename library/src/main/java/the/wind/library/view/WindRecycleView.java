@@ -33,12 +33,12 @@ import the.wind.library.utils.CWImageUtils;
  * RecycleView Wrapper
  * <p>
  * Note1:
- * https://medium.com/@haydar_ai/better-way-to-get-the-item-position-in-androids-recyclerview-820667d435d4
+ * <a href="https://medium.com/@haydar_ai/better-way-to-get-the-item-position-in-androids-recyclerview-820667d435d4">...</a>
  * According to this article, we should use holder.getBindingAdapterPosition() to retrieve the item's position in action event
  * For example: click event
  * <p>
  * Note2:
- * https://android.jlelse.eu/anatomy-of-recyclerview-part-1-a-search-for-a-viewholder-404ba3453714
+ * <a href="https://android.jlelse.eu/anatomy-of-recyclerview-part-1-a-search-for-a-viewholder-404ba3453714">...</a>
  * According to this one, RecycleView implement cache and poll for initiating view holder under the hood.
  * So be-careful when user user set holder items value without binding via data
  */

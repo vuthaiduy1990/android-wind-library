@@ -71,12 +71,12 @@ import androidx.annotation.Nullable;
  * Note: See CryptoUtilsTest#encryptDecryptUsingAsymmetricKey() for the case of using encrypt with asymmetric key
  * <p>
  * Thanks to:
- * http://tutorials.jenkov.com/java-cryptography/keypairgenerator.html
- * https://proandroiddev.com/security-best-practices-symmetric-encryption-with-aes-in-java-7616beaaade9
- * https://docs.oracle.com/javase/9/docs/specs/security/standard-names.html
- * https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation
- * https://proprivacy.com/guides/aes-encryption
- * https://www.devglan.com/java8/rsa-encryption-decryption-java
+ * <a href="http://tutorials.jenkov.com/java-cryptography/keypairgenerator.html">...</a>
+ * <a href="https://proandroiddev.com/security-best-practices-symmetric-encryption-with-aes-in-java-7616beaaade9">...</a>
+ * <a href="https://docs.oracle.com/javase/9/docs/specs/security/standard-names.html">...</a>
+ * <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation">...</a>
+ * <a href="https://proprivacy.com/guides/aes-encryption">...</a>
+ * <a href="https://www.devglan.com/java8/rsa-encryption-decryption-java">...</a>
  */
 public final class CWCryptoUtils {
 
@@ -212,7 +212,7 @@ public final class CWCryptoUtils {
     /**
      * Convert string to hash using specific algorithm
      * Available algorithm
-     * https://docs.oracle.com/javase/9/docs/specs/security/standard-names.html#messagedigest-algorithms
+     * <a href="https://docs.oracle.com/javase/9/docs/specs/security/standard-names.html#messagedigest-algorithms">...</a>
      * <pre>
      *     MD2, MD5
      *     SHA-1, SHA-224, SHA-256, SHA-384, SHA-512, SHA-512/224, SHA-512/256
@@ -242,7 +242,7 @@ public final class CWCryptoUtils {
     /**
      * Convert string to hash using specific algorithm
      * Available algorithm
-     * https://docs.oracle.com/javase/9/docs/specs/security/standard-names.html#messagedigest-algorithms
+     * <a href="https://docs.oracle.com/javase/9/docs/specs/security/standard-names.html#messagedigest-algorithms">...</a>
      * <pre>
      *     MD2, MD5
      *     SHA-1, SHA-224, SHA-256, SHA-384, SHA-512, SHA-512/224, SHA-512/256
@@ -307,7 +307,7 @@ public final class CWCryptoUtils {
 
     /**
      * Generate a symmetric key using AES algorithm
-     * https://docs.oracle.com/javase/9/docs/specs/security/standard-names.html#keygenerator-algorithms
+     * <a href="https://docs.oracle.com/javase/9/docs/specs/security/standard-names.html#keygenerator-algorithms">...</a>
      *
      * @param seed    a user generated seed.
      * @param keySize unit is bytes
