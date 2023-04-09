@@ -91,25 +91,25 @@ public class Button extends LinearLayout {
         _space = findViewById(R.id._space);
 
         // bind attributes
-        TypedArray btTypeArray = context.getTheme().obtainStyledAttributes(
+        TypedArray typeArray = context.getTheme().obtainStyledAttributes(
                 attrs, R.styleable.Button,
                 defStyleAttr, defStyleRes);
         try {
             // retrieve button type
-            int typeIdx = btTypeArray.getInt(R.styleable.Button_type, 0);
+            int typeIdx = typeArray.getInt(R.styleable.Button_type, 0);
             Type type = Type.values()[typeIdx];
             if (getBackground() == null) {
                 setType(type);
             }
 
             // bind icon's attributes
-            int iconIdx = btTypeArray.getInt(R.styleable.Button_inlineIcon, -1);
+            int iconIdx = typeArray.getInt(R.styleable.Button_inlineIcon, -1);
             if (iconIdx >= 0) {
                 mInlineIcon = InlineIcon.values()[iconIdx];
             }
-            mCustomIconRes = btTypeArray.getResourceId(R.styleable.Button_customIcon, 0);
-            mCustomAnimRes = btTypeArray.getResourceId(R.styleable.Button_customAnim, 0);
-            float iconSize = btTypeArray.getDimension(
+            mCustomIconRes = typeArray.getResourceId(R.styleable.Button_customIcon, 0);
+            mCustomAnimRes = typeArray.getResourceId(R.styleable.Button_customAnim, 0);
+            float iconSize = typeArray.getDimension(
                     R.styleable.Button_iconSize,
                     getResources().getDimension(R.dimen.wl_icon_small));
             RelativeLayout.LayoutParams iconLayout = new RelativeLayout.LayoutParams((int) iconSize, (int) iconSize);
@@ -118,11 +118,11 @@ public class Button extends LinearLayout {
             judgeIcon();
 
             // bind text attributes
-            String textValue = btTypeArray.getString(R.styleable.Button_text);
-            int textColorInt = btTypeArray.getColor(
+            String textValue = typeArray.getString(R.styleable.Button_text);
+            int textColorInt = typeArray.getColor(
                     R.styleable.Button_textColor,
                     ContextCompat.getColor(context, type.getColor()));
-            float textSize = btTypeArray.getDimension(
+            float textSize = typeArray.getDimension(
                     R.styleable.Button_textSize,
                     getResources().getDimension(R.dimen.wl_text_small));
             LinearLayout.LayoutParams textLayout = new LinearLayout.LayoutParams(
@@ -134,7 +134,7 @@ public class Button extends LinearLayout {
             _textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 
             // bind space attribute
-            float spacing = btTypeArray.getDimension(
+            float spacing = typeArray.getDimension(
                     R.styleable.Button_spacing,
                     getResources().getDimension(R.dimen.wl_spacing_level_1));
             _space.setLayoutParams(new LinearLayout.LayoutParams((int) spacing, 1));
@@ -142,8 +142,9 @@ public class Button extends LinearLayout {
 
         } catch (Exception ex) {
             ex.printStackTrace();
+            typeArray.close();
         } finally {
-            btTypeArray.recycle();
+            typeArray.recycle();
         }
         setClickable(true);
         setGravity(Gravity.CENTER);

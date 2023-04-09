@@ -83,6 +83,7 @@ public class Dropdown extends RelativeLayout {
 
         } catch (Exception ex) {
             ex.printStackTrace();
+            typeArray.close();
         } finally {
             typeArray.recycle();
         }

@@ -280,6 +280,7 @@ public class WindCalendar extends LinearLayout {
 
         } catch (Exception ex) {
             ex.printStackTrace();
+            typeArray.close();
         } finally {
             typeArray.recycle();
         }

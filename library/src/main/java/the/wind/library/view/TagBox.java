@@ -128,6 +128,7 @@ public class TagBox extends FlexboxLayout {
 
         } catch (Exception ex) {
             ex.printStackTrace();
+            typeArray.close();
         } finally {
             typeArray.recycle();
         }
