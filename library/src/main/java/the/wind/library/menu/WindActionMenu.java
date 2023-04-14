@@ -171,9 +171,9 @@ public class WindActionMenu extends WindDialog {
      *
      * @param iconResId icon resource id
      * @param textResId text resource id
-     * @return menu
+     * @return item view
      */
-    public WindActionMenu addItem(@IdRes final int id, @DrawableRes int iconResId, @StringRes int textResId) {
+    public View addItem(@IdRes final int id, @DrawableRes int iconResId, @StringRes int textResId) {
         return addItem(id, iconResId, textResId, false);
     }
 
@@ -185,7 +185,7 @@ public class WindActionMenu extends WindDialog {
      * @param vip       pro item or not
      * @return menu
      */
-    public WindActionMenu addItem(@IdRes final int id, @DrawableRes int iconResId, @StringRes int textResId, boolean vip) {
+    public View addItem(@IdRes final int id, @DrawableRes int iconResId, @StringRes int textResId, boolean vip) {
         View itemView = inflater.inflate(menuType.getItemLayout(), _menuHolder, false);
         itemView.setId(id);
         itemView.setBackgroundResource(itemBackground);
@@ -234,7 +234,7 @@ public class WindActionMenu extends WindDialog {
         });
 
 
-        return this;
+        return itemView;
     }
 
     /**
