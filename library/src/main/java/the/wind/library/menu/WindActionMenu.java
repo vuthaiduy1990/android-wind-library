@@ -2,6 +2,7 @@ package the.wind.library.menu;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.PorterDuff;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.ColorRes;
+import androidx.annotation.ColorInt;
 import androidx.annotation.DimenRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
@@ -36,12 +37,14 @@ public class WindActionMenu extends WindDialog {
     // styling attributes
     @DrawableRes
     private int itemBackground;
-    @ColorRes
+    @ColorInt
     private int itemTextColor;
     @DimenRes
     private int itemTextSize;
     @DimenRes
     private int itemIconSize;
+    @ColorInt
+    private int itemIconColor;
 
     // model
     private final MenuType menuType;
@@ -87,7 +90,8 @@ public class WindActionMenu extends WindDialog {
         setTitleVisible(false);
         setIconVisible(false);
         setItemBackground(R.drawable.wl_background_hover_pressed);
-        setItemTextColor(R.color.wl_text);
+        setItemTextColor(ContextCompat.getColor(context, R.color.wl_text));
+        setItemIconColor(ContextCompat.getColor(context, R.color.wl_black));
         switch (menuType) {
             case LIST:
                 setGravity(Gravity.TOP);
@@ -191,6 +195,7 @@ public class WindActionMenu extends WindDialog {
         ImageView _iconView = itemView.findViewById(R.id._iconView);
         if (iconResId != 0) {
             _iconView.setImageResource(iconResId);
+            _iconView.setColorFilter(itemIconColor, PorterDuff.Mode.SRC_IN);
             int iconSize = (int) getContext().getResources().getDimension(itemIconSize);
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) _iconView.getLayoutParams();
             params.width = iconSize;
@@ -204,7 +209,7 @@ public class WindActionMenu extends WindDialog {
         TextView _textView = itemView.findViewById(R.id._textView);
         if (textResId != 0) {
             _textView.setText(textResId);
-            _textView.setTextColor(ContextCompat.getColor(getContext(), itemTextColor));
+            _textView.setTextColor(itemTextColor);
             _textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getContext().getResources().getDimension(itemTextSize));
         } else {
             _textView.setVisibility(View.GONE);
@@ -246,11 +251,11 @@ public class WindActionMenu extends WindDialog {
     /**
      * Set text color
      *
-     * @param colorResId color resource id
+     * @param color color resource id
      * @return menu
      */
-    public WindActionMenu setItemTextColor(@ColorRes int colorResId) {
-        itemTextColor = colorResId;
+    public WindActionMenu setItemTextColor(@ColorInt int color) {
+        itemTextColor = color;
         return this;
     }
 
@@ -273,6 +278,17 @@ public class WindActionMenu extends WindDialog {
      */
     public WindActionMenu setItemIconSize(@DimenRes int size) {
         itemIconSize = size;
+        return this;
+    }
+
+    /**
+     * Set item color
+     *
+     * @param color color
+     * @return menu
+     */
+    public WindActionMenu setItemIconColor(@ColorInt int color) {
+        this.itemIconColor = color;
         return this;
     }
 

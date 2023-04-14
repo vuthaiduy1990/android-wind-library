@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import the.wind.library.dialog.WindDialog;
 import the.wind.library.menu.WindActionMenu;
@@ -93,7 +94,7 @@ public class ActionMenuPage extends Fragment {
         _longActionMenu = new WindActionMenu(view.getContext());
         _longActionMenu.setItemBackground(R.drawable.wl_button_background_neutral_light);
         _longActionMenu.setItemIconSize(R.dimen.wl_icon_big);
-        _longActionMenu.setItemTextColor(R.color.wl_info_pressed);
+        _longActionMenu.setItemTextColor(ContextCompat.getColor(view.getContext(), R.color.wl_info_pressed));
         _longActionMenu.setItemTextSize(R.dimen.wl_text_big);
         _longActionMenu.setHeight(800);
         _longActionMenu.setGravity(Gravity.BOTTOM);
