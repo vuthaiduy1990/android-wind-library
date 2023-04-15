@@ -61,7 +61,7 @@
             app:compactMode="false"
             app:hint="Custom style"
             app:iconSize="@dimen/wl_icon_big"
-            app:searchIcon="@drawable/wl_ic_tag"
+            app:searchIcon="@drawable/ic_tag"
             app:textSize="@dimen/wl_title_big" />
 
 

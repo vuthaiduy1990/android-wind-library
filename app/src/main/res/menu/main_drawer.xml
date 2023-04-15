@@ -53,7 +53,7 @@
 
             <item
                 android:id="@+id/_navTagBoxMenu"
-                android:icon="@drawable/wl_ic_tag"
+                android:icon="@drawable/ic_tag"
                 android:title="@string/drawer_tag_box" />
 
             <item
@@ -68,7 +68,7 @@
 
             <item
                 android:id="@+id/_navCalendarMenu"
-                android:icon="@drawable/wl_ic_calendar"
+                android:icon="@drawable/ic_calendar"
                 android:title="@string/drawer_calendar" />
         </menu>
     </item>

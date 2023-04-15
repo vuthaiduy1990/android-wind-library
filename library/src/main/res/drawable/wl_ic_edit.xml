@@ -1,10 +1,35 @@
-<!-- @Copyright https://www.flaticon.com/free-icon/draw_61456 -->
+<!-- @Copyright https://www.flaticon.com/free-icon/write_10188830 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="128dp"
     android:height="128dp"
-    android:viewportWidth="528.9"
-    android:viewportHeight="528.9">
+    android:viewportWidth="66"
+    android:viewportHeight="66">
     <path
-        android:fillColor="#FF000000"
-        android:pathData="M328.88,89.13l107.59,107.59l-272.34,272.34L56.6,361.46L328.88,89.13zM518.11,63.18l-47.98,-47.98c-18.54,-18.54 -48.65,-18.54 -67.26,0l-45.96,45.96l107.59,107.59l53.61,-53.61C532.49,100.75 532.49,77.56 518.11,63.18zM0.3,512.69c-1.96,8.81 6,16.71 14.81,14.56l119.89,-29.07L27.47,390.6L0.3,512.69z" />
+        android:fillColor="#00000000"
+        android:pathData="m16,60.7 l-14,3.3 3.2,-14z"
+        android:strokeWidth="3"
+        android:strokeColor="#000"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="m50.6,26.2 l-34.6,34.5 -10.8,-10.7 34.7,-34.6"
+        android:strokeWidth="3"
+        android:strokeColor="#000"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="m53.5,23.3 l4.8,-4.8 -10.8,-10.7 -4.8,4.8z"
+        android:strokeWidth="3"
+        android:strokeColor="#000"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="m62.8,14 l-4.6,4.6 -10.7,-10.8 4.6,-4.6c1.6,-1.6 4.2,-1.6 5.7,0l5,5c1.6,1.6 1.6,4.2 0,5.8z"
+        android:strokeWidth="3"
+        android:strokeColor="#000"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
 </vector>

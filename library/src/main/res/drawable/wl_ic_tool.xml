@@ -1,16 +1,22 @@
-<!-- @Copyright  https://www.flaticon.com/free-icon/tools_8201733 -->
+<!-- @Copyright https://www.flaticon.com/free-icon/wrench_2963833 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="128dp"
     android:height="128dp"
-    android:viewportWidth="509.99"
-    android:viewportHeight="509.99">
-    <path
-        android:fillColor="#FF000000"
-        android:pathData="m501.22,458.79c15.98,-33.45 10.12,-74.73 -17.59,-102.44 -27.71,-27.71 -68.99,-33.57 -102.44,-17.59l-209.96,-209.96c15.98,-33.45 10.12,-74.73 -17.59,-102.44 -27.71,-27.71 -68.99,-33.57 -102.44,-17.59l49.41,49.41 -42.43,42.43 -49.41,-49.41c-15.98,33.45 -10.12,74.73 17.59,102.44s68.99,33.57 102.44,17.59l209.97,209.96c-15.98,33.45 -10.12,74.73 17.59,102.44 27.71,27.71 68.98,33.57 102.44,17.59l-49.4,-49.41 42.43,-42.43z" />
-    <path
-        android:fillColor="#FF000000"
-        android:pathData="m17.57,407.56c-23.39,23.41 -23.47,61.37 0,84.86 23.44,23.43 61.42,23.43 84.86,0l152.57,-152.57 -84.85,-84.85zM75.01,456.2 L53.79,434.99 169.23,319.55 190.44,340.77z" />
-    <path
-        android:fillColor="#FF000000"
-        android:pathData="m417.43,134.99 l55.57,-10.61 34,-91.39 -30,-30 -91.39,34 -10.61,55.57 -98.79,98.79 42.43,42.43z" />
+    android:viewportWidth="682.67"
+    android:viewportHeight="682.67">
+    <group>
+        <clip-path android:pathData="M0,0L682.67,0L682.67,682.67L0,682.67Z" />
+        <path
+            android:fillColor="#00000000"
+            android:pathData="m657.24,138.57 l-79.02,79.02 -94.28,-18.86 -18.86,-94.28 79.02,-79.02c-53.35,-14.21 -112.59,-0.54 -154.45,41.31 -48.83,48.83 -59.5,121.37 -32.01,180.57l-312.6,282.83c-32.27,29.2 -33.53,79.47 -2.75,110.24l0,-0c30.77,30.77 81.04,29.52 110.24,-2.75l282.83,-312.6c59.19,27.49 131.74,16.82 180.57,-32.01C657.78,251.16 671.45,191.92 657.24,138.57Z"
+            android:strokeWidth="40"
+            android:strokeColor="#000000"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round" />
+        <path
+            android:fillColor="#000000"
+            android:fillType="nonZero"
+            android:pathData="m113,597.95c-7.81,7.81 -20.47,7.81 -28.28,-0 -7.81,-7.81 -7.81,-20.47 0,-28.28 7.81,-7.81 20.47,-7.81 28.28,-0C120.81,577.48 120.81,590.14 113,597.95"
+            android:strokeColor="#00000000" />
+    </group>
 </vector>

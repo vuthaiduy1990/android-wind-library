@@ -1,10 +1,27 @@
-<!-- @Copyright  https://www.flaticon.com/free-icon/tick_87932 -->
+<!-- @Copyright https://www.flaticon.com/free-icon/check-mark_1442912 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="128dp"
     android:height="128dp"
-    android:viewportWidth="191.667"
-    android:viewportHeight="191.667">
-    <path
-        android:fillColor="#FF000000"
-        android:pathData="M95.833,0C42.991,0 0,42.99 0,95.833s42.991,95.834 95.833,95.834s95.833,-42.991 95.833,-95.834S148.676,0 95.833,0zM150.862,79.646l-60.207,60.207c-2.56,2.56 -5.963,3.969 -9.583,3.969c-3.62,0 -7.023,-1.409 -9.583,-3.969l-30.685,-30.685c-2.56,-2.56 -3.97,-5.963 -3.97,-9.583c0,-3.621 1.41,-7.024 3.97,-9.584c2.559,-2.56 5.962,-3.97 9.583,-3.97c3.62,0 7.024,1.41 9.583,3.971l21.101,21.1l50.623,-50.623c2.56,-2.56 5.963,-3.969 9.583,-3.969c3.62,0 7.023,1.409 9.583,3.969C156.146,65.765 156.146,74.362 150.862,79.646z" />
+    android:viewportWidth="682.67"
+    android:viewportHeight="682.67">
+    <group>
+        <clip-path android:pathData="M0,0h682.67v682.67h-682.67z" />
+        <path
+            android:fillColor="#00000000"
+            android:pathData="m473.36,251.88 l-178.9,178.9 -85.16,-85.16"
+            android:strokeWidth="35"
+            android:strokeColor="#000000"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round" />
+        <group>
+            <clip-path android:pathData="M0,0L682.67,0L682.67,682.67L0,682.67Z" />
+            <path
+                android:fillColor="#00000000"
+                android:pathData="m656,341.33c0,173.79 -140.88,314.67 -314.67,314.67 -173.79,-0 -314.67,-140.88 -314.67,-314.67 0,-173.79 140.88,-314.67 314.67,-314.67C515.12,26.67 656,167.55 656,341.33Z"
+                android:strokeWidth="35"
+                android:strokeColor="#000000"
+                android:strokeLineCap="round"
+                android:strokeLineJoin="round" />
+        </group>
+    </group>
 </vector>

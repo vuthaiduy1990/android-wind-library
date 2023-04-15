@@ -16,7 +16,7 @@
         app:closeKeyboardOnSearch="false"
         app:closeVisible="false"
         app:compactMode="false"
-        app:searchIcon="@drawable/wl_ic_tag" />
+        app:searchIcon="@drawable/ic_tag" />
 
 
     <the.wind.library.view.TagBox
@@ -34,7 +34,7 @@
         android:background="@drawable/wl_button_background_highlight"
         android:padding="@dimen/wl_spacing_level_1"
         app:iconSize="@dimen/wl_icon"
-        app:removeIcon="@drawable/wl_ic_tag"
+        app:removeIcon="@drawable/ic_tag"
         app:textColor="@color/wl_button_text_white"
         app:textMaxWidth="500dp"
         app:textSize="@dimen/wl_text_big" />
