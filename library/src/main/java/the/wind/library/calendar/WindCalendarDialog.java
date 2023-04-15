@@ -44,6 +44,8 @@ import the.wind.library.view.Button;
  */
 public class WindCalendarDialog extends DialogFragment {
 
+    public static final long DEFAULT_ANIM_DURATION = 600;
+
     // List if week days
     private static final Map<Integer, Integer> WEEK_DAY_MAP = new HashMap<>();
 
@@ -148,7 +150,7 @@ public class WindCalendarDialog extends DialogFragment {
                 Animation.RELATIVE_TO_SELF, 0.5f);
         rotationIconAnim.setRepeatMode(Animation.RESTART);
         rotationIconAnim.setRepeatCount(0);
-        rotationIconAnim.setDuration(500);
+        rotationIconAnim.setDuration(DEFAULT_ANIM_DURATION);
 
         // create core dialog
         _coreDialog = createCoreDialog(context);
@@ -410,7 +412,9 @@ public class WindCalendarDialog extends DialogFragment {
         dialog.addViewToHeader(extraHeader);
         extraHeader.findViewById(R.id._reloadIconView).setOnClickListener(v -> {
             v.startAnimation(rotationIconAnim);
-            onReloadCalendar(selectedDate);
+            v.postDelayed(() -> {
+                onReloadCalendar(selectedDate);
+            }, DEFAULT_ANIM_DURATION / 2);
         });
 
         // show year selection dialog when user click on title view of dialog
