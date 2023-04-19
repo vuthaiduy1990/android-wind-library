@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -141,6 +142,25 @@ public final class CWNLPEngine<T extends INLPText> {
         targetList.remove(target);
         targetQueue.remove(target);
         textMap.remove(target.nlpTextId(getContext()));
+        clearCache();
+    }
+
+    /**
+     * Remove target
+     *
+     * @param targetId unique ID
+     */
+    public void remove(String targetId) {
+        Iterator<T> targetIt = targetList.iterator();
+        while (targetIt.hasNext()) {
+            T target = targetIt.next();
+            if (target.nlpTextId(getContext()).equals(targetId)) {
+                targetIt.remove();
+                targetQueue.remove(target);
+                break;
+            }
+        }
+        textMap.remove(targetId);
         clearCache();
     }
 
