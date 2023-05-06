@@ -186,7 +186,7 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
             _dateTextView.setText(String.format(Locale.getDefault(), "%d", data.getDayOfMonth()));
             if (data.hasLunarDate()) {
                 _lunarDateTextView.setVisibility(View.VISIBLE);
-                _lunarDateTextView.setText(String.format(Locale.getDefault(), "%d/%d", data.getLunarDayOfMonth(), data.getLunarMonth() + 1));
+                _lunarDateTextView.setText(String.format(Locale.getDefault(), "%d/%d", data.getLunarMonth() + 1, data.getLunarDayOfMonth()));
             } else {
                 _lunarDateTextView.setVisibility(View.GONE);
             }
