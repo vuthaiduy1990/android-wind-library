@@ -135,7 +135,9 @@ public class MonthViewFragment extends Fragment {
      * Notify dataset changes
      */
     public void notifyDataSetChanged() {
-        monthAdapter.notifyDataSetChanged();
+        if (monthAdapter != null) {
+            monthAdapter.notifyDataSetChanged();
+        }
     }
 
     /* ---------------------- INNER CLASS -------------------- */
