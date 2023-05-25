@@ -576,6 +576,21 @@ public class WindRecycleView extends RecyclerView {
         }
 
         /**
+         * Check if data exist in adapter or not
+         *
+         * @param data given data
+         * @return true if already exist
+         */
+        public boolean existData(@NonNull T data) {
+            for (T item : dataset) {
+                if (item.equals(data)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /**
          * Check if dataset is empty or not
          *
          * @return true if empty
