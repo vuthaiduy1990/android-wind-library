@@ -98,6 +98,24 @@ public class DateInfo implements Serializable {
     }
 
     /**
+     * Get solar date info
+     *
+     * @return [year, month, month day, leap, week day, hour, minute, second]
+     */
+    public int[] getSolarInfo() {
+        return solarInfo;
+    }
+
+    /**
+     * Get lunar date info
+     *
+     * @return [year, month, month day, leap, week day, hour, minute, second]
+     */
+    public int[] getLunarInfo() {
+        return lunarInfo;
+    }
+
+    /**
      * @return year
      */
     public int getYear() {
