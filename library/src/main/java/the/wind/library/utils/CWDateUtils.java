@@ -198,7 +198,7 @@ public final class CWDateUtils {
     }
 
     /**
-     * Check if the first date less than the second date.
+     * Check if the first date greater than the second date.
      * Note: compare date without time
      * Note: compare date without time
      *
@@ -223,7 +223,7 @@ public final class CWDateUtils {
     }
 
     /**
-     * Check if the first date less than the second date without comparing year.
+     * Check if the first date greater than the second date without comparing year.
      * Note: compare date without time
      * Note: compare date without time
      *
