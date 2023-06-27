@@ -38,6 +38,9 @@ import the.wind.library.calendar.model.WeekStartsOn;
 
 public class WindCalendar extends LinearLayout {
 
+    // month/date. For example, 04/15
+    private static final String DEFAULT_MONTH_DATE_FORMAT = "%1$s/%2$s";
+
     // List if week days
     private static final Map<Integer, Integer> WEEK_DAY_MAP = new HashMap<>();
 
@@ -194,6 +197,8 @@ public class WindCalendar extends LinearLayout {
                 attrs, R.styleable.WindCalendar, defStyleAttr, defStyleRes);
 
         String[] weekDays = new String[]{"Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"};
+        String monthDateFormat = DEFAULT_MONTH_DATE_FORMAT;
+
         float weekDayTextSize = 0f;
         int weekDayTextColor = 0;
         int weekDayPanelBackground = 0;
@@ -224,11 +229,17 @@ public class WindCalendar extends LinearLayout {
 
         Resources res = getResources();
         try {
-            // Week day style
+
             String weekDaysStr = typeArray.getString(R.styleable.WindCalendar_weekDays);
             if (weekDaysStr != null) {
                 weekDays = weekDaysStr.split(",");
             }
+            monthDateFormat = typeArray.getString(R.styleable.WindCalendar_monthDateFormat);
+            if (monthDateFormat == null) {
+                monthDateFormat = DEFAULT_MONTH_DATE_FORMAT;
+            }
+
+            // Week day style
             weekDayTextSize = typeArray.getDimension(R.styleable.WindCalendar_weekDayTextSize, res.getDimension(R.dimen.wl_calendar_date_text_size));
             weekDayTextColor = typeArray.getColor(R.styleable.WindCalendar_weekDayTextColor, ContextCompat.getColor(context, R.color.wl_calendar_week_day));
             weekDayPanelBackground = typeArray.getResourceId(R.styleable.WindCalendar_weekDayPanelBackground, 0);
@@ -286,6 +297,7 @@ public class WindCalendar extends LinearLayout {
         }
 
         style.weekDays(weekDays)
+                .monthDateFormat(monthDateFormat)
                 .weekDayTextSize(weekDayTextSize)
                 .weekDayTextColor(weekDayTextColor)
                 .weekDayPanelBackground(weekDayPanelBackground)
@@ -586,6 +598,15 @@ public class WindCalendar extends LinearLayout {
      */
     public void setWeekDayString(String[] weekDays) {
         style.weekDays(weekDays);
+    }
+
+    /**
+     * Set lunar month date format
+     *
+     * @param format %1$s/%2$s
+     */
+    public void setMonthDateFormat(String format) {
+        style.monthDateFormat(format);
     }
 
     /**

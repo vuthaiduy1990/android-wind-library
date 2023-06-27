@@ -46,6 +46,9 @@ public class WindCalendarDialog extends DialogFragment {
 
     public static final long DEFAULT_ANIM_DURATION = 600;
 
+    // month/date. For example, 04/15
+    private static final String DEFAULT_LUNAR_MONTH_DATE_FORMAT = "%1$s/%2$s";
+
     // List if week days
     private static final Map<Integer, Integer> WEEK_DAY_MAP = new HashMap<>();
 
@@ -100,8 +103,11 @@ public class WindCalendarDialog extends DialogFragment {
         inflater = LayoutInflater.from(context);
         Resources res = context.getResources();
 
-        // Week day style
+        // Date format
         style.weekDays(new String[]{"Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"});
+        style.lunarMonthDateFormat(DEFAULT_LUNAR_MONTH_DATE_FORMAT);
+
+        // Week day style
         style.weekDayTextSize(res.getDimension(R.dimen.wl_calendar_dialog_date_text_size));
         style.weekDayTextColor(ContextCompat.getColor(context, R.color.wl_calendar_week_day));
         style.weekDayPanelBackground(0);

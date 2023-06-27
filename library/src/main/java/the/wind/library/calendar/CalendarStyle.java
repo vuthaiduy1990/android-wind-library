@@ -11,6 +11,7 @@ public class CalendarStyle {
     private int dateCellSize;
     private float dateTextSize;
     private float dateLunarTextSize;
+    private String monthDateFormat;
     private float dateEventSymbolSize;
 
     private int dateTextColor;
@@ -52,6 +53,28 @@ public class CalendarStyle {
      */
     public float weekDayTextSize() {
         return weekDayTextSize;
+    }
+
+    /**
+     * @return lunar date format
+     */
+    public String monthDateFormat() {
+        return monthDateFormat;
+    }
+
+    /**
+     * Set lunar date format.
+     * Format: %1$s/%2$s
+     * + %1$s: month
+     * + %2$s: date
+     * For example 04/15
+     *
+     * @param format %1$s/%2$s
+     * @return style
+     */
+    public CalendarStyle monthDateFormat(String format) {
+        this.monthDateFormat = format;
+        return this;
     }
 
     /**

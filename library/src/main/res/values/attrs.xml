@@ -108,6 +108,8 @@
         <attr name="offscreen" />
 
         <attr name="weekDays" format="string" />
+        <attr name="monthDateFormat" format="string" />
+
         <attr name="weekDayTextSize" format="dimension" />
         <attr name="weekDayTextColor" format="color" />
         <attr name="weekDayPanelBackground" format="reference" />
