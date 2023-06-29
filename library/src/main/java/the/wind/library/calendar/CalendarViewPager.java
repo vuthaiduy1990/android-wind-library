@@ -2,6 +2,7 @@ package the.wind.library.calendar;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 
 import java.util.Date;
 
@@ -17,6 +18,7 @@ public class CalendarViewPager extends ViewPager {
 
     private CalendarEvent calendarEvent;
     private MonthInfo preMonth;
+    private boolean swipeEnabled = true;
 
     /**
      * Constructor
@@ -85,6 +87,24 @@ public class CalendarViewPager extends ViewPager {
         super.setCurrentItem(item, true);
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        if (this.swipeEnabled) {
+            return super.onTouchEvent(ev);
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (this.swipeEnabled) {
+            return super.onInterceptTouchEvent(ev);
+        }
+
+        return false;
+    }
+
     /* ---------------------- STATIC ------------------------- */
 
     /* ---------------------- ABSTRACT ----------------------- */
@@ -114,6 +134,15 @@ public class CalendarViewPager extends ViewPager {
      */
     void setCalendarEvent(CalendarEvent calendarEvent) {
         this.calendarEvent = calendarEvent;
+    }
+
+    /**
+     * Enable/disable swiping
+     *
+     * @param enabled true/false
+     */
+    public void setSwipingEnabled(boolean enabled) {
+        this.swipeEnabled = enabled;
     }
 
     /* ---------------------- METHOD ------------------------- */
