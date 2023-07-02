@@ -292,10 +292,15 @@ public class WindCalendarDialog extends DialogFragment {
         }
         _calendarViewPager.setSwipingEnabled(false);
         _calendarViewPager.scrollToDate(date);
-        _calendarViewPager.setSwipingEnabled(true);
-        if (_reloadIcon != null) {
-            _reloadIcon.setEnabled(true);
-        }
+        _calendarViewPager.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                _calendarViewPager.setSwipingEnabled(true);
+                if (_reloadIcon != null) {
+                    _reloadIcon.setEnabled(true);
+                }
+            }
+        }, 300);
     }
 
     /* ---------------------- GET-SET ------------------------ */
