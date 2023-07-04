@@ -57,7 +57,7 @@ public class VietnameseCalendar extends ChineseCalendar {
      * Convert a Julian day number to day/month/year. Parameter jd is an integer
      *
      * @param jd julian day
-     * @return date [year, month, day]
+     * @return date [era, year, month, day]
      */
     private static int[] jdToDate(int jd) {
         int a, b, c, d, e, m, day, month, year;
@@ -75,7 +75,7 @@ public class VietnameseCalendar extends ChineseCalendar {
         day = e - INT((153 * m + 2) / 5d) + 1;
         month = m + 3 - 12 * INT(m / 10d);
         year = b * 100 + d - 4800 + INT(m / 10d);
-        return new int[]{year, month, day};
+        return new int[]{1, year, month, day};
     }
 
     /**
@@ -209,7 +209,7 @@ public class VietnameseCalendar extends ChineseCalendar {
      * @param mm       month
      * @param dd       date
      * @param timeZone timezone
-     * @return lunar date [yyyy, mm, dd, leap]
+     * @return lunar date [era, yyyy, mm, dd, leap]
      */
     public static int[] convertSolar2Lunar(int yy, int mm, int dd, float timeZone) {
         int k, dayNumber, monthStart, a11, b11, lunarDay, lunarMonth, lunarYear, lunarLeap;
@@ -248,7 +248,7 @@ public class VietnameseCalendar extends ChineseCalendar {
         if (lunarMonth >= 11 && diff < 4) {
             lunarYear -= 1;
         }
-        return new int[]{lunarYear, lunarMonth, lunarDay, lunarLeap};
+        return new int[]{1, lunarYear, lunarMonth, lunarDay, lunarLeap};
     }
 
     /**
@@ -256,7 +256,7 @@ public class VietnameseCalendar extends ChineseCalendar {
      * Note: month is start from 1, not 0 as in solar calendar
      *
      * @param solarCal solar calendar
-     * @return lunar date info
+     * @return lunar date [era, yyyy, mm, dd, leap]
      */
     public static int[] convertSolar2Lunar(Calendar solarCal, Date date) {
         solarCal.setTime(date);
@@ -273,7 +273,7 @@ public class VietnameseCalendar extends ChineseCalendar {
      * @param lunarDay   lunar day
      * @param lunarLeap  leap month or not
      * @param timeZone   timezone
-     * @return solar date [yyyy, mm, dd]
+     * @return solar date [era, yyyy, mm, dd]
      */
     public static int[] convertLunar2Solar(int lunarYear, int lunarMonth, int lunarDay, boolean lunarLeap, float timeZone) {
         int k, a11, b11, off, leapOff, leapMonth, monthStart;
@@ -296,7 +296,7 @@ public class VietnameseCalendar extends ChineseCalendar {
                 leapMonth += 12;
             }
             if (lunarLeap && lunarMonth != leapMonth) {
-                return new int[]{0, 0, 0};
+                return new int[]{1, 0, 0, 0};
             } else if (lunarLeap || off >= leapOff) {
                 off += 1;
             }
@@ -333,22 +333,23 @@ public class VietnameseCalendar extends ChineseCalendar {
      * Get date info
      *
      * @param solarCal solar calendar
-     * @return [year, month, month day, leap, week day, hour, minute, second]
+     * @return [era, year, month, month day, leap, week day, hour, minute, second]
      */
     public int[] getDateInfo(@NonNull Calendar solarCal) {
-        int[] result = new int[8];
+        int[] result = new int[9];
         float timezone = CalendarUtil.getTimeZone(this, solarCal.getTime());
         int[] lunarDate = convertSolar2Lunar(
                 solarCal.get(Calendar.YEAR), solarCal.get(Calendar.MONTH) + 1, solarCal.get(Calendar.DAY_OF_MONTH),
                 timezone);
-        result[0] = lunarDate[0]; // year
-        result[1] = lunarDate[1] - 1; // month
-        result[2] = lunarDate[2]; // day
-        result[3] = lunarDate[3]; // leap
-        result[4] = solarCal.get(Calendar.DAY_OF_WEEK);
-        result[5] = solarCal.get(Calendar.HOUR_OF_DAY);
-        result[6] = solarCal.get(Calendar.MINUTE);
-        result[7] = solarCal.get(Calendar.SECOND);
+        result[0] = lunarDate[0]; // era
+        result[1] = lunarDate[1]; // year
+        result[2] = lunarDate[2] - 1; // month
+        result[3] = lunarDate[3]; // day
+        result[4] = lunarDate[4]; // leap
+        result[5] = solarCal.get(Calendar.DAY_OF_WEEK);
+        result[6] = solarCal.get(Calendar.HOUR_OF_DAY);
+        result[7] = solarCal.get(Calendar.MINUTE);
+        result[8] = solarCal.get(Calendar.SECOND);
         return result;
     }
 

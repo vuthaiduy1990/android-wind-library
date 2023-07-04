@@ -156,7 +156,7 @@ public final class CalendarUtil {
      *
      * @param cal      target calendar
      * @param solarCal solar calendar
-     * @return [year, month, month day, leap, week day, hour, minute, second]
+     * @return [era, year, month, month day, leap, week day, hour, minute, second]
      */
     public static int[] getDateInfo(@NonNull Calendar cal, @NonNull Calendar solarCal) {
         if (VietnameseCalendar.class.equals(cal.getClass())) {
@@ -164,6 +164,7 @@ public final class CalendarUtil {
         }
         cal.setTime(solarCal.getTime());
         return new int[]{
+                cal.get(Calendar.ERA),
                 cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH),
                 cal.get(Calendar.IS_LEAP_MONTH), cal.get(Calendar.DAY_OF_WEEK),
                 cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND)
@@ -175,7 +176,7 @@ public final class CalendarUtil {
      *
      * @param cal  target calendar
      * @param date solar calendar
-     * @return [year, month, month day, leap, week day, hour, minute, second]
+     * @return [era, year, month, month day, leap, week day, hour, minute, second]
      */
     public static int[] getDateInfo(@NonNull Calendar cal, @NonNull Date date) {
         if (cal instanceof VietnameseCalendar) {
@@ -186,6 +187,7 @@ public final class CalendarUtil {
         }
         cal.setTime(date);
         return new int[]{
+                cal.get(Calendar.ERA),
                 cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH),
                 cal.get(Calendar.IS_LEAP_MONTH), cal.get(Calendar.DAY_OF_WEEK),
                 cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND)
@@ -196,7 +198,7 @@ public final class CalendarUtil {
      * Get date info
      *
      * @param cal target calendar
-     * @return [year, month, month day, leap, week day, hour, minute, second]
+     * @return [era, year, month, month day, leap, week day, hour, minute, second]
      */
     public static int[] getDateInfo(@NonNull Calendar cal) {
         return getDateInfo(cal, cal.getTime());
