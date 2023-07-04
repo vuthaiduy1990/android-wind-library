@@ -204,4 +204,17 @@ public final class CalendarUtil {
         return getDateInfo(cal, cal.getTime());
     }
 
+    /**
+     * Clone date info
+     *
+     * @param dateInfo [era, year, month, month day, leap, week day, hour, minute, second]
+     * @return clone
+     */
+    public static int[] cloneDateInfo(int[] dateInfo) {
+        return new int[]{
+                dateInfo[0], dateInfo[1], dateInfo[2], dateInfo[3], dateInfo[4],
+                dateInfo[5], dateInfo[6], dateInfo[7], dateInfo[8],
+        };
+    }
+
 }
