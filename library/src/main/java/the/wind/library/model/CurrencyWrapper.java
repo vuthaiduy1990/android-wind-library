@@ -49,7 +49,7 @@ public class CurrencyWrapper implements INLPText {
      */
     public static String getCurrencyDisplayText(Currency cur) {
         Locale lc = Locale.getDefault();
-        return String.format("%s (%s)", cur.getDisplayName(lc), cur.getSymbol(lc));
+        return String.format("%s (%s)", cur.getDisplayName(lc), cur.getSymbol(Locale.US));
     }
 
     /* ---------------------- ABSTRACT ----------------------- */
