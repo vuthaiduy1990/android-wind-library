@@ -313,4 +313,41 @@ public final class CWAndroidUtils {
         Intent shareIntent = Intent.createChooser(i, null);
         context.startActivity(shareIntent);
     }
+
+    /**
+     * Send email
+     *
+     * @param context application context
+     * @param email   email address
+     * @param subject email subject
+     * @param body    email body
+     */
+    public static void sendEmail(Context context, String email, String subject, String body) {
+        try {
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+            StringBuilder builder = new StringBuilder();
+            builder
+                    .append("mailto:").append(email)
+                    .append("?subject=").append(Uri.encode(subject));
+            if (CWStringUtils.hasText(body)) {
+                builder.append("&body=").append(Uri.encode(body));
+            }
+            Uri data = Uri.parse(builder.toString());
+            emailIntent.setData(data);
+            context.startActivity(emailIntent);
+        } catch (Exception ex) {
+            // No email application found
+        }
+    }
+
+    /**
+     * Open URL
+     *
+     * @param context application context
+     * @param url     URL
+     */
+    public static void openUrl(Context context, String url) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        context.startActivity(browserIntent);
+    }
 }
