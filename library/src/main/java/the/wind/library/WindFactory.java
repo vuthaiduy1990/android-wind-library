@@ -4,7 +4,9 @@ import android.icu.util.Calendar;
 import android.icu.util.TimeZone;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Currency;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -38,6 +40,8 @@ public final class WindFactory {
 
     // list of timezone
     private List<TimezoneWrapper> timezones;
+
+    private final List<String> topCurrencyList = Arrays.asList("TRY", "THB", "VND", "RUB", "JPY", "KRW", "GBP", "EUR", "USD");
 
     /**
      * Private constructor
@@ -110,7 +114,9 @@ public final class WindFactory {
             for (Currency cur : Currency.getAvailableCurrencies()) {
                 currencies.add(new CurrencyWrapper(cur));
             }
-            currencies.sort((cur1, cur2) -> cur1.getDisplayText().compareTo(cur2.getDisplayText()));
+            currencies.sort(Comparator
+                                    .comparing(CurrencyWrapper::getCode, (x1, x2) -> Integer.compare(-topCurrencyList.indexOf(x1), -topCurrencyList.indexOf(x2)))
+                                    .thenComparing(CurrencyWrapper::getDisplayText));
         }
         return Collections.unmodifiableList(currencies);
     }
