@@ -251,7 +251,13 @@ public class SelectionListAdapter<T> extends WindRecycleView.Adapter<T> {
             _checkbox = itemView.findViewById(R.id._checkbox);
             _textView = itemView.findViewById(R.id._textView);
             itemView.setClickable(true);
-            _checkbox.setEnabled(false);
+            // _checkbox.setEnabled(false);
+            _checkbox.preventToSelect(v -> {
+                OnItemClickListener<T> clickListener = getItemClickListener();
+                if (clickListener != null) {
+                    clickListener.onClick(DefaultViewHolder.this, v, getAdapterData());
+                }
+            });
         }
 
         @Override

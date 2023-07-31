@@ -1059,6 +1059,13 @@ public class WindRecycleView extends RecyclerView {
         }
 
         /**
+         * @return item click listener
+         */
+        public Adapter.OnItemClickListener<T> getItemClickListener() {
+            return itemClickListener;
+        }
+
+        /**
          * Bind item long click listener from adapter
          *
          * @param listener item  long click listener

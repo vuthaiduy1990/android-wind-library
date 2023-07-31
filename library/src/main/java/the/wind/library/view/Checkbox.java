@@ -13,6 +13,7 @@ import com.airbnb.lottie.model.KeyPath;
 import com.airbnb.lottie.value.LottieValueCallback;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import the.wind.library.CWBundle;
 import the.wind.library.R;
@@ -33,6 +34,8 @@ public class Checkbox extends LottieAnimationView {
 
     // checkbox status. true -> checked else unchecked
     private boolean checked = false;
+    // prevent click event
+    private boolean allowSelect;
 
     // animation type
     private AnimType animType = AnimType.DEFAULT_CIRCLE;
@@ -46,6 +49,7 @@ public class Checkbox extends LottieAnimationView {
 
     // listener
     private OnCheckedListener checkedListener;
+    private OnClickListener clickListener;
 
     /**
      * Constructor
@@ -107,7 +111,14 @@ public class Checkbox extends LottieAnimationView {
         setChecked(checked);
 
         // set event listeners
+        allowToSelect();
         setOnClickListener(v -> {
+            if (!allowSelect) {
+                if (clickListener != null) {
+                    clickListener.onClick(v);
+                }
+                return;
+            }
             if (isAnimating()) {
                 return;
             }
@@ -180,6 +191,15 @@ public class Checkbox extends LottieAnimationView {
     }
 
     /**
+     * set click listener
+     *
+     * @param listener listener
+     */
+    public void setClickListener(OnClickListener listener) {
+        this.clickListener = listener;
+    }
+
+    /**
      * Get animation type
      *
      * @return animation type
@@ -238,6 +258,23 @@ public class Checkbox extends LottieAnimationView {
             setLayoutParams(layoutParams);
         }
     }
+
+    /**
+     * Enable click event
+     */
+    public void allowToSelect() {
+        allowSelect = true;
+        this.clickListener = null;
+    }
+
+    /**
+     * Disable click event
+     */
+    public void preventToSelect(@Nullable OnClickListener listener) {
+        allowSelect = false;
+        this.clickListener = listener;
+    }
+
 
     /* ---------------------- METHOD ------------------------- */
 
