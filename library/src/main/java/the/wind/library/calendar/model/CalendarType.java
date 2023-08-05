@@ -63,6 +63,9 @@ public enum CalendarType {
      * @return calendar instance
      */
     public Calendar getValue() {
-        return (Calendar) this.value.clone();
+        if (value != null) {
+            return (Calendar) this.value.clone();
+        }
+        return null;
     }
 }
