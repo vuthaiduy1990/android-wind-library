@@ -17,6 +17,7 @@ import the.wind.library.calendar.VietnameseCalendar;
  */
 public enum CalendarType {
 
+    NULL(-1, null),
     Buddhist(0, new BuddhistCalendar()),
     Chinese(1, new ChineseCalendar()),
     Coptic(2, new CopticCalendar()),
