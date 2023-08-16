@@ -31,7 +31,7 @@ dependencies {
 
     // G-SON library
     // https://github.com/google/gson
-    api 'com.google.code.gson:gson:2.8.9'
+    api 'com.google.code.gson:gson:2.10.1'
 
     // Lottie Animation
     // https://github.com/airbnb/lottie-android/
