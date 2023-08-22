@@ -106,8 +106,14 @@ public abstract class SelectionListDialog<T> extends WindDialog {
                             dismiss();
                         } else {
                             if (listAdapter.getPreSelectedItem() != null) {
-                                listAdapter.notifyItemChanged(listAdapter.getPreSelectedItem().getPosition());
-                                listAdapter.notifyItemChanged(viewHolder.getBindingAdapterPosition());
+                                int previousPos = listAdapter.getPreSelectedItem().getPosition();
+                                int newPos = viewHolder.getBindingAdapterPosition();
+                                if (previousPos != newPos) {
+                                    listAdapter.notifyItemChanged(previousPos);
+                                    listAdapter.notifyItemChanged(newPos);
+                                } else {
+                                    listAdapter.notifyDataSetChanged();
+                                }
                             } else {
                                 listAdapter.notifyDataSetChanged();
                             }
