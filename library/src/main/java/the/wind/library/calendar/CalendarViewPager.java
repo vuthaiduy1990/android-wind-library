@@ -89,8 +89,12 @@ public class CalendarViewPager extends ViewPager {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        if (this.swipeEnabled) {
-            return super.onTouchEvent(ev);
+        try {
+            if (this.swipeEnabled) {
+                return super.onTouchEvent(ev);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
 
         return false;
@@ -98,8 +102,12 @@ public class CalendarViewPager extends ViewPager {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if (this.swipeEnabled) {
-            return super.onInterceptTouchEvent(ev);
+        try {
+            if (this.swipeEnabled) {
+                return super.onInterceptTouchEvent(ev);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
 
         return false;
