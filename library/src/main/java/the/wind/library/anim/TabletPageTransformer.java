@@ -4,12 +4,12 @@ import android.graphics.Camera;
 import android.graphics.Matrix;
 import android.view.View;
 
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 /**
- * Thank to Rahul Huria at https://www.loginworks.com/
+ * Thank to Rahul Huria at <a href="https://www.loginworks.com/">...</a>
  */
-public class TabletPageTransformer implements ViewPager.PageTransformer {
+public class TabletPageTransformer implements ViewPager2.PageTransformer {
 
     private static final Matrix MATRIX_OFFSET = new Matrix();
     private static final Camera CAMERA_OFFSET = new Camera();

@@ -2,12 +2,12 @@ package the.wind.library.anim;
 
 import android.view.View;
 
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 /**
- * Thank to Rahul Huria at https://www.loginworks.com/
+ * Thank to Rahul Huria at <a href="https://www.loginworks.com/">...</a>
  */
-public class DepthPageTransformer implements ViewPager.PageTransformer {
+public class DepthPageTransformer implements ViewPager2.PageTransformer {
 
     private static final float MIN_SCALE = 0.75f;
 

@@ -1,22 +1,20 @@
 package the.wind.library.calendar;
 
 import android.icu.util.Calendar;
-import android.view.ViewGroup;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.lifecycle.Lifecycle;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 /**
  * Calendar month view adapter which used for view pager
  */
-public class CalendarAdapter extends FragmentStatePagerAdapter {
+public class CalendarAdapter extends FragmentStateAdapter {
 
     // default number of month preloaded on both side of selected month page
     public static final int DEFAULT_OFF_SCREEN = 2;
@@ -30,7 +28,6 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
 
     // the number of month will be preloaded in the left side and right side of current month
     private final int offscreen;
-    private final Map<Integer, MonthViewFragment> fragmentCache = new HashMap<>();
 
     // selected month
     private MonthInfo selectedMonth;
@@ -47,8 +44,8 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
      * @param fm       month view fragment
      * @param calendar abstract calendar with any given date
      */
-    public CalendarAdapter(FragmentManager fm, Calendar calendar) {
-        this(fm, calendar, DEFAULT_OFF_SCREEN);
+    public CalendarAdapter(FragmentManager fm, Lifecycle lifecycle, Calendar calendar) {
+        this(fm, lifecycle, calendar, DEFAULT_OFF_SCREEN);
     }
 
     /**
@@ -58,8 +55,8 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
      * @param calendar  abstract calendar with any given date
      * @param offscreen the number of month will be preloaded in the left side and right side of current month
      */
-    public CalendarAdapter(FragmentManager fm, Calendar calendar, int offscreen) {
-        super(fm);
+    public CalendarAdapter(FragmentManager fm, Lifecycle lifecycle, Calendar calendar, int offscreen) {
+        super(fm, lifecycle);
         this.calendar = calendar;
         if (offscreen > 0) {
             this.offscreen = offscreen;
@@ -71,7 +68,13 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
     /* ---------------------- OVERRIDE ----------------------- */
 
     @Override
-    public Fragment getItem(int position) {
+    public int getItemCount() {
+        return MAX_SLIDE;
+    }
+
+    @NonNull
+    @Override
+    public Fragment createFragment(int position) {
         if (selectedMonth == null) return new MonthViewFragment(); // empty fragment
         int diff = position - currentPosition;
         if (diff == 0) return newMonthFragment(selectedMonth);
@@ -92,33 +95,6 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
         return newMonthFragment(target);
     }
 
-    @Override
-    public int getCount() {
-        return MAX_SLIDE;
-    }
-
-    @NonNull
-    @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        MonthViewFragment frag = (MonthViewFragment) super.instantiateItem(container, position);
-        fragmentCache.put(position, frag);
-        return frag;
-    }
-
-    @Override
-    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        super.destroyItem(container, position, object);
-        fragmentCache.remove(position);
-    }
-
-    @Override
-    public void notifyDataSetChanged() {
-        for (Map.Entry<Integer, MonthViewFragment> entry : fragmentCache.entrySet()) {
-            MonthViewFragment frag = entry.getValue();
-            frag.notifyDataSetChanged();
-        }
-    }
-
     /* ---------------------- STATIC ------------------------- */
 
     /* ---------------------- ABSTRACT ----------------------- */
@@ -133,15 +109,6 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
      */
     private MonthViewFragment newMonthFragment(@Nullable MonthInfo monthInfo) {
         return new MonthViewFragment(monthInfo, calendarInfo, calendarStyle, calendarEvent);
-    }
-
-    /**
-     * Get offscreen fragment
-     *
-     * @return map between position and fragment
-     */
-    public Map<Integer, MonthViewFragment> getFragmentCache() {
-        return fragmentCache;
     }
 
     /**
@@ -168,15 +135,6 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
      */
     public int getOffscreen() {
         return offscreen;
-    }
-
-    /**
-     * Get current view page
-     *
-     * @return current view page
-     */
-    public MonthViewFragment getCurrentPage() {
-        return fragmentCache.get(currentPosition);
     }
 
     /**
@@ -289,10 +247,7 @@ public class CalendarAdapter extends FragmentStatePagerAdapter {
      * Notify dataset changes
      */
     void refreshCurrentPage() {
-        MonthViewFragment frag = fragmentCache.get(currentPosition);
-        if (frag != null) {
-            frag.notifyDataSetChanged();
-        }
+        notifyItemChanged(currentPosition);
     }
 
     /**

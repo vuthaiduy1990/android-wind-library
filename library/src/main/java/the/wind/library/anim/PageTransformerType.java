@@ -1,6 +1,6 @@
 package the.wind.library.anim;
 
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 public enum PageTransformerType {
 
@@ -18,21 +18,21 @@ public enum PageTransformerType {
     ZOOM_OUT(new ZoomOutPageTransformer());
 
     // transformer
-    private final ViewPager.PageTransformer transformer;
+    private final ViewPager2.PageTransformer transformer;
 
     /**
      * Constructor
      *
      * @param transformer transformer
      */
-    PageTransformerType(ViewPager.PageTransformer transformer) {
+    PageTransformerType(ViewPager2.PageTransformer transformer) {
         this.transformer = transformer;
     }
 
     /**
      * @return transformer
      */
-    public ViewPager.PageTransformer getTransformer() {
+    public ViewPager2.PageTransformer getTransformer() {
         return transformer;
     }
 

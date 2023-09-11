@@ -2,12 +2,12 @@ package the.wind.library.anim;
 
 import android.view.View;
 
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 /**
- * Thank to Rahul Huria at https://www.loginworks.com/
+ * Thank to Rahul Huria at <a href="https://www.loginworks.com/">...</a>
  */
-public class RotateDownPageTransformer implements ViewPager.PageTransformer {
+public class RotateDownPageTransformer implements ViewPager2.PageTransformer {
     private static final float ROTATION = -15f;
 
     @Override

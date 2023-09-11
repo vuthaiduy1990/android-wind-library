@@ -22,8 +22,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 import the.wind.library.CWBundle;
 import the.wind.library.R;
 
@@ -34,14 +34,14 @@ public class ImageSlider extends LinearLayout {
 
     // Views
     private final LayoutInflater inflater;
-    private final ViewPager _viewpager;
+    private final ViewPager2 _viewpager;
     private final SliderAdapter adapter;
     private final ViewGroup _dotListView;
     private View preDotView;
     private final Map<Integer, View> dotViewMap = new HashMap<>();
 
     // Listener
-    private ViewPager.OnPageChangeListener pageChangeListener;
+    private ViewPager2.OnPageChangeCallback pageChangeListener;
 
     // data
     private final CWBundle mBundle = new CWBundle();
@@ -95,7 +95,7 @@ public class ImageSlider extends LinearLayout {
         _dotListView = findViewById(R.id._dotListView);
 
         // Create adapter
-        adapter = new SliderAdapter(context);
+        adapter = new SliderAdapter();
 
         // bind attributes
         TypedArray typeArray = context.getTheme().obtainStyledAttributes(
@@ -128,9 +128,10 @@ public class ImageSlider extends LinearLayout {
         // Set adapter
         _viewpager.setOffscreenPageLimit(offscreen);
         _viewpager.setAdapter(adapter);
-        _viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        _viewpager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
                 // do nothing
                 if (pageChangeListener != null) {
                     pageChangeListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
@@ -139,6 +140,7 @@ public class ImageSlider extends LinearLayout {
 
             @Override
             public void onPageSelected(int position) {
+                super.onPageSelected(position);
                 ImageSlider.this.onPageSelected(position);
                 if (pageChangeListener != null) {
                     pageChangeListener.onPageSelected(position);
@@ -147,6 +149,7 @@ public class ImageSlider extends LinearLayout {
 
             @Override
             public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
                 if (pageChangeListener != null) {
                     pageChangeListener.onPageScrollStateChanged(state);
                 }
@@ -258,7 +261,7 @@ public class ImageSlider extends LinearLayout {
      *
      * @param listener listener
      */
-    public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
+    public void setOnPageChangeListener(ViewPager2.OnPageChangeCallback listener) {
         this.pageChangeListener = listener;
     }
 
@@ -338,10 +341,7 @@ public class ImageSlider extends LinearLayout {
     /**
      * Slider adapter
      */
-    public static class SliderAdapter extends PagerAdapter {
-
-        private final LayoutInflater inflater;
-
+    public static class SliderAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         // style
         private float titleSize;
@@ -351,42 +351,62 @@ public class ImageSlider extends LinearLayout {
         @ColorInt
         private int textColor;
 
+        // Dataset
         private Data[] dataset = new Data[]{};
 
         /**
          * Slider adapter
          */
-        private SliderAdapter(Context context) {
-            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-
-        @Override
-        public int getCount() {
-            return dataset.length;
-        }
-
-        @Override
-        public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-            return view == object;
+        private SliderAdapter() {
         }
 
         @NonNull
         @Override
-        public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            // bind view
-            View view = inflater.inflate(R.layout.wl_slider_item_view, container, false);
-            ImageView _imageView = view.findViewById(R.id._imageView);
-            TextView _titleView = view.findViewById(R.id._titleView);
-            TextView _textView = view.findViewById(R.id._textView);
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.wl_slider_item_view, parent, false);
+            ViewHolder vh = new ViewHolder(view);
+            vh.bindStyle(titleSize, titleColor, textSize, textColor);
+            return vh;
+        }
 
-            // bind style
-            _titleView.setTextColor(titleColor);
-            _titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleSize);
-            _textView.setTextColor(textColor);
-            _textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
-
-            // bind data
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             Data data = dataset[position];
+            holder.bindData(data);
+        }
+
+        @Override
+        public int getItemCount() {
+            return dataset != null ? dataset.length : 0;
+        }
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        // Views
+        private final ImageView _imageView;
+        private final TextView _titleView;
+        private final TextView _textView;
+
+        /**
+         * Constructor
+         *
+         * @param itemView item view
+         */
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            _imageView = itemView.findViewById(R.id._imageView);
+            _titleView = itemView.findViewById(R.id._titleView);
+            _textView = itemView.findViewById(R.id._textView);
+        }
+
+        /**
+         * Bind data
+         *
+         * @param data data
+         */
+        private void bindData(Data data) {
             _imageView.setImageResource(data.imageResId);
             if (data.titleResId > 0) {
                 _titleView.setText(data.titleResId);
@@ -400,14 +420,17 @@ public class ImageSlider extends LinearLayout {
             } else {
                 _textView.setVisibility(GONE);
             }
-
-            container.addView(view);
-            return view;
         }
 
-        @Override
-        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-            container.removeView((ViewGroup) object);
+        /**
+         * Bind style
+         */
+        private void bindStyle(float titleSize, @ColorInt int titleColor, float textSize, @ColorInt int textColor) {
+            // bind style
+            _titleView.setTextColor(titleColor);
+            _titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleSize);
+            _textView.setTextColor(textColor);
+            _textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         }
     }
 }

@@ -2,13 +2,13 @@ package the.wind.library.anim;
 
 import android.view.View;
 
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 /**
- * Thank to Rahul Huria at https://www.loginworks.com/
+ * Thank to Rahul Huria at <a href="https://www.loginworks.com/">...</a>
  */
 
-public class FlipVerticalPageTransformer implements ViewPager.PageTransformer {
+public class FlipVerticalPageTransformer implements ViewPager2.PageTransformer {
     @Override
     public void transformPage(View page, float pos) {
         final float rotation = -180f * pos;

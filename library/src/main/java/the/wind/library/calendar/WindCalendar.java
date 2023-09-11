@@ -30,6 +30,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Lifecycle;
 import the.wind.library.CWBundle;
 import the.wind.library.R;
 import the.wind.library.anim.PageTransformerType;
@@ -57,6 +58,7 @@ public class WindCalendar extends LinearLayout {
     // Views
     private final LayoutInflater inflater;
     private final FragmentManager fragManager;
+    private final Lifecycle lifecycle;
     private final ViewGroup _rootView;
     private final CalendarViewPager _calendarViewPager;
     private final ViewGroup _weekDayPanelView;
@@ -180,15 +182,18 @@ public class WindCalendar extends LinearLayout {
         // Get fragment manager
         if (context instanceof FragmentActivity) {
             fragManager = ((FragmentActivity) context).getSupportFragmentManager();
+            lifecycle = ((FragmentActivity) context).getLifecycle();
+
         } else if (context instanceof ContextWrapper && ((ContextWrapper) context).getBaseContext() instanceof FragmentActivity) {
             fragManager = ((FragmentActivity) ((ContextWrapper) context).getBaseContext()).getSupportFragmentManager();
+            lifecycle = ((FragmentActivity) ((ContextWrapper) context).getBaseContext()).getLifecycle();
         } else {
             throw new ActivityNotFoundException("Context is not an fragment activity");
         }
 
         // Bind views
         _rootView = findViewById(R.id._rootView);
-        _calendarViewPager = _rootView.findViewById(R.id._calendarViewPager);
+        _calendarViewPager = new CalendarViewPager(_rootView.findViewById(R.id._calendarViewPager));
         _weekDayPanelView = _rootView.findViewById(R.id._weekDayPanelView);
         _overlayView = _rootView.findViewById(R.id._overlayView);
 
@@ -343,8 +348,8 @@ public class WindCalendar extends LinearLayout {
 
         // setup calendar view pager
         _calendarViewPager.setCalendarEvent(eventListener);
-        _calendarViewPager.setSaveEnabled(false); // do not keep fragment state when view is restart
-        _calendarViewPager.setBackgroundResource(style.monthPanelViewBackground());
+        _calendarViewPager.getViewPager().setSaveEnabled(false); // do not keep fragment state when view is restart
+        _calendarViewPager.getViewPager().setBackgroundResource(style.monthPanelViewBackground());
 
         // If auto build is false, user need to call rebuild function after setting up the calendar
         if (autoBuild) {
@@ -426,16 +431,7 @@ public class WindCalendar extends LinearLayout {
      * @param type page transformer
      */
     public void setPageTransformer(PageTransformerType type) {
-        _calendarViewPager.setPageTransformer(true, type.getTransformer());
-    }
-
-    /**
-     * Get current selected view page
-     *
-     * @return current view page
-     */
-    public MonthViewFragment getSelectedPage() {
-        return adapter.getCurrentPage();
+        _calendarViewPager.getViewPager().setPageTransformer(type.getTransformer());
     }
 
     /**
@@ -759,7 +755,7 @@ public class WindCalendar extends LinearLayout {
      */
     private CalendarAdapter createCalendarAdapter() {
         // Create new adapter
-        CalendarAdapter adapter = new CalendarAdapter(fragManager, new GregorianCalendar(), offscreen);
+        CalendarAdapter adapter = new CalendarAdapter(fragManager, lifecycle, new GregorianCalendar(), offscreen);
         adapter.setCalendarStyle(style);
         adapter.setCalendarInfo(info);
         adapter.setCalendarEvent(eventListener);
@@ -857,7 +853,7 @@ public class WindCalendar extends LinearLayout {
      * Hide overlay
      */
     private void hideOverlay() {
-        _calendarViewPager.postDelayed(() -> _overlayView.setClickable(false), 200);
+        _calendarViewPager.getViewPager().postDelayed(() -> _overlayView.setClickable(false), 200);
     }
 
     /* ---------------------- INNER CLASS -------------------- */

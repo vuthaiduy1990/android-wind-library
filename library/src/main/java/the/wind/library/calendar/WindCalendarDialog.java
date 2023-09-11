@@ -31,6 +31,7 @@ import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Lifecycle;
 import the.wind.library.CWBundle;
 import the.wind.library.R;
 import the.wind.library.calendar.model.CalendarType;
@@ -168,7 +169,7 @@ public class WindCalendarDialog extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         // Rebuild month view panel
         FragmentManager fragManager = getChildFragmentManager();
-        adapter = createMonthViewAdapter(fragManager);
+        adapter = createMonthViewAdapter(fragManager, getLifecycle());
 
         if (_calendarViewPager.getAdapter() == null) {
             _calendarViewPager.setAdapter(adapter);
@@ -292,7 +293,7 @@ public class WindCalendarDialog extends DialogFragment {
         }
         _calendarViewPager.setSwipingEnabled(false);
         _calendarViewPager.scrollToDate(date);
-        _calendarViewPager.postDelayed(new Runnable() {
+        _calendarViewPager.getViewPager().postDelayed(new Runnable() {
             @Override
             public void run() {
                 _calendarViewPager.setSwipingEnabled(true);
@@ -426,7 +427,7 @@ public class WindCalendarDialog extends DialogFragment {
         dialog.setWidth((int) context.getResources().getDimension(R.dimen.wl_calendar_dialog_width));
         View contentView = dialog.contentView();
         _weekDayPanelView = contentView.findViewById(R.id._weekDayPanelView);
-        _calendarViewPager = contentView.findViewById(R.id._calendarViewPager);
+        _calendarViewPager = new CalendarViewPager(contentView.findViewById(R.id._calendarViewPager));
 
         // Add extra header
         View extraHeader = inflater.inflate(R.layout.wl_calendar_dialog_extra_header, dialog.headerLayout(), false);
@@ -468,8 +469,8 @@ public class WindCalendarDialog extends DialogFragment {
 
         // setup calendar view pager
         _calendarViewPager.setCalendarEvent(eventListener);
-        _calendarViewPager.setSaveEnabled(false); // do not keep fragment state when view is restart
-        _calendarViewPager.setBackgroundResource(style.monthPanelViewBackground());
+        _calendarViewPager.getViewPager().setSaveEnabled(false); // do not keep fragment state when view is restart
+        _calendarViewPager.getViewPager().setBackgroundResource(style.monthPanelViewBackground());
         return this;
     }
 
@@ -479,9 +480,9 @@ public class WindCalendarDialog extends DialogFragment {
      * @param fragManager fragment manager
      * @return calendar adapter
      */
-    private CalendarAdapter createMonthViewAdapter(FragmentManager fragManager) {
+    private CalendarAdapter createMonthViewAdapter(FragmentManager fragManager, Lifecycle lifecycle) {
         // Create new adapter
-        CalendarAdapter adapter = new CalendarAdapter(fragManager, new GregorianCalendar());
+        CalendarAdapter adapter = new CalendarAdapter(fragManager, lifecycle, new GregorianCalendar());
         adapter.setCalendarStyle(style);
         adapter.setCalendarInfo(info);
         adapter.setCalendarEvent(eventListener);

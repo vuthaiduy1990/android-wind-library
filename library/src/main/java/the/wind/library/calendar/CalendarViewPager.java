@@ -1,53 +1,38 @@
 package the.wind.library.calendar;
 
-import android.content.Context;
-import android.util.AttributeSet;
-import android.view.MotionEvent;
-
 import java.util.Date;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 /**
  * Custom view pager for calendar view
  */
-public class CalendarViewPager extends ViewPager {
+public class CalendarViewPager {
 
+    private final ViewPager2 _viewPager;
     private CalendarEvent calendarEvent;
     private MonthInfo preMonth;
-    private boolean swipeEnabled = true;
 
     /**
      * Constructor
      *
-     * @param context application context
+     * @param viewPager view pager
      */
-    public CalendarViewPager(@NonNull Context context) {
-        this(context, null);
-    }
-
-    /**
-     * Constructor
-     *
-     * @param context application context
-     * @param attrs   attributes
-     */
-    public CalendarViewPager(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
+    public CalendarViewPager(ViewPager2 viewPager) {
+        this._viewPager = viewPager;
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
             }
 
             @Override
             public void onPageSelected(int position) {
-                if (getAdapter() != null) {
-                    CalendarAdapter adapter = (CalendarAdapter) getAdapter();
-                    adapter.slide(position);
+                super.onPageSelected(position);
+                CalendarAdapter adapter = getAdapter();
+                if (adapter != null) {
+                    // adapter.slide(position);
                     if (calendarEvent.monthPageChangeListener != null) {
                         calendarEvent.monthPageChangeListener.onChange(preMonth, adapter.getSelectedMonth());
                     }
@@ -57,60 +42,39 @@ public class CalendarViewPager extends ViewPager {
 
             @Override
             public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
             }
         });
     }
 
     /* ---------------------- OVERRIDE ----------------------- */
 
-    @Override
-    public void setAdapter(@Nullable PagerAdapter adapter) {
+    /**
+     * Set adapter
+     *
+     * @param adapter adapter
+     */
+    public void setAdapter(@Nullable CalendarAdapter adapter) {
         if (adapter == null) {
-            super.setAdapter(null);
+            _viewPager.setAdapter(null);
             return;
         }
-        if (!(adapter instanceof CalendarAdapter)) {
-            throw new IllegalArgumentException("adapter is not calendar");
-        }
-        super.setAdapter(adapter);
-        CalendarAdapter _adapter = (CalendarAdapter) adapter;
-        setOffscreenPageLimit(_adapter.getOffscreen());
+        _viewPager.setAdapter(adapter);
+        _viewPager.setOffscreenPageLimit(adapter.getOffscreen());
     }
 
-    @Override
+    /**
+     * Set current page
+     *
+     * @param item item position
+     */
     public void setCurrentItem(int item) {
-        CalendarAdapter adapter = (CalendarAdapter) getAdapter();
+        CalendarAdapter adapter = getAdapter();
         if (item < 0 && adapter != null) {
-            super.setCurrentItem(adapter.getCurrentPagePosition(), true);
+            _viewPager.setCurrentItem(adapter.getCurrentPagePosition(), true);
             return;
         }
-        super.setCurrentItem(item, true);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        try {
-            if (this.swipeEnabled) {
-                return super.onTouchEvent(ev);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return false;
-    }
-
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        try {
-            if (this.swipeEnabled) {
-                return super.onInterceptTouchEvent(ev);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return false;
+        _viewPager.setCurrentItem(item, true);
     }
 
     /* ---------------------- STATIC ------------------------- */
@@ -118,6 +82,44 @@ public class CalendarViewPager extends ViewPager {
     /* ---------------------- ABSTRACT ----------------------- */
 
     /* ---------------------- GET-SET ------------------------ */
+
+    /**
+     * Get view pager
+     *
+     * @return view pager
+     */
+    public ViewPager2 getViewPager() {
+        return _viewPager;
+    }
+
+    /**
+     * Get adapter
+     *
+     * @return adapter
+     */
+    public CalendarAdapter getAdapter() {
+        return (CalendarAdapter) _viewPager.getAdapter();
+    }
+
+    /**
+     * Set calendar event listener
+     *
+     * @param calendarEvent calendar event listener
+     */
+    void setCalendarEvent(CalendarEvent calendarEvent) {
+        this.calendarEvent = calendarEvent;
+    }
+
+    /**
+     * Enable/disable swiping
+     *
+     * @param enabled true/false
+     */
+    public void setSwipingEnabled(boolean enabled) {
+        _viewPager.setUserInputEnabled(enabled);
+    }
+
+    /* ---------------------- METHOD ------------------------- */
 
     /**
      * Scroll calendar view to selected date
@@ -136,26 +138,6 @@ public class CalendarViewPager extends ViewPager {
     }
 
     /**
-     * Set calendar event listener
-     *
-     * @param calendarEvent calendar event listener
-     */
-    void setCalendarEvent(CalendarEvent calendarEvent) {
-        this.calendarEvent = calendarEvent;
-    }
-
-    /**
-     * Enable/disable swiping
-     *
-     * @param enabled true/false
-     */
-    public void setSwipingEnabled(boolean enabled) {
-        this.swipeEnabled = enabled;
-    }
-
-    /* ---------------------- METHOD ------------------------- */
-
-    /**
      * Refresh adapter to selected date
      *
      * @param adapter calendar adapter
@@ -168,7 +150,7 @@ public class CalendarViewPager extends ViewPager {
         // set new adapter that lead viewpager back to start page
         // Therefore, we should reset adapter position to zero too
         adapter.reset();
-        setOffscreenPageLimit(1); // set 1 to avoid creating too much cache fragment for empty adapter
+        _viewPager.setOffscreenPageLimit(1); // set 1 to avoid creating too much cache fragment for empty adapter
         setAdapter(adapter); // that will reset offscreen limit to configured value
 
         // set selected date

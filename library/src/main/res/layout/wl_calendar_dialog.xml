@@ -15,7 +15,7 @@
         android:orientation="horizontal" />
 
     <!-- Date Panel  -->
-    <the.wind.library.calendar.CalendarViewPager
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/_calendarViewPager"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/wl_calendar_dialog_viewpager_height" />
