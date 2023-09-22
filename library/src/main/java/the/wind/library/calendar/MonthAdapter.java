@@ -258,7 +258,8 @@ public class MonthAdapter extends WindRecycleView.Adapter<DateInfo> {
             // Configure cell size
             ViewGroup.LayoutParams lp = itemView.getLayoutParams();
             lp.width = calStyle.dateCellSize();
-            lp.height = calStyle.dateCellSize();
+            lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            itemView.setMinimumHeight(calStyle.dateCellSize());
             itemView.setLayoutParams(lp);
 
             // Configure date text
