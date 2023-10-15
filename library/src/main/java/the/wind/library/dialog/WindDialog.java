@@ -1,5 +1,6 @@
 package the.wind.library.dialog;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -547,6 +548,7 @@ public class WindDialog extends Dialog {
                 _dialogView.post(new Runnable() {
                     @Override
                     public void run() {
+                        if (isActivityFinishing()) return;
                         WindDialog.super.dismiss();
                     }
                 });
@@ -959,6 +961,25 @@ public class WindDialog extends Dialog {
     }
 
     /**
+     * Check if activity is destroying or not
+     *
+     * @return true/false
+     */
+    public boolean isActivityFinishing() {
+        Context ctx = getContext();
+        if (ctx instanceof Activity) {
+            return ((Activity) ctx).isFinishing();
+
+        } else if (ctx instanceof ContextWrapper) {
+            Context ctxWrapper = ((ContextWrapper) ctx).getBaseContext();
+            if (ctxWrapper instanceof Activity) {
+                return ((Activity) ctxWrapper).isFinishing();
+            }
+        }
+        return false;
+    }
+
+    /**
      * Show dialog with timeout in milliseconds.
      * It means that after timeout, dialog will be auto dismissed
      *
@@ -978,7 +999,7 @@ public class WindDialog extends Dialog {
     public void showTimeout(long timeout, CWCallback<?> callback) {
         show();
         postDelayed(() -> {
-            if (_dialogView == null) return;
+            if (isActivityFinishing()) return;
             if (callback != null) callback.onEnd();
             dismiss();
         }, timeout);
@@ -992,6 +1013,7 @@ public class WindDialog extends Dialog {
     public void showDelay(long delay) {
         showingAfterDelay = true;
         UiThread.postDelayed(() -> {
+            if (isActivityFinishing()) return;
             if (showingAfterDelay) show();
         }, delay);
     }
@@ -1015,6 +1037,7 @@ public class WindDialog extends Dialog {
     public void showDelay(long delay, long timeout, CWCallback<?> callback) {
         showingAfterDelay = true;
         UiThread.postDelayed(() -> {
+            if (isActivityFinishing()) return;
             if (showingAfterDelay) showTimeout(timeout, callback);
         }, delay);
     }
@@ -1079,11 +1102,9 @@ public class WindDialog extends Dialog {
      */
     public void waitMe(long timeout, final boolean quit) {
         waitMe();
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                imDone(quit);
-            }
+        postDelayed(() -> {
+            if (isActivityFinishing()) return;
+            imDone(quit);
         }, timeout);
     }
 

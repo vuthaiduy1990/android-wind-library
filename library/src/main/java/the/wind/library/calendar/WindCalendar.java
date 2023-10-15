@@ -1,5 +1,6 @@
 package the.wind.library.calendar;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -753,6 +754,25 @@ public class WindCalendar extends LinearLayout {
     /* ---------------------- METHOD ------------------------- */
 
     /**
+     * Check if activity is destroying or not
+     *
+     * @return true/false
+     */
+    private boolean isActivityFinishing() {
+        Context ctx = getContext();
+        if (ctx instanceof Activity) {
+            return ((Activity) ctx).isFinishing();
+
+        } else if (ctx instanceof ContextWrapper) {
+            Context ctxWrapper = ((ContextWrapper) ctx).getBaseContext();
+            if (ctxWrapper instanceof Activity) {
+                return ((Activity) ctxWrapper).isFinishing();
+            }
+        }
+        return false;
+    }
+
+    /**
      * Create calendar adapter
      *
      * @return adapter
@@ -857,7 +877,10 @@ public class WindCalendar extends LinearLayout {
      * Hide overlay
      */
     private void hideOverlay() {
-        _calendarViewPager.postDelayed(() -> _overlayView.setClickable(false), 200);
+        _calendarViewPager.postDelayed(() -> {
+            if (isActivityFinishing()) return;
+            _overlayView.setClickable(false);
+        }, 300);
     }
 
     /* ---------------------- INNER CLASS -------------------- */

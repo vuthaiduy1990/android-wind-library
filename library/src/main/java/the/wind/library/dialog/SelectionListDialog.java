@@ -359,6 +359,7 @@ public abstract class SelectionListDialog<T> extends WindDialog {
         // scroll to selected item
         listAdapter.setSelectors(items);
         postDelayed(() -> {
+            if (isActivityFinishing()) return;
             for (int i = 0; i < listAdapter.getItemCount(); i++) {
                 T data = listAdapter.getData(i);
                 if (listAdapter.isSelectedItem(data)) {

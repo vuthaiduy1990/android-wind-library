@@ -1,7 +1,9 @@
 package the.wind.library.calendar;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.icu.util.Calendar;
@@ -295,6 +297,7 @@ public class WindCalendarDialog extends DialogFragment {
         _calendarViewPager.postDelayed(new Runnable() {
             @Override
             public void run() {
+                if (isActivityFinishing()) return;
                 _calendarViewPager.setSwipingEnabled(true);
                 if (_reloadIcon != null) {
                     _reloadIcon.setEnabled(true);
@@ -304,6 +307,26 @@ public class WindCalendarDialog extends DialogFragment {
     }
 
     /* ---------------------- GET-SET ------------------------ */
+
+    /**
+     * Check if activity is destroying or not
+     *
+     * @return true/false
+     */
+    private boolean isActivityFinishing() {
+        Context ctx = getContext();
+        if (ctx instanceof Activity) {
+            return ((Activity) ctx).isFinishing();
+
+        } else if (ctx instanceof ContextWrapper) {
+            Context ctxWrapper = ((ContextWrapper) ctx).getBaseContext();
+            if (ctxWrapper instanceof Activity) {
+                return ((Activity) ctxWrapper).isFinishing();
+            }
+        }
+        return false;
+    }
+
 
     /**
      * @return bundle data
@@ -435,6 +458,7 @@ public class WindCalendarDialog extends DialogFragment {
         _reloadIcon.setOnClickListener(v -> {
             v.startAnimation(rotationIconAnim);
             v.postDelayed(() -> {
+                if (isActivityFinishing()) return;
                 onReloadCalendar(selectedDate);
             }, DEFAULT_ANIM_DURATION / 2);
         });
