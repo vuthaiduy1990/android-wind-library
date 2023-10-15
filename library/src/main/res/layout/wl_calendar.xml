@@ -27,11 +27,4 @@
 
     </LinearLayout>
 
-    <!-- Overlay View -->
-    <RelativeLayout
-        android:id="@+id/_overlayView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/wl_transparent" />
-
 </RelativeLayout>

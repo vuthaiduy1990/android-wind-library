@@ -62,7 +62,6 @@ public class WindCalendar extends LinearLayout {
     private final CalendarViewPager _calendarViewPager;
     private final ViewGroup _weekDayPanelView;
     private View _weekDayTouchedView;
-    private final View _overlayView;
 
     //Adapter
     private CalendarAdapter adapter;
@@ -191,7 +190,6 @@ public class WindCalendar extends LinearLayout {
         _rootView = findViewById(R.id._rootView);
         _calendarViewPager = _rootView.findViewById(R.id._calendarViewPager);
         _weekDayPanelView = _rootView.findViewById(R.id._weekDayPanelView);
-        _overlayView = _rootView.findViewById(R.id._overlayView);
 
         // Styling
         TypedArray typeArray = context.getTheme().obtainStyledAttributes(
@@ -333,14 +331,6 @@ public class WindCalendar extends LinearLayout {
             }
         }
         fragTrans.commit();
-
-        // set overlay
-        _rootView.post(() -> {
-            ViewGroup.LayoutParams layout = _overlayView.getLayoutParams();
-            layout.width = _rootView.getWidth();
-            layout.height = _rootView.getHeight();
-            _overlayView.setLayoutParams(layout);
-        });
 
         // setup calendar view pager
         _calendarViewPager.setCalendarEvent(eventListener);
@@ -870,7 +860,7 @@ public class WindCalendar extends LinearLayout {
      * Show overlay
      */
     private void showOverlay() {
-        _overlayView.setClickable(true);
+        _calendarViewPager.setSwipingEnabled(false);
     }
 
     /**
@@ -879,7 +869,7 @@ public class WindCalendar extends LinearLayout {
     private void hideOverlay() {
         _calendarViewPager.postDelayed(() -> {
             if (isActivityFinishing()) return;
-            _overlayView.setClickable(false);
+            _calendarViewPager.setSwipingEnabled(true);
         }, 300);
     }
 
