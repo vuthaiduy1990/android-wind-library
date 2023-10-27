@@ -156,7 +156,14 @@ public final class CWNLPEngine<T extends INLPText> {
             T target = targetIt.next();
             if (target.nlpTextId(getContext()).equals(targetId)) {
                 targetIt.remove();
-                targetQueue.remove(target);
+                break;
+            }
+        }
+        targetIt = targetQueue.iterator();
+        while (targetIt.hasNext()) {
+            T target = targetIt.next();
+            if (target.nlpTextId(getContext()).equals(targetId)) {
+                targetIt.remove();
                 break;
             }
         }
