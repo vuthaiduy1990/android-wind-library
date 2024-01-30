@@ -53,6 +53,6 @@ public class SearchBoxPage extends Fragment {
         // Auto complete search box
         _autoCompleteBox = view.findViewById(R.id._autoCompleteBox);
         _autoCompleteBox.setSuggestions(fruits);
-        ((AutoCompleteTextView) _autoCompleteBox.inputView()).setDropDownVerticalOffset((int) getResources().getDimension(R.dimen.wl_spacing_level_4));
+        ((AutoCompleteTextView) _autoCompleteBox.inputView()).setDropDownVerticalOffset((int) getResources().getDimension(the.wind.library.R.dimen.wl_spacing_level_4));
     }
 }

@@ -85,7 +85,7 @@ public class TagBoxPage extends Fragment {
             }
         });
         _tagInput.setSuggestions(tags);
-        ((AutoCompleteTextView) _tagInput.inputView()).setDropDownVerticalOffset((int) getResources().getDimension(R.dimen.wl_spacing_level_4));
+        ((AutoCompleteTextView) _tagInput.inputView()).setDropDownVerticalOffset((int) getResources().getDimension(the.wind.library.R.dimen.wl_spacing_level_4));
     }
 
     private void customTagBox(View view) {

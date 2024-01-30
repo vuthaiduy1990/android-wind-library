@@ -51,17 +51,17 @@ public class ColorPage extends Fragment {
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
             );
-            int margin = (int) getResources().getDimension(R.dimen.wl_spacing_level_2);
+            int margin = (int) getResources().getDimension(the.wind.library.R.dimen.wl_spacing_level_2);
             params.setMargins(0, 0, 0, margin);
             item.setLayoutParams(params);
-            int padding = (int) getResources().getDimension(R.dimen.wl_spacing_level_2);
+            int padding = (int) getResources().getDimension(the.wind.library.R.dimen.wl_spacing_level_2);
             item.setPadding(padding, padding, padding, padding);
             item.setText(entry.getKey());
             item.setBackgroundColor(entry.getValue().value());
             item.setEnabled(false);
             item.setTextSize(
                     TypedValue.COMPLEX_UNIT_PX,
-                    getResources().getDimension(R.dimen.wl_text_big));
+                    getResources().getDimension(the.wind.library.R.dimen.wl_text_big));
             item.setGravity(Gravity.CENTER);
             item.setTextColor(ContextCompat.getColor(view.getContext(), R.color.textColor));
             _colorLayout.addView(item);

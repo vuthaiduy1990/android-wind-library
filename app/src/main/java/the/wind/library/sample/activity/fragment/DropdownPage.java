@@ -41,11 +41,11 @@ public class DropdownPage extends Fragment {
         {
             Dropdown _dropdown2 = view.findViewById(R.id._dropdown2);
             DropdownAdapter<Color> adapter = createAdapter(view.getContext());
-            adapter.setItemTextColor(ContextCompat.getColor(view.getContext(), R.color.wl_white));
-            adapter.setItemTextSize(R.dimen.wl_text_big);
-            adapter.setPopupTextSize(R.dimen.wl_text_big);
-            adapter.setPopupCheckboxSizeRestId(R.dimen.wl_icon_big);
-            adapter.setPopupItemBackground(R.drawable.wl_button_background_highlight_light);
+            adapter.setItemTextColor(ContextCompat.getColor(view.getContext(), the.wind.library.R.color.wl_white));
+            adapter.setItemTextSize(the.wind.library.R.dimen.wl_text_big);
+            adapter.setPopupTextSize(the.wind.library.R.dimen.wl_text_big);
+            adapter.setPopupCheckboxSizeRestId(the.wind.library.R.dimen.wl_icon_big);
+            adapter.setPopupItemBackground(the.wind.library.R.drawable.wl_button_background_highlight_light);
             _dropdown2.setAdapter(adapter);
             _dropdown2.setSelectedData(Color.One);
             _dropdown2.setOnItemSelectedListener(new Dropdown.OnItemSelectedListener() {

@@ -29,7 +29,7 @@ public class ButtonPage extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final Button _eventButton = view.findViewById(R.id._eventButton);
-        _eventButton.setTextColor(ContextCompat.getColor(view.getContext(), R.color.wl_button_text_white));
+        _eventButton.setTextColor(ContextCompat.getColor(view.getContext(), the.wind.library.R.color.wl_button_text_white));
 
         anim = new ScaleAnimation(
                 0.5f, 1f, 0.5f, 1f,

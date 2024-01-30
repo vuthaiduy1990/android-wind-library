@@ -28,13 +28,13 @@ import the.wind.library.view.WindRecycleView;
 public class RecycleViewPage extends Fragment {
 
     public final int[] BACKGROUNDS = new int[]{
-            R.drawable.wl_button_background_gray,
-            R.drawable.wl_button_background_highlight,
-            R.drawable.wl_button_background_info,
-            R.drawable.wl_button_background_danger,
-            R.drawable.wl_button_background_neutral,
-            R.drawable.wl_button_background_primary,
-            R.drawable.wl_button_background_warning,
+            the.wind.library.R.drawable.wl_button_background_gray,
+            the.wind.library.R.drawable.wl_button_background_highlight,
+            the.wind.library.R.drawable.wl_button_background_info,
+            the.wind.library.R.drawable.wl_button_background_danger,
+            the.wind.library.R.drawable.wl_button_background_neutral,
+            the.wind.library.R.drawable.wl_button_background_primary,
+            the.wind.library.R.drawable.wl_button_background_warning,
     };
 
     public final String PARAGRAPH = "She closed her eyes,sinking down to her knees. " +
@@ -102,9 +102,9 @@ public class RecycleViewPage extends Fragment {
         // _recycleView.enableSwapPosition(null);
 
         // enable swipe to remove
-        _recycleView.setLeftSwipeIcon(CWImageUtils.drawbleToBitmap(view.getContext(), R.drawable.wl_ic_tool));
-        _recycleView.setRightSwipeIcon(CWImageUtils.drawbleToBitmap(view.getContext(), R.drawable.wl_ic_trash));
-        _recycleView.setSwipeIconSize(view.getResources().getDimension(R.dimen.wl_icon));
+        _recycleView.setLeftSwipeIcon(CWImageUtils.drawbleToBitmap(view.getContext(), the.wind.library.R.drawable.wl_ic_tool));
+        _recycleView.setRightSwipeIcon(CWImageUtils.drawbleToBitmap(view.getContext(), the.wind.library.R.drawable.wl_ic_trash));
+        _recycleView.setSwipeIconSize(view.getResources().getDimension(the.wind.library.R.dimen.wl_icon));
         _recycleView.enableSwipeToRemove(new WindRecycleView.OnSwipeToRemoveListener() {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
@@ -132,7 +132,7 @@ public class RecycleViewPage extends Fragment {
         mAdapter.setOnItemTouchDownListener(new WindRecycleView.Adapter.OnItemTouchDownListener<DummyData>() {
             @Override
             public void onTouchDown(WindRecycleView.ViewHolder<DummyData> viewHolder, View view, DummyData data) {
-                viewHolder.itemView.setBackgroundResource(R.drawable.wl_button_background_success);
+                viewHolder.itemView.setBackgroundResource(the.wind.library.R.drawable.wl_button_background_success);
             }
         }).setOnItemTouchUpListener(new WindRecycleView.Adapter.OnItemTouchUpListener<DummyData>() {
             @Override

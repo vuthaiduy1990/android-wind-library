@@ -133,113 +133,92 @@ public class MainActivity extends AppCompatActivity {
             currentPage = hostFrag.getChildFragmentManager().getFragments().get(0);
         }
 
-        switch (item.getItemId()) {
-            case R.id.action_menu_settings:
-                Toast.makeText(this, R.string.action_menu_settings, Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.action_menu_recycle_list_view:
-                if (currentPage instanceof RecycleViewPage) {
-                    ((RecycleViewPage) currentPage).changeViewType(RecycleViewPage.ViewType.LIST_VIEW);
-                }
-                break;
-            case R.id.action_menu_recycle_grid_view:
-                if (currentPage instanceof RecycleViewPage) {
-                    ((RecycleViewPage) currentPage).changeViewType(RecycleViewPage.ViewType.GRID_VIEW);
-                }
-                break;
-            case R.id.action_menu_recycle_anim_sweet_alert:
-                if (currentPage instanceof RecycleViewPage) {
-                    ((RecycleViewPage) currentPage).changeLayoutAnim(WindRecycleView.LayoutAnim.SWEET_ALERT);
-                }
-                break;
-            case R.id.action_menu_recycle_anim_fade:
-                if (currentPage instanceof RecycleViewPage) {
-                    ((RecycleViewPage) currentPage).changeLayoutAnim(WindRecycleView.LayoutAnim.FADE);
-                }
-                break;
-            case R.id.action_menu_recycle_anim_left_right:
-                if (currentPage instanceof RecycleViewPage) {
-                    ((RecycleViewPage) currentPage).changeLayoutAnim(WindRecycleView.LayoutAnim.LEFT_2_RIGHT);
-                }
-                break;
-            case R.id.action_menu_recycle_anim_right_left:
-                if (currentPage instanceof RecycleViewPage) {
-                    ((RecycleViewPage) currentPage).changeLayoutAnim(WindRecycleView.LayoutAnim.RIGHT_2_LEFT);
-                }
-                break;
-            case R.id.action_menu_recycle_enable_swap_position:
-                if (currentPage instanceof RecycleViewPage) {
-                    ((RecycleViewPage) currentPage).enableSwapPosition();
-                }
-                break;
-            case R.id.action_menu_calendar_btf_transform:
-                if (currentPage instanceof CalendarPage) {
-                    ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.BACKGROUND_TO_FOREGROUND);
-                }
-                break;
-            case R.id.action_menu_calendar_ftb_transform:
-                if (currentPage instanceof CalendarPage) {
-                    ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.FOREGROUND_TO_BACKGROUND);
-                }
-                break;
-            case R.id.action_menu_calendar_cube_in_transform:
-                if (currentPage instanceof CalendarPage) {
-                    ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.CUBE_IN);
-                }
-                break;
-            case R.id.action_menu_calendar_cube_out_transform:
-                if (currentPage instanceof CalendarPage) {
-                    ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.CUBE_OUT);
-                }
-                break;
-            case R.id.action_menu_calendar_depth_transform:
-                if (currentPage instanceof CalendarPage) {
-                    ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.DEPTH);
-                }
-                break;
-            case R.id.action_menu_calendar_flip_horizontal_transform:
-                if (currentPage instanceof CalendarPage) {
-                    ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.FLIP_HORIZONTAL);
-                }
-                break;
-            case R.id.action_menu_calendar_flip_vertical_transform:
-                if (currentPage instanceof CalendarPage) {
-                    ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.FLIP_VERTICAL);
-                }
-                break;
-            case R.id.action_menu_calendar_rotate_down_transform:
-                if (currentPage instanceof CalendarPage) {
-                    ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.ROTATE_DOWN);
-                }
-                break;
-            case R.id.action_menu_calendar_rotate_up_transform:
-                if (currentPage instanceof CalendarPage) {
-                    ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.ROTATE_UP);
-                }
-                break;
-            case R.id.action_menu_calendar_tablet_transform:
-                if (currentPage instanceof CalendarPage) {
-                    ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.TABLET);
-                }
-                break;
-            case R.id.action_menu_calendar_zoom_in_transform:
-                if (currentPage instanceof CalendarPage) {
-                    ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.ZOOM_IN);
-                }
-                break;
-            case R.id.action_menu_calendar_zoom_out_transform:
-                if (currentPage instanceof CalendarPage) {
-                    ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.ZOOM_OUT);
-                }
-                break;
-            case R.id.action_menu_image_slider_show_dialog:
-                if (currentPage instanceof ImageSliderPage) {
-                    ((ImageSliderPage) currentPage).showDialog();
-                }
-                break;
-            default:
-                break;
+        int id = item.getItemId();
+        if (id == R.id.action_menu_settings) {
+            Toast.makeText(this, R.string.action_menu_settings, Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.action_menu_recycle_list_view) {
+            if (currentPage instanceof RecycleViewPage) {
+                ((RecycleViewPage) currentPage).changeViewType(RecycleViewPage.ViewType.LIST_VIEW);
+            }
+        } else if (id == R.id.action_menu_recycle_grid_view) {
+            if (currentPage instanceof RecycleViewPage) {
+                ((RecycleViewPage) currentPage).changeViewType(RecycleViewPage.ViewType.GRID_VIEW);
+            }
+        } else if (id == R.id.action_menu_recycle_anim_sweet_alert) {
+            if (currentPage instanceof RecycleViewPage) {
+                ((RecycleViewPage) currentPage).changeLayoutAnim(WindRecycleView.LayoutAnim.SWEET_ALERT);
+            }
+        } else if (id == R.id.action_menu_recycle_anim_fade) {
+            if (currentPage instanceof RecycleViewPage) {
+                ((RecycleViewPage) currentPage).changeLayoutAnim(WindRecycleView.LayoutAnim.FADE);
+            }
+        } else if (id == R.id.action_menu_recycle_anim_left_right) {
+            if (currentPage instanceof RecycleViewPage) {
+                ((RecycleViewPage) currentPage).changeLayoutAnim(WindRecycleView.LayoutAnim.LEFT_2_RIGHT);
+            }
+        } else if (id == R.id.action_menu_recycle_anim_right_left) {
+            if (currentPage instanceof RecycleViewPage) {
+                ((RecycleViewPage) currentPage).changeLayoutAnim(WindRecycleView.LayoutAnim.RIGHT_2_LEFT);
+            }
+        } else if (id == R.id.action_menu_recycle_enable_swap_position) {
+            if (currentPage instanceof RecycleViewPage) {
+                ((RecycleViewPage) currentPage).enableSwapPosition();
+            }
+        } else if (id == R.id.action_menu_calendar_btf_transform) {
+            if (currentPage instanceof CalendarPage) {
+                ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.BACKGROUND_TO_FOREGROUND);
+            }
+        } else if (id == R.id.action_menu_calendar_ftb_transform) {
+            if (currentPage instanceof CalendarPage) {
+                ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.FOREGROUND_TO_BACKGROUND);
+            }
+        } else if (id == R.id.action_menu_calendar_cube_in_transform) {
+            if (currentPage instanceof CalendarPage) {
+                ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.CUBE_IN);
+            }
+        } else if (id == R.id.action_menu_calendar_cube_out_transform) {
+            if (currentPage instanceof CalendarPage) {
+                ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.CUBE_OUT);
+            }
+        } else if (id == R.id.action_menu_calendar_depth_transform) {
+            if (currentPage instanceof CalendarPage) {
+                ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.DEPTH);
+            }
+        } else if (id == R.id.action_menu_calendar_flip_horizontal_transform) {
+            if (currentPage instanceof CalendarPage) {
+                ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.FLIP_HORIZONTAL);
+            }
+        } else if (id == R.id.action_menu_calendar_flip_vertical_transform) {
+            if (currentPage instanceof CalendarPage) {
+                ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.FLIP_VERTICAL);
+            }
+        } else if (id == R.id.action_menu_calendar_rotate_down_transform) {
+            if (currentPage instanceof CalendarPage) {
+                ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.ROTATE_DOWN);
+            }
+        } else if (id == R.id.action_menu_calendar_rotate_up_transform) {
+            if (currentPage instanceof CalendarPage) {
+                ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.ROTATE_UP);
+            }
+        } else if (id == R.id.action_menu_calendar_tablet_transform) {
+            if (currentPage instanceof CalendarPage) {
+                ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.TABLET);
+            }
+        } else if (id == R.id.action_menu_calendar_zoom_in_transform) {
+            if (currentPage instanceof CalendarPage) {
+                ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.ZOOM_IN);
+            }
+        } else if (id == R.id.action_menu_calendar_zoom_out_transform) {
+            if (currentPage instanceof CalendarPage) {
+                ((CalendarPage) currentPage).setPageTransformer(PageTransformerType.ZOOM_OUT);
+            }
+        } else if (id == R.id.action_menu_image_slider_show_dialog) {
+            if (currentPage instanceof ImageSliderPage) {
+                ((ImageSliderPage) currentPage).showDialog();
+            }
         }
+
         return super.onOptionsItemSelected(item);
     }
 }
+

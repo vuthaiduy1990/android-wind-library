@@ -349,9 +349,9 @@ public class DialogPage extends Fragment {
         LinearLayout.LayoutParams headerSearchBoxLp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        headerSearchBoxLp.leftMargin = view.getContext().getResources().getDimensionPixelSize(R.dimen.wl_spacing_level_2);
+        headerSearchBoxLp.leftMargin = view.getContext().getResources().getDimensionPixelSize(the.wind.library.R.dimen.wl_spacing_level_2);
         headerSearchBox.setLayoutParams(headerSearchBoxLp);
-        headerSearchBox.setBackgroundResource(R.drawable.wl_button_background_gray);
+        headerSearchBox.setBackgroundResource(the.wind.library.R.drawable.wl_button_background_gray);
         headerSearchBox.setCompactMode(true);
         headerSearchBox.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
         _extraHeaderDialog.addViewToHeader(headerSearchBox);
@@ -371,7 +371,7 @@ public class DialogPage extends Fragment {
                 1f);
         footerSearchBox.setLayoutParams(footerSearchBoxLp);
         footerSearchBox.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
-        footerSearchBox.setBackgroundResource(R.drawable.wl_button_background_gray);
+        footerSearchBox.setBackgroundResource(the.wind.library.R.drawable.wl_button_background_gray);
         footerSearchBox.setCompactMode(true);
         _extraFooterDialog.addViewToFooter(0, footerSearchBox);
         view.findViewById(R.id._extraFooterView).setOnClickListener(v -> _extraFooterDialog.show());
