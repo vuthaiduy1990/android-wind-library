@@ -14,7 +14,8 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Looper;
@@ -44,13 +45,11 @@ public final class CWAndroidUtils {
      * @return true if available
      */
     public static boolean isNetworkConnected(Context context) {
-        if (context == null) return false;
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (cm != null) {
-            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-            return networkInfo != null && networkInfo.isConnected();
-        }
-        return false;
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        Network nw = connectivityManager.getActiveNetwork();
+        if (nw == null) return false;
+        NetworkCapabilities actNw = connectivityManager.getNetworkCapabilities(nw);
+        return actNw != null && (actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR));
     }
 
     /**
@@ -212,7 +211,7 @@ public final class CWAndroidUtils {
      * @return Uri
      */
     public static Uri resourceToUri(Context context, int id) {
-        return Uri.parse("android.resource://" + context.getPackageName() + File.pathSeparator + +id);
+        return Uri.parse("android.resource://" + context.getPackageName() + File.pathSeparator + id);
     }
 
     /**

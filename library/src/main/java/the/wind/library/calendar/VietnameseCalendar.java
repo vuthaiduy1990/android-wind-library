@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
  * documentation for personal, non-commercial use is hereby granted provided that
  * this copyright notice and appropriate documentation appears in all copies.
  *
- * @see https://www.informatik.uni-leipzig.de/~duc/amlich/calrules.html
+ * @see <a href="https://www.informatik.uni-leipzig.de/~duc/amlich/calrules.html">...</a>
  */
 public class VietnameseCalendar extends ChineseCalendar {
 
