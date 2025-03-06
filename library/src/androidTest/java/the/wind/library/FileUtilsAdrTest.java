@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -201,17 +202,17 @@ public class FileUtilsAdrTest {
         CWFileUtils.copyDir(srcDir, destDir);
 
         // List all copied file in destination directory
-        List<String> paths = listDir(destDir);
+        List<String> paths = listDir(destDir).stream().sorted().collect(Collectors.toList());
         Assert.assertEquals(rootPath + "/dest", paths.get(0));
-        Assert.assertEquals(rootPath + "/dest/file1.txt", paths.get(1));
-        Assert.assertEquals(rootPath + "/dest/file2.txt", paths.get(2));
-        Assert.assertEquals(rootPath + "/dest/sub-1", paths.get(3));
-        Assert.assertEquals(rootPath + "/dest/sub-1/file3.txt", paths.get(4));
-        Assert.assertEquals(rootPath + "/dest/sub-1/file4.txt", paths.get(5));
-        Assert.assertEquals(rootPath + "/dest/sub-2", paths.get(6));
-        Assert.assertEquals(rootPath + "/dest/sub-2/sub-3", paths.get(7));
-        Assert.assertEquals(rootPath + "/dest/sub-2/sub-3/file5.txt", paths.get(8));
-        Assert.assertEquals(rootPath + "/dest/empty", paths.get(9));
+        Assert.assertEquals(rootPath + "/dest/empty", paths.get(1));
+        Assert.assertEquals(rootPath + "/dest/file1.txt", paths.get(2));
+        Assert.assertEquals(rootPath + "/dest/file2.txt", paths.get(3));
+        Assert.assertEquals(rootPath + "/dest/sub-1", paths.get(4));
+        Assert.assertEquals(rootPath + "/dest/sub-1/file3.txt", paths.get(5));
+        Assert.assertEquals(rootPath + "/dest/sub-1/file4.txt", paths.get(6));
+        Assert.assertEquals(rootPath + "/dest/sub-2", paths.get(7));
+        Assert.assertEquals(rootPath + "/dest/sub-2/sub-3", paths.get(8));
+        Assert.assertEquals(rootPath + "/dest/sub-2/sub-3/file5.txt", paths.get(9));
 
         // Delete directory
         CWFileUtils.deleteDir(srcDir);
@@ -232,7 +233,7 @@ public class FileUtilsAdrTest {
         // Unzip directory
         CWFileUtils.unzipDir(zipFile, destDir);
         // List all copied file in destination directory
-        List<String> paths = listDir(destDir);
+        List<String> paths = listDir(destDir).stream().sorted().collect(Collectors.toList());
         Assert.assertEquals(rootPath + "/dest", paths.get(0));
         Assert.assertEquals(rootPath + "/dest/file1.txt", paths.get(1));
         Assert.assertEquals(rootPath + "/dest/file2.txt", paths.get(2));
