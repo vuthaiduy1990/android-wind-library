@@ -1,6 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/_icon1"
+        android:layout_width="256dp"
+        android:layout_height="256dp"
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true"
+        android:importantForAccessibility="no"
+        android:src="@drawable/bamboo_note_logo" />
+
+    <the.wind.library.view.Button
+        android:id="@+id/_downloadBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/_icon1"
+        android:layout_centerHorizontal="true"
+        app:text="@string/bamboo_note_download"
+        app:textSize="@dimen/wl_title"
+        app:type="PRIMARY" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/wl_spacing_level_2"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/_footerText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/powered_by"
+            android:textColor="@color/wl_text"
+            android:textSize="@dimen/wl_title"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/_footerText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:linksClickable="true"
+            android:textColor="#5190e5"
+            android:textColorLink="#5190e5"
+            android:textSize="@dimen/wl_title" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>
