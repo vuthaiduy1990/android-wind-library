@@ -45,6 +45,9 @@ More installation repository here:  [JitPack](https://jitpack.io/#vuthaiduy1990/
 - Simple wrapper of crypto (encryption and decryption)
 - Simple fake NLP searching
 
+## 📒 Wiki
+
+**[Document](https://github.com/vuthaiduy1990/android-wind-library/wiki)**
 
 ## 🚀 Screenshot
 
@@ -58,6 +61,8 @@ More installation repository here:  [JitPack](https://jitpack.io/#vuthaiduy1990/
 <img src="https://github.com/vuthaiduy1990/android-wind-library/blob/master/tag_box.jpg" height="480px">
 <img src="https://github.com/vuthaiduy1990/android-wind-library/blob/master/calendar.gif" height="480px">
 <img src="https://github.com/vuthaiduy1990/android-wind-library/blob/master/recycleview.gif" height="480px">
+<img src="https://github.com/vuthaiduy1990/android-wind-library/blob/master/menu.jpg" height="480px">
+<img src="https://github.com/vuthaiduy1990/android-wind-library/blob/master/sidebar_menu.jpg" height="480px">
 </div>
 
 ## 🔗 Dependencies
