@@ -48,6 +48,7 @@ More installation repository here:  [JitPack](https://jitpack.io/#vuthaiduy1990/
 ## 📒 Wiki
 
 **[Document](https://github.com/vuthaiduy1990/android-wind-library/wiki)**
+**[Google Code Wiki] (https://codewiki.google/github.com/vuthaiduy1990/android-wind-library#android-ui-component-library)
 
 ## 🚀 Screenshot
 
