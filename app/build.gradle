@@ -7,8 +7,8 @@ android {
         applicationId "the.wind.library.sample"
         minSdk 24
         targetSdk 37
-        versionCode 400
-        versionName "2025-07 (v.4.0.0)"
+        versionCode 401
+        versionName "2026-08 (v.4.0.1)"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -24,7 +24,7 @@ dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:2.1.10"))
 
     implementation 'androidx.appcompat:appcompat:1.7.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.2'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.2.0"
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
